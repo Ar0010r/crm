@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Http\Requests\Company;
+
+use App\Http\Requests\OwnerAllowedRequest;
+use App\Models\Company;
+use App\Rules\User\UserIdBelongsToPersonnel;
+use Illuminate\Validation\Rule;
+
+class CompanyUpdateRequest extends CompanyOwnerAllowedRequest
+{
+   /* public function authorize()
+    {
+        return auth()->user()->tokenCan(Permission::COMPANY_UPDATE);
+    }*/
+
+    public function rules()
+    {
+        $updatedId = $this->route()->parameter('company');
+
+        return [
+            'name' => Rule::unique('companies')->ignore($updatedId),
+            'user_id' => ['exists:users,id',  new UserIdBelongsToPersonnel()],
+        ];
+    }
+}
