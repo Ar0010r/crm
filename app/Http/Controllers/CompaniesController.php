@@ -19,6 +19,7 @@ class CompaniesController extends Controller
 
     public function store(CompanyStoreRequest $r)
     {
+        $r->merge(["personnel_id" => auth()->user()->getAuthIdentifier()]);
         $company = Company::create($r->all());
 
         return response(['company' => $company], JsonResponse::HTTP_OK);

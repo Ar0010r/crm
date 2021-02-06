@@ -16,11 +16,11 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->foreignId('user_id');
+            $table->foreignId('personnel_id');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('personnel_id')->references('id')->on('users');
         });
     }
 

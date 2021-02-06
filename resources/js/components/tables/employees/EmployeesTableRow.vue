@@ -2,7 +2,7 @@
     <tr class="odd gradeX">
         <td>{{employee.created_at}}</td>
         <td>{{employee.hr.login}}</td>
-        <td>{{employee.company.name}}</td>
+        <td v-if="employee.company">{{employee.company.name}}</td>
         <td class="d-flex flex-column border-0">
             <p class="m-0 p-0">{{employee.name}} <i>{{employee.race}}</i></p>
             <i>{{employee.birthday}}</i>
@@ -11,7 +11,7 @@
             <p class="m-0 p-0">{{employee.email}}</p>
             <p class="m-0 p-0">{{employee.paypal}}</p>
         </td>
-        <td>{{employee.address + employee.state + employee.zip}}</td>
+        <td>{{employee.address +  employee.city + employee.state + employee.zip}}</td>
         <td>
             <p class="m-0 p-0">{{employee.phone_1}}</p>
             <p class="m-0 p-0">{{employee.phone_2}}</p>
@@ -43,17 +43,16 @@
     //import StatusField from './EmployeesTableStatusField';
     import StatusSelect from '../../layout/EmployeesStatusSelect';
     import { useStore } from 'vuex';
+    import { watch } from 'vue';
     export default {
-        mounted(){
 
-        },
-        setup(){
+        setup(props){
 
-
-
+            console.log('table row', props.employee)
         },
         methods: {
             putEmployeeInfoToStore(){
+                console.log('commit', this.employee);
                 this.$store.commit('setEmployee', this.employee);
             }
         },

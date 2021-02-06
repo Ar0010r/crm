@@ -12,7 +12,7 @@
                 <EmployeesTableRow
                         v-for="employee in employees"
                         :key="employee.id"
-                        :employee='employee'
+                        :employee.sync='employee'
                 >
                 </EmployeesTableRow>
                 <EmptyTableRow></EmptyTableRow>
@@ -40,7 +40,7 @@
     import StoreEmployeeForm from '../../modals/employee/StoreEmployeeForm';
     import EditEmployeeForm from '../../modals/employee/EditEmployeeForm';
     import FileInputForm from '../../modals/employee/FileInputForm';
-    import {computed} from 'vue';
+    import {computed, reactive, watch} from 'vue';
     import{useStore} from 'vuex';
 
     export default {
@@ -51,9 +51,24 @@
                 useStore().commit('setEmployees');
             }
 
+            let store = useStore();
+
             let employees = computed(() => useStore().getters.getEmployees);
 
-            return {employees: employees}
+
+            watch(
+                () => store.getters.getEmployees,
+                (state, prevState) => {
+                    //store.commit('setEmployee', state);
+                    console.log('updated from store')
+                    console.log(state)
+                    employees = state;
+                },
+                { deep: true }
+            );
+
+
+            return {employees: reactive(employees)}
         },
 
         components: {

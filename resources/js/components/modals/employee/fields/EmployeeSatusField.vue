@@ -17,11 +17,14 @@
     import StatusSelect from '../../../layout/EmployeesStatusSelect.vue'
     import {computed} from 'vue'
     import {useStore} from 'vuex'
+    import md5 from "js-md5";
     export default {
         setup(props){
             //let employee = computed(() => useStore().getters.getEmployees[props.employee.id]);
 
-            return{currentEmployee: computed(() => useStore().getters.getEmployees[props.employee.id])}
+            //return{currentEmployee: computed(() => useStore().getters.getEmployeeById(props.employee.id))}
+            //let key = md5(props.employee.id.toString())
+            return{currentEmployee: computed(() => useStore().getters.getEmployees[md5(props.employee.id.toString())])}
             //return{currentEmployee: reactive(employee)}
         },
         props: {employee: Object},

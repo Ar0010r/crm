@@ -16,10 +16,21 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::create([
-            'login' => 'Arthur',
+            'login' => 'Admin',
             'role' => Role::ADMIN,
             'password' => bcrypt(11111111)
         ]);
-        // \App\Models\User::factory(10)->create();
+
+        User::create([
+            'login' => 'Hr',
+            'role' => Role::HR,
+            'password' => bcrypt(11111111)
+        ]);
+
+        User::create([
+            'login' => 'Personnel',
+            'role' => Role::PERSONNEL,
+            'password' => bcrypt(11111111)
+        ]);
     }
 }

@@ -6,13 +6,19 @@ use App\Http\Requests\Employee\EmployeeIndexRequest;
 use App\Http\Requests\Employee\EmployeeStoreRequest;
 use App\Http\Requests\Employee\EmployeeUpdateRequest;
 use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
 class EmployeesController extends Controller
 {
     public function index()
     {
-        $employees = Employee::query()->with('hr')->with('company')->get()->toArray();
+        $employees = Employee::query()
+            ->orderByDesc('employees.created_at')
+            ->with('hr')
+            ->with('company')
+            ->get()
+            ->toArray();
 
         foreach ($employees as &$employee) {
             foreach ($employee as $itemKey => &$item) {
@@ -24,14 +30,13 @@ class EmployeesController extends Controller
                 }
             }
         }
+
         return response($employees, JsonResponse::HTTP_OK);
     }
 
     public function store(EmployeeStoreRequest $r)
     {
-        if (!$r->user_id) {
-            $r->merge(["user_id" => auth()->user()->getAuthIdentifier()]);
-        }
+        $r->merge(["hr_id" => auth()->user()->getAuthIdentifier()]);
         $employee = Employee::create($r->all());
 
         return response(['employee' => $employee], JsonResponse::HTTP_OK);

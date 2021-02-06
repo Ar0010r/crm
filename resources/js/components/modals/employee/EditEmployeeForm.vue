@@ -18,8 +18,8 @@
                     <EmployeePickUpField :employeePickUp='employee.pickup'></EmployeePickUpField>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button @click.prevent="updateEmployee" type="button" class="btn btn-primary">Add</button>
+                    <button id="editEmployeeFormClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button @click.prevent="updateEmployee(employee)" type="button" class="btn btn-primary">Update</button>
                 </div>
             </form>
         </div>
@@ -27,27 +27,50 @@
 </template>
 
 <script>
+    import {useStore} from 'vuex';
+    import {computed} from 'vue';
     import EmployeeFormFields from './fields/EmployeeFormFields';
     import EmployeeStatusField from './fields/EmployeeSatusField.vue';
     import EmployeePickUpField from './fields/EmployeePickUpField';
-    import {useStore} from 'vuex';
-    import {computed} from 'vue';
+    import axios from 'axios';
 
     export default {
-        setup(){
+        setup() {
 
             return {employee: computed(() => useStore().getters.getEmployee)}
         },
 
         methods: {
-            updateEmployee(){
-               let data = $('#editEmployeeForm').serialize();
+           async updateEmployee(employee) {
 
-               console.log(data);
-            }
+                let data = {
+                    address: employee.address ?? "",
+                    birthday: employee.birthday ?? "",
+                    city: employee.city ?? "",
+                    company_id: employee.company_id ?? "",
+                    email: employee.email ?? null,
+                    name: employee.name ?? "",
+                    paypal: employee.paypal ?? null,
+                    phone_1: employee.phone_1 ?? "",
+                    phone_2: employee.phone_2 ?? "",
+                    race: employee.race ?? "",
+                    state: employee.state ?? "",
+                    zip: employee.zip ?? "",
+                };
+
+                console.log('beforeupdate', employee);
+
+                let result = await axios.put('api/employees/' + employee.id, data);
+                if(result.status === 204){
+                    console.log('upadted on server and now commit to store', employee);
+                    this.$store.commit('setEmployeeById', employee)
+                    document.getElementById('editEmployeeFormClose').click()
+                }
+
+            },
         },
 
-        components : {
+        components: {
             EmployeeFormFields,
             EmployeeStatusField,
             EmployeePickUpField,

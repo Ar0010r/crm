@@ -29,8 +29,8 @@ class EmployeeUpdateRequest extends FormRequest
         $rules = $this->basicRules();
         $updatedId = $this->route()->parameter('employee');
 
-        $rules['email'] = [Rule::unique('employees')->ignore($updatedId), 'email'];
-        $rules['paypal'] = [Rule::unique('employees')->ignore($updatedId), 'email'];
+        $rules['email'] = [Rule::unique('employees')->ignore($updatedId), 'email', 'nullable'];
+        $rules['paypal'] = [Rule::unique('employees')->ignore($updatedId), 'email', 'nullable'];
 
         return $rules;
     }

@@ -27,7 +27,8 @@
             if (racesAreUndefined) useStore().commit('setRaces');
             if (companiesAreUndefined) useStore().commit('setCompanies');
 
-            let employee = computed(() => useStore().getters.getEmployee);
+            let employee = computed(() => this.$store.getters.getEmployee);
+            //let employee = computed(() => useStore().getters.getEmployee);
 
             return {employee}
 

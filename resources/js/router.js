@@ -1,11 +1,10 @@
 import {createWebHistory, createRouter, useRoute} from 'vue-router';
-import EmployeesView from './views/EmployeesView.vue';
-import {useStore} from 'vuex';
 import axios from "axios";
 
-const CompaniesView = import('./views/CompaniesView.vue');
-const ManagersView = import('./views/ManagersView.vue');
-const LoginView = import('./views/LoginView.vue');
+const EmployeesView = () => import('./views/EmployeesView.vue');
+const CompaniesView = () => import('./views/CompaniesView.vue');
+const ManagersView = () => import('./views/ManagersView.vue');
+const LoginView = () => import('./views/LoginView.vue');
 
 const history = createWebHistory();
 

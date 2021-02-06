@@ -16,8 +16,8 @@ class CreateEmployeesTable extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->nullable();
-            $table->foreignId('user_id')->nullable();
-            $table->string('status')->default(\App\Properties\Status::NEW);
+            $table->foreignId('hr_id')->nullable();
+            $table->string('status')->default(\App\Properties\Status::NEW)->nullable();
             $table->string('name')->nullable();
             $table->dateTime('birthday')->nullable();
             $table->string('avatar')->nullable();
@@ -35,7 +35,7 @@ class CreateEmployeesTable extends Migration
             $table->softDeletes();
 
             $table->foreign('company_id')->references('id')->on('companies');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('hr_id')->references('id')->on('users');
         });
     }
 

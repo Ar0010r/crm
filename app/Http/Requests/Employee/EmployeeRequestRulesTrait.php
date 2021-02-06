@@ -14,19 +14,19 @@ trait EmployeeRequestRulesTrait
     public function basicRules()
     {
         return [
-            'company_id' => 'exists:companies,id',
-            'user_id' => ['exists:users,id', new UserIdBelongsToHr()],
-            'name' => 'string',
-            'avatar' => 'string',
-            'email' => 'email|unique:employees|unique:employees,paypal',
-            'paypal' => 'email|unique:employees|unique:employees,email',
-            'address' => 'string',
-            'city' => 'string',
-            'state' => 'string|in:' . $this->states,
-            'zip' => 'regex:/^\d{5}(-\d{4})?$/',
-            'phone_1' => 'regex:/^\d{3}-\d{3}-\d{4}$/',
-            'phone_2' => 'regex:/^\d{3}-\d{3}-\d{4}$/',
-            'race' => 'string|in:' . implode(',', Race::RACES),
+            'company_id' => 'nullable|exists:companies,id',
+            'user_id' => ['nullable|exists:users,id', new UserIdBelongsToHr()],
+            'name' => 'nullable|string',
+            'avatar' => 'nullable|string',
+            'email' => 'nullable|email|unique:employees|unique:employees,paypal',
+            'paypal' => 'nullable|email|unique:employees|unique:employees,email',
+            'address' => 'nullable|string',
+            'city' => 'nullable|string',
+            'state' => 'nullable|string|in:' . $this->states,
+            'zip' => 'nullable|regex:/^\d{5}(-\d{4})?$/',
+            'phone_1' => 'nullable|regex:/^\d{3}-\d{3}-\d{4}$/',
+            'phone_2' => 'nullable|regex:/^\d{3}-\d{3}-\d{4}$/',
+            'race' => 'nullable|string|in:' . implode(',', Race::RACES),
         ];
     }
 }
