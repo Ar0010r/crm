@@ -29,7 +29,7 @@
                 <button type="button" class="ion ion-md-create p-0 bg-transparent border-0"
                         data-toggle="tooltip" data-target="#editEmployeeForm"
                         data-placement="right" title="Edit"
-                        @click="putEmployeeInfoToStore"
+                        @click="putEmployeeInfoToStore(employee)"
                 >
 
                 </button>
@@ -51,9 +51,27 @@
             console.log('table row', props.employee)
         },
         methods: {
-            putEmployeeInfoToStore(){
-                console.log('commit', this.employee);
-                this.$store.commit('setEmployee', this.employee);
+            putEmployeeInfoToStore(employee){
+                let object = {
+                    id: employee.id,
+                    name: employee.name,
+                    email: employee.email,
+                    paypal: employee.paypal,
+                    company: employee.company,
+                    company_id: employee.company_id,
+                    address: employee.address,
+                    city: employee.city,
+                    state: employee.state,
+                    zip: employee.zip,
+                    phone_1: employee.phone_1,
+                    phone_2: employee.phone_2,
+                    birthday: employee.birthday,
+                    race: employee.race,
+                    status: employee.status,
+                    pickup: employee.pickup,
+                }
+                console.log(object);
+                this.$store.commit('setEmployee', object);
             }
         },
         props: {employee: Object},

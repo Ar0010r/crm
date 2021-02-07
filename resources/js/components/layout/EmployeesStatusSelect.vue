@@ -23,6 +23,7 @@
         setup(props) {
             let watchedStatus = watch(() => props.status, (first, second) => {
                 render().setup();
+                console.log('props changed in status comp')
                 return second ?? first
             });
 
@@ -34,6 +35,7 @@
 
         methods: {
             async activateStatus(id, newStatus) {
+                this.employeeStatus  = newStatus;
                 this.$store.commit('setEmployeeStatus', {id: id, newStatus: newStatus});
                 axios.put('api/employees/' + this.id, {status: newStatus});
             }

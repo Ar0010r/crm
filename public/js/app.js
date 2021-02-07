@@ -30260,15 +30260,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
 /* harmony import */ var _router_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./router.js */ "./resources/js/router.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.cjs.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vuex__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.cjs.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vuex__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./services */ "./resources/js/services/index.js");
 
 
 
 
 
-(0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)(_App_vue__WEBPACK_IMPORTED_MODULE_1__.default).use(_router_js__WEBPACK_IMPORTED_MODULE_2__.default).use((vuex__WEBPACK_IMPORTED_MODULE_4___default())).use(_store__WEBPACK_IMPORTED_MODULE_3__.default).mount("#app");
+
+(0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)(_App_vue__WEBPACK_IMPORTED_MODULE_1__.default).use(_router_js__WEBPACK_IMPORTED_MODULE_2__.default).use((vuex__WEBPACK_IMPORTED_MODULE_5___default())).use(_store__WEBPACK_IMPORTED_MODULE_3__.default).provide('container', _services__WEBPACK_IMPORTED_MODULE_4__.container).mount("#app");
 
 /***/ }),
 
@@ -30359,6 +30361,120 @@ router.beforeEach(function (to, from, next) {
 
 /***/ }),
 
+/***/ "./resources/js/services/employee.service.js":
+/*!***************************************************!*\
+  !*** ./resources/js/services/employee.service.js ***!
+  \***************************************************/
+/*! namespace exports */
+/*! export EmployeeService [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "EmployeeService": () => /* binding */ EmployeeService
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var EmployeeService = /*#__PURE__*/function () {
+  function EmployeeService(client) {
+    _classCallCheck(this, EmployeeService);
+
+    this.client = client;
+  }
+
+  _createClass(EmployeeService, [{
+    key: "getEmployees",
+    value: function () {
+      var _getEmployees = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(params) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.$get('/api/employees', {
+                  params: params
+                });
+
+              case 2:
+                return _context.abrupt("return", _context.sent);
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function getEmployees(_x) {
+        return _getEmployees.apply(this, arguments);
+      }
+
+      return getEmployees;
+    }()
+  }]);
+
+  return EmployeeService;
+}();
+
+/***/ }),
+
+/***/ "./resources/js/services/index.js":
+/*!****************************************!*\
+  !*** ./resources/js/services/index.js ***!
+  \****************************************/
+/*! namespace exports */
+/*! export container [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "container": () => /* binding */ container
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _employee_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./employee.service */ "./resources/js/services/employee.service.js");
+
+
+(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = '/api/';
+var serviceProviders = {
+  EmployeeService: function EmployeeService() {
+    return new _employee_service__WEBPACK_IMPORTED_MODULE_1__.EmployeeService((axios__WEBPACK_IMPORTED_MODULE_0___default()));
+  }
+};
+var container = new Proxy(serviceProviders, {
+  get: function get(target, name, receiver) {
+    if (Reflect.has(target, name)) {
+      var definition = Reflect.get(target, name, receiver);
+      return typeof definition === 'function' ? definition({
+        container: this
+      }) : definition;
+    }
+
+    return undefined;
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/store/index.js":
 /*!*************************************!*\
   !*** ./resources/js/store/index.js ***!
@@ -30436,6 +30552,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getRaces: function getRaces(state) {
       return state.races;
     },
+    getHrs: function getHrs(state) {},
     getStatuses: function getStatuses(state) {
       return state.statuses;
     },
@@ -30459,8 +30576,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     setEmployeeById: function setEmployeeById(state, employee) {
       console.log('before set in store', employee);
       var key = js_md5__WEBPACK_IMPORTED_MODULE_2___default()(employee.id.toString());
-      state.employees[key] = _objectSpread(_objectSpread({}, state.employees[key]), employee); //state.employees[key] = {...state.employees[employee.id], ...employee};
-
+      state.employees[key] = _objectSpread(_objectSpread({}, state.employees[key]), employee);
       state.employees[key].company = employee.company;
     },
     setRaces: function setRaces(state) {
@@ -30563,64 +30679,48 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         }, _callee4);
       }))();
-    },
-    removeEmployees: function removeEmployees(state) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                state.employees = {};
-
-              case 1:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5);
-      }))();
     }
   },
   actions: {
     login: function login(_ref, user) {
       var _this = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 _objectDestructuringEmpty(_ref);
 
-                _context6.next = 3;
+                _context5.next = 3;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/login", {
                   login: user.login,
                   password: user.password
                 });
 
               case 3:
-                response = _context6.sent;
+                response = _context5.sent;
 
                 if (!response.data.plainTextToken) {
-                  _context6.next = 9;
+                  _context5.next = 9;
                   break;
                 }
 
                 localStorage.setItem('token', response.data.plainTextToken);
                 (axios__WEBPACK_IMPORTED_MODULE_1___default().defaults.headers.common.Authorization) = 'Bearer ' + response.data.plainTextToken;
                 _this.state.user.token = response.data.plainTextToken;
-                return _context6.abrupt("return", true);
+                return _context5.abrupt("return", true);
 
               case 9:
-                return _context6.abrupt("return", false);
+                return _context5.abrupt("return", false);
 
               case 10:
               case "end":
-                return _context6.stop();
+                return _context5.stop();
             }
           }
-        }, _callee6);
+        }, _callee5);
       }))();
     }
   },

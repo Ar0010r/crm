@@ -30,27 +30,11 @@
     import EmployeePickUpField from './fields/EmployeePickUpField'
     import axios from 'axios';
     import {computed} from 'vue';
+    import {useStore} from 'vuex';
 
     export default {
         setup() {
-            let emptyEmployee = {
-                name: "",
-                email: "",
-                paypal: "",
-                company: "",
-                address: "",
-                city: "",
-                state: "",
-                zip: "",
-                phone_1: "",
-                phone_2: "",
-                birthday: "",
-                race: "",
-                status: "",
-                pickup: "",
-            };
-
-            return {emptyEmployee}
+            return {emptyEmployee: computed(() => useStore().getters.getEmployee)}
         },
 
         methods : {
@@ -77,8 +61,10 @@
 
                 let result = await axios.post('api/employees', data);
                 if(result.status === 200){
-                    //console.log('upadted on server and now commit to store', employee);
-                    //this.$store.commit('setEmployee', this.emptyEmployee)
+                    console.log('upadted on server and now commit to store', employee);
+                    console.log(result.data.employee);
+                    this.$store.commit('setEmployee', this.emptyEmployee);
+                    this.$store.commit('setEmployeeById', result.data.employee);
                     document.getElementById('storeEmployeeFormClose').click()
                 }
 

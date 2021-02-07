@@ -35,6 +35,7 @@ export default createStore({
         getEmployee: state => state.employee,
         getEmployees: state => state.employees,
         getRaces: state => state.races,
+        getHrs: state => {},
         getStatuses: state => state.statuses,
         getCompanies: state => state.companies,
         getEmployeeById: (id, state) => {
@@ -56,7 +57,6 @@ export default createStore({
             console.log('before set in store', employee)
             let key = md5(employee.id.toString());
             state.employees[key] = {...state.employees[key], ...employee};
-            //state.employees[key] = {...state.employees[employee.id], ...employee};
             state.employees[key].company = employee.company;
         },
         async setRaces(state) {
@@ -89,9 +89,6 @@ export default createStore({
             });
             state.employees = employees;
         },
-        async removeEmployees(state) {
-            state.employees = {};
-        }
     },
     actions: {
         async login({}, user) {

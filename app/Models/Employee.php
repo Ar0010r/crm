@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -45,11 +46,16 @@ class Employee extends Model
 
     public function hr()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'hr_id', 'id');
     }
 
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id', 'id');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i');
     }
 }

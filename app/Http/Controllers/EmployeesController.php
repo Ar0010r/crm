@@ -2,36 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Employee\EmployeeIndexRequest;
+use App\Helpers\ArrayHelper;
 use App\Http\Requests\Employee\EmployeeStoreRequest;
 use App\Http\Requests\Employee\EmployeeUpdateRequest;
 use App\Models\Employee;
-use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class EmployeesController extends Controller
 {
     public function index()
     {
-        $employees = Employee::query()
-            ->orderByDesc('employees.created_at')
-            ->with('hr')
-            ->with('company')
-            ->get()
-            ->toArray();
+        $employees = QueryBuilder::for(Employee::class)
+           ->orderByDesc('employees.created_at')
+           ->allowedFilters(['company_id', 'status'])
+           ->with('hr')
+           ->with('company')
+           ->get()
+           ->toArray();
 
-        foreach ($employees as &$employee) {
-            foreach ($employee as $itemKey => &$item) {
-                $employee[$itemKey] = $item ?? '';
-                if (is_iterable($item)) {
-                    foreach ($item as $key => &$value) {
-                        $item[$key] = $value ?? "";
-                    }
-                }
-            }
-        }
 
-        return response($employees, JsonResponse::HTTP_OK);
+
+        $data = ArrayHelper::changeNullFieldsToEmptyString($employees);
+
+        return response($data, JsonResponse::HTTP_OK);
     }
 
     public function store(EmployeeStoreRequest $r)

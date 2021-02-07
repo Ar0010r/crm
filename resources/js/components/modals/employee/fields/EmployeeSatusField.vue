@@ -3,10 +3,9 @@
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between">
             <label class="form-label col-md-2">Status</label>
 
-            <StatusSelect
-                    :status.sync='currentEmployee.status'
-                    :id.sync='currentEmployee.id'
-                    :update-on-select.sync=false
+            <StatusSelect v-if="emp.status"
+                          :status.sync='emp.status'
+                          :id.sync='employee.id'
             />
         </div>
     </div>
@@ -15,20 +14,16 @@
 
 <script>
     import StatusSelect from '../../../layout/EmployeesStatusSelect.vue'
-    import {computed} from 'vue'
+    import {computed, reactive} from 'vue'
     import {useStore} from 'vuex'
     import md5 from "js-md5";
-    export default {
-        setup(props){
-            //let employee = computed(() => useStore().getters.getEmployees[props.employee.id]);
 
-            //return{currentEmployee: computed(() => useStore().getters.getEmployeeById(props.employee.id))}
-            //let key = md5(props.employee.id.toString())
-            return{currentEmployee: computed(() => useStore().getters.getEmployees[md5(props.employee.id.toString())])}
-            //return{currentEmployee: reactive(employee)}
+    export default {
+        setup(props) {
+            return {emp: computed(() => useStore().getters.getEmployees[md5(props.employee.id.toString())])}
         },
         props: {employee: Object},
-        components:{
+        components: {
             StatusSelect
         }
     };

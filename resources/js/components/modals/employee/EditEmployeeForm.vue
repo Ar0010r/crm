@@ -14,7 +14,7 @@
                 </div>
                 <div class="modal-body pb-0">
                     <EmployeeFormFields :employee.sync='employee'></EmployeeFormFields>
-                    <EmployeeStatusField :employee.sync='employee'></EmployeeStatusField>
+                    <EmployeeStatusField v-if="employee.id" :employee.sync='employee'></EmployeeStatusField>
                     <EmployeePickUpField :employeePickUp='employee.pickup'></EmployeePickUpField>
                 </div>
                 <div class="modal-footer">
