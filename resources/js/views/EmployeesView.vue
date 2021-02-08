@@ -1,9 +1,9 @@
 <template>
     <EmployeesTable/>
 
-    <StoreEmployeeForm/>
+   <!-- <StoreEmployeeForm/>
     <FileInputForm/>
-    <EditEmployeeForm/>
+    <EditEmployeeForm/>-->
 
 </template>
 
@@ -15,24 +15,24 @@
     import FileInputForm from '../components/modals/employee/FileInputForm';
 
     import {useStore} from 'vuex';
-    import {computed} from 'vue';
+    import {inject} from 'vue';
 
     export default {
-        setup(){
-            let statusesAreUndefined = Object.keys(useStore().state.statuses).length === 0;
-            let racesAreUndefined = Object.keys(useStore().state.races).length === 0;
-            let companiesAreUndefined = Object.keys(useStore().state.companies).length === 0;
+        setup() {
+            const container = inject('container');
 
-            if (statusesAreUndefined) useStore().commit('setStatuses');
-            if (racesAreUndefined) useStore().commit('setRaces');
-            if (companiesAreUndefined) useStore().commit('setCompanies');
+            let store = useStore();
+            let statusesAreUndefined = Object.keys(store.getters.getStatuses).length === 0;
+            let racesAreUndefined = Object.keys(store.getters.getRaces).length === 0;
+            let companiesAreUndefined = Object.keys(store.getters.getCompanies).length === 0;
+            let employeesAreUndefined = Object.keys(store.getters.getEmployees).length === 0;
 
-            let employee = computed(() => this.$store.getters.getEmployee);
-            //let employee = computed(() => useStore().getters.getEmployee);
-
-            return {employee}
-
+            if (statusesAreUndefined) container.EmployeeService.setStatusesToStore();
+            if (racesAreUndefined) container.EmployeeService.setRacesToStore();
+            if (companiesAreUndefined) container.CompanyService.setCompaniesToStore();
+            if (employeesAreUndefined) container.EmployeeService.setEmployeesToStore();
         },
+
         components: {
             EmployeesTable,
             StoreEmployeeForm,

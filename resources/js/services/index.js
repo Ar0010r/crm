@@ -1,12 +1,21 @@
 
 import axios from 'axios'
+import { useStore } from 'vuex'
 import { EmployeeService } from "./employee.service";
+import { CompanyService } from "./company.service";
+import { AuthService } from "./auth.service";
 
-axios.defaults.baseURL = '/api/';
+//axios.defaults.baseURL = '/api/';
 
 const serviceProviders = {
+    AuthService: function () {
+        return new AuthService(axios, useStore());
+    },
     EmployeeService: function () {
-        return new EmployeeService(axios);
+        return new EmployeeService(axios, useStore());
+    },
+    CompanyService: function () {
+        return new CompanyService(axios, useStore());
     }
 
 };

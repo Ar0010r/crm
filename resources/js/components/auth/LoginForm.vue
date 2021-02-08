@@ -9,49 +9,40 @@
             <label class="form-label d-flex justify-content-between align-items-end">
                 <div>Password</div>
             </label>
-            <input type="password" class="form-control" v-model="user.password" ref="password" :class="{ 'is-invalid': isInvalid}">
+            <input type="password" class="form-control" v-model="user.password" :class="{ 'is-invalid': isInvalid}">
         </div>
         <div class="d-flex justify-content-between align-items-center m-0">
             <label class="custom-control custom-checkbox m-0">
                 <input type="checkbox" class="custom-control-input">
                 <span class="custom-control-label">Remember me</span>
             </label>
-            <button type="button" class="btn btn-primary" @click.prevent="login">Sign In</button>
+            <button type="button" class="btn btn-primary" @click.prevent=login(user)>Sign In</button>
         </div>
     </form>
 </template>
 
 <script>
-    import { useStore } from 'vuex';
     import router from '../../router.js'
+    import {inject, ref, reactive} from 'vue';
 
     export default {
-        data () {
-            return {isInvalid: false, dBlock: false}
-        },
         setup() {
-            const store = useStore();
-            //const user = computed(() => store.state.user);
+            const container = inject('container');
+            let user = reactive({login: "", password: ""});
+            let isInvalid = ref(false);
+            let dBlock = ref(false);
 
-            const user = {login: "", password: "" };
-
-            return {user , store}
-
-        },
-
-        methods: {
-            async login(){
-                let res = await this.store.dispatch('login', this.user);
-                if(res){
+            const login = async () => {
+                let res = await container.AuthService.login(user);
+                if (res) {
                     router.push("/employees");
-
                 } else {
-                    console.log(this.isInvalid);
-
-                   this.isInvalid = true;
-                   this.dBlock = true;
+                    isInvalid.value = true;
+                    dBlock.value = true;
                 }
-            }
+            };
+
+            return {user, isInvalid, dBlock, login}
         },
     };
 </script>

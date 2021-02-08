@@ -36,7 +36,7 @@
         methods: {
             async activateStatus(id, newStatus) {
                 this.employeeStatus  = newStatus;
-                this.$store.commit('setEmployeeStatus', {id: id, newStatus: newStatus});
+                this.$store.commit('employee/setEmployeeStatus', {id: id, newStatus: newStatus});
                 axios.put('api/employees/' + this.id, {status: newStatus});
             }
         },

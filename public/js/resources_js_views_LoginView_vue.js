@@ -17,8 +17,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
 /* harmony import */ var _router_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../router.js */ "./resources/js/router.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -28,36 +28,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data: function data() {
-    return {
-      isInvalid: false,
-      dBlock: false
-    };
-  },
   setup: function setup() {
-    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_2__.useStore)(); //const user = computed(() => store.state.user);
-
-    var user = {
+    var container = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)('container');
+    var user = (0,vue__WEBPACK_IMPORTED_MODULE_2__.reactive)({
       login: "",
       password: ""
-    };
-    return {
-      user: user,
-      store: store
-    };
-  },
-  methods: {
-    login: function login() {
-      var _this = this;
+    });
+    var isInvalid = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)(false);
+    var dBlock = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)(false);
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+    var login = /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         var res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _this.store.dispatch('login', _this.user);
+                return container.AuthService.login(user);
 
               case 2:
                 res = _context.sent;
@@ -65,9 +53,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (res) {
                   _router_js__WEBPACK_IMPORTED_MODULE_1__.default.push("/employees");
                 } else {
-                  console.log(_this.isInvalid);
-                  _this.isInvalid = true;
-                  _this.dBlock = true;
+                  isInvalid.value = true;
+                  dBlock.value = true;
                 }
 
               case 4:
@@ -76,8 +63,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
-      }))();
-    }
+      }));
+
+      return function login() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+
+    return {
+      user: user,
+      isInvalid: isInvalid,
+      dBlock: dBlock,
+      login: login
+    };
   }
 });
 
@@ -159,12 +157,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _LoginForm_vue_vue_type_template_id_5547a011_bindings_isInvalid_data_dBlock_data_user_setup_store_setup_login_options___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LoginForm.vue?vue&type=template&id=5547a011&bindings={"isInvalid":"data","dBlock":"data","user":"setup","store":"setup","login":"options"} */ "./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={\"isInvalid\":\"data\",\"dBlock\":\"data\",\"user\":\"setup\",\"store\":\"setup\",\"login\":\"options\"}");
+/* harmony import */ var _LoginForm_vue_vue_type_template_id_5547a011_bindings_user_setup_isInvalid_setup_dBlock_setup_login_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LoginForm.vue?vue&type=template&id=5547a011&bindings={"user":"setup","isInvalid":"setup","dBlock":"setup","login":"setup"} */ "./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={\"user\":\"setup\",\"isInvalid\":\"setup\",\"dBlock\":\"setup\",\"login\":\"setup\"}");
 /* harmony import */ var _LoginForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LoginForm.vue?vue&type=script&lang=js */ "./resources/js/components/auth/LoginForm.vue?vue&type=script&lang=js");
 
 
 
-_LoginForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _LoginForm_vue_vue_type_template_id_5547a011_bindings_isInvalid_data_dBlock_data_user_setup_store_setup_login_options___WEBPACK_IMPORTED_MODULE_0__.render
+_LoginForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _LoginForm_vue_vue_type_template_id_5547a011_bindings_user_setup_isInvalid_setup_dBlock_setup_login_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -294,12 +292,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={\"isInvalid\":\"data\",\"dBlock\":\"data\",\"user\":\"setup\",\"store\":\"setup\",\"login\":\"options\"}":
-/*!*********************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={"isInvalid":"data","dBlock":"data","user":"setup","store":"setup","login":"options"} ***!
-  \*********************************************************************************************************************************************************************************/
+/***/ "./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={\"user\":\"setup\",\"isInvalid\":\"setup\",\"dBlock\":\"setup\",\"login\":\"setup\"}":
+/*!*****************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={"user":"setup","isInvalid":"setup","dBlock":"setup","login":"setup"} ***!
+  \*****************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={"isInvalid":"data","dBlock":"data","user":"setup","store":"setup","login":"options"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={"user":"setup","isInvalid":"setup","dBlock":"setup","login":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -307,9 +305,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LoginForm_vue_vue_type_template_id_5547a011_bindings_isInvalid_data_dBlock_data_user_setup_store_setup_login_options___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LoginForm_vue_vue_type_template_id_5547a011_bindings_user_setup_isInvalid_setup_dBlock_setup_login_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LoginForm_vue_vue_type_template_id_5547a011_bindings_isInvalid_data_dBlock_data_user_setup_store_setup_login_options___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LoginForm.vue?vue&type=template&id=5547a011&bindings={"isInvalid":"data","dBlock":"data","user":"setup","store":"setup","login":"options"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={\"isInvalid\":\"data\",\"dBlock\":\"data\",\"user\":\"setup\",\"store\":\"setup\",\"login\":\"options\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LoginForm_vue_vue_type_template_id_5547a011_bindings_user_setup_isInvalid_setup_dBlock_setup_login_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LoginForm.vue?vue&type=template&id=5547a011&bindings={"user":"setup","isInvalid":"setup","dBlock":"setup","login":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={\"user\":\"setup\",\"isInvalid\":\"setup\",\"dBlock\":\"setup\",\"login\":\"setup\"}");
 
 
 /***/ }),
@@ -354,10 +352,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={\"isInvalid\":\"data\",\"dBlock\":\"data\",\"user\":\"setup\",\"store\":\"setup\",\"login\":\"options\"}":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={"isInvalid":"data","dBlock":"data","user":"setup","store":"setup","login":"options"} ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={\"user\":\"setup\",\"isInvalid\":\"setup\",\"dBlock\":\"setup\",\"login\":\"setup\"}":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={"user":"setup","isInvalid":"setup","dBlock":"setup","login":"setup"} ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -393,11 +391,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [
       _hoisted_3,
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
-        class: ["float-right text-danger d-none", { 'd-block': $data.dBlock}]
+        class: ["float-right text-danger d-none", { 'd-block': $setup.dBlock}]
       }, " Invalid credentials", 2 /* CLASS */),
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
         type: "text",
-        class: ["form-control", { 'is-invalid': $data.isInvalid}],
+        class: ["form-control", { 'is-invalid': $setup.isInvalid}],
         "onUpdate:modelValue": _cache[1] || (_cache[1] = $event => ($setup.user.login = $event))
       }, null, 2 /* CLASS */), [
         [vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.user.login]
@@ -407,9 +405,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       _hoisted_5,
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
         type: "password",
-        class: ["form-control", { 'is-invalid': $data.isInvalid}],
-        "onUpdate:modelValue": _cache[2] || (_cache[2] = $event => ($setup.user.password = $event)),
-        ref: "password"
+        class: ["form-control", { 'is-invalid': $setup.isInvalid}],
+        "onUpdate:modelValue": _cache[2] || (_cache[2] = $event => ($setup.user.password = $event))
       }, null, 2 /* CLASS */), [
         [vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.user.password]
       ])
@@ -419,7 +416,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
         type: "button",
         class: "btn btn-primary",
-        onClick: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)((...args) => ($options.login(...args)), ["prevent"]))
+        onClick: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($event => ($setup.login($setup.user)), ["prevent"]))
       }, "Sign In")
     ])
   ]))

@@ -40,35 +40,12 @@
     import StoreEmployeeForm from '../../modals/employee/StoreEmployeeForm';
     import EditEmployeeForm from '../../modals/employee/EditEmployeeForm';
     import FileInputForm from '../../modals/employee/FileInputForm';
-    import {computed, reactive, watch} from 'vue';
+    import {computed} from 'vue';
     import{useStore} from 'vuex';
 
     export default {
         setup(){
-            let employeesAreUndefined = Object.keys(useStore().state.employees).length === 0;
-
-            if(employeesAreUndefined){
-                useStore().commit('setEmployees');
-            }
-
-            let store = useStore();
-
-            let employees = computed(() => useStore().getters.getEmployees);
-
-
-            watch(
-                () => store.getters.getEmployees,
-                (state, prevState) => {
-                    //store.commit('setEmployee', state);
-                    console.log('updated from store')
-                    console.log(state)
-                    employees = state;
-                },
-                { deep: true }
-            );
-
-
-            return {employees: reactive(employees)}
+            return {employees: computed(() => useStore().getters.getEmployees)}
         },
 
         components: {

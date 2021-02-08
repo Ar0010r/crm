@@ -1,10 +1,13 @@
+import user from './user'
+import employee from './employee'
+import company from "./company";
 import {createStore} from 'vuex'
 import axios from 'axios';
 import md5 from "js-md5";
 
 export default createStore({
     state: {
-        user: {
+        /*user: {
             id: "",
             login: "",
             token: ""
@@ -29,23 +32,22 @@ export default createStore({
         employees: {},
         races: {},
         companies: {},
-        statuses: {}
+        statuses: {}*/
     },
     getters: {
-        getEmployee: state => state.employee,
-        getEmployees: state => state.employees,
-        getRaces: state => state.races,
+        getEmployee: state => state.employee.employee,
+        getEmployees: state => state.employee.employees,
+        getRaces: state => state.employee.races,
         getHrs: state => {},
-        getStatuses: state => state.statuses,
-        getCompanies: state => state.companies,
+        getStatuses: state => state.employee.statuses,
+        getCompanies: state => state.company.companies,
         getEmployeeById: (id, state) => {
-            console.log('what', state.employees);
             let key = md5(id.toString())
-            return state.employees[key]
+            return state.employee.employees[key]
         },
     },
     mutations: {
-        setEmployee(state, employee) {
+       /* setEmployee(state, employee) {
             state.employee = employee
         },
         setEmployeeStatus(state, params)
@@ -59,39 +61,23 @@ export default createStore({
             state.employees[key] = {...state.employees[key], ...employee};
             state.employees[key].company = employee.company;
         },
-        async setRaces(state) {
-            let response = await axios.get('api/races');
-            state.races = response.data;
+        async setRaces(state, races) {
+            state.races = races;
         },
-        async setStatuses(state) {
-            let response = await axios.get('api/statuses');
-            state.statuses = response.data;
+        async setStatuses(state, statuses) {
+            console.log('from state', statuses)
+            state.statuses = statuses;
         },
-        async setCompanies(state) {
-            let response = await axios.get('api/companies');
-            state.companies = response.data;
-            let data = response.data;
-            let companies = {};
-            Object.keys(data).map(function (key) {
-                let index = data[key].id;
-                companies[index] = data[key];
-            });
+        async setCompanies(state, companies) {
             state.companies = companies;
         },
 
-        async setEmployees(state) {
-            let response = await axios.get('api/employees');
-            let data = response.data;
-            let employees = {};
-            Object.keys(data).map(function (key) {
-                let index = md5( data[key].id.toString() );
-                employees[index] = data[key];
-            });
+        async setEmployees(state, employees) {
             state.employees = employees;
-        },
+        },*/
     },
     actions: {
-        async login({}, user) {
+        /*async login({}, user) {
             let response = await axios.post("/api/login", {login: user.login, password: user.password});
 
             if (response.data.plainTextToken) {
@@ -103,7 +89,11 @@ export default createStore({
                 return true;
             }
             return false;
-        },
+        },*/
     },
-    modules: {}
+    modules: {
+        user: user,
+        employee: employee,
+        company: company,
+    }
 })
