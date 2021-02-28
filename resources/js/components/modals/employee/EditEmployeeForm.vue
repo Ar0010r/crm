@@ -15,11 +15,11 @@
                 <div class="modal-body pb-0">
                     <EmployeeFormFields :employee.sync='employee'></EmployeeFormFields>
                     <EmployeeStatusField v-if="employee.id" :employee.sync='employee'></EmployeeStatusField>
-                    <EmployeePickUpField :employeePickUp='employee.pickup'></EmployeePickUpField>
+                    <EmployeePickUpField :employee.sync='employee'></EmployeePickUpField>
                 </div>
                 <div class="modal-footer">
                     <button id="editEmployeeFormClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button @click.prevent="updateEmployee(employee)" type="button" class="btn btn-primary">Update</button>
+                    <button :disabled='!employee.dataIsValid'  @click.prevent="updateEmployee(employee)" type="button" class="btn btn-primary">Update</button>
                 </div>
             </form>
         </div>
@@ -37,17 +37,28 @@
     export default {
         setup() {
 
-            return {employee: computed(() => useStore().getters.getEmployee)}
+            const store = useStore();
+            return {
+                employee: computed(() => store.getters.getEmployee)
+            }
         },
 
         methods: {
            async updateEmployee(employee) {
 
+               let companies = await this.$store.getters.getCompanies;
+
+               let company = companies[employee.company_id];
+
+               console.log('company' ,company)
+
                 let data = {
+                    id:employee.id,
                     address: employee.address ?? "",
                     birthday: employee.birthday ?? "",
                     city: employee.city ?? "",
                     company_id: employee.company_id ?? "",
+                    company: company ?? "",
                     email: employee.email ?? null,
                     name: employee.name ?? "",
                     paypal: employee.paypal ?? null,
@@ -56,14 +67,15 @@
                     race: employee.race ?? "",
                     state: employee.state ?? "",
                     zip: employee.zip ?? "",
+                    pickup: employee.pickup ?? "",
                 };
 
                 console.log('beforeupdate', employee);
+                console.log('beforeupdate data', data);
 
                 let result = await axios.put('api/employees/' + employee.id, data);
                 if(result.status === 204){
-                    console.log('upadted on server and now commit to store', employee);
-                    this.$store.commit('setEmployeeById', employee)
+                    this.$store.commit('employee/setEmployeeById', data)
                     document.getElementById('editEmployeeFormClose').click()
                 }
 

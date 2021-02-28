@@ -16,30 +16,25 @@
 
 <script>
     import axios from 'axios';
-    import {computed, ref, watch} from 'vue';
+    import {computed, ref} from 'vue';
     import {useStore} from 'vuex';
 
     export default {
         setup(props) {
-            let watchedStatus = watch(() => props.status, (first, second) => {
-                render().setup();
-                console.log('props changed in status comp')
-                return second ?? first
-            });
+            let store = useStore();
+
+            const activateStatus = (id, newStatus) => {
+                store.commit('employee/setEmployeeStatus', {id: id, newStatus: newStatus});
+                axios.put('api/employees/' + id, {status: newStatus});
+            };
 
             return {
-                statuses: computed(() => useStore().getters.getStatuses),
-                employeeStatus: ref(watchedStatus())
+                statuses: computed(() => store.getters.getStatuses),
+                employeeStatus: ref(props.status),
+                activateStatus
             }
         },
 
-        methods: {
-            async activateStatus(id, newStatus) {
-                this.employeeStatus  = newStatus;
-                this.$store.commit('employee/setEmployeeStatus', {id: id, newStatus: newStatus});
-                axios.put('api/employees/' + this.id, {status: newStatus});
-            }
-        },
         props: ['status', 'id', 'updateOnSelect'],
     };
 </script>

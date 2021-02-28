@@ -1,9 +1,11 @@
 import md5 from "js-md5";
+import container from "../services/employee.service.js";
+//import {inject} from 'vue';
 
 export default {
     namespaced: true,
     state: {
-        employee: {
+        /*employee: {
             name: "",
             email: "",
             paypal: "",
@@ -18,27 +20,24 @@ export default {
             race: "",
             status: "",
             pickup: "",
-        },
+        },*/
 
         employees: {},
         races: {},
         companies: {},
-        statuses: {}
-    },
-    getters: {
-       /* getEmployee: state => state.employee,
-        getEmployees: state => state.employees,
-        getRaces: state => state.races,
-        getStatuses: state => state.statuses,
-        getEmployeeById: (id, state) => {
-            let key = md5(id.toString())
-            return state.employees[key]
-        },*/
+        statuses: {},
+        pagination: {},
+        queryParams: {
+            company: "",
+            status: "",
+            page: "",
+            recordsPerPage: ""
+        }
     },
     mutations: {
-        setEmployee(state, employee) {
-            state.employee = employee
-        },
+         setQueryParam(state, {key, value}) {
+             state.queryParams[key] = value
+         },
         setEmployeeStatus(state, params) {
             let key = md5(params.id.toString())
             state.employees[key].status = params.newStatus
@@ -53,6 +52,24 @@ export default {
         setEmployees(state, employees) {
             state.employees = employees;
         },
+
+        setPagination(state, pagination) {
+            state.pagination = pagination;
+        },
+
+        setEmployeeById(state, employee) {
+            let key = md5(employee.id.toString());
+            if (state.employees[key]) {
+                state.employees[key] = {...state.employees[key], ...employee};
+                state.employees[key].company = employee.company;
+                //state.employees[key].pickup = employee.pickup;
+
+            } else {
+                let newEmpObj = {};
+                newEmpObj[key] = employee;
+                //newEmpObj[key] = {...state.employee, ...employee};
+                state.employees = {...newEmpObj, ...state.employees};
+            }
+        },
     },
-    modules: {}
 }

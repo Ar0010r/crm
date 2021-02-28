@@ -14,11 +14,11 @@
                 </div>
                 <div class="modal-body pb-0">
                     <EmployeeFormFields :employee='emptyEmployee'></EmployeeFormFields>
-                    <EmployeePickUpField></EmployeePickUpField>
+                    <EmployeePickUpField :employee.sync='emptyEmployee'></EmployeePickUpField>
                 </div>
                 <div class="modal-footer">
                     <button id="storeEmployeeFormClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button @click.prevent="storeEmployee()" type="button" class="btn btn-primary">Add</button>
+                    <button :disabled='!emptyEmployee.dataIsValid'  @click.prevent="storeEmployee()" type="button" class="btn btn-primary">Add</button>
                 </div>
             </form>
         </div>
@@ -42,6 +42,9 @@
 
                 let employee = this.$store.getters.getEmployee;
 
+                let companies = this.$store.getters.getCompanies;
+                let users = this.$store.getters.getUsers;
+
                 let data = {
                     address: employee.address ?? "",
                     birthday: employee.birthday ?? "",
@@ -61,10 +64,15 @@
 
                 let result = await axios.post('api/employees', data);
                 if(result.status === 200){
-                    console.log('upadted on server and now commit to store', employee);
-                    console.log(result.data.employee);
-                    this.$store.commit('setEmployee', this.emptyEmployee);
-                    this.$store.commit('setEmployeeById', result.data.employee);
+
+                    let savedEmployee = result.data.employee;
+                    savedEmployee.company = companies[data.company_id] ?? {};
+                    savedEmployee.hr = users[savedEmployee.hr_id];
+
+
+                    this.$store.commit('employee/setEmployee', this.emptyEmployee);
+                    this.$store.commit('employee/setEmployeeById', savedEmployee);
+
                     document.getElementById('storeEmployeeFormClose').click()
                 }
 

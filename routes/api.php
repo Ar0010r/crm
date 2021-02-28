@@ -1,9 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\JsonResponse;
-use App\Properties\Race;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +13,6 @@ use App\Properties\Race;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-\request()->headers->set('Accept', 'application/json');
 
 Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::post('/login', 'AuthController@login')->name('login');
@@ -23,8 +20,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::apiResource('/users', 'UsersController');
         Route::apiResource('/companies', 'CompaniesController');
         Route::apiResource('/employees', 'EmployeesController');
-        Route::get('/races', 'EmployeePropertiesController@races');
-        Route::get('/statuses', 'EmployeePropertiesController@statuses');
+        Route::post('employees/import', 'EmployeesController@import');
+        Route::get('/races', 'EmployeesController@races');
+        Route::get('/statuses', 'EmployeesController@statuses');
 
         Route::post('/logout', 'AuthController@logout')->name('logout');
     });

@@ -1,7 +1,7 @@
 <template>
     <div class="modal fade" id="fileInputForm">
         <div class="modal-dialog">
-            <form class="modal-content">
+            <form class="modal-content" enctype='multipart/form-data'>
                 <div class="modal-header">
                     <h5 class="modal-title">
                         Add employees
@@ -20,40 +20,61 @@
                          style="display: block;">
                         <div class="d-flex flex-column justify-content-center">
                             <h4>Drop files here to upload or select</h4>
-                            <button type="button" class="flow-browse btn btn-secondary">Select from your computer
-                                <input type="file" multiple="multiple"
+                            <button @click="selectFile" type="button" class="flow-browse btn btn-secondary">Select from
+                                your computer
+                                <input @change="setFile" type="file" id="empFileInput" accept=".xlsx, .xls"
                                        style="visibility: hidden; position: absolute; width: 1px; height: 1px;">
                             </button>
                         </div>
                     </div>
 
-                    <div class="flow-progress media d-none mt-4">
-                        <div class="mr-3">
-                            <button type="button" onclick="r.upload(); return(false);"
-                                    class="progress-resume-link btn icon-btn btn-primary">
-                                <i class="ion ion-md-play"></i>
-                            </button>
-                            <button type="button" onclick="r.pause(); return(false);"
-                                    class="progress-pause-link btn icon-btn btn-warning">
-                                <i class="ion ion-md-pause"></i>
-                            </button>
-                            <button type="button" onclick="r.cancel(); return(false);"
-                                    class="progress-cancel-link btn icon-btn btn-danger">
-                                <i class="ion ion-md-close"></i>
-                            </button>
-                        </div>
-                        <div class="media-body align-self-center">
-                            <div class="progress-container progress">
-                                <div class="progress-bar"></div>
+                    <ul v-if="success" class="flow-list list-group mt-4">
+                        <li class="flow-file list-group-item flow-file">
+                            <div class="flow-progress media">
+                                <div class="media-body">
+                                    <div><strong class="flow-file-name text-success">File exported successfully</strong>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </li>
+                    </ul>
 
-                    <ul class="flow-list list-group d-none mt-4"></ul>
+                    <ul v-if="errors" class="flow-list list-group mt-4">
+                        <li class="flow-file list-group-item flow-file">
+                            <div v-for="error in errors" class="flow-progress media">
+                                <div class="media-body">
+                                    <div><strong class="flow-file-name text-danger">{{error.shift()}}</strong></div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <ul v-if="file" class="flow-list list-group mt-4">
+                        <li class="flow-file list-group-item flow-file-49077-ASeleznovCVpdf">
+                            <div class="flow-progress media">
+                                <div class="media-body">
+                                    <div><strong class="flow-file-name">{{file.name}}</strong> - <em
+                                            class="flow-file-progress">file is uploaded, press play to send it</em>
+                                    </div>
+                                    <div>
+                                        <small class="flow-file-size text-muted">{{(file.size/1000000).toFixed(2)}} Mb
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="ml-3 align-self-center">
+                                    <button type="button" @click="sendFile"
+                                            class="flow-file-resume btn btn-sm icon-btn btn-outline-success"
+                                    ><i class="ion ion-md-play"></i></button>
+                                    <button type="button" @click="deleteFile"
+                                            class="flow-file-cancel btn btn-sm icon-btn btn-outline-danger ml-1"><i
+                                            class="ion ion-md-close"></i></button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
                 </div>
             </form>
         </div>
@@ -61,65 +82,63 @@
 </template>
 
 <script>
-export default {
-    mounted() {
-        console.log("Component mounted.");
-    },
-};
+    import {computed, ref, inject} from 'vue';
+    import {useStore} from 'vuex';
+
+    export default {
+        setup() {
+
+            const container = inject('container');
+            const store = useStore();
+
+            let file = ref(null);
+            let errors = ref(null);
+            let success = ref(false);
+
+            function setFile(event) {
+                console.log(event);
+                file.value = event.target.files[0];
+            }
+
+            function deleteFile() {
+                file.value = null;
+                errors.value = null;
+                document.getElementById("empFileInput").value = null;
+            }
+
+            async function sendFile() {
+                let formData = new FormData();
+                formData.set('file', file.value);
+
+                try {
+                   await container.EmployeeService.sendFile(formData);
+                } catch (e) {
+                    success.value = false;
+                    if (e.response.status === 422) {
+                        errors.value = e.response.data.errors;
+                    }
+                    return ;
+                }
+
+                success.value = true;
+
+                let data = await container.EmployeeService.getEmployees();
+
+                console.log(data);
+
+                store.commit('employee/setEmployees', data.employees);
+                store.commit('employee/setPagination', data.pagination);
+            }
+
+            return {
+                setFile,
+                deleteFile,
+                sendFile,
+                file: computed(() => file.value),
+                errors: computed(() => errors.value),
+                success: computed(() => success.value),
+                selectFile: () => document.getElementById("empFileInput").click()
+            }
+        }
+    };
 </script>
-
-<style lang="scss">
-html,
-body,
-#app {
-    width: 100%;
-    height: 100%;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #e3e4e5;
-}
-
-.flex {
-    display: flex;
-    height: 100%;
-    width: 100%;
-
-    &--column {
-        flex-direction: column;
-    }
-
-    &--align-center {
-        align-items: center;
-    }
-
-    &--justify-center {
-        justify-content: center;
-    }
-}
-
-.logos {
-    padding-top: 16px;
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-gap: 32px;
-}
-
-.title {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-gap: 16px;
-    padding: 32px;
-
-    .laravel {
-        color: #ff291a
-    }
-
-    .vue {
-        color: #41b883;
-    }
-
-    .plus {
-        color: #35495e
-    }
-
-}
-</style>

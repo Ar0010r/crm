@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Employee;
 
+use App\Models\Company;
 use App\Properties\Race;
+use App\Properties\Status;
 use App\Rules\User\UserIdBelongsToHr;
 
 trait EmployeeRequestRulesTrait
@@ -14,19 +16,24 @@ trait EmployeeRequestRulesTrait
     public function basicRules()
     {
         return [
-            'company_id' => 'nullable|exists:companies,id',
-            'user_id' => ['nullable|exists:users,id', new UserIdBelongsToHr()],
-            'name' => 'nullable|string',
-            'avatar' => 'nullable|string',
-            'email' => 'nullable|email|unique:employees|unique:employees,paypal',
-            'paypal' => 'nullable|email|unique:employees|unique:employees,email',
-            'address' => 'nullable|string',
-            'city' => 'nullable|string',
-            'state' => 'nullable|string|in:' . $this->states,
-            'zip' => 'nullable|regex:/^\d{5}(-\d{4})?$/',
-            'phone_1' => 'nullable|regex:/^\d{3}-\d{3}-\d{4}$/',
-            'phone_2' => 'nullable|regex:/^\d{3}-\d{3}-\d{4}$/',
-            'race' => 'nullable|string|in:' . implode(',', Race::RACES),
+            '*.company_id' => 'nullable|exists:companies,id',
+            '*.company' => 'nullable|string|in:' . implode(',', Company::all()->pluck('name')->toArray()),
+            '*.hr_id' => ['nullable|exists:users,id'],
+            //'hr_id' => ['nullable|exists:users,id', new UserIdBelongsToHr()],
+            '*.name' => 'nullable|string',
+            '*.avatar' => 'nullable|string',
+            '*.email' => 'nullable|email|unique:employees|unique:employees,paypal',
+            '*.paypal' => 'nullable|email|unique:employees|unique:employees,email',
+            '*.address' => 'nullable|string',
+            '*.city' => 'nullable|string',
+            '*.state' => 'nullable|string|in:' . $this->states,
+            '*.zip' => 'nullable|regex:/^\d{5}(-\d{4})?$/',
+            '*.phone_1' => 'nullable|regex:/^\d{3}-\d{3}-\d{4}$/',
+            '*.phone_2' => 'nullable|regex:/^\d{3}-\d{3}-\d{4}$/',
+            //'birthday' => 'nullable|date',
+            //'birthday' => 'nullable|regex:/^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/',
+            '*.race' => 'nullable|string|in:' . implode(',', Race::RACES),
+            '*.status' => 'nullable|string|in:' . implode(',', Status::STATUSES),
         ];
     }
 }

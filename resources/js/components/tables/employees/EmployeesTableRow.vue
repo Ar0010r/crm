@@ -3,15 +3,22 @@
         <td>{{employee.created_at}}</td>
         <td>{{employee.hr.login}}</td>
         <td v-if="employee.company">{{employee.company.name}}</td>
+        <td v-else></td>
         <td class="d-flex flex-column border-0">
             <p class="m-0 p-0">{{employee.name}} <i>{{employee.race}}</i></p>
+            <strong class="m-0 p-0 text-success" v-if="employee.pickup == 1">pick up</strong>
             <i>{{employee.birthday}}</i>
         </td>
         <td>
             <p class="m-0 p-0">{{employee.email}}</p>
             <p class="m-0 p-0">{{employee.paypal}}</p>
         </td>
-        <td>{{employee.address +  employee.city + employee.state + employee.zip}}</td>
+        <td>
+            <span>{{employee.address}}</span> <br>
+            <span>{{employee.city}}</span> <span>{{' '}}</span>
+            <span>{{employee.state}}</span> <span>{{' '}}</span>
+            <span>{{employee.zip}}</span> <span>{{' '}}</span>
+        </td>
         <td>
             <p class="m-0 p-0">{{employee.phone_1}}</p>
             <p class="m-0 p-0">{{employee.phone_2}}</p>
@@ -19,9 +26,9 @@
 
         <td>
             <StatusSelect v-if="employee.status"
-                    :status='employee.status'
-                    :id='employee.id'
-                    :update-on-select='true'
+                          :status='employee.status'
+                          :id='employee.id'
+                          :update-on-select='true'
             />
         </td>
         <td class="d-flex justify-content-center align-items-center border-0">
@@ -40,38 +47,37 @@
 </template>
 
 <script>
-    //import StatusField from './EmployeesTableStatusField';
     import StatusSelect from '../../layout/EmployeesStatusSelect';
-    import { useStore } from 'vuex';
-    import { watch } from 'vue';
+    import {useStore} from 'vuex';
+    import {watch} from 'vue';
+
     export default {
 
-        setup(props){
+        setup(props) {
 
-            console.log('table row', props.employee)
         },
         methods: {
-            putEmployeeInfoToStore(employee){
+            putEmployeeInfoToStore(employee) {
                 let object = {
-                    id: employee.id,
-                    name: employee.name,
-                    email: employee.email,
-                    paypal: employee.paypal,
-                    company: employee.company,
-                    company_id: employee.company_id,
-                    address: employee.address,
-                    city: employee.city,
-                    state: employee.state,
-                    zip: employee.zip,
-                    phone_1: employee.phone_1,
-                    phone_2: employee.phone_2,
-                    birthday: employee.birthday,
-                    race: employee.race,
-                    status: employee.status,
-                    pickup: employee.pickup,
+                    id: employee.id ?? "",
+                    name: employee.name ?? "",
+                    email: employee.email ?? "",
+                    paypal: employee.paypal ?? "",
+                    company: employee.company ?? "",
+                    company_id: employee.company_id ?? "",
+                    address: employee.address ?? "",
+                    city: employee.city ?? "",
+                    state: employee.state ?? "",
+                    zip: employee.zip ?? "",
+                    phone_1: employee.phone_1 ?? "",
+                    phone_2: employee.phone_2 ?? "",
+                    birthday: employee.birthday ?? "",
+                    race: employee.race ?? "",
+                    status: employee.status ?? "",
+                    pickup: employee.pickup ?? "",
                 }
-                console.log(object);
-                this.$store.commit('setEmployee', object);
+                this.$store.commit('formData/setEmployee', object);
+                //this.$store.commit('employee/setEmployee', object);
             }
         },
         props: {employee: Object},

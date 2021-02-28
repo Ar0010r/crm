@@ -19,7 +19,7 @@ class CreateEmployeesTable extends Migration
             $table->foreignId('hr_id')->nullable();
             $table->string('status')->default(\App\Properties\Status::NEW)->nullable();
             $table->string('name')->nullable();
-            $table->dateTime('birthday')->nullable();
+            $table->date('birthday')->nullable();
             $table->string('avatar')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('paypal')->nullable()->unique()->nullable();
@@ -30,7 +30,7 @@ class CreateEmployeesTable extends Migration
             $table->string('phone_1')->nullable();
             $table->string('phone_2')->nullable();
             $table->string('race')->nullable();
-            $table->boolean('pickup')->default(false);
+            $table->boolean('pickup')->nullable()->default(false);
             $table->timestamps();
             $table->softDeletes();
 

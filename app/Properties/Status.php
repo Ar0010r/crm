@@ -39,4 +39,17 @@ class Status
         self::GREETED => self::GREY_COLOR_STYLE,
         self::EXPORTED => self::GREEN_COLOR_STYLE,
     ];
+
+    public const STATUSES = [
+        self::NEW,
+        self::WAITING_AGREEMENT,
+        self::WAITING_DATA,
+        self::NEED_CALL,
+        self::NEED_INFO_REQUEST,
+        self::NO_ANSWER,
+        self::BAD,
+        self::READY,
+        self::GREETED,
+        self::EXPORTED,
+    ];
 }

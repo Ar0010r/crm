@@ -3,10 +3,10 @@
         <h4 class="font-weight-bold py-3 mb-4">
             Employees
         </h4>
-        <EmployeesTableControl></EmployeesTableControl>
+        <EmployeesTableControl/>
 
         <div class="table-responsive">
-            <table v-if="employees" class="datatables-demo table table-striped table-bordered">
+            <table v-if="employees !== {}" class="datatables-demo table table-striped table-bordered">
                 <EmployeesTableHead/>
                 <tbody>
                 <EmployeesTableRow
@@ -15,18 +15,12 @@
                         :employee.sync='employee'
                 >
                 </EmployeesTableRow>
-                <EmptyTableRow></EmptyTableRow>
-                <EmptyTableRow></EmptyTableRow>
-                <EmptyTableRow></EmptyTableRow>
-                <EmptyTableRow></EmptyTableRow>
-                <EmptyTableRow></EmptyTableRow>
-                <EmptyTableRow></EmptyTableRow>
-                <EmptyTableRow></EmptyTableRow>
-
-
+                <EmptyTableRow
+                        v-if="5 - Object.keys(employees).length > 0"
+                        v-for="n in (5 - Object.keys(employees).length)"/>
                 </tbody>
             </table>
-            <Pagination></Pagination>
+            <Pagination :data="pagination"/>
         </div>
     </div>
 </template>
@@ -45,7 +39,10 @@
 
     export default {
         setup(){
-            return {employees: computed(() => useStore().getters.getEmployees)}
+            return {
+                employees: computed(() => useStore().getters.getEmployees),
+                pagination: computed(() => useStore().getters.getEmployeesPagination),
+            }
         },
 
         components: {

@@ -8,9 +8,23 @@ export default {
             login: "",
             token: ""
         },
+
+        users:{},
+        hrs:{},
+        personnels:{},
     },
-    getters: {},
-    mutations: {},
+    mutations: {
+        setUsers(state, users) {
+            state.users = users;
+        },
+        setHrs(state, hrs) {
+            state.hrs = hrs;
+        },
+        setPersonnels(state, personnels) {
+            state.personnels = personnels;
+        },
+
+    },
     actions: {},
     modules: {}
 }

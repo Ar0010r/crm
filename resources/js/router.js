@@ -36,8 +36,8 @@ const router = createRouter({
             redirect: '/employees'
         }
     ],
-    linkActiveClass: "active", // active class for non-exact links.
-    linkExactActiveClass: "active" // active class for *exact* links.
+    linkActiveClass: "active",
+    linkExactActiveClass: "active"
 });
 
 router.beforeEach((to, from, next) => {

@@ -28,6 +28,7 @@ class Employee extends Model
         'address',
         'city',
         'state',
+        'pickup',
         'zip',
         'phone_1',
         'phone_2',

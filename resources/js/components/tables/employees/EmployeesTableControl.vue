@@ -1,20 +1,22 @@
 <template>
     <div class="d-flex justify-content-between mb-3">
         <div class="d-flex align-items-center justify-content-between">
-            <select class="custom-select form-control form-control-sm ml-2">
-                <option value="10">Company</option>
-                <option v-for="company in companies" :value="company.id">{{company.name}}</option>
+            <select v-model="activeFilters.company_id" class="custom-select form-control form-control-sm ml-2">
+                <option value="" selected>Company</option>
+                <option v-for="company in companies" :value="company.id">
+                    {{company.name}}
+                </option>
             </select>
-            <select class="custom-select custom-select form-control-lg form-control-sm ml-2">
-                <option value="10">Status</option>
+            <select v-model="activeFilters.status"
+                    class="custom-select custom-select form-control-lg form-control-sm ml-2">
+                <option value="" selected>Status</option>
                 <option v-for="(key, value) in statuses" :value="value">{{value}}</option>
             </select>
             <select class="custom-select custom-select form-control-lg form-control-sm ml-2">
-                <option value="10">Hr</option>
-                <option value="10">Hr1</option>
-                <option value="10">Hr2</option>
-                <option value="25">Hr3</option>
-                <option value="50">Hr4</option>
+                <option  value="10">Hr</option>
+                <option v-for="hr in hrs" :value="hr.id">
+                    {{hr.login}}
+                </option>
             </select>
         </div>
         <div id="DataTables_Table_0_filter"
@@ -27,11 +29,11 @@
             <button type="button" data-toggle="modal" data-target="#fileInputForm"
                     class="btn-primary btn w-auto ml-2 col-sm-4">File upload
             </button>
-            <select class="custom-select ml-2 col-md-4">
-                <option value="10">Records</option>
-                <option value="25">10</option>
-                <option value="50">20</option>
-                <option value="100">30</option>
+            <select v-model="activeFilters.recordsPerPage" class="custom-select ml-2 col-md-4">
+                <option value="" selected >Records</option>
+                <option v-for="record in recordsPerPage" :value="record">
+                    {{record}}
+                </option>
             </select>
         </div>
     </div>
@@ -39,20 +41,50 @@
 
 <script>
     import {useStore} from 'vuex'
-    import {computed} from 'vue'
-    export default {
-        setup(){
+    import {computed, reactive, inject, watch} from 'vue'
 
-            return{
-                activeFilters:{},
-                companies: computed(() => useStore().getters.getCompanies),
-                statuses: computed(() => useStore().getters.getStatuses),
-                hrs: computed(() => useStore().getters.getHrs),
+    export default {
+        setup() {
+            const container = inject('container');
+
+            let store = useStore();
+
+            let activeFilters = reactive({company_id: '', status: '', hr: '', recordsPerPage:''});
+
+
+            const filter = async () => {
+                store.commit('employee/setQueryParam', {'key':'company', 'value': activeFilters.company_id});
+                store.commit('employee/setQueryParam', {'key':'status', 'value': activeFilters.status});
+                store.commit('employee/setQueryParam', {'key':'recordsPerPage', 'value': activeFilters.recordsPerPage});
+
+                let params = store.getters.getEmployeeQueryParams;
+
+                let employees = await container.EmployeeService.getEmployees({
+                    'filter[company_id]': params.company,
+                    'filter[status]': params.status,
+                    'page': params.page,
+                    'recordsPerPage': params.recordsPerPage,
+                });
+
+                store.commit('employee/setEmployees', employees.employees);
+                store.commit('employee/setPagination', employees.pagination);
+            };
+
+            watch(() => activeFilters, (first, second) => {
+                filter();
+            }, {deep: true});
+
+            return {
+                activeFilters: activeFilters,
+                companies: computed(() => store.getters.getCompanies),
+                statuses: computed(() => store.getters.getStatuses),
+                hrs: computed(() => store.getters.getHrs),
+                recordsPerPage: [10,30,50,100,300,500],
             }
 
         },
-        methods:{
-            initializeEmployeeStoreForm(){
+        methods: {
+            initializeEmployeeStoreForm() {
                 let emptyEmployee = {
                     id: "",
                     name: "",
@@ -71,7 +103,7 @@
                     pickup: "",
                 };
 
-                this.$store.commit('setEmployee', emptyEmployee);
+                this.$store.commit('formData/setEmployee', emptyEmployee);
             }
         }
     };

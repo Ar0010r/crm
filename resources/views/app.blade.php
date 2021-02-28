@@ -55,6 +55,9 @@
     <link rel="stylesheet" href="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css">
     <!-- Page -->
     <link rel="stylesheet" href="assets/vendor/css/pages/authentication.css">
+
+    <link rel="stylesheet" href="assets/vendor/libs/dropzone/dropzone.css">
+    <link rel="stylesheet" href="assets/vendor/libs/flow-js/flow.css">
 </head>
 
 <body style="background: white;">
@@ -71,6 +74,8 @@
 
 <!-- Libs -->
 <script src="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+{{--<script src="assets/vendor/libs/dropzone/dropzone.js"></script>
+<script src="assets/vendor/libs/flow-js/flow.js"></script>--}}
 
 <!-- Demo -->
 <script src="assets/js/demo.js"></script>

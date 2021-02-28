@@ -1,9 +1,9 @@
 <template>
     <EmployeesTable/>
 
-   <!-- <StoreEmployeeForm/>
+    <StoreEmployeeForm/>
     <FileInputForm/>
-    <EditEmployeeForm/>-->
+    <EditEmployeeForm/>
 
 </template>
 
@@ -26,11 +26,13 @@
             let racesAreUndefined = Object.keys(store.getters.getRaces).length === 0;
             let companiesAreUndefined = Object.keys(store.getters.getCompanies).length === 0;
             let employeesAreUndefined = Object.keys(store.getters.getEmployees).length === 0;
+            let usersAreUndefined = Object.keys(store.getters.getUsers).length === 0;
 
             if (statusesAreUndefined) container.EmployeeService.setStatusesToStore();
             if (racesAreUndefined) container.EmployeeService.setRacesToStore();
             if (companiesAreUndefined) container.CompanyService.setCompaniesToStore();
             if (employeesAreUndefined) container.EmployeeService.setEmployeesToStore();
+            if (usersAreUndefined) container.UserService.setUsersToStore();
         },
 
         components: {
