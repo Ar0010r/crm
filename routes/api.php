@@ -23,6 +23,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::post('employees/import', 'EmployeesController@import');
         Route::get('/races', 'EmployeesController@races');
         Route::get('/statuses', 'EmployeesController@statuses');
+        Route::get('/available-roles', 'UsersController@getAvailableRoles');
 
         Route::post('/logout', 'AuthController@logout')->name('logout');
     });

@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\OwnerAllowedRequest;
-use App\Http\Requests\OnlyAdminAllowedRequest;
 use App\Http\Requests\User\UserDeleteRequest;
 use App\Http\Requests\User\UserIndexRequest;
 use App\Http\Requests\User\UserShowRequest;
 use App\Http\Requests\User\UserStoreRequest;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\User;
+use App\Shared\Value\Role;
 use Illuminate\Http\JsonResponse;
 
 class UsersController extends Controller
@@ -50,5 +49,10 @@ class UsersController extends Controller
         } catch (\Exception $e) {
             return response($e->getMessage());
         }
+    }
+
+    public function getAvailableRoles()
+    {
+        return response(Role::AVAILABLE_ROLES, JsonResponse::HTTP_OK);
     }
 }

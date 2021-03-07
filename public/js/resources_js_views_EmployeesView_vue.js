@@ -194,7 +194,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 companies = _context.sent;
                 company = companies[employee.company_id];
-                console.log('company', company);
                 data = {
                   id: employee.id,
                   address: (_employee$address = employee.address) !== null && _employee$address !== void 0 ? _employee$address : "",
@@ -212,12 +211,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   zip: (_employee$zip = employee.zip) !== null && _employee$zip !== void 0 ? _employee$zip : "",
                   pickup: (_employee$pickup = employee.pickup) !== null && _employee$pickup !== void 0 ? _employee$pickup : ""
                 };
-                console.log('beforeupdate', employee);
-                console.log('beforeupdate data', data);
-                _context.next = 10;
+                _context.next = 7;
                 return axios__WEBPACK_IMPORTED_MODULE_5___default().put('api/employees/' + employee.id, data);
 
-              case 10:
+              case 7:
                 result = _context.sent;
 
                 if (result.status === 204) {
@@ -226,7 +223,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   document.getElementById('editEmployeeFormClose').click();
                 }
 
-              case 12:
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -412,7 +409,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var _employee$address, _employee$birthday, _employee$city, _employee$company_id, _employee$email, _employee$name, _employee$paypal, _employee$phone_, _employee$phone_2, _employee$race, _employee$state, _employee$zip;
+        var _employee$address, _employee$birthday, _employee$city, _employee$company_id, _employee$email, _employee$name, _employee$paypal, _employee$phone_, _employee$phone_2, _employee$race, _employee$state, _employee$zip, _employee$pickup;
 
         var employee, companies, users, data, result, _companies$data$compa, savedEmployee;
 
@@ -435,7 +432,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   phone_2: (_employee$phone_2 = employee.phone_2) !== null && _employee$phone_2 !== void 0 ? _employee$phone_2 : "",
                   race: (_employee$race = employee.race) !== null && _employee$race !== void 0 ? _employee$race : "",
                   state: (_employee$state = employee.state) !== null && _employee$state !== void 0 ? _employee$state : "",
-                  zip: (_employee$zip = employee.zip) !== null && _employee$zip !== void 0 ? _employee$zip : ""
+                  zip: (_employee$zip = employee.zip) !== null && _employee$zip !== void 0 ? _employee$zip : "",
+                  pickup: (_employee$pickup = employee.pickup) !== null && _employee$pickup !== void 0 ? _employee$pickup : ""
                 };
                 console.log('before store', employee);
                 _context.next = 7;
@@ -507,8 +505,7 @@ __webpack_require__.r(__webpack_exports__);
       zip: yup__WEBPACK_IMPORTED_MODULE_1__.string().nullable().matches('^$|\\d{5}(-\\d{4})?$', 'Enter valid zip code'),
       phone_1: yup__WEBPACK_IMPORTED_MODULE_1__.string().nullable().matches('^$|\\d{3}-\\d{3}-\\d{4}$', 'Enter valid phone'),
       phone_2: yup__WEBPACK_IMPORTED_MODULE_1__.string().nullable().matches("^$|\\d{3}-\\d{3}-\\d{4}$", 'Enter valid phone'),
-      birthday: yup__WEBPACK_IMPORTED_MODULE_1__.string().nullable().matches('^$|(0[1-9]|[12][0-9]|3[01])[-](0[1-9]|1[012])[-](19|20)\\d\\d$', 'Enter valid birthday'),
-      //birthday: yup.string().matches('^$|(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$', 'Enter valid birthday'),
+      birthday: yup__WEBPACK_IMPORTED_MODULE_1__.date().nullable().typeError('Valid date format is yyyy-mm-dd'),
       state: yup__WEBPACK_IMPORTED_MODULE_1__.string().nullable().test("test-name", "Please enter correct state abbreviation", function (value) {
         return !!uSstates.includes(value) || value === "" || value === null;
       })
@@ -605,7 +602,7 @@ __webpack_require__.r(__webpack_exports__);
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(meta, function (first, second) {
       store.commit('formData/setEmployeeIsValidState', meta.value.valid);
       console.log('from watcher ' + meta.value.valid);
-      console.log("Watch props.selected function called with args:", first, second); // Both props are undefined so its just a bare callback func to be run
+      console.log("Watch props.selected function called with args:", first, second);
     });
     /*const validationListeners = computed(() => {
         // If the field is valid or have not been validated yet
@@ -916,7 +913,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         zip: "",
         phone_1: "",
         phone_2: "",
-        birthday: "",
+        birthday: null,
         race: "",
         status: "",
         pickup: ""
@@ -967,7 +964,7 @@ __webpack_require__.r(__webpack_exports__);
         zip: (_employee$zip = employee.zip) !== null && _employee$zip !== void 0 ? _employee$zip : "",
         phone_1: (_employee$phone_ = employee.phone_1) !== null && _employee$phone_ !== void 0 ? _employee$phone_ : "",
         phone_2: (_employee$phone_2 = employee.phone_2) !== null && _employee$phone_2 !== void 0 ? _employee$phone_2 : "",
-        birthday: (_employee$birthday = employee.birthday) !== null && _employee$birthday !== void 0 ? _employee$birthday : "",
+        birthday: (_employee$birthday = employee.birthday) !== null && _employee$birthday !== void 0 ? _employee$birthday : null,
         race: (_employee$race = employee.race) !== null && _employee$race !== void 0 ? _employee$race : "",
         status: (_employee$status = employee.status) !== null && _employee$status !== void 0 ? _employee$status : "",
         pickup: (_employee$pickup = employee.pickup) !== null && _employee$pickup !== void 0 ? _employee$pickup : ""
@@ -10515,7 +10512,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
           type: "text",
           class: ["form-control col-md-10", { 'is-invalid': !!$setup.birthdayError}],
-          placeholder: "dd/mm/yyyy",
+          placeholder: "yyyy-mm-dd",
           name: "birthday",
           "onUpdate:modelValue": _cache[11] || (_cache[11] = $event => ($props.employee.birthday = $event))
         }, null, 2 /* CLASS */), [
@@ -10725,19 +10722,17 @@ const _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
   value: "",
   selected: ""
 }, "Status", -1 /* HOISTED */)
-const _hoisted_5 = { class: "custom-select custom-select form-control-lg form-control-sm ml-2" }
-const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", { value: "10" }, "Hr", -1 /* HOISTED */)
-const _hoisted_7 = {
+const _hoisted_5 = {
   id: "DataTables_Table_0_filter",
   class: "col-md-4 dataTables_filter d-flex align-items-center justify-content-end "
 }
-const _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
   type: "button",
   "data-toggle": "modal",
   "data-target": "#fileInputForm",
   class: "btn-primary btn w-auto ml-2 col-sm-4"
 }, "File upload ", -1 /* HOISTED */)
-const _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
   value: "",
   selected: ""
 }, "Records", -1 /* HOISTED */)
@@ -10768,17 +10763,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }), 256 /* UNKEYED_FRAGMENT */))
       ], 512 /* NEED_PATCH */), [
         [vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.activeFilters.status]
-      ]),
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", _hoisted_5, [
-        _hoisted_6,
-        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.hrs, (hr) => {
-          return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
-            value: hr.id
-          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(hr.login), 9 /* TEXT, PROPS */, ["value"]))
-        }), 256 /* UNKEYED_FRAGMENT */))
       ])
     ]),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
         type: "button",
         "data-toggle": "modal",
@@ -10786,12 +10773,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         class: "btn-primary btn w-auto col-sm-5",
         onClick: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)((...args) => ($options.initializeEmployeeStoreForm(...args)), ["prevent"]))
       }, "Add employee "),
-      _hoisted_8,
+      _hoisted_6,
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
         "onUpdate:modelValue": _cache[4] || (_cache[4] = $event => ($setup.activeFilters.recordsPerPage = $event)),
         class: "custom-select ml-2 col-md-4"
       }, [
-        _hoisted_9,
+        _hoisted_7,
         ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.recordsPerPage, (record) => {
           return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", { value: record }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record), 9 /* TEXT, PROPS */, ["value"]))
         }), 256 /* UNKEYED_FRAGMENT */))
@@ -10865,24 +10852,26 @@ const _hoisted_2 = { key: 0 }
 const _hoisted_3 = { key: 1 }
 const _hoisted_4 = { class: "d-flex flex-column border-0" }
 const _hoisted_5 = { class: "m-0 p-0" }
-const _hoisted_6 = {
+const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1 /* HOISTED */)
+const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()
+const _hoisted_8 = {
   key: 0,
   class: "m-0 p-0 text-success"
 }
-const _hoisted_7 = { class: "m-0 p-0" }
-const _hoisted_8 = { class: "m-0 p-0" }
-const _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()
-const _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1 /* HOISTED */)
+const _hoisted_9 = { class: "m-0 p-0" }
+const _hoisted_10 = { class: "m-0 p-0" }
 const _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()
-const _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' '), -1 /* HOISTED */)
+const _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1 /* HOISTED */)
 const _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()
 const _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' '), -1 /* HOISTED */)
 const _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()
 const _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' '), -1 /* HOISTED */)
-const _hoisted_17 = { class: "m-0 p-0" }
-const _hoisted_18 = { class: "m-0 p-0" }
-const _hoisted_19 = { class: "d-flex justify-content-center align-items-center border-0" }
-const _hoisted_20 = {
+const _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()
+const _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' '), -1 /* HOISTED */)
+const _hoisted_19 = { class: "m-0 p-0" }
+const _hoisted_20 = { class: "m-0 p-0" }
+const _hoisted_21 = { class: "d-flex justify-content-center align-items-center border-0" }
+const _hoisted_22 = {
   "data-toggle": "modal",
   "data-target": "#editEmployeeForm"
 }
@@ -10898,35 +10887,37 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_3)),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_4, [
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_5, [
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.name) + " ", 1 /* TEXT */),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.name), 1 /* TEXT */),
+        _hoisted_6,
+        _hoisted_7,
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.race), 1 /* TEXT */)
       ]),
       ($props.employee.pickup == 1)
-        ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("strong", _hoisted_6, "pick up"))
+        ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("strong", _hoisted_8, "pick up"))
         : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.birthday), 1 /* TEXT */)
     ]),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.email), 1 /* TEXT */),
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.paypal), 1 /* TEXT */)
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.email), 1 /* TEXT */),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.paypal), 1 /* TEXT */)
     ]),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.address), 1 /* TEXT */),
-      _hoisted_9,
-      _hoisted_10,
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.city), 1 /* TEXT */),
       _hoisted_11,
       _hoisted_12,
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.state), 1 /* TEXT */),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.city), 1 /* TEXT */),
       _hoisted_13,
       _hoisted_14,
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.zip), 1 /* TEXT */),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.state), 1 /* TEXT */),
       _hoisted_15,
-      _hoisted_16
+      _hoisted_16,
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.zip), 1 /* TEXT */),
+      _hoisted_17,
+      _hoisted_18
     ]),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.phone_1), 1 /* TEXT */),
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.phone_2), 1 /* TEXT */)
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.phone_1), 1 /* TEXT */),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.phone_2), 1 /* TEXT */)
     ]),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [
       ($props.employee.status)
@@ -10938,8 +10929,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           }, null, 8 /* PROPS */, ["status", "id"]))
         : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
     ]),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_19, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", _hoisted_20, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_21, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", _hoisted_22, [
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
           type: "button",
           class: "ion ion-md-create p-0 bg-transparent border-0",

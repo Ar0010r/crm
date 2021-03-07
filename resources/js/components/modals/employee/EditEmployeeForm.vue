@@ -36,7 +36,6 @@
 
     export default {
         setup() {
-
             const store = useStore();
             return {
                 employee: computed(() => store.getters.getEmployee)
@@ -49,8 +48,6 @@
                let companies = await this.$store.getters.getCompanies;
 
                let company = companies[employee.company_id];
-
-               console.log('company' ,company)
 
                 let data = {
                     id:employee.id,
@@ -69,9 +66,6 @@
                     zip: employee.zip ?? "",
                     pickup: employee.pickup ?? "",
                 };
-
-                console.log('beforeupdate', employee);
-                console.log('beforeupdate data', data);
 
                 let result = await axios.put('api/employees/' + employee.id, data);
                 if(result.status === 204){

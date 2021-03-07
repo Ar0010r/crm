@@ -8,20 +8,29 @@ import md5 from "js-md5";
 export default createStore({
     getters: {
         getUsers: state => state.user.users,
+        getRoles: state => state.user.roles,
+        getAuthUser: state => state.user.user,
+
+
+        getUser: state => state.formData.user,
+        getEmployee: state => state.formData.employee,
+        getCompany: state => state.formData.company,
+        isEmployeeDataValid: state => state.formData.employee.isValid,
+
         getHrs: state => state.user.hrs,
         getPersonnels: state => state.user.personnels,
-        getEmployee: state => state.formData.employee,
-        getEmployeeQueryParams: state => state.employee.queryParams,
-        getEmployees: state => state.employee.employees,
-        getEmployeesPagination: state => state.employee.pagination,
+
         getRaces: state => state.employee.races,
         getStatuses: state => state.employee.statuses,
-        getCompanies: state => state.company.companies,
-        isEmployeeDataValid: state => state.formData.employee.isValid,
+        getEmployees: state => state.employee.employees,
+        getEmployeesPagination: state => state.employee.pagination,
+        getEmployeeQueryParams: state => state.employee.queryParams,
         getEmployeeById: (id, state) => {
             let key = md5(id.toString());
             return state.employee.employees[key]
         },
+
+        getCompanies: state => state.company.companies,
     },
     modules: {
         user: user,

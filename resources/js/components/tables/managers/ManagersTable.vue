@@ -4,7 +4,10 @@
             Managers
         </h4>
         <div class="d-flex justify-content-between mb-3">
-            <button class="btn btn-primary btn" data-toggle="modal" data-target="#addManagerForm">
+            <button @click.prevent="initializeManagerStoreForm"
+                    class="btn btn-primary btn"
+                    data-toggle="modal"
+                    data-target="#addManagerForm">
                 Add manager
             </button>
         </div>
@@ -12,17 +15,15 @@
             <table class="datatables-demo table table-striped table-bordered">
                 <ManagersTableHead/>
                 <tbody>
-                <ManagersTableRow/>
-                <ManagersTableRow/>
-                <ManagersTableRow/>
+                <ManagersTableRow
+                        v-for="user in users"
+                        :key="user.id"
+                        :user.sync='user'
+                />
                 </tbody>
             </table>
         </div>
     </div>
-
-    <!--<EditManagerForm/>
-    <StoreManagerForm/>-->
-
 </template>
 
 <script>
@@ -32,9 +33,27 @@
     import ManagersTableHead from './ManagersTableHead';
     import ManagersTableRow from './ManagersTableRow';
 
+    import {computed} from 'vue';
+    import {useStore} from 'vuex';
+
     export default {
-        mounted() {
-            console.log("Component mounted.");
+        setup() {
+            const store = useStore();
+            function initializeManagerStoreForm() {
+                let emptyUser = {
+                    login: null,
+                    role: null,
+                    password: null,
+                    dataIsValid: false,
+                };
+
+                store.commit('formData/setUser', emptyUser);
+            }
+
+            return {
+                initializeManagerStoreForm,
+                users: computed(() => useStore().getters.getUsers),
+            }
         },
 
         components: {

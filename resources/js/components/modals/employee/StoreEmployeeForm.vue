@@ -58,6 +58,7 @@
                     race: employee.race ?? "",
                     state: employee.state ?? "",
                     zip: employee.zip ?? "",
+                    pickup: employee.pickup ?? "",
                 };
 
                 console.log('before store', employee);

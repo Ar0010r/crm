@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -63,5 +64,10 @@ class User extends Authenticatable
             throw new \Exception('it seems that user role was specified incorrectly : ' . $this->role);
         }
         return Role::PERMISSIONS[$this->role];
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i');
     }
 }

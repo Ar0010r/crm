@@ -30414,13 +30414,13 @@ var AuthService = /*#__PURE__*/function () {
               case 2:
                 response = _context.sent;
 
-                if (!response.data.plainTextToken) {
+                if (!response.data.token.plainTextToken) {
                   _context.next = 7;
                   break;
                 }
 
-                localStorage.setItem('token', response.data.plainTextToken);
-                this.client.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.plainTextToken; //this.store.user.token = response.data.plainTextToken;
+                localStorage.setItem('token', response.data.token.plainTextToken);
+                this.client.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token.plainTextToken; //this.store.user.token = response.data.plainTextToken;
 
                 return _context.abrupt("return", true);
 
@@ -30514,19 +30514,76 @@ var CompanyService = /*#__PURE__*/function () {
       return getCompanies;
     }()
   }, {
-    key: "setCompaniesToStore",
+    key: "storeCompany",
     value: function () {
-      var _setCompaniesToStore = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var companiesList, companies;
+      var _storeCompany = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(company) {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
+                return this.client.post('/api/companies', company);
+
+              case 2:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function storeCompany(_x) {
+        return _storeCompany.apply(this, arguments);
+      }
+
+      return storeCompany;
+    }()
+  }, {
+    key: "updateCompany",
+    value: function () {
+      var _updateCompany = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(company) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                console.log('sent to server', company);
+                _context3.next = 3;
+                return this.client.put('/api/companies/' + company.id, company);
+
+              case 3:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function updateCompany(_x2) {
+        return _updateCompany.apply(this, arguments);
+      }
+
+      return updateCompany;
+    }()
+  }, {
+    key: "setCompaniesToStore",
+    value: function () {
+      var _setCompaniesToStore = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var companiesList, companies;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
                 return this.getCompanies();
 
               case 2:
-                companiesList = _context2.sent;
+                companiesList = _context4.sent;
                 companiesList = companiesList.data;
                 companies = {};
                 Object.keys(companiesList).map(function (key) {
@@ -30537,10 +30594,10 @@ var CompanyService = /*#__PURE__*/function () {
 
               case 7:
               case "end":
-                return _context2.stop();
+                return _context4.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee4, this);
       }));
 
       function setCompaniesToStore() {
@@ -30948,19 +31005,125 @@ var UserService = /*#__PURE__*/function () {
       return getUsers;
     }()
   }, {
-    key: "setUsersToStore",
+    key: "getRoles",
     value: function () {
-      var _setUsersToStore = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(params) {
-        var response, usersList, hrs, personnels, users;
+      var _getRoles = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
+                return this.client.get('/api/available-roles');
+
+              case 2:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function getRoles() {
+        return _getRoles.apply(this, arguments);
+      }
+
+      return getRoles;
+    }()
+  }, {
+    key: "setRolesToStore",
+    value: function () {
+      var _setRolesToStore = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return this.getRoles();
+
+              case 2:
+                response = _context3.sent;
+                this.store.commit('user/setRoles', response.data);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function setRolesToStore() {
+        return _setRolesToStore.apply(this, arguments);
+      }
+
+      return setRolesToStore;
+    }()
+  }, {
+    key: "storeUser",
+    value: function () {
+      var _storeUser = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(user) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                return _context4.abrupt("return", this.client.post('api/users', user));
+
+              case 1:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function storeUser(_x) {
+        return _storeUser.apply(this, arguments);
+      }
+
+      return storeUser;
+    }()
+  }, {
+    key: "updateUser",
+    value: function () {
+      var _updateUser = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(user) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                return _context5.abrupt("return", this.client.put('api/users/' + user.id, user));
+
+              case 1:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this);
+      }));
+
+      function updateUser(_x2) {
+        return _updateUser.apply(this, arguments);
+      }
+
+      return updateUser;
+    }()
+  }, {
+    key: "setUsersToStore",
+    value: function () {
+      var _setUsersToStore = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6(params) {
+        var response, usersList, hrs, personnels, users;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.next = 2;
                 return this.getUsers(params);
 
               case 2:
-                response = _context2.sent;
+                response = _context6.sent;
                 usersList = response.data;
                 hrs = {};
                 Object.keys(usersList).map(function (key) {
@@ -30983,13 +31146,13 @@ var UserService = /*#__PURE__*/function () {
 
               case 13:
               case "end":
-                return _context2.stop();
+                return _context6.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee6, this);
       }));
 
-      function setUsersToStore(_x) {
+      function setUsersToStore(_x3) {
         return _setUsersToStore.apply(this, arguments);
       }
 
@@ -31021,6 +31184,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -31049,6 +31218,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    setCompanyById: function setCompanyById(state, company) {
+      console.log('ffffffff', company);
+      var key = company.id;
+
+      if (state.companies[key]) {
+        state.companies[key] = _objectSpread(_objectSpread({}, state.companies[key]), company);
+      } else {
+        var newCompanyObj = {};
+        newCompanyObj[key] = company;
+        state.companies = _objectSpread(_objectSpread({}, newCompanyObj), state.companies);
+      }
+
+      console.log(state.companies);
     }
   },
   actions: {},
@@ -31177,7 +31360,9 @@ __webpack_require__.r(__webpack_exports__);
       name: "",
       email: "",
       paypal: "",
-      company: "",
+      company: {
+        name: ""
+      },
       address: "",
       city: "",
       state: "",
@@ -31189,14 +31374,46 @@ __webpack_require__.r(__webpack_exports__);
       status: "",
       pickup: "",
       isValid: ""
+    },
+    user: {
+      id: "",
+      login: "",
+      created_at: "",
+      role: "",
+      dataIsValid: ""
+    },
+    company: {
+      id: "",
+      name: "",
+      personnel_id: "",
+      personnel: {
+        login: ""
+      },
+      domain: "",
+      email: "",
+      created_at: "",
+      dataIsValid: ""
     }
   },
   mutations: {
     setEmployee: function setEmployee(state, employee) {
       state.employee = employee;
     },
+    setUser: function setUser(state, user) {
+      state.user = user;
+    },
+    setCompany: function setCompany(state, company) {
+      console.log('in store', company);
+      state.company = company;
+    },
     setEmployeeIsValidState: function setEmployeeIsValidState(state, status) {
       state.employee.dataIsValid = status;
+    },
+    setUserIsValidState: function setUserIsValidState(state, status) {
+      state.user.dataIsValid = status;
+    },
+    setCompanyIsValidState: function setCompanyIsValidState(state, status) {
+      state.company.dataIsValid = status;
     }
   }
 });
@@ -31236,23 +31453,29 @@ __webpack_require__.r(__webpack_exports__);
     getUsers: function getUsers(state) {
       return state.user.users;
     },
+    getRoles: function getRoles(state) {
+      return state.user.roles;
+    },
+    getAuthUser: function getAuthUser(state) {
+      return state.user.user;
+    },
+    getUser: function getUser(state) {
+      return state.formData.user;
+    },
+    getEmployee: function getEmployee(state) {
+      return state.formData.employee;
+    },
+    getCompany: function getCompany(state) {
+      return state.formData.company;
+    },
+    isEmployeeDataValid: function isEmployeeDataValid(state) {
+      return state.formData.employee.isValid;
+    },
     getHrs: function getHrs(state) {
       return state.user.hrs;
     },
     getPersonnels: function getPersonnels(state) {
       return state.user.personnels;
-    },
-    getEmployee: function getEmployee(state) {
-      return state.formData.employee;
-    },
-    getEmployeeQueryParams: function getEmployeeQueryParams(state) {
-      return state.employee.queryParams;
-    },
-    getEmployees: function getEmployees(state) {
-      return state.employee.employees;
-    },
-    getEmployeesPagination: function getEmployeesPagination(state) {
-      return state.employee.pagination;
     },
     getRaces: function getRaces(state) {
       return state.employee.races;
@@ -31260,15 +31483,21 @@ __webpack_require__.r(__webpack_exports__);
     getStatuses: function getStatuses(state) {
       return state.employee.statuses;
     },
-    getCompanies: function getCompanies(state) {
-      return state.company.companies;
+    getEmployees: function getEmployees(state) {
+      return state.employee.employees;
     },
-    isEmployeeDataValid: function isEmployeeDataValid(state) {
-      return state.formData.employee.isValid;
+    getEmployeesPagination: function getEmployeesPagination(state) {
+      return state.employee.pagination;
+    },
+    getEmployeeQueryParams: function getEmployeeQueryParams(state) {
+      return state.employee.queryParams;
     },
     getEmployeeById: function getEmployeeById(id, state) {
       var key = js_md5__WEBPACK_IMPORTED_MODULE_4___default()(id.toString());
       return state.employee.employees[key];
+    },
+    getCompanies: function getCompanies(state) {
+      return state.company.companies;
     }
   },
   modules: {
@@ -31288,7 +31517,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -31296,6 +31525,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
+/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-md5 */ "./node_modules/js-md5/src/md5.js");
+/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_md5__WEBPACK_IMPORTED_MODULE_0__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   namespaced: true,
@@ -31307,11 +31545,31 @@ __webpack_require__.r(__webpack_exports__);
     },
     users: {},
     hrs: {},
-    personnels: {}
+    personnels: {},
+    roles: {}
   },
   mutations: {
     setUsers: function setUsers(state, users) {
       state.users = users;
+    },
+    setUserById: function setUserById(state, user) {
+      console.log(user);
+      var key = user.id;
+
+      if (state.users[key]) {
+        state.users[key] = _objectSpread(_objectSpread({}, state.users[key]), user);
+      } else {
+        var newUserObj = {};
+        newUserObj[key] = user;
+        state.users = _objectSpread(_objectSpread({}, newUserObj), state.users);
+      }
+
+      if (user.role === 'personnel') state.personnels[key] = user;
+      if (user.role === 'hr') state.hrs[key] = user;
+      console.log(state.users);
+    },
+    setRoles: function setRoles(state, roles) {
+      state.roles = roles;
     },
     setHrs: function setHrs(state, hrs) {
       state.hrs = hrs;

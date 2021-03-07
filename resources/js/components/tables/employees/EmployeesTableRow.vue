@@ -5,7 +5,7 @@
         <td v-if="employee.company">{{employee.company.name}}</td>
         <td v-else></td>
         <td class="d-flex flex-column border-0">
-            <p class="m-0 p-0">{{employee.name}} <i>{{employee.race}}</i></p>
+            <p class="m-0 p-0">{{employee.name}}<br> <i>{{employee.race}}</i></p>
             <strong class="m-0 p-0 text-success" v-if="employee.pickup == 1">pick up</strong>
             <i>{{employee.birthday}}</i>
         </td>
@@ -71,7 +71,7 @@
                     zip: employee.zip ?? "",
                     phone_1: employee.phone_1 ?? "",
                     phone_2: employee.phone_2 ?? "",
-                    birthday: employee.birthday ?? "",
+                    birthday: employee.birthday ?? null,
                     race: employee.race ?? "",
                     status: employee.status ?? "",
                     pickup: employee.pickup ?? "",

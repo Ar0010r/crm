@@ -39,30 +39,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     var login = /*#__PURE__*/function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                _context.prev = 0;
+                _context.next = 3;
                 return container.AuthService.login(user);
 
-              case 2:
-                res = _context.sent;
+              case 3:
+                _context.next = 10;
+                break;
 
-                if (res) {
-                  _router_js__WEBPACK_IMPORTED_MODULE_1__.default.push("/employees");
-                } else {
-                  isInvalid.value = true;
-                  dBlock.value = true;
-                }
+              case 5:
+                _context.prev = 5;
+                _context.t0 = _context["catch"](0);
+                console.log(_context.t0);
+                isInvalid.value = true;
+                dBlock.value = true;
 
-              case 4:
+              case 10:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[0, 5]]);
       }));
 
       return function login() {

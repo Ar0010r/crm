@@ -13,10 +13,17 @@ class AuthController extends Controller
         if (!auth()->attempt($credentials)) {
             return response(['message' => 'Invalid credentials'], JsonResponse::HTTP_OK);
         }
-        auth()->user()->tokens()->delete();
+        //auth()->user()->tokens()->delete();
+
         $permissions = auth()->user()->permissions();
 
-        return auth()->user()->createToken('authToken', $permissions);
+        return response(
+            ['user' => auth()->user(),
+                'token' => auth()->user()->createToken('authToken', $permissions)
+            ], JsonResponse::HTTP_OK
+        );
+
+       // return auth()->user()->createToken('authToken', $permissions);
     }
 
     public function logout()

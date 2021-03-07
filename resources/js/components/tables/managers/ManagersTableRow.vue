@@ -1,14 +1,15 @@
 <template>
     <tr class="odd gradeX">
-        <td>Artek</td>
-        <td>01.01.2001</td>
-        <td>Personal</td>
+        <td>{{user.created_at}}</td>
+        <td>{{user.login}}</td>
+        <td>{{user.role}}</td>
         <td>
-            <a data-toggle="modal" data-target="#editManagerForm" class="p-5">
+            <a data-toggle="modal" data-target="#editManagerForm"   @click=putUserInfoToStore(user) >
                 <button type="button" class="ion ion-md-cog p-0 bg-transparent border-0"
-                        data-toggle="tooltip" data-target="#editManagerForm"
-                        data-placement="right" title="Edit">
+                        data-toggle="tooltip"
+                        data-placement="right" title="Edit"
 
+                >
                 </button>
             </a>
         </td>
@@ -16,9 +17,24 @@
 </template>
 
 <script>
+    import{useStore} from 'vuex';
     export default {
-        mounted() {
-            console.log("Component mounted.");
+        setup(props){
+            const store = useStore();
+
+            function putUserInfoToStore(user) {
+                let object = {
+                    id: user.id,
+                    login: user.login,
+                    role: user.role,
+                    password: null,
+                };
+
+                store.commit('formData/setUser', object);
+            }
+
+            return { putUserInfoToStore }
         },
+        props: {user: Object},
     };
 </script>

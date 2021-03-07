@@ -17,6 +17,8 @@ class CreateCompaniesTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->foreignId('personnel_id');
+            $table->string('domain')->unique();
+            $table->string('email')->unique();
             $table->timestamps();
             $table->softDeletes();
 

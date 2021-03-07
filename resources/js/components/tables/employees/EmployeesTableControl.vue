@@ -12,12 +12,6 @@
                 <option value="" selected>Status</option>
                 <option v-for="(key, value) in statuses" :value="value">{{value}}</option>
             </select>
-            <select class="custom-select custom-select form-control-lg form-control-sm ml-2">
-                <option  value="10">Hr</option>
-                <option v-for="hr in hrs" :value="hr.id">
-                    {{hr.login}}
-                </option>
-            </select>
         </div>
         <div id="DataTables_Table_0_filter"
              class="col-md-4 dataTables_filter d-flex align-items-center justify-content-end ">
@@ -97,7 +91,7 @@
                     zip: "",
                     phone_1: "",
                     phone_2: "",
-                    birthday: "",
+                    birthday: null,
                     race: "",
                     status: "",
                     pickup: "",

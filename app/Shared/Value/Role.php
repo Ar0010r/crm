@@ -10,6 +10,9 @@ class Role
     public const PERSONNEL = 'personnel';
     public const ADMIN = 'admin';
 
+    public const AVAILABLE_ROLES = [self::HR, self::PERSONNEL];
+
+
     public const PERMISSIONS = [
         self::HR => [
             Permission::EMPLOYEE_CREATE,

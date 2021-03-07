@@ -26,7 +26,9 @@ class CompanyStoreRequest extends OnlyAdminAllowedRequest
     {
         return [
             'name' => 'required|string|max:100|unique:companies',
-            'user_id' => ['exists:users,id',  new UserIdBelongsToPersonnel()],
+            'domain' => 'required|string|max:100|unique:companies',
+            'email' => 'required|string|max:100|unique:companies',
+            'personnel_id' => ['exists:users,id',  new UserIdBelongsToPersonnel()],
         ];
     }
 }

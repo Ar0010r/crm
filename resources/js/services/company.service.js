@@ -9,6 +9,15 @@ export class CompanyService {
         return await this.client.get('/api/companies');
     }
 
+    async storeCompany(company) {
+        return await this.client.post('/api/companies', company);
+    }
+
+    async updateCompany(company) {
+        console.log('sent to server', company);
+        return await this.client.put('/api/companies/' + company.id, company);
+    }
+
     async setCompaniesToStore(){
         let companiesList = await this.getCompanies();
         companiesList = companiesList.data;

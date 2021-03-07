@@ -8,10 +8,13 @@ export class AuthService {
     async login(user) {
         let response = await this.client.post("/api/login", {login: user.login, password: user.password});
 
-        if (response.data.plainTextToken) {
-            localStorage.setItem('token', response.data.plainTextToken);
+        //console.log(response.data.token.plainTextToken);
+        if (response.data.token.plainTextToken) {
+            localStorage.setItem('token', response.data.token.plainTextToken);
 
-            this.client.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.plainTextToken;
+            this.client.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token.plainTextToken;
+
+
             //this.store.user.token = response.data.plainTextToken;
 
             return true;

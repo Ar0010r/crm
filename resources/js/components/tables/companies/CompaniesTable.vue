@@ -4,7 +4,7 @@
             Companies
         </h4>
         <div class="d-flex justify-content-between mb-3">
-            <button class="btn btn-primary btn" data-toggle="modal" data-target="#addCompanyForm">Add
+            <button @click="initializeCompanyStoreForm" class="btn btn-primary btn" data-toggle="modal" data-target="#addCompanyForm">Add
                 company
             </button>
         </div>
@@ -12,11 +12,7 @@
             <table class="datatables-demo table table-striped table-bordered">
                 <CompaniesTableHead/>
                 <tbody>
-                <CompaniesTableRow/>
-                <CompaniesTableRow/>
-                <CompaniesTableRow/>
-                <CompaniesTableRow/>
-                <CompaniesTableRow/>
+                <CompaniesTableRow v-for="company in companies" :company="company"/>
                 </tbody>
             </table>
         </div>
@@ -28,8 +24,31 @@
     import CompaniesTableRow from './CompaniesTableRow.vue';
     import CreateCompanyForm from '../../modals/company/CreateCompanyForm';
     import EditCompanyForm from '../../modals/company/EditCompanyForm';
+    import {computed} from 'vue';
+    import {useStore} from 'vuex';
 
     export default {
+        setup(){
+            const store = useStore();
+
+            function initializeCompanyStoreForm() {
+                let emptyCompany = {
+                    id: null,
+                    name: null,
+                    personnel_id: null,
+                    personnel: {login: null},
+                    domain: null,
+                    email: null,
+                    created_at: null,
+                    dataIsValid: null,
+                };
+
+                store.commit('formData/setCompany', emptyCompany);
+            }
+
+            return { companies: computed(() => store.getters.getCompanies), initializeCompanyStoreForm}
+        },
+
         components: {
             CompaniesTableHead,
             CompaniesTableRow,

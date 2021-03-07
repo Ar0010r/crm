@@ -20,7 +20,9 @@ class CompanyUpdateRequest extends CompanyOwnerAllowedRequest
 
         return [
             'name' => Rule::unique('companies')->ignore($updatedId),
-            'user_id' => ['exists:users,id',  new UserIdBelongsToPersonnel()],
+            'domain' => Rule::unique('companies')->ignore($updatedId),
+            'email' => Rule::unique('companies')->ignore($updatedId),
+            'personnel_id' => ['exists:users,id',  new UserIdBelongsToPersonnel()],
         ];
     }
 }

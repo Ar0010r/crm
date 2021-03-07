@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 
 class UserUpdateRequest extends OwnerAllowedRequest
 {
+    public const ENTITY = 'user';
     /**
      * Determine if the user is authorized to make this request.
      *

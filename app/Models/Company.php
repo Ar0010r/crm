@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,16 +17,18 @@ class Company extends Model
      */
     protected $fillable = [
         'name',
-        'user_id',
+        'personnel_id',
+        'domain',
+        'email',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        //'password',
-        //'remember_token',
-    ];
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i');
+    }
+
+    public function personnel()
+    {
+        return $this->belongsTo(User::class, 'personnel_id', 'id');
+    }
 }

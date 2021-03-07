@@ -14,12 +14,11 @@ class CompaniesController extends Controller
 {
     public function index(CompanyIndexRequest $r)
     {
-        return response(Company::all(), JsonResponse::HTTP_OK);
+        return response(Company::with('personnel')->get(), JsonResponse::HTTP_OK);
     }
 
     public function store(CompanyStoreRequest $r)
     {
-        $r->merge(["personnel_id" => auth()->user()->getAuthIdentifier()]);
         $company = Company::create($r->all());
 
         return response(['company' => $company], JsonResponse::HTTP_OK);

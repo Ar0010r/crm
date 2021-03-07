@@ -34,16 +34,30 @@
             let dBlock = ref(false);
 
             const login = async () => {
-                let res = await container.AuthService.login(user);
-                if (res) {
-                    router.push("/employees");
-                } else {
+                try {
+                    await container.AuthService.login(user);
+                   // router.push("/employees");
+                } catch (e) {
+                    console.log(e);
                     isInvalid.value = true;
                     dBlock.value = true;
                 }
+
             };
 
             return {user, isInvalid, dBlock, login}
         },
     };
 </script>
+
+
+
+<!--const login = async () => {
+let res = await container.AuthService.login(user);
+if (res) {
+router.push("/employees");
+} else {
+isInvalid.value = true;
+dBlock.value = true;
+}
+};-->

@@ -90,7 +90,7 @@
     <div class="form-row mb-2  d-flex flex-column">
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between">
             <label class="form-label col-md-2">Birthday</label>
-            <input type="text" class="form-control col-md-10" placeholder="dd/mm/yyyy" name="birthday"
+            <input type="text" class="form-control col-md-10" placeholder="yyyy-mm-dd" name="birthday"
                    :class="{ 'is-invalid': !!birthdayError}" v-model=employee.birthday />
         </div>
         <label class="float-right text-danger d-none align-self-end" :class="{ 'd-block': !!birthdayError}">{{birthdayError}}</label>
@@ -107,7 +107,7 @@
 </template>
 
 <script>
-    import {computed, watch, reactive, ref} from 'vue';
+    import {computed, watch} from 'vue';
     import {useStore} from 'vuex';
     import {useForm, useIsFormDirty, useField} from 'vee-validate';
     import * as yup from 'yup';
@@ -126,8 +126,7 @@
                 zip: yup.string().nullable().matches('^$|\\d{5}(-\\d{4})?$', 'Enter valid zip code'),
                 phone_1: yup.string().nullable().matches('^$|\\d{3}-\\d{3}-\\d{4}$', 'Enter valid phone'),
                 phone_2: yup.string().nullable().matches("^$|\\d{3}-\\d{3}-\\d{4}$", 'Enter valid phone'),
-                birthday: yup.string().nullable().matches('^$|(0[1-9]|[12][0-9]|3[01])[-](0[1-9]|1[012])[-](19|20)\\d\\d$', 'Enter valid birthday'),
-                //birthday: yup.string().matches('^$|(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$', 'Enter valid birthday'),
+                birthday: yup.date().nullable().typeError('Valid date format is yyyy-mm-dd'),
                 state: yup.string().nullable().test("test-name", "Please enter correct state abbreviation",
                     function (value) {
                         return !!uSstates.includes(value) || value === ""|| value === null
@@ -177,7 +176,6 @@
                     first,
                     second
                 );
-                // Both props are undefined so its just a bare callback func to be run
             });
 
             /*const validationListeners = computed(() => {

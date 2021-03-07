@@ -9,11 +9,13 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
                 </div>
                 <div class="modal-body">
-                    <ManagerFormFields/>
+                    <ManagerFormFields :user.sync='user'/>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Add</button>
+                    <button id="storeUserFormClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button @click.prevent="storeManager(user)" :disabled="user.password === null || user.login === null || user.role === null || !user.dataIsValid " type="button"
+                            class="btn btn-primary">Add
+                    </button>
                 </div>
             </form>
         </div>
@@ -22,9 +24,24 @@
 
 <script>
     import ManagerFormFields from './ManagerFormFields';
+    import {useStore} from 'vuex';
+    import {computed, inject} from 'vue';
 
     export default {
-        components : {
+        setup() {
+            const store = useStore();
+            const container = inject('container');
+
+            async function storeManager(user) {
+                let storedManager = await container.UserService.storeUser(user);
+                store.commit('user/setUserById', storedManager.data.user);
+                document.getElementById('storeUserFormClose').click()
+
+            }
+
+            return {user: computed(() => store.getters.getUser), storeManager}
+        },
+        components: {
             ManagerFormFields
         }
     };
