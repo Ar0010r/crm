@@ -5,8 +5,10 @@ namespace App\Models;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class Employee extends Model
+class Employee extends Model implements Searchable
 {
     use HasFactory;
 
@@ -35,15 +37,16 @@ class Employee extends Model
         'race',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        //'password',
-        //'remember_token',
-    ];
+    public function getSearchResult(): SearchResult
+    {
+        $url = route('employees.show', $this->id);
+
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->name,
+            $url
+        );
+    }
 
     public function hr()
     {

@@ -36,7 +36,7 @@
             const login = async () => {
                 try {
                     await container.AuthService.login(user);
-                   // router.push("/employees");
+                    router.push("/employees");
                 } catch (e) {
                     console.log(e);
                     isInvalid.value = true;

@@ -20,8 +20,8 @@
     export default {
         setup() {
             const container = inject('container');
-
             let store = useStore();
+
             let statusesAreUndefined = Object.keys(store.getters.getStatuses).length === 0;
             let racesAreUndefined = Object.keys(store.getters.getRaces).length === 0;
             let companiesAreUndefined = Object.keys(store.getters.getCompanies).length === 0;

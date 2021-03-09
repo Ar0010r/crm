@@ -9,6 +9,10 @@ export class UserService {
         return await this.client.get('/api/users');
     }
 
+    async getProfile() {
+        return await this.client.get('/api/profile');
+    }
+
     async getRoles() {
         return await this.client.get('/api/available-roles');
     }
@@ -24,6 +28,11 @@ export class UserService {
 
     async updateUser(user) {
         return this.client.put('api/users/' + user.id, user);
+    }
+
+    async setProfileToStore(){
+        let response = await this.getProfile();
+        this.store.commit('user/setProfile', response.data);
     }
 
     async setUsersToStore(params) {

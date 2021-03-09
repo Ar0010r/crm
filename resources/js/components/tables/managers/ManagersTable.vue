@@ -27,7 +27,6 @@
 </template>
 
 <script>
-    import Pagination from '../../layout/Pagination.vue';
     import StoreManagerForm from '../../modals/manager/CreateManagerForm';
     import EditManagerForm from '../../modals/manager/EditManagerForm';
     import ManagersTableHead from './ManagersTableHead';
@@ -57,7 +56,6 @@
         },
 
         components: {
-            Pagination,
             StoreManagerForm,
             EditManagerForm,
             ManagersTableHead,

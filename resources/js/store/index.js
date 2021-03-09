@@ -7,18 +7,17 @@ import md5 from "js-md5";
 
 export default createStore({
     getters: {
+        getProfile: state => state.user.profile,
         getUsers: state => state.user.users,
         getRoles: state => state.user.roles,
-        getAuthUser: state => state.user.user,
+        getHrs: state => state.user.hrs,
+        getPersonnels: state => state.user.personnels,
 
 
         getUser: state => state.formData.user,
         getEmployee: state => state.formData.employee,
         getCompany: state => state.formData.company,
         isEmployeeDataValid: state => state.formData.employee.isValid,
-
-        getHrs: state => state.user.hrs,
-        getPersonnels: state => state.user.personnels,
 
         getRaces: state => state.employee.races,
         getStatuses: state => state.employee.statuses,

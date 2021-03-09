@@ -12,13 +12,19 @@ export class EmployeeService {
     async getEmployees(params) {
         let response = await this.client.get('/api/employees', {params});
 
-        let employeesList = response.data.data;
+        let employees = this.setMd5Keys(response.data.data);
 
-        let employees = {};
-        Object.keys(employeesList).map(function (key) {
-            let index = md5(employeesList[key].id.toString());
-            employees[index] = employeesList[key];
+        return {employees: employees, pagination: response.data.pagination}
+    }
+
+    async search(keyword) {
+        let response = await this.client.get('api/search', {
+            params: {
+                keyword: keyword
+            }
         });
+
+        let employees = this.setMd5Keys(response.data.data);
 
         return {employees: employees, pagination: response.data.pagination}
     }
@@ -50,4 +56,15 @@ export class EmployeeService {
         this.store.commit('employee/setEmployees', employees.employees);
         this.store.commit('employee/setPagination', employees.pagination);
     }
+
+    setMd5Keys(employeesList){
+        let employees = {};
+        Object.keys(employeesList).map(function (key) {
+            let index = md5(employeesList[key].id.toString());
+            employees[index] = employeesList[key];
+        });
+
+        return employees;
+    }
+
 }

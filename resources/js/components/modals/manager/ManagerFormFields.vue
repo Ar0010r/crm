@@ -1,6 +1,6 @@
 <template>
     <Form class="form-row mb-2 d-flex flex-column" :validation-schema="schema">
-        <div class="form-row mb-2 d-flex flex-column">
+        <div v-if="showRoleField" id="managerRoleField" class="form-row mb-2 d-flex flex-column">
             <div class="form-group col mb-0 d-flex align-items-center justify-content-between">
                 <label class="form-label col-md-2">Role</label>
                 <Field as="select"
@@ -103,7 +103,7 @@
                 schema,generatePass, roles: computed(() => store.getters.getRoles), errors,
             }
         },
-        props: {user: Object},
+        props: {user: Object, showRoleField: Boolean},
         components: {
             Form,
             Field,

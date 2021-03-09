@@ -1,18 +1,17 @@
 <template>
 
     <ManagersTable/>
-    <EditManagerForm/>
     <StoreManagerForm/>
+    <EditManagerForm/>
 
 </template>
 
 <script>
-    import ManagersTable from '../components/tables/managers/ManagersTable';
-    import StoreManagerForm from '../components/modals/manager/CreateManagerForm';
-    import EditManagerForm from '../components/modals/manager/EditManagerForm';
+    import ManagersTable from '../components/tables/managers/ManagersTable.vue';
+    import StoreManagerForm from '../components/modals/manager/CreateManagerForm.vue';
+    import EditManagerForm from '../components/modals/manager/EditManagerForm.vue';
     import {inject} from 'vue';
     import {useStore} from 'vuex';
-
 
     export default {
         setup() {

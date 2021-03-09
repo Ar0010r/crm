@@ -9,6 +9,7 @@
                 </div>
             </div>
         </div>
+        <ProfileForm/>
         <div class="layout-overlay layout-sidenav-toggle"></div>
     </div>
 </template>
@@ -16,11 +17,29 @@
 <script>
     import SideBar from './components/layout/SideBar.vue';
     import NavBar from './components/layout/NavBar.vue';
+    import ProfileForm from './components/modals/profile/ProfileForm';
+    import {useStore} from 'vuex';
+    import {inject} from 'vue';
 
     export default {
+        setup() {
+            const container = inject('container');
+            let store = useStore();
+
+            let profileIsUndefined = Object.keys(store.getters.getProfile).length === 0;
+            if (profileIsUndefined) setTimeout(() => setProfileToStore(), 1000);
+
+            setTimeout(() => setProfileToStore(), 2000);
+
+            async function setProfileToStore() {
+                let response = await container.UserService.getProfile()
+                store.commit('user/setProfile', response.data);
+            }
+        },
         components: {
             SideBar,
             NavBar,
+            ProfileForm,
         }
     };
 </script>

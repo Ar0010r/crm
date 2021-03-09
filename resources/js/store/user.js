@@ -4,9 +4,11 @@ import md5 from "js-md5";
 export default {
     namespaced: true,
     state: {
-        user: {
+        profile: {
             id: "",
             login: "",
+            role:"",
+            avatar:"",
             token: ""
         },
 
@@ -16,6 +18,9 @@ export default {
         roles : {},
     },
     mutations: {
+        setProfile(state, user) {
+            state.profile = user;
+        },
         setUsers(state, users) {
             state.users = users;
         },

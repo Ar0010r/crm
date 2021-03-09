@@ -15,15 +15,15 @@ class AuthController extends Controller
         }
         //auth()->user()->tokens()->delete();
 
-        $permissions = auth()->user()->permissions();
+        $user = auth()->user();
+        $p = $user->permissions();
 
-        return response(
-            ['user' => auth()->user(),
-                'token' => auth()->user()->createToken('authToken', $permissions)
-            ], JsonResponse::HTTP_OK
-        );
+        return response(['user' => $user, 'token' =>$user->createToken('authToken', $p)], JsonResponse::HTTP_OK);
+    }
 
-       // return auth()->user()->createToken('authToken', $permissions);
+    public function profile()
+    {
+        return response(auth()->user(), JsonResponse::HTTP_OK);
     }
 
     public function logout()

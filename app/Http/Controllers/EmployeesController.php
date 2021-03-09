@@ -14,6 +14,8 @@ use Illuminate\Http\JsonResponse;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Http\Request;
+use Spatie\Searchable\ModelSearchAspect;
+use Spatie\Searchable\Search;
 
 class EmployeesController extends Controller
 {
@@ -42,7 +44,6 @@ class EmployeesController extends Controller
 
     public function import(Request $r, EmployeeImport $import)
     {
-
         $file = $r->file('file');
         Excel::import($import, $file);
 
@@ -69,6 +70,31 @@ class EmployeesController extends Controller
         } catch (\Exception $e) {
             return response($e->getMessage());
         }
+    }
+
+    public function search(Request $r, Search $search)
+    {
+        if (!$r->keyword) {
+            return $this->index();
+        }
+
+        $search = ($search)->registerModel(Employee::class, function (ModelSearchAspect $modelSearchAspect) {
+            $modelSearchAspect
+                ->addSearchableAttribute('name')
+                ->addSearchableAttribute('email')
+                ->addSearchableAttribute('paypal')
+                ->addSearchableAttribute('address')
+                ->addSearchableAttribute('city')
+                ->addSearchableAttribute('state')
+                ->with('hr')
+                ->with('company');
+        })->search($r->keyword)->toArray();
+
+        $data = array_map(function ($item) {
+            return $item->searchable;
+        }, $search);
+
+        return response(['data' => $data, 'pagination' => []], JsonResponse::HTTP_OK);
     }
 
     public function statuses()

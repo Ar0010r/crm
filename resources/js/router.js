@@ -34,7 +34,7 @@ const router = createRouter({
         {
             path: '/',
             redirect: '/employees'
-        }
+        },
     ],
     linkActiveClass: "active",
     linkExactActiveClass: "active"

@@ -15,17 +15,20 @@ use Illuminate\Http\JsonResponse;
 */
 
 Route::group(['namespace' => 'App\Http\Controllers'], function () {
-    Route::post('/login', 'AuthController@login')->name('login');
+    Route::post('/login', 'AuthController@login');
+
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::apiResource('/users', 'UsersController');
         Route::apiResource('/companies', 'CompaniesController');
         Route::apiResource('/employees', 'EmployeesController');
         Route::post('employees/import', 'EmployeesController@import');
         Route::get('/races', 'EmployeesController@races');
+        Route::get('/profile', 'AuthController@profile');
         Route::get('/statuses', 'EmployeesController@statuses');
         Route::get('/available-roles', 'UsersController@getAvailableRoles');
+        Route::get('/search', 'EmployeesController@search');
 
-        Route::post('/logout', 'AuthController@logout')->name('logout');
+        Route::post('/logout', 'AuthController@logout');
     });
 });
 

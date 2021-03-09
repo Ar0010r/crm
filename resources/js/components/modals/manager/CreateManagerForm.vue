@@ -9,7 +9,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
                 </div>
                 <div class="modal-body">
-                    <ManagerFormFields :user.sync='user'/>
+                    <ManagerFormFields :user.sync='user' :show-role-field="true"/>
                 </div>
                 <div class="modal-footer">
                     <button id="storeUserFormClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
