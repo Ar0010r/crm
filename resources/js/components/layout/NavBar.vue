@@ -74,7 +74,7 @@
 
                         <div class="dropdown-divider"></div>
 
-                        <a href="javascript:void(0)" class="dropdown-item">
+                        <a @click="logout" href="javascript:void(0)" class="dropdown-item">
                             <i class="ion ion-ios-log-out text-danger"></i>
                             Log Out
                         </a>
@@ -87,6 +87,7 @@
 
 <script>
     import {useStore} from 'vuex';
+    import router from '../../router.js'
     import {inject, computed} from 'vue';
 
     export default {
@@ -103,8 +104,10 @@
                 store.commit('employee/setPagination', employees.pagination);
             }
 
-            async function logout(keyword) {
-
+            async function logout() {
+                localStorage.removeItem('token');
+                router.push('/login');
+                //localStorage.setItem('token', response.data.token.plainTextToken);
             }
 
             function profileForm() {

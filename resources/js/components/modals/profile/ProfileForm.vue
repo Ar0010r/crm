@@ -10,9 +10,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-row mb-2 d-flex flex-column p-0">
+
                         <div class=" p-0 form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap">
                             <label class="form-label col-md-2">Avatar</label>
-                            <input class="form-control col-md-10" name="avatar" placeholder="Click to select an image">
+                            <input v-if="file" v-model="file.name" @click="selectFile" class="form-control col-md-10"
+                                   name="avatar" placeholder="Click to select an image">
+                            <input v-else @click="selectFile" class="form-control col-md-10" name="avatar"
+                                   placeholder="Click to select an image">
                         </div>
                     </div>
                     <ManagerFormFields :user.sync='user' :show-role-field="false"/>
@@ -21,34 +25,63 @@
                     <button id="profileFormClose" type="button" class="btn btn-default" data-dismiss="modal">Close
                     </button>
                     <button :disabled="!user.dataIsValid" type="button" class="btn btn-primary"
-                            @click="updateUser(user)">Update
+                            @click="updateProfile(user)">Update
                     </button>
                 </div>
             </form>
         </div>
     </div>
+    <input @change="setFile" type="file" id="avatarInput" accept=".jpg, .png, .jpeg"
+           style="visibility: hidden; position: absolute; width: 1px; height: 1px;">
 </template>
 
 <script>
     import ManagerFormFields from '../manager/ManagerFormFields';
     import {useStore} from 'vuex';
-    import {computed, inject} from 'vue';
+    import {computed, inject, ref} from 'vue';
+    import axios from 'axios'
 
     export default {
         setup() {
             const store = useStore();
             const container = inject('container');
+            let user = computed(() => store.getters.getUser)
 
-            async function updateUser(user) {
+            let file = ref(null);
+
+            async function updateProfile(user) {
                 if (user.password === null) delete user.password;
 
-                await container.UserService.updateUser(user);
+                let formData = new FormData();
+                if (file.value) formData.set('file', file.value);
+                if (user.password) formData.set('password', user.password);
+
+                formData.append('id', user.id);
+                formData.append('login', user.login);
+                formData.set('_method', 'put');
+
+                let response = await axios.post('api/users/' + user.id, formData, {headers: {'Content-Type': 'multipart/form-data'}});
+                let newUser = response.data;
+
+                console.log(response);
+                user.login = newUser.login;
+                user.avatar = newUser.avatar;
 
                 store.commit('user/setProfile', user);
-                document.getElementById('profileFormClose').click();
+
+                document.getElementById('profileFormClose').click()
+
             }
 
-            return {user: computed(() => store.getters.getUser), updateUser}
+            function setFile(event) {
+                console.log(event);
+                file.value = event.target.files[0];
+            }
+
+            return {
+                user, file: computed(() => file.value),
+                updateProfile, setFile, selectFile: () => document.getElementById("avatarInput").click()
+            }
         },
 
         components: {

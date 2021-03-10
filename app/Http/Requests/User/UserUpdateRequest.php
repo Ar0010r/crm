@@ -34,6 +34,8 @@ class UserUpdateRequest extends OwnerAllowedRequest
         return [
             'login' => Rule::unique('users')->ignore($updatedId),
             'password' => 'string|max:12',
+            'avatar' => 'image|mimes:jpeg,png,jpg',
+            'file' => 'image|mimes:jpeg,png,jpg',
             'role' => 'in:' . Role::ADMIN . ',' . Role::HR . ',' . Role::PERSONNEL
         ];
     }

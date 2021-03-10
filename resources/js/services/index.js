@@ -1,6 +1,9 @@
 
 import axios from 'axios'
-import { useStore } from 'vuex'
+
+//import { useStore } from 'vuex'
+
+import store from '../store'
 import { EmployeeService } from "./employee.service";
 import { CompanyService } from "./company.service";
 import { AuthService } from "./auth.service";
@@ -8,10 +11,10 @@ import { UserService } from "./user.service";
 
 //axios.defaults.baseURL = '/api/';
 const serviceProviders = {
-    AuthService: () => new AuthService(axios, useStore()),
-    EmployeeService: () => new EmployeeService(axios, useStore()),
-    CompanyService: () => new CompanyService(axios, useStore()),
-    UserService: () => new UserService(axios, useStore()),
+    AuthService: () => new AuthService(axios, store),
+    EmployeeService: () => new EmployeeService(axios, store),
+    CompanyService: () => new CompanyService(axios, store),
+    UserService: () => new UserService(axios, store),
 };
 
 export const container = (new Proxy(serviceProviders, {

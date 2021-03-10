@@ -20,6 +20,8 @@ export default {
     mutations: {
         setProfile(state, user) {
             state.profile = user;
+
+            console.log('in store', state.profile);
         },
         setUsers(state, users) {
             state.users = users;

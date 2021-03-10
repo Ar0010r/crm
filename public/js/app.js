@@ -30279,8 +30279,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var _router_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../router.js */ "./resources/js/router.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -30289,11 +30290,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
-    var container = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)('container');
-    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_2__.useStore)();
-    var profile = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+    var container = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)('container');
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
+    var profile = (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
       return store.getters.getProfile;
     });
     var keyword;
@@ -30327,16 +30329,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return _search.apply(this, arguments);
     }
 
-    function logout(_x2) {
+    function logout() {
       return _logout.apply(this, arguments);
     }
 
     function _logout() {
-      _logout = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(keyword) {
+      _logout = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                localStorage.removeItem('token');
+                _router_js__WEBPACK_IMPORTED_MODULE_1__.default.push('/login'); //localStorage.setItem('token', response.data.token.plainTextToken);
+
+              case 2:
               case "end":
                 return _context2.stop();
             }
@@ -30507,8 +30513,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _manager_ManagerFormFields__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../manager/ManagerFormFields */ "./resources/js/components/modals/manager/ManagerFormFields.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -30518,44 +30526,75 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
-    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_4__.useStore)();
     var container = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)('container');
+    var user = (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+      return store.getters.getUser;
+    });
+    var file = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)(null);
 
-    function updateUser(_x) {
-      return _updateUser.apply(this, arguments);
+    function updateProfile(_x) {
+      return _updateProfile.apply(this, arguments);
     }
 
-    function _updateUser() {
-      _updateUser = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(user) {
+    function _updateProfile() {
+      _updateProfile = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(user) {
+        var formData, response, newUser;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 if (user.password === null) delete user.password;
-                _context.next = 3;
-                return container.UserService.updateUser(user);
+                formData = new FormData();
+                if (file.value) formData.set('file', file.value);
+                if (user.password) formData.set('password', user.password);
+                formData.append('id', user.id);
+                formData.append('login', user.login);
+                formData.set('_method', 'put');
+                _context.next = 9;
+                return axios__WEBPACK_IMPORTED_MODULE_3___default().post('api/users/' + user.id, formData, {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                });
 
-              case 3:
+              case 9:
+                response = _context.sent;
+                newUser = response.data;
+                console.log(response);
+                user.login = newUser.login;
+                user.avatar = newUser.avatar;
                 store.commit('user/setProfile', user);
                 document.getElementById('profileFormClose').click();
 
-              case 5:
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
       }));
-      return _updateUser.apply(this, arguments);
+      return _updateProfile.apply(this, arguments);
+    }
+
+    function setFile(event) {
+      console.log(event);
+      file.value = event.target.files[0];
     }
 
     return {
-      user: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
-        return store.getters.getUser;
+      user: user,
+      file: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return file.value;
       }),
-      updateUser: updateUser
+      updateProfile: updateProfile,
+      setFile: setFile,
+      selectFile: function selectFile() {
+        return document.getElementById("avatarInput").click();
+      }
     };
   },
   components: {
@@ -31086,7 +31125,7 @@ var EmployeeService = /*#__PURE__*/function () {
                 _context4.next = 2;
                 return this.client.post('api/employees/import', file, {
                   headers: {
-                    'Content-Type': 'miltipart/form-data'
+                    'Content-Type': 'multipart/form-data'
                   }
                 });
 
@@ -31260,11 +31299,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
-/* harmony import */ var _employee_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./employee.service */ "./resources/js/services/employee.service.js");
-/* harmony import */ var _company_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./company.service */ "./resources/js/services/company.service.js");
-/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth.service */ "./resources/js/services/auth.service.js");
-/* harmony import */ var _user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./user.service */ "./resources/js/services/user.service.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
+/* harmony import */ var _employee_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./employee.service */ "./resources/js/services/employee.service.js");
+/* harmony import */ var _company_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./company.service */ "./resources/js/services/company.service.js");
+/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./auth.service */ "./resources/js/services/auth.service.js");
+/* harmony import */ var _user_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./user.service */ "./resources/js/services/user.service.js");
+ //import { useStore } from 'vuex'
 
 
 
@@ -31274,16 +31314,16 @@ __webpack_require__.r(__webpack_exports__);
 
 var serviceProviders = {
   AuthService: function AuthService() {
-    return new _auth_service__WEBPACK_IMPORTED_MODULE_3__.AuthService((axios__WEBPACK_IMPORTED_MODULE_0___default()), (0,vuex__WEBPACK_IMPORTED_MODULE_5__.useStore)());
+    return new _auth_service__WEBPACK_IMPORTED_MODULE_4__.AuthService((axios__WEBPACK_IMPORTED_MODULE_0___default()), _store__WEBPACK_IMPORTED_MODULE_1__.default);
   },
   EmployeeService: function EmployeeService() {
-    return new _employee_service__WEBPACK_IMPORTED_MODULE_1__.EmployeeService((axios__WEBPACK_IMPORTED_MODULE_0___default()), (0,vuex__WEBPACK_IMPORTED_MODULE_5__.useStore)());
+    return new _employee_service__WEBPACK_IMPORTED_MODULE_2__.EmployeeService((axios__WEBPACK_IMPORTED_MODULE_0___default()), _store__WEBPACK_IMPORTED_MODULE_1__.default);
   },
   CompanyService: function CompanyService() {
-    return new _company_service__WEBPACK_IMPORTED_MODULE_2__.CompanyService((axios__WEBPACK_IMPORTED_MODULE_0___default()), (0,vuex__WEBPACK_IMPORTED_MODULE_5__.useStore)());
+    return new _company_service__WEBPACK_IMPORTED_MODULE_3__.CompanyService((axios__WEBPACK_IMPORTED_MODULE_0___default()), _store__WEBPACK_IMPORTED_MODULE_1__.default);
   },
   UserService: function UserService() {
-    return new _user_service__WEBPACK_IMPORTED_MODULE_4__.UserService((axios__WEBPACK_IMPORTED_MODULE_0___default()), (0,vuex__WEBPACK_IMPORTED_MODULE_5__.useStore)());
+    return new _user_service__WEBPACK_IMPORTED_MODULE_5__.UserService((axios__WEBPACK_IMPORTED_MODULE_0___default()), _store__WEBPACK_IMPORTED_MODULE_1__.default);
   }
 };
 var container = new Proxy(serviceProviders, {
@@ -31484,9 +31524,18 @@ var UserService = /*#__PURE__*/function () {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                return _context6.abrupt("return", this.client.put('api/users/' + user.id, user));
+                console.log(user);
+                _context6.next = 3;
+                return this.client.put('api/users/1', user, {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                });
 
-              case 1:
+              case 3:
+                return _context6.abrupt("return", _context6.sent);
+
+              case 4:
               case "end":
                 return _context6.stop();
             }
@@ -31973,6 +32022,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mutations: {
     setProfile: function setProfile(state, user) {
       state.profile = user;
+      console.log('in store', state.profile);
     },
     setUsers: function setUsers(state, users) {
       state.users = users;
@@ -42135,12 +42185,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _ProfileForm_vue_vue_type_template_id_6236ac2e_bindings_user_setup_updateUser_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProfileForm.vue?vue&type=template&id=6236ac2e&bindings={"user":"setup","updateUser":"setup"} */ "./resources/js/components/modals/profile/ProfileForm.vue?vue&type=template&id=6236ac2e&bindings={\"user\":\"setup\",\"updateUser\":\"setup\"}");
+/* harmony import */ var _ProfileForm_vue_vue_type_template_id_6236ac2e_bindings_user_setup_file_setup_updateProfile_setup_setFile_setup_selectFile_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProfileForm.vue?vue&type=template&id=6236ac2e&bindings={"user":"setup","file":"setup","updateProfile":"setup","setFile":"setup","selectFile":"setup"} */ "./resources/js/components/modals/profile/ProfileForm.vue?vue&type=template&id=6236ac2e&bindings={\"user\":\"setup\",\"file\":\"setup\",\"updateProfile\":\"setup\",\"setFile\":\"setup\",\"selectFile\":\"setup\"}");
 /* harmony import */ var _ProfileForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProfileForm.vue?vue&type=script&lang=js */ "./resources/js/components/modals/profile/ProfileForm.vue?vue&type=script&lang=js");
 
 
 
-_ProfileForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _ProfileForm_vue_vue_type_template_id_6236ac2e_bindings_user_setup_updateUser_setup___WEBPACK_IMPORTED_MODULE_0__.render
+_ProfileForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _ProfileForm_vue_vue_type_template_id_6236ac2e_bindings_user_setup_file_setup_updateProfile_setup_setFile_setup_selectFile_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -42346,12 +42396,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/modals/profile/ProfileForm.vue?vue&type=template&id=6236ac2e&bindings={\"user\":\"setup\",\"updateUser\":\"setup\"}":
-/*!*********************************************************************************************************************************************!*\
-  !*** ./resources/js/components/modals/profile/ProfileForm.vue?vue&type=template&id=6236ac2e&bindings={"user":"setup","updateUser":"setup"} ***!
-  \*********************************************************************************************************************************************/
+/***/ "./resources/js/components/modals/profile/ProfileForm.vue?vue&type=template&id=6236ac2e&bindings={\"user\":\"setup\",\"file\":\"setup\",\"updateProfile\":\"setup\",\"setFile\":\"setup\",\"selectFile\":\"setup\"}":
+/*!******************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/modals/profile/ProfileForm.vue?vue&type=template&id=6236ac2e&bindings={"user":"setup","file":"setup","updateProfile":"setup","setFile":"setup","selectFile":"setup"} ***!
+  \******************************************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/profile/ProfileForm.vue?vue&type=template&id=6236ac2e&bindings={"user":"setup","updateUser":"setup"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/profile/ProfileForm.vue?vue&type=template&id=6236ac2e&bindings={"user":"setup","file":"setup","updateProfile":"setup","setFile":"setup","selectFile":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -42359,9 +42409,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ProfileForm_vue_vue_type_template_id_6236ac2e_bindings_user_setup_updateUser_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ProfileForm_vue_vue_type_template_id_6236ac2e_bindings_user_setup_file_setup_updateProfile_setup_setFile_setup_selectFile_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ProfileForm_vue_vue_type_template_id_6236ac2e_bindings_user_setup_updateUser_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ProfileForm.vue?vue&type=template&id=6236ac2e&bindings={"user":"setup","updateUser":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/profile/ProfileForm.vue?vue&type=template&id=6236ac2e&bindings={\"user\":\"setup\",\"updateUser\":\"setup\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ProfileForm_vue_vue_type_template_id_6236ac2e_bindings_user_setup_file_setup_updateProfile_setup_setFile_setup_selectFile_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ProfileForm.vue?vue&type=template&id=6236ac2e&bindings={"user":"setup","file":"setup","updateProfile":"setup","setFile":"setup","selectFile":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/profile/ProfileForm.vue?vue&type=template&id=6236ac2e&bindings={\"user\":\"setup\",\"file\":\"setup\",\"updateProfile\":\"setup\",\"setFile\":\"setup\",\"selectFile\":\"setup\"}");
 
 
 /***/ }),
@@ -42531,13 +42581,8 @@ const _hoisted_16 = { class: "dropdown-menu dropdown-menu-right" }
 const _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "ion ion-ios-person text-lightest" }, null, -1 /* HOISTED */)
 const _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" My profile ")
 const _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", { class: "dropdown-divider" }, null, -1 /* HOISTED */)
-const _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
-  href: "javascript:void(0)",
-  class: "dropdown-item"
-}, [
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "ion ion-ios-log-out text-danger" }),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Log Out ")
-], -1 /* HOISTED */)
+const _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "ion ion-ios-log-out text-danger" }, null, -1 /* HOISTED */)
+const _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Log Out ")
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("nav", _hoisted_1, [
@@ -42593,7 +42638,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               _hoisted_18
             ]),
             _hoisted_19,
-            _hoisted_20
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+              onClick: _cache[4] || (_cache[4] = (...args) => ($setup.logout(...args))),
+              href: "javascript:void(0)",
+              class: "dropdown-item"
+            }, [
+              _hoisted_20,
+              _hoisted_21
+            ])
           ])
         ])
       ])
@@ -42890,10 +42942,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/profile/ProfileForm.vue?vue&type=template&id=6236ac2e&bindings={\"user\":\"setup\",\"updateUser\":\"setup\"}":
-/*!******************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/profile/ProfileForm.vue?vue&type=template&id=6236ac2e&bindings={"user":"setup","updateUser":"setup"} ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/profile/ProfileForm.vue?vue&type=template&id=6236ac2e&bindings={\"user\":\"setup\",\"file\":\"setup\",\"updateProfile\":\"setup\",\"setFile\":\"setup\",\"selectFile\":\"setup\"}":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/profile/ProfileForm.vue?vue&type=template&id=6236ac2e&bindings={"user":"setup","file":"setup","updateProfile":"setup","setFile":"setup","selectFile":"setup"} ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -42924,18 +42976,11 @@ const _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
   }, "×")
 ], -1 /* HOISTED */)
 const _hoisted_5 = { class: "modal-body" }
-const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", { class: "form-row mb-2 d-flex flex-column p-0" }, [
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", { class: " p-0 form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap" }, [
-    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Avatar"),
-    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
-      class: "form-control col-md-10",
-      name: "avatar",
-      placeholder: "Click to select an image"
-    })
-  ])
-], -1 /* HOISTED */)
-const _hoisted_7 = { class: "modal-footer" }
-const _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+const _hoisted_6 = { class: "form-row mb-2 d-flex flex-column p-0" }
+const _hoisted_7 = { class: " p-0 form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap" }
+const _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Avatar", -1 /* HOISTED */)
+const _hoisted_9 = { class: "modal-footer" }
+const _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
   id: "profileFormClose",
   type: "button",
   class: "btn btn-default",
@@ -42945,29 +42990,60 @@ const _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_ManagerFormFields = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ManagerFormFields")
 
-  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", _hoisted_3, [
-        _hoisted_4,
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [
-          _hoisted_6,
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ManagerFormFields, {
-            user: $setup.user,
-            "show-role-field": false
-          }, null, 8 /* PROPS */, ["user"])
-        ]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [
-          _hoisted_8,
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-            disabled: !$setup.user.dataIsValid,
-            type: "button",
-            class: "btn btn-primary",
-            onClick: _cache[1] || (_cache[1] = $event => ($setup.updateUser($setup.user)))
-          }, "Update ", 8 /* PROPS */, ["disabled"])
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", _hoisted_3, [
+          _hoisted_4,
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [
+              (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [
+                _hoisted_8,
+                ($setup.file)
+                  ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("input", {
+                      key: 0,
+                      "onUpdate:modelValue": _cache[1] || (_cache[1] = $event => ($setup.file.name = $event)),
+                      onClick: _cache[2] || (_cache[2] = (...args) => ($setup.selectFile(...args))),
+                      class: "form-control col-md-10",
+                      name: "avatar",
+                      placeholder: "Click to select an image"
+                    }, null, 512 /* NEED_PATCH */)), [
+                      [vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.file.name]
+                    ])
+                  : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("input", {
+                      key: 1,
+                      onClick: _cache[3] || (_cache[3] = (...args) => ($setup.selectFile(...args))),
+                      class: "form-control col-md-10",
+                      name: "avatar",
+                      placeholder: "Click to select an image"
+                    }))
+              ])
+            ]),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ManagerFormFields, {
+              user: $setup.user,
+              "show-role-field": false
+            }, null, 8 /* PROPS */, ["user"])
+          ]),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [
+            _hoisted_10,
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+              disabled: !$setup.user.dataIsValid,
+              type: "button",
+              class: "btn btn-primary",
+              onClick: _cache[4] || (_cache[4] = $event => ($setup.updateProfile($setup.user)))
+            }, "Update ", 8 /* PROPS */, ["disabled"])
+          ])
         ])
       ])
-    ])
-  ]))
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+      onChange: _cache[5] || (_cache[5] = (...args) => ($setup.setFile(...args))),
+      type: "file",
+      id: "avatarInput",
+      accept: ".jpg, .png, .jpeg",
+      style: {"visibility":"hidden","position":"absolute","width":"1px","height":"1px"}
+    }, null, 32 /* HYDRATE_EVENTS */)
+  ], 64 /* STABLE_FRAGMENT */))
 }
 
 /***/ }),

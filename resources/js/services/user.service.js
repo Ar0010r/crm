@@ -27,7 +27,8 @@ export class UserService {
     }
 
     async updateUser(user) {
-        return this.client.put('api/users/' + user.id, user);
+        console.log(user);
+        return await this.client.put('api/users/1', user, {headers: {'Content-Type': 'multipart/form-data'}});
     }
 
     async setProfileToStore(){

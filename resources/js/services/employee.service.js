@@ -34,7 +34,7 @@ export class EmployeeService {
     }
 
     async sendFile(file) {
-        return await this.client.post('api/employees/import', file, {headers: {'Content-Type': 'miltipart/form-data'}});
+        return await this.client.post('api/employees/import', file, {headers: {'Content-Type': 'multipart/form-data'}});
     }
 
     async getStatuses() {

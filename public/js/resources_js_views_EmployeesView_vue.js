@@ -326,11 +326,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 15:
                 data = _context.sent;
-                console.log(data);
                 store.commit('employee/setEmployees', data.employees);
                 store.commit('employee/setPagination', data.pagination);
 
-              case 19:
+              case 18:
               case "end":
                 return _context.stop();
             }

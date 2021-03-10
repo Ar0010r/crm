@@ -1,3 +1,4 @@
+
 export class AuthService {
 
     constructor(client, store) {

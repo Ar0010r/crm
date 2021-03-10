@@ -124,7 +124,6 @@
 
                 let data = await container.EmployeeService.getEmployees();
 
-                console.log(data);
 
                 store.commit('employee/setEmployees', data.employees);
                 store.commit('employee/setPagination', data.pagination);

@@ -10,6 +10,7 @@ use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\User;
 use App\Shared\Value\Role;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
@@ -33,12 +34,18 @@ class UsersController extends Controller
 
     public function update(UserUpdateRequest $r, User $user)
     {
+        $avatar = $r->file('file');
+        if ($avatar) {
+            $new_name = rand() . '.' . $avatar->getClientOriginalExtension();
+            $avatar->move(public_path('images'), $new_name);
+            $r->merge(["avatar" => $new_name]);
+        }
         if ($r->password) {
             $r->merge(["password" => bcrypt($r->password)]);
         }
         $user->update($r->all());
 
-        return response("updated", JsonResponse::HTTP_NO_CONTENT);
+        return response($user, JsonResponse::HTTP_OK);
     }
 
     public function destroy(UserDeleteRequest $r, User $user)
