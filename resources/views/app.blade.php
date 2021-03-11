@@ -3,7 +3,7 @@
 <html lang="en" class="light-style">
 
 <head>
-    <title>Login v2 - Pages - Appwork</title>
+    <title>crm</title>
 
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
