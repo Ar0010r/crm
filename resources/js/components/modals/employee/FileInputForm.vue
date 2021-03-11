@@ -6,7 +6,7 @@
                     <h5 class="modal-title">
                         Add employees
                         <div class="d-flex flex-column mt-1">
-                            <small class="text-muted">.xls file requirements
+                            <small class="text-muted">Example format of accepted <a href="public/example.xls" download>file</a>
                             </small>
                         </div>
                     </h5>
