@@ -8,13 +8,22 @@ use App\Http\Requests\Company\CompanyShowRequest;
 use App\Http\Requests\Company\CompanyStoreRequest;
 use App\Http\Requests\Company\CompanyUpdateRequest;
 use App\Models\Company;
+use App\Shared\Value\Role;
 use Illuminate\Http\JsonResponse;
 
 class CompaniesController extends Controller
 {
-    public function index(CompanyIndexRequest $r)
+    public function index()
     {
-        return response(Company::with('personnel')->get(), JsonResponse::HTTP_OK);
+        switch (auth()->user()->role) {
+            case Role::PERSONNEL:
+                $data = auth()->user()->companies()->with('personnel')->get();
+                break;
+            default:
+                $data = Company::with('personnel')->get();
+        }
+
+        return response($data, JsonResponse::HTTP_OK);
     }
 
     public function store(CompanyStoreRequest $r)

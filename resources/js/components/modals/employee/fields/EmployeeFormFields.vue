@@ -126,7 +126,7 @@
                 zip: yup.string().nullable().matches('^$|\\d{5}(-\\d{4})?$', 'Enter valid zip code'),
                 phone_1: yup.string().nullable().matches('^$|\\d{3}-\\d{3}-\\d{4}$', 'Enter valid phone'),
                 phone_2: yup.string().nullable().matches("^$|\\d{3}-\\d{3}-\\d{4}$", 'Enter valid phone'),
-                birthday: yup.date().nullable().typeError('Valid date format is yyyy-mm-dd'),
+                birthday: yup.string().nullable().matches("^((?:19|20)[1-9][1-9])-(0[1-9]|1[012])-([12][0-9]|3[01]|0[1-9])$",'Valid date format is yyyy-mm-dd'),
                 state: yup.string().nullable().test("test-name", "Please enter correct state abbreviation",
                     function (value) {
                         return !!uSstates.includes(value) || value === ""|| value === null

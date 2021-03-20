@@ -1,5 +1,6 @@
 <?php
 
+use App\Shared\Value\Status;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,7 @@ class CreateEmployeesTable extends Migration
             $table->id();
             $table->foreignId('company_id')->nullable();
             $table->foreignId('hr_id')->nullable();
-            $table->string('status')->default(\App\Properties\Status::NEW)->nullable();
+            $table->string('status')->default(Status::NEW)->nullable();
             $table->string('name')->nullable();
             $table->date('birthday')->nullable();
             $table->string('avatar')->nullable();

@@ -3,8 +3,9 @@
 namespace App\Http\Requests\Employee;
 
 use App\Models\Company;
-use App\Properties\Race;
-use App\Properties\Status;
+use App\Shared\Value\Race;
+use App\Shared\Value\Status;
+
 
 trait EmployeeRequestRulesTrait
 {

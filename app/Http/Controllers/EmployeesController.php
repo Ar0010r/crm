@@ -5,30 +5,40 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Employee\EmployeeStoreRequest;
 use App\Http\Requests\Employee\EmployeeUpdateRequest;
 use App\Imports\EmployeeImport;
-use App\Models\Company;
 use App\Models\Employee;
+use App\Services\EmployeeService;
 use App\Shared\Value\Race;
+use App\Shared\Value\Role;
 use App\Shared\Value\Status;
-
 use Illuminate\Http\JsonResponse;
 use Maatwebsite\Excel\Facades\Excel;
-use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Http\Request;
-use Spatie\Searchable\ModelSearchAspect;
-use Spatie\Searchable\Search;
+
 
 class EmployeesController extends Controller
 {
+    private EmployeeService $employeeService;
+
+    public function __construct(EmployeeService $employeeService)
+    {
+        $this->employeeService = $employeeService;
+    }
+
     public function index()
     {
         $recordsPerPage = request()->get('recordsPerPage') ?? 10;
 
-        $data = QueryBuilder::for(Employee::class)
-            ->orderByDesc('employees.created_at')
-            ->allowedFilters(['company_id', 'status', 'page'])
-            ->with('hr')
-            ->with('company')
-            ->paginate($recordsPerPage);
+        switch (auth()->user()->role) {
+            case Role::PERSONNEL:
+                $data = $this->employeeService->getPersonnelEmployees($recordsPerPage);
+                break;
+            case Role::HR:
+                $data = $this->employeeService->getHrEmployees($recordsPerPage);
+                break;
+            case Role::ADMIN:
+                $data = $this->employeeService->getAdminEmployees($recordsPerPage);
+                break;
+        }
 
         return response(['data' => $data->items(), 'pagination' => $data], JsonResponse::HTTP_OK);
     }
@@ -47,7 +57,7 @@ class EmployeesController extends Controller
         $file = $r->file('file');
         Excel::import($import, $file);
 
-        return response('cshc');
+        return response('stored', JsonResponse::HTTP_NO_CONTENT);
     }
 
     public function show(Employee $employee)
@@ -72,27 +82,11 @@ class EmployeesController extends Controller
         }
     }
 
-    public function search(Request $r, Search $search)
+    public function search(Request $r)
     {
-        if (!$r->keyword) {
-            return $this->index();
-        }
+        if (!$r->keyword) return $this->index();
 
-        $search = ($search)->registerModel(Employee::class, function (ModelSearchAspect $modelSearchAspect) {
-            $modelSearchAspect
-                ->addSearchableAttribute('name')
-                ->addSearchableAttribute('email')
-                ->addSearchableAttribute('paypal')
-                ->addSearchableAttribute('address')
-                ->addSearchableAttribute('city')
-                ->addSearchableAttribute('state')
-                ->with('hr')
-                ->with('company');
-        })->search($r->keyword)->toArray();
-
-        $data = array_map(function ($item) {
-            return $item->searchable;
-        }, $search);
+        $data = $this->employeeService->search($r->keyword);
 
         return response(['data' => $data, 'pagination' => []], JsonResponse::HTTP_OK);
     }

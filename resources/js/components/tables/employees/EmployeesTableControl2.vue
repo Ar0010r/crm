@@ -1,30 +1,35 @@
 <template>
-    <div class="d-flex justify-content-start mb-3" style="max-width: 50%">
-        <button type="button" data-toggle="modal" data-target="#storeEmployeeForm"
-                class=" p-0 btn-primary btn col-sm-2 text-nowrap text-center"
-                @click.prevent="initializeEmployeeStoreForm"
-        >Add employee
-        </button>
-        <button type="button" data-toggle="modal" data-target="#fileInputForm"
-                class=" p-0 btn-primary btn  ml-2 col-sm-2 text-nowrap">File upload
-        </button>
-        <select v-model="activeFilters.company_id" class="custom-select form-control ml-2 col-sm-2">
-            <option value="" selected>Company</option>
-            <option v-for="company in companies" :value="company.id">
-                {{company.name}}
-            </option>
-        </select>
-        <select v-model="activeFilters.status"
-                class="custom-select custom-select form-control-lg  ml-2 col-sm-2">
-            <option value="" selected>Status</option>
-            <option v-for="(key, value) in statuses" :value="value">{{value}}</option>
-        </select>
-        <select v-model="activeFilters.recordsPerPage" class="custom-select ml-2 col-sm-2">
-            <option value="" selected >Records</option>
-            <option v-for="record in recordsPerPage" :value="record">
-                {{record}}
-            </option>
-        </select>
+    <div class="d-flex justify-content-between mb-3">
+        <div class="d-flex align-items-center justify-content-between">
+            <select v-model="activeFilters.company_id" class="custom-select form-control form-control-sm ml-2">
+                <option value="" selected>Company</option>
+                <option v-for="company in companies" :value="company.id">
+                    {{company.name}}
+                </option>
+            </select>
+            <select v-model="activeFilters.status"
+                    class="custom-select custom-select form-control-lg form-control-sm ml-2">
+                <option value="" selected>Status</option>
+                <option v-for="(key, value) in statuses" :value="value">{{value}}</option>
+            </select>
+        </div>
+        <div id="DataTables_Table_0_filter"
+             class="col-md-4 dataTables_filter d-flex align-items-center justify-content-end ">
+            <button type="button" data-toggle="modal" data-target="#storeEmployeeForm"
+                    class="btn-primary btn w-auto col-sm-5"
+                    @click.prevent="initializeEmployeeStoreForm"
+            >Add employee
+            </button>
+            <button type="button" data-toggle="modal" data-target="#fileInputForm"
+                    class="btn-primary btn w-auto ml-2 col-sm-4">File upload
+            </button>
+            <select v-model="activeFilters.recordsPerPage" class="custom-select ml-2 col-md-4">
+                <option value="" selected >Records</option>
+                <option v-for="record in recordsPerPage" :value="record">
+                    {{record}}
+                </option>
+            </select>
+        </div>
     </div>
 </template>
 

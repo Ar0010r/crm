@@ -2,8 +2,6 @@
 
 namespace App\Shared\Value;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-
 class Status
 {
     public const NEW = 'New';
@@ -26,6 +24,18 @@ class Status
     private const GREY_COLOR_STYLE = 'btn-secondary';
     private const BLACK_COLOR_STYLE = 'dark-secondary';
 
+    public const STATUSES = [
+        self::NEW,
+        self::WAITING_AGREEMENT,
+        self::WAITING_DATA,
+        self::NEED_CALL,
+        self::NEED_INFO_REQUEST,
+        self::NO_ANSWER,
+        self::BAD,
+        self::READY,
+        self::GREETED,
+        self::EXPORTED,
+    ];
 
     public const STATUSES_CSS_CLASSES = [
         self::NEW => self::WHITE_COLOR_STYLE,

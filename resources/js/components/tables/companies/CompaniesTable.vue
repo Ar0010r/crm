@@ -3,8 +3,9 @@
         <h4 class="font-weight-bold py-3 mb-4">
             Companies
         </h4>
-        <div class="d-flex justify-content-between mb-3">
-            <button @click="initializeCompanyStoreForm" class="btn btn-primary btn" data-toggle="modal" data-target="#addCompanyForm">Add
+        <div v-if="profile.role === 'admin'" class="d-flex justify-content-between mb-3">
+            <button @click="initializeCompanyStoreForm" class="btn btn-primary btn" data-toggle="modal"
+                    data-target="#addCompanyForm">Add
                 company
             </button>
         </div>
@@ -28,7 +29,7 @@
     import {useStore} from 'vuex';
 
     export default {
-        setup(){
+        setup() {
             const store = useStore();
 
             function initializeCompanyStoreForm() {
@@ -46,7 +47,11 @@
                 store.commit('formData/setCompany', emptyCompany);
             }
 
-            return { companies: computed(() => store.getters.getCompanies), initializeCompanyStoreForm}
+            return {
+                profile: computed(() => store.getters.getProfile),
+                companies: computed(() => store.getters.getCompanies),
+                initializeCompanyStoreForm
+            }
         },
 
         components: {

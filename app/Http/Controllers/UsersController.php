@@ -60,6 +60,16 @@ class UsersController extends Controller
 
     public function getAvailableRoles()
     {
-        return response(Role::AVAILABLE_ROLES, JsonResponse::HTTP_OK);
+        switch (auth()->user()->role) {
+            case Role::TOP_HR:
+                $data = Role::TOP_HR__AVAILABLE_ROLES;
+                break;
+            case Role::ADMIN:
+                $data = Role::ADMIN_AVAILABLE_ROLES;
+                break;
+            default:
+                $data = [];
+        }
+        return response($data, JsonResponse::HTTP_OK);
     }
 }

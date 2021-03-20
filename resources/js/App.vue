@@ -10,6 +10,7 @@
             </div>
         </div>
         <ProfileForm/>
+        <Notification/>
         <div class="layout-overlay layout-sidenav-toggle"></div>
     </div>
 </template>
@@ -18,6 +19,7 @@
     import SideBar from './components/layout/SideBar.vue';
     import NavBar from './components/layout/NavBar.vue';
     import ProfileForm from './components/modals/profile/ProfileForm';
+    import Notification from './components/modals/Notification';
     import {useStore} from 'vuex';
     import {inject} from 'vue';
 
@@ -40,6 +42,7 @@
             SideBar,
             NavBar,
             ProfileForm,
+            Notification,
         }
     };
 </script>

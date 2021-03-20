@@ -77,9 +77,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  setup: function setup() {
+  setup: function setup(props) {
     var container = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)('container');
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_2__.useStore)();
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(function () {
+      return props.data;
+    }, function (first, second) {
+      if (props.data.current_page > props.data.last_page) {
+        goToPage(props.data.last_page);
+      }
+    });
 
     function goToPage(_x) {
       return _goToPage.apply(this, arguments);
@@ -410,7 +417,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         var _employee$address, _employee$birthday, _employee$city, _employee$company_id, _employee$email, _employee$name, _employee$paypal, _employee$phone_, _employee$phone_2, _employee$race, _employee$state, _employee$zip, _employee$pickup;
 
-        var employee, companies, users, data, result, _companies$data$compa, savedEmployee;
+        var employee, companies, users, data, _companies$data$compa, result, savedEmployee;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
@@ -435,30 +442,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   pickup: (_employee$pickup = employee.pickup) !== null && _employee$pickup !== void 0 ? _employee$pickup : ""
                 };
                 console.log('before store', employee);
-                _context.next = 7;
+                _context.prev = 5;
+                _context.next = 8;
                 return axios__WEBPACK_IMPORTED_MODULE_3___default().post('api/employees', data);
 
-              case 7:
+              case 8:
                 result = _context.sent;
+                savedEmployee = result.data.employee;
+                savedEmployee.company = (_companies$data$compa = companies[data.company_id]) !== null && _companies$data$compa !== void 0 ? _companies$data$compa : {};
+                savedEmployee.hr = users[savedEmployee.hr_id];
 
-                if (result.status === 200) {
-                  savedEmployee = result.data.employee;
-                  savedEmployee.company = (_companies$data$compa = companies[data.company_id]) !== null && _companies$data$compa !== void 0 ? _companies$data$compa : {};
-                  savedEmployee.hr = users[savedEmployee.hr_id];
+                _this.$store.commit('employee/setEmployee', _this.emptyEmployee);
 
-                  _this.$store.commit('employee/setEmployee', _this.emptyEmployee);
+                _this.$store.commit('employee/setEmployeeById', savedEmployee);
 
-                  _this.$store.commit('employee/setEmployeeById', savedEmployee);
+                document.getElementById('storeEmployeeFormClose').click();
+                _context.next = 21;
+                break;
 
-                  document.getElementById('storeEmployeeFormClose').click();
-                }
+              case 17:
+                _context.prev = 17;
+                _context.t0 = _context["catch"](5);
 
-              case 9:
+                _this.$store.commit('notification/setMessage', _context.t0.response.data);
+
+                _this.$store.commit('notification/setShow', true);
+
+              case 21:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[5, 17]]);
       }))();
     }
   },
@@ -504,7 +519,7 @@ __webpack_require__.r(__webpack_exports__);
       zip: yup__WEBPACK_IMPORTED_MODULE_1__.string().nullable().matches('^$|\\d{5}(-\\d{4})?$', 'Enter valid zip code'),
       phone_1: yup__WEBPACK_IMPORTED_MODULE_1__.string().nullable().matches('^$|\\d{3}-\\d{3}-\\d{4}$', 'Enter valid phone'),
       phone_2: yup__WEBPACK_IMPORTED_MODULE_1__.string().nullable().matches("^$|\\d{3}-\\d{3}-\\d{4}$", 'Enter valid phone'),
-      birthday: yup__WEBPACK_IMPORTED_MODULE_1__.date().nullable().typeError('Valid date format is yyyy-mm-dd'),
+      birthday: yup__WEBPACK_IMPORTED_MODULE_1__.string().nullable().matches("^((?:19|20)[1-9][1-9])-(0[1-9]|1[012])-([12][0-9]|3[01]|0[1-9])$", 'Valid date format is yyyy-mm-dd'),
       state: yup__WEBPACK_IMPORTED_MODULE_1__.string().nullable().test("test-name", "Please enter correct state abbreviation", function (value) {
         return !!uSstates.includes(value) || value === "" || value === null;
       })
@@ -2096,7 +2111,7 @@ const _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
 }, "»", -1 /* HOISTED */)
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return ($props.data.from !== $props.data.last_page)
+  return ($props.data.from !== $props.data.last_page && $props.data.last_page !== 1)
     ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("nav", null, [
           (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("ul", _hoisted_2, [
@@ -2879,8 +2894,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-const _hoisted_1 = { class: "d-flex justify-content-between mb-3" }
-const _hoisted_2 = { class: "d-flex align-items-center justify-content-between" }
+const _hoisted_1 = {
+  class: "d-flex justify-content-start mb-3",
+  style: {"max-width":"50%"}
+}
+const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  type: "button",
+  "data-toggle": "modal",
+  "data-target": "#fileInputForm",
+  class: " p-0 btn-primary btn  ml-2 col-sm-2 text-nowrap"
+}, "File upload ", -1 /* HOISTED */)
 const _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
   value: "",
   selected: ""
@@ -2889,69 +2912,55 @@ const _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
   value: "",
   selected: ""
 }, "Status", -1 /* HOISTED */)
-const _hoisted_5 = {
-  id: "DataTables_Table_0_filter",
-  class: "col-md-4 dataTables_filter d-flex align-items-center justify-content-end "
-}
-const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-  type: "button",
-  "data-toggle": "modal",
-  "data-target": "#fileInputForm",
-  class: "btn-primary btn w-auto ml-2 col-sm-4"
-}, "File upload ", -1 /* HOISTED */)
-const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+const _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
   value: "",
   selected: ""
 }, "Records", -1 /* HOISTED */)
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-        "onUpdate:modelValue": _cache[1] || (_cache[1] = $event => ($setup.activeFilters.company_id = $event)),
-        class: "custom-select form-control form-control-sm ml-2"
-      }, [
-        _hoisted_3,
-        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.companies, (company) => {
-          return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
-            value: company.id
-          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(company.name), 9 /* TEXT, PROPS */, ["value"]))
-        }), 256 /* UNKEYED_FRAGMENT */))
-      ], 512 /* NEED_PATCH */), [
-        [vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.activeFilters.company_id]
-      ]),
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-        "onUpdate:modelValue": _cache[2] || (_cache[2] = $event => ($setup.activeFilters.status = $event)),
-        class: "custom-select custom-select form-control-lg form-control-sm ml-2"
-      }, [
-        _hoisted_4,
-        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.statuses, (key, value) => {
-          return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", { value: value }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(value), 9 /* TEXT, PROPS */, ["value"]))
-        }), 256 /* UNKEYED_FRAGMENT */))
-      ], 512 /* NEED_PATCH */), [
-        [vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.activeFilters.status]
-      ])
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+      type: "button",
+      "data-toggle": "modal",
+      "data-target": "#storeEmployeeForm",
+      class: " p-0 btn-primary btn col-sm-2 text-nowrap text-center",
+      onClick: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)((...args) => ($options.initializeEmployeeStoreForm(...args)), ["prevent"]))
+    }, "Add employee "),
+    _hoisted_2,
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+      "onUpdate:modelValue": _cache[2] || (_cache[2] = $event => ($setup.activeFilters.company_id = $event)),
+      class: "custom-select form-control ml-2 col-sm-2"
+    }, [
+      _hoisted_3,
+      ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.companies, (company) => {
+        return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
+          value: company.id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(company.name), 9 /* TEXT, PROPS */, ["value"]))
+      }), 256 /* UNKEYED_FRAGMENT */))
+    ], 512 /* NEED_PATCH */), [
+      [vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.activeFilters.company_id]
     ]),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-        type: "button",
-        "data-toggle": "modal",
-        "data-target": "#storeEmployeeForm",
-        class: "btn-primary btn w-auto col-sm-5",
-        onClick: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)((...args) => ($options.initializeEmployeeStoreForm(...args)), ["prevent"]))
-      }, "Add employee "),
-      _hoisted_6,
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-        "onUpdate:modelValue": _cache[4] || (_cache[4] = $event => ($setup.activeFilters.recordsPerPage = $event)),
-        class: "custom-select ml-2 col-md-4"
-      }, [
-        _hoisted_7,
-        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.recordsPerPage, (record) => {
-          return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", { value: record }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record), 9 /* TEXT, PROPS */, ["value"]))
-        }), 256 /* UNKEYED_FRAGMENT */))
-      ], 512 /* NEED_PATCH */), [
-        [vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.activeFilters.recordsPerPage]
-      ])
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+      "onUpdate:modelValue": _cache[3] || (_cache[3] = $event => ($setup.activeFilters.status = $event)),
+      class: "custom-select custom-select form-control-lg  ml-2 col-sm-2"
+    }, [
+      _hoisted_4,
+      ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.statuses, (key, value) => {
+        return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", { value: value }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(value), 9 /* TEXT, PROPS */, ["value"]))
+      }), 256 /* UNKEYED_FRAGMENT */))
+    ], 512 /* NEED_PATCH */), [
+      [vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.activeFilters.status]
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+      "onUpdate:modelValue": _cache[4] || (_cache[4] = $event => ($setup.activeFilters.recordsPerPage = $event)),
+      class: "custom-select ml-2 col-sm-2"
+    }, [
+      _hoisted_5,
+      ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.recordsPerPage, (record) => {
+        return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", { value: record }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record), 9 /* TEXT, PROPS */, ["value"]))
+      }), 256 /* UNKEYED_FRAGMENT */))
+    ], 512 /* NEED_PATCH */), [
+      [vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.activeFilters.recordsPerPage]
     ])
   ]))
 }
@@ -3019,26 +3028,27 @@ const _hoisted_2 = { key: 0 }
 const _hoisted_3 = { key: 1 }
 const _hoisted_4 = { class: "d-flex flex-column border-0" }
 const _hoisted_5 = { class: "m-0 p-0" }
-const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1 /* HOISTED */)
-const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()
-const _hoisted_8 = {
+const _hoisted_6 = { class: "d-flex" }
+const _hoisted_7 = { class: "mr-1" }
+const _hoisted_8 = { class: "mr-1" }
+const _hoisted_9 = {
   key: 0,
-  class: "m-0 p-0 text-success"
+  class: "mr-1 m-0 p-0 text-success"
 }
-const _hoisted_9 = { class: "m-0 p-0" }
 const _hoisted_10 = { class: "m-0 p-0" }
-const _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()
-const _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1 /* HOISTED */)
-const _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()
-const _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' '), -1 /* HOISTED */)
-const _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()
-const _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' '), -1 /* HOISTED */)
-const _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()
-const _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' '), -1 /* HOISTED */)
-const _hoisted_19 = { class: "m-0 p-0" }
+const _hoisted_11 = { class: "m-0 p-0" }
+const _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()
+const _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1 /* HOISTED */)
+const _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()
+const _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' '), -1 /* HOISTED */)
+const _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()
+const _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' '), -1 /* HOISTED */)
+const _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()
+const _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' '), -1 /* HOISTED */)
 const _hoisted_20 = { class: "m-0 p-0" }
-const _hoisted_21 = { class: "d-flex justify-content-center align-items-center border-0" }
-const _hoisted_22 = {
+const _hoisted_21 = { class: "m-0 p-0" }
+const _hoisted_22 = { class: "d-flex justify-content-center align-items-center border-0" }
+const _hoisted_23 = {
   "data-toggle": "modal",
   "data-target": "#editEmployeeForm"
 }
@@ -3053,40 +3063,39 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.company.name), 1 /* TEXT */))
       : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_3)),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_4, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_5, [
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.name), 1 /* TEXT */),
-        _hoisted_6,
-        _hoisted_7,
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.race), 1 /* TEXT */)
-      ]),
-      ($props.employee.pickup == 1)
-        ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("strong", _hoisted_8, "pick up"))
-        : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.birthday), 1 /* TEXT */)
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.name), 1 /* TEXT */),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.birthday), 1 /* TEXT */),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.race), 1 /* TEXT */),
+        ($props.employee.pickup == 1)
+          ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("strong", _hoisted_9, "P"))
+          : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
+      ])
     ]),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.email), 1 /* TEXT */),
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.paypal), 1 /* TEXT */)
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.email), 1 /* TEXT */),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.paypal), 1 /* TEXT */)
     ]),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.address), 1 /* TEXT */),
-      _hoisted_11,
       _hoisted_12,
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.city), 1 /* TEXT */),
       _hoisted_13,
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.city), 1 /* TEXT */),
       _hoisted_14,
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.state), 1 /* TEXT */),
       _hoisted_15,
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.state), 1 /* TEXT */),
       _hoisted_16,
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.zip), 1 /* TEXT */),
       _hoisted_17,
-      _hoisted_18
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.zip), 1 /* TEXT */),
+      _hoisted_18,
+      _hoisted_19
     ]),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.phone_1), 1 /* TEXT */),
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.phone_2), 1 /* TEXT */)
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.phone_1), 1 /* TEXT */),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.phone_2), 1 /* TEXT */)
     ]),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("  <span class=\"badge badge-outline-success\">Active</span>"),
       ($props.employee.status)
         ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_StatusSelect, {
             key: 0,
@@ -3096,8 +3105,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           }, null, 8 /* PROPS */, ["status", "id"]))
         : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
     ]),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_21, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", _hoisted_22, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_22, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", _hoisted_23, [
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
           type: "button",
           class: "ion ion-md-create p-0 bg-transparent border-0",

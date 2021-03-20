@@ -5,9 +5,12 @@
         <td v-if="employee.company">{{employee.company.name}}</td>
         <td v-else></td>
         <td class="d-flex flex-column border-0">
-            <p class="m-0 p-0">{{employee.name}}<br> <i>{{employee.race}}</i></p>
-            <strong class="m-0 p-0 text-success" v-if="employee.pickup == 1">pick up</strong>
-            <i>{{employee.birthday}}</i>
+            <p class="m-0 p-0">{{employee.name}}</p>
+            <div class="d-flex">
+                <i class="mr-1">{{employee.birthday}}</i>
+                <i class="mr-1">{{employee.race}}</i>
+                <strong class="mr-1 m-0 p-0 text-success" v-if="employee.pickup == 1">P</strong>
+            </div>
         </td>
         <td>
             <p class="m-0 p-0">{{employee.email}}</p>
@@ -25,6 +28,7 @@
         </td>
 
         <td>
+          <!--  <span class="badge badge-outline-success">Active</span>-->
             <StatusSelect v-if="employee.status"
                           :status='employee.status'
                           :id='employee.id'

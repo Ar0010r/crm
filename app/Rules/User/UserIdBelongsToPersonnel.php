@@ -2,8 +2,8 @@
 
 namespace App\Rules\User;
 
-use App\Properties\Role;
 use App\Models\User;
+use App\Shared\Value\Role;
 use Illuminate\Contracts\Validation\Rule;
 
 class UserIdBelongsToPersonnel implements Rule

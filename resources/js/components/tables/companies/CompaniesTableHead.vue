@@ -6,7 +6,19 @@
         <th class="text-left">Name</th>
         <th class="text-left">Domain</th>
         <th class="text-left">Email</th>
-        <th class="text-left">Actions</th>
+        <th v-if="profile.role === 'admin'" class="text-left">Actions</th>
     </tr>
     </thead>
 </template>
+
+<script>
+    import {computed} from 'vue';
+    import {useStore} from 'vuex';
+
+    export default {
+        setup() {
+            const store = useStore();
+            return {profile: computed(() => store.getters.getProfile)}
+        }
+    };
+</script>

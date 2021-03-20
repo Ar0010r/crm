@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex justify-content-between" v-if="data.from !== data.last_page">
+    <div class="d-flex justify-content-between" v-if="data.from !== data.last_page && data.last_page !== 1">
         <nav>
             <ul class="pagination">
                 <li class="page-item"
@@ -31,12 +31,19 @@
 
 <script>
     import {useStore} from 'vuex';
-    import {inject} from 'vue'
+    import {inject, watch} from 'vue'
 
     export default {
-        setup() {
+
+        setup(props) {
             const container = inject('container');
             const store = useStore();
+
+            watch(() => props.data, (first, second) => {
+                if(props.data.current_page > props.data.last_page) {
+                    goToPage(props.data.last_page)
+                }
+            });
 
             async function goToPage(page) {
                 store.commit('employee/setQueryParam', {'key': 'page', 'value': page});

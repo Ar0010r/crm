@@ -62,9 +62,8 @@
                 };
 
                 console.log('before store', employee);
-
-                let result = await axios.post('api/employees', data);
-                if(result.status === 200){
+                try{
+                    let result = await axios.post('api/employees', data);
 
                     let savedEmployee = result.data.employee;
                     savedEmployee.company = companies[data.company_id] ?? {};
@@ -75,6 +74,9 @@
                     this.$store.commit('employee/setEmployeeById', savedEmployee);
 
                     document.getElementById('storeEmployeeFormClose').click()
+                } catch (e) {
+                    this.$store.commit('notification/setMessage', e.response.data);
+                    this.$store.commit('notification/setShow', true);
                 }
 
             }

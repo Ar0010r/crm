@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Properties\Role;
+use App\Shared\Value\Role;
 use Illuminate\Foundation\Http\FormRequest;
 abstract class HrAllowedRequest extends FormRequest
 {
