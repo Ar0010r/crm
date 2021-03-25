@@ -44,7 +44,7 @@ export class UserService {
         let hrs = {};
         Object.keys(usersList).map(function (key) {
             let index = usersList[key].id;
-            if (usersList[key].role === 'hr') hrs[index] = usersList[key];
+            if (usersList[key].role === 'hr' || usersList[key].role === 'top hr') hrs[index] = usersList[key];
         });
 
         let personnels = {};

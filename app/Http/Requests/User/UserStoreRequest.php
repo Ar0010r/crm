@@ -3,21 +3,20 @@
 namespace App\Http\Requests\User;
 
 use App\Http\Requests\OnlyAdminAllowedRequest;
-use App\Properties\Permission;
-use App\Properties\Role;
+use App\Shared\Value\Role;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserStoreRequest extends OnlyAdminAllowedRequest
+class UserStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    /*public function authorize()
+    public function authorize()
     {
-        return auth()->user()->tokenCan(Permission::USER_CREATE);
-    }*/
+        return auth()->user()->role === Role::ADMIN || auth()->user()->role === Role::TOP_HR;
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -29,7 +28,7 @@ class UserStoreRequest extends OnlyAdminAllowedRequest
         return [
             'login' => 'required|string|max:100|unique:users',
             'password' => 'required|string|max:12',
-            'role' => 'required|in:' . Role::ADMIN . ',' . Role::HR . ',' . Role::PERSONNEL
+            'role' => 'required|in:' . Role::ADMIN . ',' . Role::HR . ',' . Role::PERSONNEL. ','.Role::TOP_HR
         ];
     }
 }

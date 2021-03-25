@@ -1,11 +1,10 @@
 <?php
 
-use App\Shared\Value\Status;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmployeesTable extends Migration
+class CreateTopHrHrsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +13,7 @@ class CreateEmployeesTable extends Migration
      */
     public function up()
     {
-        Schema::create('top_hr_hr', function (Blueprint $table) {
+        Schema::create('top_hr_hrs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('top_hr_id')->nullable();
             $table->foreignId('hr_id')->nullable();
@@ -33,6 +32,6 @@ class CreateEmployeesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('top_hr_hr');
+        Schema::dropIfExists('top_hr_hrs');
     }
 }

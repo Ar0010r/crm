@@ -3,7 +3,7 @@
 namespace App\Http\Requests\User;
 
 use App\Http\Requests\OwnerAllowedRequest;
-use App\Properties\Role;
+use App\Shared\Value\Role;
 use Illuminate\Validation\Rule;
 
 class UserUpdateRequest extends OwnerAllowedRequest
@@ -36,7 +36,7 @@ class UserUpdateRequest extends OwnerAllowedRequest
             'password' => 'string|max:12',
             'avatar' => 'image|mimes:jpeg,png,jpg',
             'file' => 'image|mimes:jpeg,png,jpg',
-            'role' => 'in:' . Role::ADMIN . ',' . Role::HR . ',' . Role::PERSONNEL
+            'role' => 'in:' . Role::ADMIN . ',' . Role::HR . ',' . Role::PERSONNEL . ',' . Role::TOP_HR
         ];
     }
 

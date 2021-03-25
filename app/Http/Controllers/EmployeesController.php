@@ -26,18 +26,23 @@ class EmployeesController extends Controller
 
     public function index()
     {
-        $recordsPerPage = request()->get('recordsPerPage') ?? 10;
+        $records = request()->get('recordsPerPage') ?? 10;
 
         switch (auth()->user()->role) {
             case Role::PERSONNEL:
-                $data = $this->employeeService->getPersonnelEmployees($recordsPerPage);
+                $data = $this->employeeService->getPersonnelEmployees($records);
                 break;
             case Role::HR:
-                $data = $this->employeeService->getHrEmployees($recordsPerPage);
+                $data = $this->employeeService->getHrEmployees($records);
                 break;
             case Role::ADMIN:
-                $data = $this->employeeService->getAdminEmployees($recordsPerPage);
+                $data = $this->employeeService->getAdminEmployees($records);
                 break;
+            case Role::TOP_HR:
+                $data = $this->employeeService->getTopHrEmployees($records);
+                break;
+            default:
+                $data = [];
         }
 
         return response(['data' => $data->items(), 'pagination' => $data], JsonResponse::HTTP_OK);

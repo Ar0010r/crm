@@ -14,6 +14,13 @@
                 {{company.name}}
             </option>
         </select>
+        <select v-if="profile.role === 'admin' || profile.role === 'top hr'"
+                v-model="activeFilters.hr_id" class="custom-select form-control ml-2 col-sm-2">
+            <option value="" selected>Hr</option>
+            <option v-for="hr in hrs" :value="hr.id">
+                {{hr.login}}
+            </option>
+        </select>
         <select v-model="activeFilters.status"
                 class="custom-select custom-select form-control-lg  ml-2 col-sm-2">
             <option value="" selected>Status</option>
@@ -38,19 +45,23 @@
 
             let store = useStore();
 
-            let activeFilters = reactive({company_id: '', status: '', hr: '', recordsPerPage:''});
+            let activeFilters = reactive({company_id: '', status: '', hr_id: '', recordsPerPage:''});
 
 
             const filter = async () => {
-                store.commit('employee/setQueryParam', {'key':'company', 'value': activeFilters.company_id});
+                store.commit('employee/setQueryParam', {'key':'company_id', 'value': activeFilters.company_id});
+                store.commit('employee/setQueryParam', {'key':'hr_id', 'value': activeFilters.hr_id});
                 store.commit('employee/setQueryParam', {'key':'status', 'value': activeFilters.status});
                 store.commit('employee/setQueryParam', {'key':'recordsPerPage', 'value': activeFilters.recordsPerPage});
 
                 let params = store.getters.getEmployeeQueryParams;
 
+                console.log(params.hr_id);
+
                 let employees = await container.EmployeeService.getEmployees({
-                    'filter[company_id]': params.company,
+                    'filter[company_id]': params.company_id,
                     'filter[status]': params.status,
+                    'filter[hr_id]': params.hr_id,
                     'page': params.page,
                     'recordsPerPage': params.recordsPerPage,
                 });
@@ -69,6 +80,7 @@
                 statuses: computed(() => store.getters.getStatuses),
                 hrs: computed(() => store.getters.getHrs),
                 recordsPerPage: [10,30,50,100,300,500],
+                profile: computed(() => store.getters.getProfile)
             }
 
         },

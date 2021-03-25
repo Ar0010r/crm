@@ -16,8 +16,8 @@
                 >
                 </EmployeesTableRow>
                 <EmptyTableRow
-                        v-if="5 - Object.keys(employees).length > 0"
-                        v-for="n in (5 - Object.keys(employees).length)"/>
+                        v-if="8 - Object.keys(employees).length > 0"
+                        v-for="n in (8 - Object.keys(employees).length)"/>
                 </tbody>
             </table>
             <Pagination :data="pagination"/>

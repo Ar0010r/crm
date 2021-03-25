@@ -4,7 +4,7 @@ namespace App\Http\Requests\Company;
 
 use App\Http\Requests\OwnerAllowedRequest;
 use App\Models\Company;
-use App\Properties\Role;
+use App\Shared\Value\Role;
 
 abstract class CompanyOwnerAllowedRequest extends OwnerAllowedRequest
 {

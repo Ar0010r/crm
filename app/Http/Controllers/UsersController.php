@@ -3,26 +3,41 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\User\UserDeleteRequest;
-use App\Http\Requests\User\UserIndexRequest;
 use App\Http\Requests\User\UserShowRequest;
 use App\Http\Requests\User\UserStoreRequest;
 use App\Http\Requests\User\UserUpdateRequest;
+use App\Models\Pivot\TopHrHr;
 use App\Models\User;
 use App\Shared\Value\Role;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
-    public function index(UserIndexRequest $r)
+    public function index()
     {
-        return response(User::all(), JsonResponse::HTTP_OK);
+        switch (auth()->user()->role) {
+            case Role::TOP_HR:
+                $data = auth()->user()->topHrHrs()->get()->toArray();
+                $data[] = auth()->user();
+                break;
+            case Role::ADMIN:
+                $data = User::all();
+                break;
+            default:
+                $data = [];
+        }
+
+        return response($data, JsonResponse::HTTP_OK);
     }
 
     public function store(UserStoreRequest $r)
     {
         $r->merge(["password" => bcrypt($r->password)]);
         $user = User::create($r->all());
+
+        if(auth()->user()->role = Role::TOP_HR){
+            TopHrHr::create(['top_hr_id' => auth()->user()->id, 'hr_id' => $user->id]);
+        }
 
         return response(['user' => $user], JsonResponse::HTTP_OK);
     }
@@ -35,6 +50,7 @@ class UsersController extends Controller
     public function update(UserUpdateRequest $r, User $user)
     {
         $avatar = $r->file('file');
+
         if ($avatar) {
             $new_name = rand() . '.' . $avatar->getClientOriginalExtension();
             $avatar->move(public_path('images'), $new_name);

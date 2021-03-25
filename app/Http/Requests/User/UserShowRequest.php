@@ -3,7 +3,6 @@
 namespace App\Http\Requests\User;
 
 use App\Http\Requests\OwnerAllowedRequest;
-use App\Properties\Permission;
 
 class UserShowRequest extends OwnerAllowedRequest
 {

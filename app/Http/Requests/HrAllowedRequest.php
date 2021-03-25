@@ -13,7 +13,7 @@ abstract class HrAllowedRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->role === Role::ADMIN || auth()->user()->role === Role::HR;
+        return auth()->user()->role === Role::ADMIN || auth()->user()->role === Role::HR || auth()->user()->role === Role::TOP_HR;
     }
 
     public function rules()

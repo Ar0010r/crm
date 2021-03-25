@@ -31682,7 +31682,7 @@ var UserService = /*#__PURE__*/function () {
                 hrs = {};
                 Object.keys(usersList).map(function (key) {
                   var index = usersList[key].id;
-                  if (usersList[key].role === 'hr') hrs[index] = usersList[key];
+                  if (usersList[key].role === 'hr' || usersList[key].role === 'top hr') hrs[index] = usersList[key];
                 });
                 personnels = {};
                 Object.keys(usersList).map(function (key) {
@@ -31846,7 +31846,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     statuses: {},
     pagination: {},
     queryParams: {
-      company: "",
+      company_id: "",
+      hr_id: "",
       status: "",
       page: "",
       recordsPerPage: ""
@@ -43068,11 +43069,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         ]),
         _: 1
       }),
-      ($setup.profile.role === 'admin')
+      ($setup.profile.role === 'admin' || $setup.profile.role === 'top hr')
         ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
             key: 0,
-            tag: "li",
             to: { name : 'managers-table'},
+            tag: "li",
             class: "sidenav-item"
           }, {
             default: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(() => [

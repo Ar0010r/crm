@@ -31,7 +31,8 @@
                     <div>Employees</div>
                 </a>
             </router-link>
-            <router-link v-if="profile.role === 'admin'" tag="li" :to="{ name : 'managers-table'}" class="sidenav-item">
+            <router-link v-if="profile.role === 'admin' || profile.role === 'top hr'"
+                         :to="{ name : 'managers-table'}" tag="li" class="sidenav-item">
                 <a class="sidenav-link"><i class="sidenav-icon ion ion-md-contacts"></i>
                     <div>Managers</div>
                 </a>

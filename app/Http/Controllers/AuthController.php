@@ -11,14 +11,14 @@ class AuthController extends Controller
     {
         $credentials = $r->only('login', 'password');
         if (!auth()->attempt($credentials)) {
-            return response(['message' => 'Invalid credentials'], JsonResponse::HTTP_OK);
+            return response(['message' => 'Invalid credentials'], JsonResponse::HTTP_UNAUTHORIZED);
         }
         //auth()->user()->tokens()->delete();
 
         $user = auth()->user();
-        $p = $user->permissions();
+        //$p = $user->permissions();
 
-        return response(['user' => $user, 'token' =>$user->createToken('authToken', $p)], JsonResponse::HTTP_OK);
+        return response(['user' => $user, 'token' =>$user->createToken('authToken')], JsonResponse::HTTP_OK);
     }
 
     public function profile()

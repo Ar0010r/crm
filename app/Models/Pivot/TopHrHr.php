@@ -1,26 +1,27 @@
 <?php
 
-namespace App\Models;
 
+namespace App\Models\Pivot;
+
+
+use App\Models\User;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Company extends Model
+class TopHrHr extends Model
 {
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
+        'id',
         'top_hr_id',
         'hr_id',
     ];
-
-    public function personnel()
-    {
-      return $this->belongsTo(User::class, 'personnel_id', 'id');
-    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

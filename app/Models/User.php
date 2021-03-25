@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Pivot\TopHrHr;
 use App\Shared\Value\Role;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -51,14 +52,35 @@ class User extends Authenticatable
 
     public function employees()
     {
-        
+        return $this->hasMany(Employee::class, 'hr_id', 'id');
     }
 
-    public function readyEmployees()
+    public function hrEmployees()
+    {
+
+    }
+
+    public function topHrEmployees()
+    {
+        return $this->topHrHrs()->with('employees')->select('employees.*');
+    }
+
+    public function personnelEmployees()
     {
         
     }
 
+    public function topHrHrs()
+    {
+        return $this->hasManyThrough(
+            self::class,
+            TopHrHr::class,
+            'top_hr_id',
+            'id',
+            'id',
+            'hr_id'
+        );
+    }
     public function permissions()
     {
         if (!array_key_exists($this->role, Role::PERMISSIONS)) {

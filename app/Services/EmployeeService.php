@@ -15,16 +15,18 @@ class EmployeeService
 {
     private QueryBuilder $basicQuery;
     private CompanyService $companyService;
+    private UserService $userService;
     private Search $search;
 
-    public function __construct(CompanyService $companyService, Search $search)
+    public function __construct(UserService $userService, CompanyService $companyService, Search $search)
     {
         $this->companyService = $companyService;
+        $this->userService = $userService;
         $this->search = $search;
 
         $this->basicQuery = QueryBuilder::for(Employee::class)
             ->orderByDesc('employees.created_at')
-            ->allowedFilters(['company_id', 'status', 'page'])
+            ->allowedFilters(['company_id', 'status', 'page', 'hr_id'])
             ->with('hr')
             ->with('company');
     }
@@ -49,6 +51,15 @@ class EmployeeService
         return $this->basicQuery
             ->whereIn('company_id', $companyIds)
             ->whereIn('status', [Status::READY, Status::GREETED, Status::EXPORTED])
+            ->paginate($recordsPerPage);
+    }
+
+    public function getTopHrEmployees(int $recordsPerPage, User $topHr = null): LengthAwarePaginator
+    {
+        $hrIds = $this->userService->getTopHrTeamIds($topHr);
+
+        return $this->basicQuery
+            ->whereIn('hr_id', $hrIds)
             ->paginate($recordsPerPage);
     }
 

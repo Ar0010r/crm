@@ -28,7 +28,8 @@ export default {
         statuses: {},
         pagination: {},
         queryParams: {
-            company: "",
+            company_id: "",
+            hr_id: "",
             status: "",
             page: "",
             recordsPerPage: ""
