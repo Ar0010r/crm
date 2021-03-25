@@ -1,33 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6dd06283-79a3-451e-93c8-b1b73cd686ac" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EmployeesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EmployeesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Company/CompanyOwnerAllowedRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Company/CompanyOwnerAllowedRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Company/CompanyUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Company/CompanyUpdateRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/HrAllowedRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/HrAllowedRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/User/UserShowRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/User/UserShowRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/User/UserStoreRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/User/UserStoreRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/User/UserUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/User/UserUpdateRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Company.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/EmployeeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/EmployeeService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Shared/Value/Role.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Shared/Value/Role.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_19_220008_create_top_hr_hr_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_EmployeesView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_EmployeesView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/layout/EmployeesStatusSelect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/layout/EmployeesStatusSelect.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/layout/EmptyEmployeesTableRow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/layout/EmptyEmployeesTableRow.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/layout/SideBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/layout/SideBar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/employee/fields/EmployeeFormFields.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/employee/fields/EmployeeFormFields.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTableControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTableControl.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/services/user.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/user.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/store/employee.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/employee.js" afterDir="false" />
-    </list>
+    <list default="true" id="6dd06283-79a3-451e-93c8-b1b73cd686ac" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,11 +37,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UsersController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="20" column="41" selection-start-line="20" selection-start-column="41" selection-end-line="20" selection-end-column="41" />
+            <state relative-caret-position="724">
+              <caret line="82" column="29" lean-forward="true" selection-start-line="82" selection-start-column="29" selection-end-line="82" selection-end-column="29" />
               <folding>
                 <element signature="e#40#85#0#PHP" expanded="true" />
               </folding>
@@ -108,7 +82,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CompaniesController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="128">
@@ -550,12 +524,12 @@
       <workItem from="1616171375505" duration="20108000" />
       <workItem from="1616408779807" duration="1448000" />
       <workItem from="1616538900127" duration="6070000" />
-      <workItem from="1616661332843" duration="2097000" />
+      <workItem from="1616661332843" duration="2360000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="451255000" />
+    <option name="totallyTimeSpent" value="451518000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -568,9 +542,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.32331902" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.32331902" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -585,7 +558,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32891566" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.2614458" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.2614458" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -995,16 +968,6 @@
     <entry file="file://$PROJECT_DIR$/resources/js/services/employee.service.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/EmployeesController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
-          <folding>
-            <element signature="e#40#92#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Requests/HrAllowedRequest.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -1043,16 +1006,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UsersController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="20" column="41" selection-start-line="20" selection-start-column="41" selection-end-line="20" selection-end-column="41" />
-          <folding>
-            <element signature="e#40#85#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/store/employee.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="222">
@@ -1084,6 +1037,26 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="128">
           <caret line="19" column="47" selection-start-line="19" selection-start-column="47" selection-end-line="19" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/EmployeesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+          <folding>
+            <element signature="e#40#92#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UsersController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="724">
+          <caret line="82" column="29" lean-forward="true" selection-start-line="82" selection-start-column="29" selection-end-line="82" selection-end-column="29" />
+          <folding>
+            <element signature="e#40#85#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

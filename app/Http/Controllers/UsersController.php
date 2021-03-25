@@ -35,7 +35,7 @@ class UsersController extends Controller
         $r->merge(["password" => bcrypt($r->password)]);
         $user = User::create($r->all());
 
-        if(auth()->user()->role = Role::TOP_HR){
+        if(auth()->user()->role === Role::TOP_HR){
             TopHrHr::create(['top_hr_id' => auth()->user()->id, 'hr_id' => $user->id]);
         }
 
