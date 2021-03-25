@@ -30343,7 +30343,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 localStorage.removeItem('token');
-                _router_js__WEBPACK_IMPORTED_MODULE_1__.default.push('/login'); //localStorage.setItem('token', response.data.token.plainTextToken);
+                window.location.href = '/login';
 
               case 2:
               case "end":

@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex justify-content-start mb-3" style="max-width: 50%">
+    <div class="d-flex justify-content-start mb-3" style="max-width: 55%">
         <button type="button" data-toggle="modal" data-target="#storeEmployeeForm"
                 class=" p-0 btn-primary btn col-sm-2 text-nowrap text-center"
                 @click.prevent="initializeEmployeeStoreForm"

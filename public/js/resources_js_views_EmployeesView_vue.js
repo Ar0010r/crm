@@ -2914,7 +2914,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const _hoisted_1 = {
   class: "d-flex justify-content-start mb-3",
-  style: {"max-width":"50%"}
+  style: {"max-width":"55%"}
 }
 const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
   type: "button",

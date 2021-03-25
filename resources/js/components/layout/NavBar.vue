@@ -106,8 +106,7 @@
 
             async function logout() {
                 localStorage.removeItem('token');
-                router.push('/login');
-                //localStorage.setItem('token', response.data.token.plainTextToken);
+                window.location.href = '/login';
             }
 
             function profileForm() {
