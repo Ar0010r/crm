@@ -19,4 +19,9 @@ class UserService
         return $ids;
     }
 
+    public function saveAvatar()
+    {
+        
+    }
+
 }

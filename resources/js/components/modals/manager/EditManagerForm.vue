@@ -32,9 +32,8 @@
 
             async function updateUser(user) {
                 if(user.password ===  null) delete user.password;
-
+                delete user.dataIsValid;
                 await container.UserService.updateUser(user);
-
                 store.commit('user/setUserById', user);
                 document.getElementById('editUserFormClose').click();
             }

@@ -10,6 +10,7 @@ use App\Models\Pivot\TopHrHr;
 use App\Models\User;
 use App\Shared\Value\Role;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
@@ -42,7 +43,7 @@ class UsersController extends Controller
         return response(['user' => $user], JsonResponse::HTTP_OK);
     }
 
-    public function show(UserShowRequest $r, User $user)
+    public function show(User $user)
     {
         return response(['user' => $user], JsonResponse::HTTP_OK);
     }
@@ -59,12 +60,13 @@ class UsersController extends Controller
         if ($r->password) {
             $r->merge(["password" => bcrypt($r->password)]);
         }
+
         $user->update($r->all());
 
         return response($user, JsonResponse::HTTP_OK);
     }
 
-    public function destroy(UserDeleteRequest $r, User $user)
+    public function destroy(User $user)
     {
         try {
             $user->delete();

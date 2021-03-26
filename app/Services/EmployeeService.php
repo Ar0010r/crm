@@ -88,5 +88,4 @@ class EmployeeService
                 ->with('company');
         };
     }
-
 }

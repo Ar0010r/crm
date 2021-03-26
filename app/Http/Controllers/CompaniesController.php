@@ -19,8 +19,11 @@ class CompaniesController extends Controller
             case Role::PERSONNEL:
                 $data = auth()->user()->companies()->with('personnel')->get();
                 break;
-            default:
+            case Role::TOP_HR || Role::HR || Role::ADMIN:
                 $data = Company::with('personnel')->get();
+                break;
+            default:
+                $data = [];
         }
 
         return response($data, JsonResponse::HTTP_OK);
@@ -33,7 +36,7 @@ class CompaniesController extends Controller
         return response(['company' => $company], JsonResponse::HTTP_OK);
     }
 
-    public function show(Company $company, CompanyShowRequest $r)
+    public function show(Company $company)
     {
         return response(['company' => $company], JsonResponse::HTTP_OK);
     }
@@ -45,7 +48,7 @@ class CompaniesController extends Controller
         return response("updated", JsonResponse::HTTP_NO_CONTENT);
     }
 
-    public function destroy(Company $company, CompanyDeleteRequest $r)
+    public function destroy(Company $company)
     {
         try {
             $company->delete();

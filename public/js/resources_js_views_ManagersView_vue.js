@@ -122,14 +122,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 if (user.password === null) delete user.password;
-                _context.next = 3;
+                delete user.dataIsValid;
+                _context.next = 4;
                 return container.UserService.updateUser(user);
 
-              case 3:
+              case 4:
                 store.commit('user/setUserById', user);
                 document.getElementById('editUserFormClose').click();
 
-              case 5:
+              case 6:
               case "end":
                 return _context.stop();
             }

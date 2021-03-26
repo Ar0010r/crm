@@ -27,11 +27,13 @@ export class UserService {
     }
 
     async updateUser(user) {
-        console.log(user);
-        return await this.client.put('api/users/1', user, {headers: {'Content-Type': 'multipart/form-data'}});
+        if (user.file) {
+            return await this.client.put('api/users/' + user.id, user, {headers: {'Content-Type': 'multipart/form-data'}});
+        }
+        return await this.client.put('api/users/' + user.id, user);
     }
 
-    async setProfileToStore(){
+    async setProfileToStore() {
         let response = await this.getProfile();
         this.store.commit('user/setProfile', response.data);
     }

@@ -13,8 +13,10 @@ class Company extends Model
      * @var array
      */
     protected $fillable = [
-        'top_hr_id',
-        'hr_id',
+        'name',
+        'email',
+        'domain',
+        'personnel_id'
     ];
 
     public function personnel()
