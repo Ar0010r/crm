@@ -2161,7 +2161,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
           ])
         ]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "showing " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.data.from) + " to " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.data.last_page) + " of " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.data.total) + " records", 1 /* TEXT */)
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "showing " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.data.from) + " to " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.data.to) + " of " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.data.total) + " records", 1 /* TEXT */)
       ]))
     : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
 }

@@ -25,7 +25,7 @@
                 </li>
             </ul>
         </nav>
-        <i>showing {{data.from}} to {{data.last_page}} of {{data.total}} records</i>
+        <i>showing {{data.from}} to {{data.to}} of {{data.total}} records</i>
     </div>
 </template>
 
