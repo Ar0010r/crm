@@ -848,7 +848,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     var filter = /*#__PURE__*/function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var params, employees;
+        var params;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -870,22 +870,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   'value': activeFilters.recordsPerPage
                 });
                 params = store.getters.getEmployeeQueryParams;
-                console.log(params.hr_id);
-                _context.next = 8;
-                return container.EmployeeService.getEmployees({
+                store.dispatch('employee/setEmployeesToStore', {
                   'filter[company_id]': params.company_id,
                   'filter[status]': params.status,
                   'filter[hr_id]': params.hr_id,
                   'page': params.page,
                   'recordsPerPage': params.recordsPerPage
                 });
+                /*let employees = await container.EmployeeService.getEmployees({
+                    'filter[company_id]': params.company_id,
+                    'filter[status]': params.status,
+                    'filter[hr_id]': params.hr_id,
+                    'page': params.page,
+                    'recordsPerPage': params.recordsPerPage,
+                });
+                 store.commit('employee/setEmployees', employees.employees);
+                store.commit('employee/setPagination', employees.pagination);*/
 
-              case 8:
-                employees = _context.sent;
-                store.commit('employee/setEmployees', employees.employees);
-                store.commit('employee/setPagination', employees.pagination);
-
-              case 11:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -897,6 +899,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return _ref.apply(this, arguments);
       };
     }();
+
+    function initializeEmployeeStoreForm() {
+      var emptyEmployee = {
+        id: "",
+        name: "",
+        email: "",
+        paypal: "",
+        company: "",
+        address: "",
+        city: "",
+        state: "",
+        zip: "",
+        phone_1: "",
+        phone_2: "",
+        birthday: null,
+        race: "",
+        status: "",
+        pickup: ""
+      };
+      store.commit('formData/setEmployee', emptyEmployee);
+    }
 
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(function () {
       return activeFilters;
@@ -919,30 +942,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       recordsPerPage: [10, 30, 50, 100, 300, 500],
       profile: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
         return store.getters.getProfile;
-      })
+      }),
+      initializeEmployeeStoreForm: initializeEmployeeStoreForm
     };
-  },
-  methods: {
-    initializeEmployeeStoreForm: function initializeEmployeeStoreForm() {
-      var emptyEmployee = {
-        id: "",
-        name: "",
-        email: "",
-        paypal: "",
-        company: "",
-        address: "",
-        city: "",
-        state: "",
-        zip: "",
-        phone_1: "",
-        phone_2: "",
-        birthday: null,
-        race: "",
-        status: "",
-        pickup: ""
-      };
-      this.$store.commit('formData/setEmployee', emptyEmployee);
-    }
   }
 });
 
@@ -964,14 +966,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var _layout_EmployeesStatusSelect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../layout/EmployeesStatusSelect */ "./resources/js/components/layout/EmployeesStatusSelect.vue");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  setup: function setup(props) {},
-  methods: {
-    putEmployeeInfoToStore: function putEmployeeInfoToStore(employee) {
+  setup: function setup() {
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_1__.useStore)();
+
+    function putEmployeeInfoToStore(employee) {
       var _employee$id, _employee$name, _employee$email, _employee$paypal, _employee$company, _employee$company_id, _employee$address, _employee$city, _employee$state, _employee$zip, _employee$phone_, _employee$phone_2, _employee$birthday, _employee$race, _employee$status, _employee$pickup;
 
       var object = {
@@ -992,8 +994,12 @@ __webpack_require__.r(__webpack_exports__);
         status: (_employee$status = employee.status) !== null && _employee$status !== void 0 ? _employee$status : "",
         pickup: (_employee$pickup = employee.pickup) !== null && _employee$pickup !== void 0 ? _employee$pickup : ""
       };
-      this.$store.commit('formData/setEmployee', object); //this.$store.commit('employee/setEmployee', object);
+      store.commit('formData/setEmployee', object);
     }
+
+    return {
+      putEmployeeInfoToStore: putEmployeeInfoToStore
+    };
   },
   props: {
     employee: Object
@@ -1041,11 +1047,15 @@ __webpack_require__.r(__webpack_exports__);
     var companiesAreUndefined = Object.keys(store.getters.getCompanies).length === 0;
     var employeesAreUndefined = Object.keys(store.getters.getEmployees).length === 0;
     var usersAreUndefined = Object.keys(store.getters.getUsers).length === 0;
-    if (statusesAreUndefined) container.EmployeeService.setStatusesToStore();
-    if (racesAreUndefined) container.EmployeeService.setRacesToStore();
-    if (companiesAreUndefined) container.CompanyService.setCompaniesToStore();
-    if (employeesAreUndefined) container.EmployeeService.setEmployeesToStore();
-    if (usersAreUndefined) container.UserService.setUsersToStore();
+    if (statusesAreUndefined) store.dispatch('employee/setStatusesToStore'); //if (statusesAreUndefined) container.EmployeeService.setStatusesToStore();
+
+    if (racesAreUndefined) store.dispatch('employee/setRacesToStore'); //if (racesAreUndefined) container.EmployeeService.setRacesToStore();
+
+    if (companiesAreUndefined) store.dispatch('company/setCompaniesToStore'); //if (companiesAreUndefined) container.CompanyService.setCompaniesToStore();
+
+    if (employeesAreUndefined) store.dispatch('employee/setEmployeesToStore'); //if (employeesAreUndefined) container.EmployeeService.setEmployeesToStore();
+
+    if (usersAreUndefined) store.dispatch('user/setUsersToStore'); //if (usersAreUndefined) container.UserService.setUsersToStore();
   },
   components: {
     EmployeesTable: _components_tables_employees_EmployeesTable__WEBPACK_IMPORTED_MODULE_0__.default,
@@ -1370,12 +1380,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _EmployeesTableControl_vue_vue_type_template_id_5e226d0b_bindings_activeFilters_setup_companies_setup_statuses_setup_hrs_setup_recordsPerPage_setup_profile_setup_initializeEmployeeStoreForm_options___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmployeesTableControl.vue?vue&type=template&id=5e226d0b&bindings={"activeFilters":"setup","companies":"setup","statuses":"setup","hrs":"setup","recordsPerPage":"setup","profile":"setup","initializeEmployeeStoreForm":"options"} */ "./resources/js/components/tables/employees/EmployeesTableControl.vue?vue&type=template&id=5e226d0b&bindings={\"activeFilters\":\"setup\",\"companies\":\"setup\",\"statuses\":\"setup\",\"hrs\":\"setup\",\"recordsPerPage\":\"setup\",\"profile\":\"setup\",\"initializeEmployeeStoreForm\":\"options\"}");
+/* harmony import */ var _EmployeesTableControl_vue_vue_type_template_id_5e226d0b_bindings_activeFilters_setup_companies_setup_statuses_setup_hrs_setup_recordsPerPage_setup_profile_setup_initializeEmployeeStoreForm_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmployeesTableControl.vue?vue&type=template&id=5e226d0b&bindings={"activeFilters":"setup","companies":"setup","statuses":"setup","hrs":"setup","recordsPerPage":"setup","profile":"setup","initializeEmployeeStoreForm":"setup"} */ "./resources/js/components/tables/employees/EmployeesTableControl.vue?vue&type=template&id=5e226d0b&bindings={\"activeFilters\":\"setup\",\"companies\":\"setup\",\"statuses\":\"setup\",\"hrs\":\"setup\",\"recordsPerPage\":\"setup\",\"profile\":\"setup\",\"initializeEmployeeStoreForm\":\"setup\"}");
 /* harmony import */ var _EmployeesTableControl_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmployeesTableControl.vue?vue&type=script&lang=js */ "./resources/js/components/tables/employees/EmployeesTableControl.vue?vue&type=script&lang=js");
 
 
 
-_EmployeesTableControl_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _EmployeesTableControl_vue_vue_type_template_id_5e226d0b_bindings_activeFilters_setup_companies_setup_statuses_setup_hrs_setup_recordsPerPage_setup_profile_setup_initializeEmployeeStoreForm_options___WEBPACK_IMPORTED_MODULE_0__.render
+_EmployeesTableControl_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _EmployeesTableControl_vue_vue_type_template_id_5e226d0b_bindings_activeFilters_setup_companies_setup_statuses_setup_hrs_setup_recordsPerPage_setup_profile_setup_initializeEmployeeStoreForm_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -1428,12 +1438,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _EmployeesTableRow_vue_vue_type_template_id_721513f0_bindings_putEmployeeInfoToStore_options_employee_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"options","employee":"props"} */ "./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={\"putEmployeeInfoToStore\":\"options\",\"employee\":\"props\"}");
+/* harmony import */ var _EmployeesTableRow_vue_vue_type_template_id_721513f0_bindings_putEmployeeInfoToStore_setup_employee_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"setup","employee":"props"} */ "./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={\"putEmployeeInfoToStore\":\"setup\",\"employee\":\"props\"}");
 /* harmony import */ var _EmployeesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmployeesTableRow.vue?vue&type=script&lang=js */ "./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=script&lang=js");
 
 
 
-_EmployeesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _EmployeesTableRow_vue_vue_type_template_id_721513f0_bindings_putEmployeeInfoToStore_options_employee_props___WEBPACK_IMPORTED_MODULE_0__.render
+_EmployeesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _EmployeesTableRow_vue_vue_type_template_id_721513f0_bindings_putEmployeeInfoToStore_setup_employee_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -1913,12 +1923,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/employees/EmployeesTableControl.vue?vue&type=template&id=5e226d0b&bindings={\"activeFilters\":\"setup\",\"companies\":\"setup\",\"statuses\":\"setup\",\"hrs\":\"setup\",\"recordsPerPage\":\"setup\",\"profile\":\"setup\",\"initializeEmployeeStoreForm\":\"options\"}":
-/*!*************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/employees/EmployeesTableControl.vue?vue&type=template&id=5e226d0b&bindings={"activeFilters":"setup","companies":"setup","statuses":"setup","hrs":"setup","recordsPerPage":"setup","profile":"setup","initializeEmployeeStoreForm":"options"} ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./resources/js/components/tables/employees/EmployeesTableControl.vue?vue&type=template&id=5e226d0b&bindings={\"activeFilters\":\"setup\",\"companies\":\"setup\",\"statuses\":\"setup\",\"hrs\":\"setup\",\"recordsPerPage\":\"setup\",\"profile\":\"setup\",\"initializeEmployeeStoreForm\":\"setup\"}":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/employees/EmployeesTableControl.vue?vue&type=template&id=5e226d0b&bindings={"activeFilters":"setup","companies":"setup","statuses":"setup","hrs":"setup","recordsPerPage":"setup","profile":"setup","initializeEmployeeStoreForm":"setup"} ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableControl.vue?vue&type=template&id=5e226d0b&bindings={"activeFilters":"setup","companies":"setup","statuses":"setup","hrs":"setup","recordsPerPage":"setup","profile":"setup","initializeEmployeeStoreForm":"options"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableControl.vue?vue&type=template&id=5e226d0b&bindings={"activeFilters":"setup","companies":"setup","statuses":"setup","hrs":"setup","recordsPerPage":"setup","profile":"setup","initializeEmployeeStoreForm":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1926,9 +1936,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EmployeesTableControl_vue_vue_type_template_id_5e226d0b_bindings_activeFilters_setup_companies_setup_statuses_setup_hrs_setup_recordsPerPage_setup_profile_setup_initializeEmployeeStoreForm_options___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EmployeesTableControl_vue_vue_type_template_id_5e226d0b_bindings_activeFilters_setup_companies_setup_statuses_setup_hrs_setup_recordsPerPage_setup_profile_setup_initializeEmployeeStoreForm_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EmployeesTableControl_vue_vue_type_template_id_5e226d0b_bindings_activeFilters_setup_companies_setup_statuses_setup_hrs_setup_recordsPerPage_setup_profile_setup_initializeEmployeeStoreForm_options___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./EmployeesTableControl.vue?vue&type=template&id=5e226d0b&bindings={"activeFilters":"setup","companies":"setup","statuses":"setup","hrs":"setup","recordsPerPage":"setup","profile":"setup","initializeEmployeeStoreForm":"options"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableControl.vue?vue&type=template&id=5e226d0b&bindings={\"activeFilters\":\"setup\",\"companies\":\"setup\",\"statuses\":\"setup\",\"hrs\":\"setup\",\"recordsPerPage\":\"setup\",\"profile\":\"setup\",\"initializeEmployeeStoreForm\":\"options\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EmployeesTableControl_vue_vue_type_template_id_5e226d0b_bindings_activeFilters_setup_companies_setup_statuses_setup_hrs_setup_recordsPerPage_setup_profile_setup_initializeEmployeeStoreForm_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./EmployeesTableControl.vue?vue&type=template&id=5e226d0b&bindings={"activeFilters":"setup","companies":"setup","statuses":"setup","hrs":"setup","recordsPerPage":"setup","profile":"setup","initializeEmployeeStoreForm":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableControl.vue?vue&type=template&id=5e226d0b&bindings={\"activeFilters\":\"setup\",\"companies\":\"setup\",\"statuses\":\"setup\",\"hrs\":\"setup\",\"recordsPerPage\":\"setup\",\"profile\":\"setup\",\"initializeEmployeeStoreForm\":\"setup\"}");
 
 
 /***/ }),
@@ -1953,12 +1963,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={\"putEmployeeInfoToStore\":\"options\",\"employee\":\"props\"}":
-/*!***********************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"options","employee":"props"} ***!
-  \***********************************************************************************************************************************************************************/
+/***/ "./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={\"putEmployeeInfoToStore\":\"setup\",\"employee\":\"props\"}":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"setup","employee":"props"} ***!
+  \*********************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"options","employee":"props"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"setup","employee":"props"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1966,9 +1976,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EmployeesTableRow_vue_vue_type_template_id_721513f0_bindings_putEmployeeInfoToStore_options_employee_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EmployeesTableRow_vue_vue_type_template_id_721513f0_bindings_putEmployeeInfoToStore_setup_employee_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EmployeesTableRow_vue_vue_type_template_id_721513f0_bindings_putEmployeeInfoToStore_options_employee_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"options","employee":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={\"putEmployeeInfoToStore\":\"options\",\"employee\":\"props\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EmployeesTableRow_vue_vue_type_template_id_721513f0_bindings_putEmployeeInfoToStore_setup_employee_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"setup","employee":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={\"putEmployeeInfoToStore\":\"setup\",\"employee\":\"props\"}");
 
 
 /***/ }),
@@ -2894,10 +2904,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableControl.vue?vue&type=template&id=5e226d0b&bindings={\"activeFilters\":\"setup\",\"companies\":\"setup\",\"statuses\":\"setup\",\"hrs\":\"setup\",\"recordsPerPage\":\"setup\",\"profile\":\"setup\",\"initializeEmployeeStoreForm\":\"options\"}":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableControl.vue?vue&type=template&id=5e226d0b&bindings={"activeFilters":"setup","companies":"setup","statuses":"setup","hrs":"setup","recordsPerPage":"setup","profile":"setup","initializeEmployeeStoreForm":"options"} ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableControl.vue?vue&type=template&id=5e226d0b&bindings={\"activeFilters\":\"setup\",\"companies\":\"setup\",\"statuses\":\"setup\",\"hrs\":\"setup\",\"recordsPerPage\":\"setup\",\"profile\":\"setup\",\"initializeEmployeeStoreForm\":\"setup\"}":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableControl.vue?vue&type=template&id=5e226d0b&bindings={"activeFilters":"setup","companies":"setup","statuses":"setup","hrs":"setup","recordsPerPage":"setup","profile":"setup","initializeEmployeeStoreForm":"setup"} ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -2946,7 +2956,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "data-toggle": "modal",
       "data-target": "#storeEmployeeForm",
       class: " p-0 btn-primary btn col-sm-2 text-nowrap text-center",
-      onClick: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)((...args) => ($options.initializeEmployeeStoreForm(...args)), ["prevent"]))
+      onClick: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)((...args) => ($setup.initializeEmployeeStoreForm(...args)), ["prevent"]))
     }, "Add employee "),
     _hoisted_2,
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
@@ -3043,10 +3053,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={\"putEmployeeInfoToStore\":\"options\",\"employee\":\"props\"}":
-/*!********************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"options","employee":"props"} ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={\"putEmployeeInfoToStore\":\"setup\",\"employee\":\"props\"}":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"setup","employee":"props"} ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -3133,7 +3143,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.phone_2), 1 /* TEXT */)
     ]),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("  <span class=\"badge badge-outline-success\">Active</span>"),
       ($props.employee.status)
         ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_StatusSelect, {
             key: 0,
@@ -3152,7 +3161,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "data-target": "#editEmployeeForm",
           "data-placement": "right",
           title: "Edit",
-          onClick: _cache[1] || (_cache[1] = $event => ($options.putEmployeeInfoToStore($props.employee)))
+          onClick: _cache[1] || (_cache[1] = $event => ($setup.putEmployeeInfoToStore($props.employee)))
         })
       ])
     ])

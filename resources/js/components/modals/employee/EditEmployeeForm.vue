@@ -50,7 +50,7 @@
                let company = companies[employee.company_id];
 
                 let data = {
-                    id:employee.id,
+                    id: employee.id,
                     address: employee.address ?? "",
                     birthday: employee.birthday ?? "",
                     city: employee.city ?? "",

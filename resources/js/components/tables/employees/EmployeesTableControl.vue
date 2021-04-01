@@ -27,14 +27,13 @@
             <option v-for="(key, value) in statuses" :value="value">{{value}}</option>
         </select>
         <select v-model="activeFilters.recordsPerPage" class="custom-select ml-2 col-sm-2">
-            <option value="" selected >Records</option>
+            <option value="" selected>Records</option>
             <option v-for="record in recordsPerPage" :value="record">
                 {{record}}
             </option>
         </select>
     </div>
 </template>
-
 <script>
     import {useStore} from 'vuex'
     import {computed, reactive, inject, watch} from 'vue'
@@ -45,20 +44,29 @@
 
             let store = useStore();
 
-            let activeFilters = reactive({company_id: '', status: '', hr_id: '', recordsPerPage:''});
+            let activeFilters = reactive({company_id: '', status: '', hr_id: '', recordsPerPage: ''});
 
 
             const filter = async () => {
-                store.commit('employee/setQueryParam', {'key':'company_id', 'value': activeFilters.company_id});
-                store.commit('employee/setQueryParam', {'key':'hr_id', 'value': activeFilters.hr_id});
-                store.commit('employee/setQueryParam', {'key':'status', 'value': activeFilters.status});
-                store.commit('employee/setQueryParam', {'key':'recordsPerPage', 'value': activeFilters.recordsPerPage});
+                store.commit('employee/setQueryParam', {'key': 'company_id', 'value': activeFilters.company_id});
+                store.commit('employee/setQueryParam', {'key': 'hr_id', 'value': activeFilters.hr_id});
+                store.commit('employee/setQueryParam', {'key': 'status', 'value': activeFilters.status});
+                store.commit('employee/setQueryParam', {
+                    'key': 'recordsPerPage',
+                    'value': activeFilters.recordsPerPage
+                });
 
                 let params = store.getters.getEmployeeQueryParams;
 
-                console.log(params.hr_id);
+                store.dispatch('employee/setEmployeesToStore', {
+                    'filter[company_id]': params.company_id,
+                    'filter[status]': params.status,
+                    'filter[hr_id]': params.hr_id,
+                    'page': params.page,
+                    'recordsPerPage': params.recordsPerPage,
+                });
 
-                let employees = await container.EmployeeService.getEmployees({
+                /*let employees = await container.EmployeeService.getEmployees({
                     'filter[company_id]': params.company_id,
                     'filter[status]': params.status,
                     'filter[hr_id]': params.hr_id,
@@ -67,25 +75,10 @@
                 });
 
                 store.commit('employee/setEmployees', employees.employees);
-                store.commit('employee/setPagination', employees.pagination);
+                store.commit('employee/setPagination', employees.pagination);*/
             };
 
-            watch(() => activeFilters, (first, second) => {
-                filter();
-            }, {deep: true});
-
-            return {
-                activeFilters: activeFilters,
-                companies: computed(() => store.getters.getCompanies),
-                statuses: computed(() => store.getters.getStatuses),
-                hrs: computed(() => store.getters.getHrs),
-                recordsPerPage: [10,30,50,100,300,500],
-                profile: computed(() => store.getters.getProfile)
-            }
-
-        },
-        methods: {
-            initializeEmployeeStoreForm() {
+            function initializeEmployeeStoreForm() {
                 let emptyEmployee = {
                     id: "",
                     name: "",
@@ -104,8 +97,23 @@
                     pickup: "",
                 };
 
-                this.$store.commit('formData/setEmployee', emptyEmployee);
+                store.commit('formData/setEmployee', emptyEmployee);
             }
+
+            watch(() => activeFilters, (first, second) => {
+                filter();
+            }, {deep: true});
+
+            return {
+                activeFilters: activeFilters,
+                companies: computed(() => store.getters.getCompanies),
+                statuses: computed(() => store.getters.getStatuses),
+                hrs: computed(() => store.getters.getHrs),
+                recordsPerPage: [10, 30, 50, 100, 300, 500],
+                profile: computed(() => store.getters.getProfile),
+                initializeEmployeeStoreForm
+            }
+
         }
     };
 </script>

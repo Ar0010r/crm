@@ -45,8 +45,8 @@
             }
 
             return {
-                ok, show: computed(() => store.getters.getShowNotification),
-                message: computed(() => store.getters.getNotificationMessage)
+                show: computed(() => store.getters.getShowNotification),
+                message: computed(() => store.getters.getNotificationMessage), ok
             }
         },
     };

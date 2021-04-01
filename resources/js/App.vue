@@ -34,8 +34,11 @@
             setTimeout(() => setProfileToStore(), 2000);
 
             async function setProfileToStore() {
-                let response = await container.UserService.getProfile()
-                store.commit('user/setProfile', response.data);
+
+                store.dispatch('user/setProfileToStore');
+
+                /*let response = await container.UserService.getProfile()
+                store.commit('user/setProfile', response.data);*/
             }
         },
         components: {

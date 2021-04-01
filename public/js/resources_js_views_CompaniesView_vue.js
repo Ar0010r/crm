@@ -435,8 +435,9 @@ __webpack_require__.r(__webpack_exports__);
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_4__.useStore)();
     var companiesAreUndefined = Object.keys(store.getters.getCompanies).length === 0;
     var usersAreUndefined = Object.keys(store.getters.getUsers).length === 0;
-    if (companiesAreUndefined) container.CompanyService.setCompaniesToStore();
-    if (usersAreUndefined) container.UserService.setUsersToStore();
+    if (companiesAreUndefined) store.dispatch('company/setCompaniesToStore'); //if (companiesAreUndefined) container.CompanyService.setCompaniesToStore();
+
+    if (usersAreUndefined) store.dispatch('user/setUsersToStore'); //if (usersAreUndefined) container.UserService.setUsersToStore();
   },
   components: {
     CompaniesTable: _components_tables_companies_CompaniesTable__WEBPACK_IMPORTED_MODULE_0__.default,

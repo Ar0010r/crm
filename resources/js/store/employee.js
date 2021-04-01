@@ -1,27 +1,10 @@
 import md5 from "js-md5";
-import container from "../services/employee.service.js";
+import { container } from '../services/index'
 //import {inject} from 'vue';
 
 export default {
     namespaced: true,
     state: {
-        /*employee: {
-            name: "",
-            email: "",
-            paypal: "",
-            company: "",
-            address: "",
-            city: "",
-            state: "",
-            zip: "",
-            phone_1: "",
-            phone_2: "",
-            birthday: "",
-            race: "",
-            status: "",
-            pickup: "",
-        },*/
-
         employees: {},
         races: {},
         companies: {},
@@ -73,4 +56,23 @@ export default {
             }
         },
     },
+
+    actions: {
+        async setEmployeesToStore({ commit }, params) {
+            let employees = await container.EmployeeService.getEmployees(params);
+
+            commit('setEmployees', employees.employees);
+            commit('setPagination', employees.pagination);
+        },
+
+        async setStatusesToStore({ commit }) {
+            let statuses = await container.EmployeeService.getStatuses();
+            commit('setStatuses', statuses.data);
+        },
+
+        async setRacesToStore({ commit }) {
+            let races = await container.EmployeeService.getRaces();
+            commit('setRaces', races.data);
+        }
+    }
 }

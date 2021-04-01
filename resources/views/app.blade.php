@@ -28,6 +28,9 @@
     <link rel="stylesheet" href="assets/vendor/css/rtl/theme-corporate.css" class="theme-settings-theme-css">
     <link rel="stylesheet" href="assets/vendor/css/rtl/colors.css" class="theme-settings-colors-css">
     <link rel="stylesheet" href="assets/vendor/css/rtl/uikit.css">
+    <link rel="stylesheet" href="assets/vendor/libs/bootstrap-select/bootstrap-select.css">
+    <link rel="stylesheet" href="assets/vendor/libs/select2/select2.css">
+    <link rel="stylesheet" href="assets/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css">
     <link rel="stylesheet" href="assets/css/demo.css">
 
     <!-- Load polyfills -->
@@ -76,6 +79,14 @@
 <script src="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 {{--<script src="assets/vendor/libs/dropzone/dropzone.js"></script>
 <script src="assets/vendor/libs/flow-js/flow.js"></script>--}}
+
+<script src="assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+<script src="assets/vendor/libs/select2/select2.js"></script>
+<script src="assets/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+
+<!-- Demo -->
+<script src="assets/js/demo.js"></script>
+<script src="assets/js/forms_selects.js"></script>
 
 <!-- Demo -->
 <script src="assets/js/demo.js"></script>

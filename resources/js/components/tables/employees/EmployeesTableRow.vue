@@ -28,7 +28,6 @@
         </td>
 
         <td>
-          <!--  <span class="badge badge-outline-success">Active</span>-->
             <StatusSelect v-if="employee.status"
                           :status='employee.status'
                           :id='employee.id'
@@ -52,16 +51,14 @@
 
 <script>
     import StatusSelect from '../../layout/EmployeesStatusSelect';
-    import {useStore} from 'vuex';
-    import {watch} from 'vue';
+    import {useStore} from 'vuex'
 
     export default {
 
-        setup(props) {
+        setup() {
+            const store = useStore();
 
-        },
-        methods: {
-            putEmployeeInfoToStore(employee) {
+            function putEmployeeInfoToStore(employee) {
                 let object = {
                     id: employee.id ?? "",
                     name: employee.name ?? "",
@@ -79,10 +76,13 @@
                     race: employee.race ?? "",
                     status: employee.status ?? "",
                     pickup: employee.pickup ?? "",
-                }
-                this.$store.commit('formData/setEmployee', object);
-                //this.$store.commit('employee/setEmployee', object);
+                };
+
+                store.commit('formData/setEmployee', object);
             }
+
+            return {putEmployeeInfoToStore}
+
         },
         props: {employee: Object},
         components: {

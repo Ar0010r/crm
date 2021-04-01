@@ -285,8 +285,9 @@ __webpack_require__.r(__webpack_exports__);
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_4__.useStore)();
     var usersAreUndefined = Object.keys(store.getters.getUsers).length === 0;
     var rolesAreUndefined = Object.keys(store.getters.getRoles).length === 0;
-    if (usersAreUndefined) container.UserService.setUsersToStore();
-    if (rolesAreUndefined) container.UserService.setRolesToStore();
+    if (usersAreUndefined) store.dispatch('user/setUsersToStore'); //if (usersAreUndefined) container.UserService.setUsersToStore();
+
+    if (rolesAreUndefined) store.dispatch('user/setRolesToStore'); //if (rolesAreUndefined) container.UserService.setRolesToStore();
   },
   components: {
     ManagersTable: _components_tables_managers_ManagersTable_vue__WEBPACK_IMPORTED_MODULE_0__.default,

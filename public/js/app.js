@@ -30233,19 +30233,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     function _setProfileToStore() {
       _setProfileToStore = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return container.UserService.getProfile();
+                store.dispatch('user/setProfileToStore');
+                /*let response = await container.UserService.getProfile()
+                store.commit('user/setProfile', response.data);*/
 
-              case 2:
-                response = _context.sent;
-                store.commit('user/setProfile', response.data);
-
-              case 4:
+              case 1:
               case "end":
                 return _context.stop();
             }
@@ -30466,13 +30462,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
 
     return {
-      ok: ok,
       show: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
         return store.getters.getShowNotification;
       }),
       message: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
         return store.getters.getNotificationMessage;
-      })
+      }),
+      ok: ok
     };
   }
 });
@@ -30921,11 +30917,14 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var CompanyService = /*#__PURE__*/function () {
-  function CompanyService(client, store) {
+  /*constructor(client, store) {
+      this.client = client;
+      this.store = store;
+  }*/
+  function CompanyService(client) {
     _classCallCheck(this, CompanyService);
 
     this.client = client;
-    this.store = store;
   }
 
   _createClass(CompanyService, [{
@@ -31013,46 +31012,21 @@ var CompanyService = /*#__PURE__*/function () {
 
       return updateCompany;
     }()
-  }, {
-    key: "setCompaniesToStore",
-    value: function () {
-      var _setCompaniesToStore = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        var companiesList, companies;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _context4.next = 2;
-                return this.getCompanies();
-
-              case 2:
-                companiesList = _context4.sent;
-                companiesList = companiesList.data;
-                companies = {};
-                Object.keys(companiesList).map(function (key) {
-                  var index = companiesList[key].id;
-                  companies[index] = companiesList[key];
-                });
-                this.store.commit('company/setCompanies', companies);
-
-              case 7:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, this);
-      }));
-
-      function setCompaniesToStore() {
-        return _setCompaniesToStore.apply(this, arguments);
-      }
-
-      return setCompaniesToStore;
-    }()
   }]);
 
   return CompanyService;
 }();
+/*async setCompaniesToStore(){
+        let companiesList = await this.getCompanies();
+        companiesList = companiesList.data;
+
+        let companies = {};
+        Object.keys(companiesList).map(function (key) {
+            let index = companiesList[key].id;
+            companies[index] = companiesList[key];
+        });
+        this.store.commit('company/setCompanies', companies);
+    }*/
 
 /***/ }),
 
@@ -31090,12 +31064,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  //import {useStore} from 'vuex'
 
 var EmployeeService = /*#__PURE__*/function () {
-  function EmployeeService(client, store) {
+  function EmployeeService(client) {
     _classCallCheck(this, EmployeeService);
 
     this.client = client;
-    this.store = store;
   }
+  /*constructor(client, store) {
+      this.client = client;
+      this.store = store;
+  }*/
+
 
   _createClass(EmployeeService, [{
     key: "getEmployees",
@@ -31260,97 +31238,6 @@ var EmployeeService = /*#__PURE__*/function () {
       return getStatuses;
     }()
   }, {
-    key: "setStatusesToStore",
-    value: function () {
-      var _setStatusesToStore = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
-        var statuses;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                _context6.next = 2;
-                return this.getStatuses();
-
-              case 2:
-                statuses = _context6.sent;
-                this.store.commit('employee/setStatuses', statuses.data);
-
-              case 4:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6, this);
-      }));
-
-      function setStatusesToStore() {
-        return _setStatusesToStore.apply(this, arguments);
-      }
-
-      return setStatusesToStore;
-    }()
-  }, {
-    key: "setRacesToStore",
-    value: function () {
-      var _setRacesToStore = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
-        var races;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                _context7.next = 2;
-                return this.getRaces();
-
-              case 2:
-                races = _context7.sent;
-                this.store.commit('employee/setRaces', races.data);
-
-              case 4:
-              case "end":
-                return _context7.stop();
-            }
-          }
-        }, _callee7, this);
-      }));
-
-      function setRacesToStore() {
-        return _setRacesToStore.apply(this, arguments);
-      }
-
-      return setRacesToStore;
-    }()
-  }, {
-    key: "setEmployeesToStore",
-    value: function () {
-      var _setEmployeesToStore = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8(params) {
-        var employees;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
-          while (1) {
-            switch (_context8.prev = _context8.next) {
-              case 0:
-                _context8.next = 2;
-                return this.getEmployees(params);
-
-              case 2:
-                employees = _context8.sent;
-                this.store.commit('employee/setEmployees', employees.employees);
-                this.store.commit('employee/setPagination', employees.pagination);
-
-              case 5:
-              case "end":
-                return _context8.stop();
-            }
-          }
-        }, _callee8, this);
-      }));
-
-      function setEmployeesToStore(_x4) {
-        return _setEmployeesToStore.apply(this, arguments);
-      }
-
-      return setEmployeesToStore;
-    }()
-  }, {
     key: "setMd5Keys",
     value: function setMd5Keys(employeesList) {
       var employees = {};
@@ -31364,6 +31251,21 @@ var EmployeeService = /*#__PURE__*/function () {
 
   return EmployeeService;
 }();
+/*async setStatusesToStore() {
+        let statuses = await this.getStatuses();
+        this.store.commit('setStatuses', statuses.data);
+    }*/
+
+/*async setRacesToStore() {
+    let races = await this.getRaces();
+    this.store.commit('setRaces', races.data);
+}*/
+
+/*async setEmployeesToStore(params) {
+    let employees = await this.getEmployees(params);
+    this.store.commit('employee/setEmployees', employees.employees);
+    this.store.commit('employee/setPagination', employees.pagination);
+}*/
 
 /***/ }),
 
@@ -31402,13 +31304,15 @@ var serviceProviders = {
     return new _auth_service__WEBPACK_IMPORTED_MODULE_4__.AuthService((axios__WEBPACK_IMPORTED_MODULE_0___default()), _store__WEBPACK_IMPORTED_MODULE_1__.default);
   },
   EmployeeService: function EmployeeService() {
-    return new _employee_service__WEBPACK_IMPORTED_MODULE_2__.EmployeeService((axios__WEBPACK_IMPORTED_MODULE_0___default()), _store__WEBPACK_IMPORTED_MODULE_1__.default);
+    return new _employee_service__WEBPACK_IMPORTED_MODULE_2__.EmployeeService((axios__WEBPACK_IMPORTED_MODULE_0___default()));
   },
+  //EmployeeService: () => new EmployeeService(axios, store),
   CompanyService: function CompanyService() {
-    return new _company_service__WEBPACK_IMPORTED_MODULE_3__.CompanyService((axios__WEBPACK_IMPORTED_MODULE_0___default()), _store__WEBPACK_IMPORTED_MODULE_1__.default);
+    return new _company_service__WEBPACK_IMPORTED_MODULE_3__.CompanyService((axios__WEBPACK_IMPORTED_MODULE_0___default()));
   },
+  //CompanyService: () => new CompanyService(axios, store),
   UserService: function UserService() {
-    return new _user_service__WEBPACK_IMPORTED_MODULE_5__.UserService((axios__WEBPACK_IMPORTED_MODULE_0___default()), _store__WEBPACK_IMPORTED_MODULE_1__.default);
+    return new _user_service__WEBPACK_IMPORTED_MODULE_5__.UserService((axios__WEBPACK_IMPORTED_MODULE_0___default()));
   }
 };
 var container = new Proxy(serviceProviders, {
@@ -31456,12 +31360,16 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var UserService = /*#__PURE__*/function () {
-  function UserService(client, store) {
+  function UserService(client) {
     _classCallCheck(this, UserService);
 
     this.client = client;
-    this.store = store;
   }
+  /*constructor(client, store) {
+      this.client = client;
+      this.store = store;
+  }*/
+
 
   _createClass(UserService, [{
     key: "getUsers",
@@ -31548,51 +31456,21 @@ var UserService = /*#__PURE__*/function () {
       return getRoles;
     }()
   }, {
-    key: "setRolesToStore",
+    key: "storeUser",
     value: function () {
-      var _setRolesToStore = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        var response;
+      var _storeUser = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(user) {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _context4.next = 2;
-                return this.getRoles();
+                return _context4.abrupt("return", this.client.post('api/users', user));
 
-              case 2:
-                response = _context4.sent;
-                this.store.commit('user/setRoles', response.data);
-
-              case 4:
+              case 1:
               case "end":
                 return _context4.stop();
             }
           }
         }, _callee4, this);
-      }));
-
-      function setRolesToStore() {
-        return _setRolesToStore.apply(this, arguments);
-      }
-
-      return setRolesToStore;
-    }()
-  }, {
-    key: "storeUser",
-    value: function () {
-      var _storeUser = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(user) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                return _context5.abrupt("return", this.client.post('api/users', user));
-
-              case 1:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5, this);
       }));
 
       function storeUser(_x) {
@@ -31604,17 +31482,17 @@ var UserService = /*#__PURE__*/function () {
   }, {
     key: "updateUser",
     value: function () {
-      var _updateUser = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6(user) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+      var _updateUser = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(user) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 if (!user.file) {
-                  _context6.next = 4;
+                  _context5.next = 4;
                   break;
                 }
 
-                _context6.next = 3;
+                _context5.next = 3;
                 return this.client.put('api/users/' + user.id, user, {
                   headers: {
                     'Content-Type': 'multipart/form-data'
@@ -31622,21 +31500,21 @@ var UserService = /*#__PURE__*/function () {
                 });
 
               case 3:
-                return _context6.abrupt("return", _context6.sent);
+                return _context5.abrupt("return", _context5.sent);
 
               case 4:
-                _context6.next = 6;
+                _context5.next = 6;
                 return this.client.put('api/users/' + user.id, user);
 
               case 6:
-                return _context6.abrupt("return", _context6.sent);
+                return _context5.abrupt("return", _context5.sent);
 
               case 7:
               case "end":
-                return _context6.stop();
+                return _context5.stop();
             }
           }
-        }, _callee6, this);
+        }, _callee5, this);
       }));
 
       function updateUser(_x2) {
@@ -31645,88 +31523,49 @@ var UserService = /*#__PURE__*/function () {
 
       return updateUser;
     }()
-  }, {
-    key: "setProfileToStore",
-    value: function () {
-      var _setProfileToStore = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                _context7.next = 2;
-                return this.getProfile();
-
-              case 2:
-                response = _context7.sent;
-                this.store.commit('user/setProfile', response.data);
-
-              case 4:
-              case "end":
-                return _context7.stop();
-            }
-          }
-        }, _callee7, this);
-      }));
-
-      function setProfileToStore() {
-        return _setProfileToStore.apply(this, arguments);
-      }
-
-      return setProfileToStore;
-    }()
-  }, {
-    key: "setUsersToStore",
-    value: function () {
-      var _setUsersToStore = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8(params) {
-        var response, usersList, hrs, personnels, users;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
-          while (1) {
-            switch (_context8.prev = _context8.next) {
-              case 0:
-                _context8.next = 2;
-                return this.getUsers(params);
-
-              case 2:
-                response = _context8.sent;
-                usersList = response.data;
-                hrs = {};
-                Object.keys(usersList).map(function (key) {
-                  var index = usersList[key].id;
-                  if (usersList[key].role === 'hr' || usersList[key].role === 'top hr') hrs[index] = usersList[key];
-                });
-                personnels = {};
-                Object.keys(usersList).map(function (key) {
-                  var index = usersList[key].id;
-                  if (usersList[key].role === 'personnel') personnels[index] = usersList[key];
-                });
-                users = {};
-                Object.keys(usersList).map(function (key) {
-                  var index = usersList[key].id;
-                  users[index] = usersList[key];
-                });
-                this.store.commit('user/setUsers', users);
-                this.store.commit('user/setHrs', hrs);
-                this.store.commit('user/setPersonnels', personnels);
-
-              case 13:
-              case "end":
-                return _context8.stop();
-            }
-          }
-        }, _callee8, this);
-      }));
-
-      function setUsersToStore(_x3) {
-        return _setUsersToStore.apply(this, arguments);
-      }
-
-      return setUsersToStore;
-    }()
   }]);
 
   return UserService;
 }();
+/*async setRolesToStore() {
+        let response = await this.getRoles();
+        this.store.commit('user/setRoles', response.data);
+    }*/
+
+/*async setProfileToStore() {
+    let response = await this.getProfile();
+    this.store.commit('user/setProfile', response.data);
+}*/
+
+/*async setUsersToStore(params) {
+    let response = await this.getUsers(params);
+
+    let usersList = response.data;
+
+    let hrs = {};
+    Object.keys(usersList).map(function (key) {
+        let index = usersList[key].id;
+        if (usersList[key].role === 'hr' || usersList[key].role === 'top hr') hrs[index] = usersList[key];
+    });
+
+    let personnels = {};
+    Object.keys(usersList).map(function (key) {
+        let index = usersList[key].id;
+        if (usersList[key].role === 'personnel') personnels[index] = usersList[key];
+    });
+
+    let users = {};
+    Object.keys(usersList).map(function (key) {
+        let index = usersList[key].id;
+        users[index] = usersList[key];
+    });
+
+
+    this.store.commit('user/setUsers', users);
+    this.store.commit('user/setHrs', hrs);
+    this.store.commit('user/setPersonnels', personnels);
+
+}*/
 
 /***/ }),
 
@@ -31747,6 +31586,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/index */ "./resources/js/services/index.js");
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -31758,6 +31598,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -31785,7 +31626,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     setCompanyById: function setCompanyById(state, company) {
-      console.log('ffffffff', company);
       var key = company.id;
 
       if (state.companies[key]) {
@@ -31795,11 +31635,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         newCompanyObj[key] = company;
         state.companies = _objectSpread(_objectSpread({}, newCompanyObj), state.companies);
       }
-
-      console.log(state.companies);
     }
   },
-  actions: {},
+  actions: {
+    setCompaniesToStore: function setCompaniesToStore(_ref) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var commit, companiesList, companies;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                commit = _ref.commit;
+                _context2.next = 3;
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.CompanyService.getCompanies();
+
+              case 3:
+                companiesList = _context2.sent;
+                companiesList = companiesList.data;
+                companies = {};
+                Object.keys(companiesList).map(function (key) {
+                  var index = companiesList[key].id;
+                  companies[index] = companiesList[key];
+                });
+                commit('setCompanies', companies);
+
+              case 8:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    }
+  },
   modules: {}
 });
 
@@ -31820,9 +31688,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-md5 */ "./node_modules/js-md5/src/md5.js");
-/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_md5__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _services_employee_service_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/employee.service.js */ "./resources/js/services/employee.service.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! js-md5 */ "./node_modules/js-md5/src/md5.js");
+/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(js_md5__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _services_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/index */ "./resources/js/services/index.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -31835,22 +31711,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   namespaced: true,
   state: {
-    /*employee: {
-        name: "",
-        email: "",
-        paypal: "",
-        company: "",
-        address: "",
-        city: "",
-        state: "",
-        zip: "",
-        phone_1: "",
-        phone_2: "",
-        birthday: "",
-        race: "",
-        status: "",
-        pickup: "",
-    },*/
     employees: {},
     races: {},
     companies: {},
@@ -31871,7 +31731,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       state.queryParams[key] = value;
     },
     setEmployeeStatus: function setEmployeeStatus(state, params) {
-      var key = js_md5__WEBPACK_IMPORTED_MODULE_0___default()(params.id.toString());
+      var key = js_md5__WEBPACK_IMPORTED_MODULE_1___default()(params.id.toString());
       state.employees[key].status = params.newStatus;
     },
     setRaces: function setRaces(state, races) {
@@ -31887,7 +31747,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       state.pagination = pagination;
     },
     setEmployeeById: function setEmployeeById(state, employee) {
-      var key = js_md5__WEBPACK_IMPORTED_MODULE_0___default()(employee.id.toString());
+      var key = js_md5__WEBPACK_IMPORTED_MODULE_1___default()(employee.id.toString());
 
       if (state.employees[key]) {
         state.employees[key] = _objectSpread(_objectSpread({}, state.employees[key]), employee);
@@ -31898,6 +31758,78 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         state.employees = _objectSpread(_objectSpread({}, newEmpObj), state.employees);
       }
+    }
+  },
+  actions: {
+    setEmployeesToStore: function setEmployeesToStore(_ref2, params) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var commit, employees;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref2.commit;
+                _context.next = 3;
+                return _services_index__WEBPACK_IMPORTED_MODULE_2__.container.EmployeeService.getEmployees(params);
+
+              case 3:
+                employees = _context.sent;
+                commit('setEmployees', employees.employees);
+                commit('setPagination', employees.pagination);
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    setStatusesToStore: function setStatusesToStore(_ref3) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var commit, statuses;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                commit = _ref3.commit;
+                _context2.next = 3;
+                return _services_index__WEBPACK_IMPORTED_MODULE_2__.container.EmployeeService.getStatuses();
+
+              case 3:
+                statuses = _context2.sent;
+                commit('setStatuses', statuses.data);
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    setRacesToStore: function setRacesToStore(_ref4) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var commit, races;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                commit = _ref4.commit;
+                _context3.next = 3;
+                return _services_index__WEBPACK_IMPORTED_MODULE_2__.container.EmployeeService.getRaces();
+
+              case 3:
+                races = _context3.sent;
+                commit('setRaces', races.data);
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     }
   }
 });
@@ -32133,13 +32065,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-md5 */ "./node_modules/js-md5/src/md5.js");
-/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_md5__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! js-md5 */ "./node_modules/js-md5/src/md5.js");
+/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(js_md5__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _services_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/index */ "./resources/js/services/index.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -32161,7 +32103,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mutations: {
     setProfile: function setProfile(state, user) {
       state.profile = user;
-      console.log('in store', state.profile);
     },
     setUsers: function setUsers(state, users) {
       state.users = users;
@@ -32180,7 +32121,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (user.role === 'personnel') state.personnels[key] = user;
       if (user.role === 'hr') state.hrs[key] = user;
-      console.log(state.users);
     },
     setRoles: function setRoles(state, roles) {
       state.roles = roles;
@@ -32192,8 +32132,95 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       state.personnels = personnels;
     }
   },
-  actions: {},
-  modules: {}
+  actions: {
+    setProfileToStore: function setProfileToStore(_ref) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var commit, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref.commit;
+                _context.next = 3;
+                return _services_index__WEBPACK_IMPORTED_MODULE_2__.container.UserService.getProfile();
+
+              case 3:
+                response = _context.sent;
+                commit('setProfile', response.data);
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    setUsersToStore: function setUsersToStore(_ref2, params) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var commit, response, usersList, hrs, personnels, users;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                commit = _ref2.commit;
+                _context2.next = 3;
+                return _services_index__WEBPACK_IMPORTED_MODULE_2__.container.UserService.getUsers(params);
+
+              case 3:
+                response = _context2.sent;
+                usersList = response.data;
+                hrs = {};
+                Object.keys(usersList).map(function (key) {
+                  var index = usersList[key].id;
+                  if (usersList[key].role === 'hr' || usersList[key].role === 'top hr') hrs[index] = usersList[key];
+                });
+                personnels = {};
+                Object.keys(usersList).map(function (key) {
+                  var index = usersList[key].id;
+                  if (usersList[key].role === 'personnel') personnels[index] = usersList[key];
+                });
+                users = {};
+                Object.keys(usersList).map(function (key) {
+                  var index = usersList[key].id;
+                  users[index] = usersList[key];
+                });
+                commit('setUsers', users);
+                commit('setHrs', hrs);
+                commit('setPersonnels', personnels);
+
+              case 14:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    setRolesToStore: function setRolesToStore(_ref3) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var commit, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                commit = _ref3.commit;
+                _context3.next = 3;
+                return _services_index__WEBPACK_IMPORTED_MODULE_2__.container.UserService.getRoles();
+
+              case 3:
+                response = _context3.sent;
+                commit('setRoles', response.data);
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    }
+  }
 });
 
 /***/ }),
@@ -42356,7 +42383,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _Notification_vue_vue_type_template_id_4633c519_bindings_ok_setup_show_setup_message_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Notification.vue?vue&type=template&id=4633c519&bindings={"ok":"setup","show":"setup","message":"setup"} */ "./resources/js/components/modals/Notification.vue?vue&type=template&id=4633c519&bindings={\"ok\":\"setup\",\"show\":\"setup\",\"message\":\"setup\"}");
+/* harmony import */ var _Notification_vue_vue_type_template_id_4633c519_bindings_show_setup_message_setup_ok_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Notification.vue?vue&type=template&id=4633c519&bindings={"show":"setup","message":"setup","ok":"setup"} */ "./resources/js/components/modals/Notification.vue?vue&type=template&id=4633c519&bindings={\"show\":\"setup\",\"message\":\"setup\",\"ok\":\"setup\"}");
 /* harmony import */ var _Notification_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Notification.vue?vue&type=script&lang=js */ "./resources/js/components/modals/Notification.vue?vue&type=script&lang=js");
 /* harmony import */ var _Notification_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Notification.vue?vue&type=style&index=0&lang=css */ "./resources/js/components/modals/Notification.vue?vue&type=style&index=0&lang=css");
 
@@ -42364,7 +42391,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-_Notification_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _Notification_vue_vue_type_template_id_4633c519_bindings_ok_setup_show_setup_message_setup___WEBPACK_IMPORTED_MODULE_0__.render
+_Notification_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _Notification_vue_vue_type_template_id_4633c519_bindings_show_setup_message_setup_ok_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -42646,12 +42673,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/modals/Notification.vue?vue&type=template&id=4633c519&bindings={\"ok\":\"setup\",\"show\":\"setup\",\"message\":\"setup\"}":
+/***/ "./resources/js/components/modals/Notification.vue?vue&type=template&id=4633c519&bindings={\"show\":\"setup\",\"message\":\"setup\",\"ok\":\"setup\"}":
 /*!************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/modals/Notification.vue?vue&type=template&id=4633c519&bindings={"ok":"setup","show":"setup","message":"setup"} ***!
+  !*** ./resources/js/components/modals/Notification.vue?vue&type=template&id=4633c519&bindings={"show":"setup","message":"setup","ok":"setup"} ***!
   \************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/Notification.vue?vue&type=template&id=4633c519&bindings={"ok":"setup","show":"setup","message":"setup"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/Notification.vue?vue&type=template&id=4633c519&bindings={"show":"setup","message":"setup","ok":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -42659,9 +42686,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Notification_vue_vue_type_template_id_4633c519_bindings_ok_setup_show_setup_message_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Notification_vue_vue_type_template_id_4633c519_bindings_show_setup_message_setup_ok_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Notification_vue_vue_type_template_id_4633c519_bindings_ok_setup_show_setup_message_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Notification.vue?vue&type=template&id=4633c519&bindings={"ok":"setup","show":"setup","message":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/Notification.vue?vue&type=template&id=4633c519&bindings={\"ok\":\"setup\",\"show\":\"setup\",\"message\":\"setup\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Notification_vue_vue_type_template_id_4633c519_bindings_show_setup_message_setup_ok_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Notification.vue?vue&type=template&id=4633c519&bindings={"show":"setup","message":"setup","ok":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/Notification.vue?vue&type=template&id=4633c519&bindings={\"show\":\"setup\",\"message\":\"setup\",\"ok\":\"setup\"}");
 
 
 /***/ }),
@@ -43109,9 +43136,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/Notification.vue?vue&type=template&id=4633c519&bindings={\"ok\":\"setup\",\"show\":\"setup\",\"message\":\"setup\"}":
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/Notification.vue?vue&type=template&id=4633c519&bindings={\"show\":\"setup\",\"message\":\"setup\",\"ok\":\"setup\"}":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/Notification.vue?vue&type=template&id=4633c519&bindings={"ok":"setup","show":"setup","message":"setup"} ***!
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/Notification.vue?vue&type=template&id=4633c519&bindings={"show":"setup","message":"setup","ok":"setup"} ***!
   \*********************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */

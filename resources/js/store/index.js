@@ -14,7 +14,6 @@ export default createStore({
         getHrs: state => state.user.hrs,
         getPersonnels: state => state.user.personnels,
 
-
         getUser: state => state.formData.user,
         getEmployee: state => state.formData.employee,
         getCompany: state => state.formData.company,

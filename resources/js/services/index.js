@@ -12,9 +12,11 @@ import { UserService } from "./user.service";
 //axios.defaults.baseURL = '/api/';
 const serviceProviders = {
     AuthService: () => new AuthService(axios, store),
-    EmployeeService: () => new EmployeeService(axios, store),
-    CompanyService: () => new CompanyService(axios, store),
-    UserService: () => new UserService(axios, store),
+    EmployeeService: () => new EmployeeService(axios),
+    //EmployeeService: () => new EmployeeService(axios, store),
+    CompanyService: () => new CompanyService(axios),
+    //CompanyService: () => new CompanyService(axios, store),
+    UserService: () => new UserService(axios),
 };
 
 export const container = (new Proxy(serviceProviders, {

@@ -49,15 +49,3 @@
         },
     };
 </script>
-
-
-
-<!--const login = async () => {
-let res = await container.AuthService.login(user);
-if (res) {
-router.push("/employees");
-} else {
-isInvalid.value = true;
-dBlock.value = true;
-}
-};-->

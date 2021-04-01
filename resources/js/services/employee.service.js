@@ -4,10 +4,14 @@ import md5 from "js-md5";
 
 export class EmployeeService {
 
-    constructor(client, store) {
+    constructor(client) {
+        this.client = client;
+    }
+
+    /*constructor(client, store) {
         this.client = client;
         this.store = store;
-    }
+    }*/
 
     async getEmployees(params) {
         let response = await this.client.get('/api/employees', {params});
@@ -41,22 +45,6 @@ export class EmployeeService {
         return await this.client.get('api/statuses');
     }
 
-    async setStatusesToStore() {
-        let statuses = await this.getStatuses();
-        this.store.commit('employee/setStatuses', statuses.data);
-    }
-
-    async setRacesToStore() {
-        let races = await this.getRaces();
-        this.store.commit('employee/setRaces', races.data);
-    }
-
-    async setEmployeesToStore(params) {
-        let employees = await this.getEmployees(params);
-        this.store.commit('employee/setEmployees', employees.employees);
-        this.store.commit('employee/setPagination', employees.pagination);
-    }
-
     setMd5Keys(employeesList){
         let employees = {};
         Object.keys(employeesList).map(function (key) {
@@ -68,3 +56,19 @@ export class EmployeeService {
     }
 
 }
+
+/*async setStatusesToStore() {
+        let statuses = await this.getStatuses();
+        this.store.commit('setStatuses', statuses.data);
+    }*/
+
+/*async setRacesToStore() {
+    let races = await this.getRaces();
+    this.store.commit('setRaces', races.data);
+}*/
+
+/*async setEmployeesToStore(params) {
+    let employees = await this.getEmployees(params);
+    this.store.commit('employee/setEmployees', employees.employees);
+    this.store.commit('employee/setPagination', employees.pagination);
+}*/

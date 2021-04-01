@@ -1,4 +1,5 @@
 import {createStore} from "vuex";
+import { container } from '../services/index'
 
 export default {
     namespaced: true,
@@ -13,7 +14,6 @@ export default {
             state.companies = companies;
         },
         setCompanyById(state, company) {
-            console.log('ffffffff', company);
             let key = company.id;
             if (state.companies[key]) {
                 state.companies[key] = {...state.companies[key], ...company};
@@ -23,10 +23,21 @@ export default {
                 newCompanyObj[key] = company;
                 state.companies = {...newCompanyObj, ...state.companies};
             }
-
-            console.log(state.companies);
         },
     },
-    actions: {},
+    actions: {
+        async setCompaniesToStore({ commit }){
+            let companiesList = await container.CompanyService.getCompanies();
+            companiesList = companiesList.data;
+
+            let companies = {};
+            Object.keys(companiesList).map(function (key) {
+                let index = companiesList[key].id;
+                companies[index] = companiesList[key];
+            });
+
+            commit('setCompanies', companies);
+        }
+    },
     modules: {}
 }

@@ -20,8 +20,10 @@
             let companiesAreUndefined = Object.keys(store.getters.getCompanies).length === 0;
             let usersAreUndefined = Object.keys(store.getters.getUsers).length === 0;
 
-            if (companiesAreUndefined) container.CompanyService.setCompaniesToStore();
-            if (usersAreUndefined) container.UserService.setUsersToStore();
+            if (companiesAreUndefined) store.dispatch('company/setCompaniesToStore');
+            //if (companiesAreUndefined) container.CompanyService.setCompaniesToStore();
+            if (usersAreUndefined) store.dispatch('user/setUsersToStore');
+            //if (usersAreUndefined) container.UserService.setUsersToStore();
         },
         components: {
             CompaniesTable,
