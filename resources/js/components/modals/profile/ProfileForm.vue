@@ -39,7 +39,6 @@
     import ManagerFormFields from '../manager/ManagerFormFields';
     import {useStore} from 'vuex';
     import {computed, inject, ref} from 'vue';
-    import axios from 'axios'
 
     export default {
         setup() {
@@ -60,17 +59,14 @@
                 formData.append('login', user.login);
                 formData.set('_method', 'put');
 
-                let response = await axios.post('api/users/' + user.id, formData, {headers: {'Content-Type': 'multipart/form-data'}});
-                let newUser = response.data;
+                try {
+                    let response = await container.UserService.updateUser(formData);
 
-                console.log(response);
-                user.login = newUser.login;
-                user.avatar = newUser.avatar;
-
-                store.commit('user/setProfile', user);
-
-                document.getElementById('profileFormClose').click()
-
+                    store.commit('user/setProfile', response.data);
+                    document.getElementById('profileFormClose').click()
+                } catch (e) {
+                    store.dispatch('notification/activate', e.response.data)
+                }
             }
 
             function setFile(event) {

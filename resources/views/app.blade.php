@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="assets/vendor/fonts/linearicons.css">
     <link rel="stylesheet" href="assets/vendor/fonts/open-iconic.css">
     <link rel="stylesheet" href="assets/vendor/fonts/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="assets/vendor/libs/growl/growl.css">
 
     <!-- Core stylesheets -->
     <link rel="stylesheet" href="assets/vendor/css/rtl/bootstrap.css" class="theme-settings-bootstrap-css">
@@ -86,6 +87,9 @@
 
 <!-- Demo -->
 <script src="assets/js/demo.js"></script>
+<script src="assets/js/forms_selects.js"></script>
+<script src="assets/vendor/libs/growl/growl.js"></script>
+<script src="assets/js/ui_notifications.js"></script>
 <script src="assets/js/forms_selects.js"></script>
 
 <!-- Demo -->

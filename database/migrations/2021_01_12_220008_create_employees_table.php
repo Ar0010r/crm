@@ -18,7 +18,7 @@ class CreateEmployeesTable extends Migration
             $table->id();
             $table->foreignId('company_id')->nullable();
             $table->foreignId('hr_id')->nullable();
-            $table->string('status')->default(Status::NEW)->nullable();
+            $table->string('status')->default(Status::NEW);
             $table->string('name')->nullable();
             $table->date('birthday')->nullable();
             $table->string('avatar')->nullable();

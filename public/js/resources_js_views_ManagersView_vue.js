@@ -45,20 +45,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                _context.prev = 0;
+                _context.next = 3;
                 return container.UserService.storeUser(user);
 
-              case 2:
+              case 3:
                 storedManager = _context.sent;
                 store.commit('user/setUserById', storedManager.data.user);
                 document.getElementById('storeUserFormClose').click();
+                _context.next = 11;
+                break;
 
-              case 5:
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](0);
+                store.dispatch('notification/activate', _context.t0.response.data, {
+                  root: true
+                });
+
+              case 11:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[0, 8]]);
       }));
       return _storeManager.apply(this, arguments);
     }
@@ -123,19 +133,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 if (user.password === null) delete user.password;
                 delete user.dataIsValid;
-                _context.next = 4;
+                _context.prev = 2;
+                _context.next = 5;
                 return container.UserService.updateUser(user);
 
-              case 4:
+              case 5:
                 store.commit('user/setUserById', user);
                 document.getElementById('editUserFormClose').click();
+                _context.next = 12;
+                break;
 
-              case 6:
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](2);
+                store.dispatch('notification/activate', _context.t0.response.data, {
+                  root: true
+                });
+
+              case 12:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[2, 9]]);
       }));
       return _updateUser.apply(this, arguments);
     }
@@ -272,22 +292,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_tables_managers_ManagersTable_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/tables/managers/ManagersTable.vue */ "./resources/js/components/tables/managers/ManagersTable.vue");
 /* harmony import */ var _components_modals_manager_CreateManagerForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/modals/manager/CreateManagerForm.vue */ "./resources/js/components/modals/manager/CreateManagerForm.vue");
 /* harmony import */ var _components_modals_manager_EditManagerForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/modals/manager/EditManagerForm.vue */ "./resources/js/components/modals/manager/EditManagerForm.vue");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
-
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
 
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
-    var container = (0,vue__WEBPACK_IMPORTED_MODULE_3__.inject)('container');
-    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_4__.useStore)();
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
     var usersAreUndefined = Object.keys(store.getters.getUsers).length === 0;
     var rolesAreUndefined = Object.keys(store.getters.getRoles).length === 0;
-    if (usersAreUndefined) store.dispatch('user/setUsersToStore'); //if (usersAreUndefined) container.UserService.setUsersToStore();
-
-    if (rolesAreUndefined) store.dispatch('user/setRolesToStore'); //if (rolesAreUndefined) container.UserService.setRolesToStore();
+    if (usersAreUndefined) store.dispatch('user/setUsersToStore');
+    if (rolesAreUndefined) store.dispatch('user/setRolesToStore');
   },
   components: {
     ManagersTable: _components_tables_managers_ManagersTable_vue__WEBPACK_IMPORTED_MODULE_0__.default,
@@ -807,7 +823,7 @@ const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
   type: "button",
   class: "btn btn-default",
   "data-dismiss": "modal"
-}, "Close", -1 /* HOISTED */)
+}, "Close ", -1 /* HOISTED */)
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_ManagerFormFields = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ManagerFormFields")
@@ -829,7 +845,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             type: "button",
             class: "btn btn-primary",
             onClick: _cache[1] || (_cache[1] = $event => ($setup.updateUser($setup.user)))
-          }, "Update", 8 /* PROPS */, ["disabled"])
+          }, "Update ", 8 /* PROPS */, ["disabled"])
         ])
       ])
     ])

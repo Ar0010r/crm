@@ -23,6 +23,7 @@ export default createStore({
 
         getRaces: state => state.employee.races,
         getStatuses: state => state.employee.statuses,
+        getEmptyEmployee: state => state.employee.emptyEmployee,
         getEmployees: state => state.employee.employees,
         getEmployeesPagination: state => state.employee.pagination,
         getEmployeeQueryParams: state => state.employee.queryParams,

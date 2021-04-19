@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Models\User;
 use App\Shared\Value\Status;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\Searchable\ModelSearchAspect;
 use Spatie\Searchable\Search;
@@ -67,7 +68,8 @@ class EmployeeService
     {
         $search = $this->search
             ->registerModel(Employee::class, $this->getSearchAspect())
-            ->search($keyword)->toArray();
+            ->search($keyword)
+            ->toArray();
 
         return array_map(function ($item) {
             return $item->searchable;

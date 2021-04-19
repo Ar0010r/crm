@@ -17,21 +17,52 @@ trait EmployeeRequestRulesTrait
     {
         return [
             '*.company_id' => 'nullable|exists:companies,id',
+            'company_id' => 'nullable|exists:companies,id',
+
             '*.company' => 'nullable|string|in:' . implode(',', Company::all()->pluck('name')->toArray()),
-            '*.hr_id' => ['nullable|exists:users,id'],
-            '*.name' => 'nullable|string',
+            'company' => 'nullable|string|in:' . implode(',', Company::all()->pluck('name')->toArray()),
+
+            '*.hr_id' => 'nullable|exists:users,id',
+            'hr_id' => 'nullable|exists:users,id',
+
+            '*.name' => 'nullable|regex:/^[a-zA-Z ]+$/',
+            'name' => 'nullable|regex:/^[a-zA-Z ]+$/',
+
             '*.avatar' => 'nullable|string',
+            'avatar' => 'nullable|string',
+
             '*.email' => 'nullable|email|unique:employees|unique:employees,paypal',
+            'email' => 'nullable|email|unique:employees|unique:employees,paypal',
+
             '*.paypal' => 'nullable|email|unique:employees|unique:employees,email',
+            'paypal' => 'nullable|email|unique:employees|unique:employees,email',
+
             '*.address' => 'nullable|string',
+            'address' => 'nullable|string',
+
             '*.city' => 'nullable|string',
+            'city' => 'nullable|string',
+
             '*.state' => 'nullable|string|in:' . $this->states,
+            'state' => 'nullable|string|in:' . $this->states,
+
             '*.zip' => 'nullable|regex:/^\d{5}(-\d{4})?$/',
+            'zip' => 'nullable|regex:/^\d{5}(-\d{4})?$/',
+
             '*.phone_1' => 'nullable|regex:/^\d{3}-\d{3}-\d{4}$/',
+            'phone_1' => 'nullable|regex:/^\d{3}-\d{3}-\d{4}$/',
+
             '*.phone_2' => 'nullable|regex:/^\d{3}-\d{3}-\d{4}$/',
+            'phone_2' => 'nullable|regex:/^\d{3}-\d{3}-\d{4}$/',
+
+            '*.birthday' => 'nullable|date',
             'birthday' => 'nullable|date',
+
             '*.race' => 'nullable|string|in:' . implode(',', Race::RACES),
+            'race' => 'nullable|string|in:' . implode(',', Race::RACES),
+
             '*.status' => 'nullable|string|in:' . implode(',', Status::STATUSES),
+            'status' => 'nullable|string|in:' . implode(',', Status::STATUSES),
         ];
     }
 }

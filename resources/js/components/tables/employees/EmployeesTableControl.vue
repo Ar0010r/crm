@@ -36,12 +36,10 @@
 </template>
 <script>
     import {useStore} from 'vuex'
-    import {computed, reactive, inject, watch} from 'vue'
+    import {computed, reactive, watch} from 'vue'
 
     export default {
         setup() {
-            const container = inject('container');
-
             let store = useStore();
 
             let activeFilters = reactive({company_id: '', status: '', hr_id: '', recordsPerPage: ''});
@@ -65,17 +63,6 @@
                     'page': params.page,
                     'recordsPerPage': params.recordsPerPage,
                 });
-
-                /*let employees = await container.EmployeeService.getEmployees({
-                    'filter[company_id]': params.company_id,
-                    'filter[status]': params.status,
-                    'filter[hr_id]': params.hr_id,
-                    'page': params.page,
-                    'recordsPerPage': params.recordsPerPage,
-                });
-
-                store.commit('employee/setEmployees', employees.employees);
-                store.commit('employee/setPagination', employees.pagination);*/
             };
 
             function initializeEmployeeStoreForm() {

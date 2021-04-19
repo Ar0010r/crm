@@ -14,16 +14,12 @@
 
     export default {
         setup() {
-            const container = inject('container');
-
             let store = useStore();
             let companiesAreUndefined = Object.keys(store.getters.getCompanies).length === 0;
             let usersAreUndefined = Object.keys(store.getters.getUsers).length === 0;
 
             if (companiesAreUndefined) store.dispatch('company/setCompaniesToStore');
-            //if (companiesAreUndefined) container.CompanyService.setCompaniesToStore();
             if (usersAreUndefined) store.dispatch('user/setUsersToStore');
-            //if (usersAreUndefined) container.UserService.setUsersToStore();
         },
         components: {
             CompaniesTable,

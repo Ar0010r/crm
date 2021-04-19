@@ -1,17 +1,10 @@
 import md5 from "js-md5";
 
-//import {useStore} from 'vuex'
-
 export class EmployeeService {
 
     constructor(client) {
         this.client = client;
     }
-
-    /*constructor(client, store) {
-        this.client = client;
-        this.store = store;
-    }*/
 
     async getEmployees(params) {
         let response = await this.client.get('/api/employees', {params});
@@ -55,20 +48,8 @@ export class EmployeeService {
         return employees;
     }
 
+    async deleteEmployee(employee){
+        return await this.client.delete('api/employees/'+employee.id);
+    }
+
 }
-
-/*async setStatusesToStore() {
-        let statuses = await this.getStatuses();
-        this.store.commit('setStatuses', statuses.data);
-    }*/
-
-/*async setRacesToStore() {
-    let races = await this.getRaces();
-    this.store.commit('setRaces', races.data);
-}*/
-
-/*async setEmployeesToStore(params) {
-    let employees = await this.getEmployees(params);
-    this.store.commit('employee/setEmployees', employees.employees);
-    this.store.commit('employee/setPagination', employees.pagination);
-}*/

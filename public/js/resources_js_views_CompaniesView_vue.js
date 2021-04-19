@@ -140,23 +140,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                _context.prev = 0;
+                _context.next = 3;
                 return container.CompanyService.storeCompany(company);
 
-              case 2:
+              case 3:
                 response = _context.sent;
                 storedCompany = response.data.company;
                 storedCompany.personnel = users.value[storedCompany.personnel_id];
-                console.log('users', users.value);
                 store.commit('company/setCompanyById', storedCompany);
                 document.getElementById('storeCompanyFormClose').click();
+                _context.next = 13;
+                break;
 
-              case 8:
+              case 10:
+                _context.prev = 10;
+                _context.t0 = _context["catch"](0);
+                store.dispatch('notification/activate', _context.t0.response.data);
+
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[0, 10]]);
       }));
       return _storeCompany.apply(this, arguments);
     }
@@ -222,20 +229,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                _context.prev = 0;
+                _context.next = 3;
                 return container.CompanyService.updateCompany(company);
 
-              case 2:
+              case 3:
                 company.personnel = users.value[company.personnel_id];
                 store.commit('company/setCompanyById', company);
                 document.getElementById('editCompanyFormClose').click();
+                _context.next = 11;
+                break;
 
-              case 5:
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](0);
+                store.dispatch('notification/activate', _context.t0.response.data);
+
+              case 11:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[0, 8]]);
       }));
       return _updateCompany.apply(this, arguments);
     }
@@ -431,13 +446,11 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
-    var container = (0,vue__WEBPACK_IMPORTED_MODULE_3__.inject)('container');
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_4__.useStore)();
     var companiesAreUndefined = Object.keys(store.getters.getCompanies).length === 0;
     var usersAreUndefined = Object.keys(store.getters.getUsers).length === 0;
-    if (companiesAreUndefined) store.dispatch('company/setCompaniesToStore'); //if (companiesAreUndefined) container.CompanyService.setCompaniesToStore();
-
-    if (usersAreUndefined) store.dispatch('user/setUsersToStore'); //if (usersAreUndefined) container.UserService.setUsersToStore();
+    if (companiesAreUndefined) store.dispatch('company/setCompaniesToStore');
+    if (usersAreUndefined) store.dispatch('user/setUsersToStore');
   },
   components: {
     CompaniesTable: _components_tables_companies_CompaniesTable__WEBPACK_IMPORTED_MODULE_0__.default,
@@ -1115,7 +1128,7 @@ const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
   type: "button",
   class: "btn btn-default",
   "data-dismiss": "modal"
-}, "Close", -1 /* HOISTED */)
+}, " Close ", -1 /* HOISTED */)
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_CompanyFormFields = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("CompanyFormFields")
@@ -1134,7 +1147,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             type: "button",
             class: "btn btn-primary",
             onClick: _cache[1] || (_cache[1] = $event => ($setup.storeCompany($setup.company)))
-          }, "Add", 8 /* PROPS */, ["disabled"])
+          }, "Add ", 8 /* PROPS */, ["disabled"])
         ])
       ])
     ])

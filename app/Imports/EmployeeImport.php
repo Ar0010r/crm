@@ -13,30 +13,50 @@ class EmployeeImport implements ToModel, WithHeadingRow, WithValidation
 {
     use EmployeeRequestRulesTrait;
 
+    private const REQUIRED_KEYS = [
+        'company',
+        'hr_id',
+        'status',
+        'name',
+        'email',
+        'paypal',
+        'address',
+        'birthday',
+        'city',
+        'state',
+        'zip',
+        'phone_1',
+        'phone_2',
+        'race',
+    ];
+
     public function model(array $row)
     {
         $company = Company::where('name', $row['company'])->first();
 
         return new Employee([
-            'company_id' => $company['id'] ?? null,
+            'company_id' => $company['id'],
             'hr_id' => auth()->user()->getAuthIdentifier(),
-            'status' => $row['status'] ?? null,
-            'name' => $row['name'] ?? null,
-            'email' => $row['email'] ?? null,
-            'paypal' => $row['paypal'] ?? null,
-            'address' => $row['address'] ?? null,
-            'birthday' => $row['birthday'] ?? null,
-            'city' => $row['city'] ?? null,
-            'state' => $row['state'] ?? null,
-            'zip' => $row['zip'] ?? null,
-            'phone_1' => $row['phone_1'] ?? null,
-            'phone_2' => $row['phone_2'] ?? null,
-            'race' => $row['race'] ?? null,
+            'status' => $row['status'],
+            'name' => $row['name'],
+            'email' => $row['email'],
+            'paypal' => $row['paypal'],
+            'address' => $row['address'],
+            'birthday' => $row['birthday'],
+            'city' => $row['city'],
+            'state' => $row['state'],
+            'zip' => $row['zip'],
+            'phone_1' => $row['phone_1'],
+            'phone_2' => $row['phone_2'],
+            'race' => $row['race'],
         ]);
     }
 
     public function rules(): array
     {
-        return  $rules = $this->basicRules();
+        return array_map(function ($rule){
+            return 'required|'.$rule;
+        }, $this->basicRules());
+
     }
 }

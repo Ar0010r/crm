@@ -12,8 +12,11 @@
                     <ManagerFormFields :user.sync='user' :show-role-field="true"/>
                 </div>
                 <div class="modal-footer">
-                    <button id="editUserFormClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button :disabled="!user.dataIsValid" type="button" class="btn btn-primary" @click="updateUser(user)">Update</button>
+                    <button id="editUserFormClose" type="button" class="btn btn-default" data-dismiss="modal">Close
+                    </button>
+                    <button :disabled="!user.dataIsValid" type="button" class="btn btn-primary"
+                            @click="updateUser(user)">Update
+                    </button>
                 </div>
             </form>
         </div>
@@ -31,11 +34,16 @@
             const container = inject('container');
 
             async function updateUser(user) {
-                if(user.password ===  null) delete user.password;
+                if (user.password === null) delete user.password;
                 delete user.dataIsValid;
-                await container.UserService.updateUser(user);
-                store.commit('user/setUserById', user);
-                document.getElementById('editUserFormClose').click();
+
+                try {
+                    await container.UserService.updateUser(user);
+                    store.commit('user/setUserById', user);
+                    document.getElementById('editUserFormClose').click();
+                } catch (e) {
+                    store.dispatch('notification/activate', e.response.data, {root: true});
+                }
             }
 
             return {user: computed(() => store.getters.getUser), updateUser}

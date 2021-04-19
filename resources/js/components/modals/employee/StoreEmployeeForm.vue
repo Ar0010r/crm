@@ -13,12 +13,12 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
                 </div>
                 <div class="modal-body pb-0">
-                    <EmployeeFormFields :employee='emptyEmployee'></EmployeeFormFields>
-                    <EmployeePickUpField :employee.sync='emptyEmployee'></EmployeePickUpField>
+                    <EmployeeFormFields :employee='employee'></EmployeeFormFields>
+                    <EmployeePickUpField :employee.sync='employee'></EmployeePickUpField>
                 </div>
                 <div class="modal-footer">
                     <button id="storeEmployeeFormClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button :disabled='!emptyEmployee.dataIsValid'  @click.prevent="storeEmployee()" type="button" class="btn btn-primary">Add</button>
+                    <button :disabled='!employee.dataIsValid'  @click.prevent="storeEmployee()" type="button" class="btn btn-primary">Add</button>
                 </div>
             </form>
         </div>
@@ -34,34 +34,20 @@
 
     export default {
         setup() {
-            return {emptyEmployee: computed(() => useStore().getters.getEmployee)}
-        },
 
-        methods : {
-            async storeEmployee() {
+            const store = useStore();
+            const employee = computed(() => store.getters.getEmployee);
 
-                let employee = this.$store.getters.getEmployee;
+            async function storeEmployee() {
 
-                let companies = this.$store.getters.getCompanies;
-                let users = this.$store.getters.getUsers;
+                let employeeToStore = store.getters.getEmployee;
 
-                let data = {
-                    address: employee.address ?? "",
-                    birthday: employee.birthday ?? "",
-                    city: employee.city ?? "",
-                    company_id: employee.company_id ?? "",
-                    email: employee.email ?? null,
-                    name: employee.name ?? "",
-                    paypal: employee.paypal ?? null,
-                    phone_1: employee.phone_1 ?? "",
-                    phone_2: employee.phone_2 ?? "",
-                    race: employee.race ?? "",
-                    state: employee.state ?? "",
-                    zip: employee.zip ?? "",
-                    pickup: employee.pickup ?? "",
-                };
+                let companies = store.getters.getCompanies;
+                let users = store.getters.getUsers;
+                const emptyEmployee = store.getters.getEmptyEmployee;
 
-                console.log('before store', employee);
+                const data = {...emptyEmployee, ...employeeToStore};
+
                 try{
                     let result = await axios.post('api/employees', data);
 
@@ -70,16 +56,20 @@
                     savedEmployee.hr = users[savedEmployee.hr_id];
 
 
-                    this.$store.commit('employee/setEmployee', this.emptyEmployee);
-                    this.$store.commit('employee/setEmployeeById', savedEmployee);
+                    store.commit('formData/setEmployee', emptyEmployee);
+                    store.commit('employee/setEmployeeById', savedEmployee);
 
                     document.getElementById('storeEmployeeFormClose').click()
                 } catch (e) {
-                    this.$store.commit('notification/setMessage', e.response.data);
-                    this.$store.commit('notification/setShow', true);
+                    store.dispatch('notification/activate', e.response.data)
                 }
-
             }
+
+            return {storeEmployee, employee,}
+        },
+
+        methods : {
+
         },
         components: {
             EmployeeFormFields,

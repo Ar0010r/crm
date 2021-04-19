@@ -1,10 +1,5 @@
 export class CompanyService {
 
-    /*constructor(client, store) {
-        this.client = client;
-        this.store = store;
-    }*/
-
     constructor(client) {
         this.client = client;
     }
@@ -22,15 +17,3 @@ export class CompanyService {
         return await this.client.put('/api/companies/' + company.id, company);
     }
 }
-
-/*async setCompaniesToStore(){
-        let companiesList = await this.getCompanies();
-        companiesList = companiesList.data;
-
-        let companies = {};
-        Object.keys(companiesList).map(function (key) {
-            let index = companiesList[key].id;
-            companies[index] = companiesList[key];
-        });
-        this.store.commit('company/setCompanies', companies);
-    }*/

@@ -1,21 +1,20 @@
-import {createStore} from "vuex";
-import md5 from "js-md5";
-import { container } from '../services/index'
+import {container} from '../services/index'
+
 export default {
     namespaced: true,
     state: {
         profile: {
             id: "",
             login: "",
-            role:"",
-            avatar:"",
+            role: "",
+            avatar: "",
             token: ""
         },
 
-        users : {},
-        hrs : {},
-        personnels : {},
-        roles : {},
+        users: {},
+        hrs: {},
+        personnels: {},
+        roles: {},
     },
     mutations: {
         setProfile(state, user) {
@@ -36,8 +35,8 @@ export default {
                 state.users = {...newUserObj, ...state.users};
             }
 
-            if(user.role === 'personnel') state.personnels[key] = user;
-            if(user.role === 'hr') state.hrs[key] = user;
+            if (user.role === 'personnel') state.personnels[key] = user;
+            if (user.role === 'hr') state.hrs[key] = user;
         },
         setRoles(state, roles) {
             state.roles = roles;
@@ -51,44 +50,57 @@ export default {
 
     },
     actions: {
-        async setProfileToStore({ commit }) {
-            let response = await container.UserService.getProfile();
-            commit('setProfile', response.data);
+        async setProfileToStore({commit}) {
+            try {
+                let response = await container.UserService.getProfile();
+                commit('setProfile', response.data);
+            } catch (e) {
+                dispatch('notification/activate', e.response.data, {root: true});
+            }
         },
 
-        async setUsersToStore({ commit }, params) {
-            let response = await container.UserService.getUsers(params);
+        async setUsersToStore({commit}, params) {
+            try {
+                let response = await container.UserService.getUsers(params);
 
-            let usersList = response.data;
+                let usersList = response.data;
 
-            let hrs = {};
-            Object.keys(usersList).map(function (key) {
-                let index = usersList[key].id;
-                if (usersList[key].role === 'hr' || usersList[key].role === 'top hr') hrs[index] = usersList[key];
-            });
+                let hrs = {};
+                Object.keys(usersList).map(function (key) {
+                    let index = usersList[key].id;
+                    if (usersList[key].role === 'hr' || usersList[key].role === 'top hr') hrs[index] = usersList[key];
+                });
 
-            let personnels = {};
-            Object.keys(usersList).map(function (key) {
-                let index = usersList[key].id;
-                if (usersList[key].role === 'personnel') personnels[index] = usersList[key];
-            });
+                let personnels = {};
+                Object.keys(usersList).map(function (key) {
+                    let index = usersList[key].id;
+                    if (usersList[key].role === 'personnel') personnels[index] = usersList[key];
+                });
 
-            let users = {};
-            Object.keys(usersList).map(function (key) {
-                let index = usersList[key].id;
-                users[index] = usersList[key];
-            });
+                let users = {};
+                Object.keys(usersList).map(function (key) {
+                    let index = usersList[key].id;
+                    users[index] = usersList[key];
+                });
 
 
-            commit('setUsers', users);
-            commit('setHrs', hrs);
-            commit('setPersonnels', personnels);
+                commit('setUsers', users);
+                commit('setHrs', hrs);
+                commit('setPersonnels', personnels);
+
+            } catch (e) {
+                dispatch('notification/activate', e.response.data, {root: true});
+            }
 
         },
 
-        async setRolesToStore({ commit }) {
-            let response = await container.UserService.getRoles();
-            commit('setRoles', response.data);
+        async setRolesToStore({commit}) {
+            try {
+                let response = await container.UserService.getRoles();
+                commit('setRoles', response.data);
+            } catch (e) {
+                dispatch('notification/activate', e.response.data, {root: true});
+            }
         }
 
 

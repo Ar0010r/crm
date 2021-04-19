@@ -50,6 +50,9 @@ class UsersController extends Controller
 
     public function update(UserUpdateRequest $r, User $user)
     {
+
+       // dd($r->all());
+
         $avatar = $r->file('file');
 
         if ($avatar) {

@@ -12,10 +12,13 @@
                     <CompanyFormFields :company="company"/>
                 </div>
                 <div class="modal-footer">
-                    <button id="storeCompanyFormClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="storeCompanyFormClose" type="button" class="btn btn-default" data-dismiss="modal">
+                        Close
+                    </button>
                     <button :disabled="!company.dataIsValid" type="button"
                             class="btn btn-primary"
-                            @click="storeCompany(company)">Add</button>
+                            @click="storeCompany(company)">Add
+                    </button>
                 </div>
             </form>
         </div>
@@ -35,21 +38,24 @@
             let users = computed(() => store.getters.getUsers);
 
             async function storeCompany(company) {
-                let response = await container.CompanyService.storeCompany(company);
+                try {
+                    let response = await container.CompanyService.storeCompany(company);
 
-                let storedCompany = response.data.company;
+                    let storedCompany = response.data.company;
 
-                storedCompany.personnel = users.value[storedCompany.personnel_id];
+                    storedCompany.personnel = users.value[storedCompany.personnel_id];
 
-                console.log('users', users.value);
-                store.commit('company/setCompanyById', storedCompany);
-                document.getElementById('storeCompanyFormClose').click()
+                    store.commit('company/setCompanyById', storedCompany);
+                    document.getElementById('storeCompanyFormClose').click()
+                } catch (e) {
+                    store.dispatch('notification/activate', e.response.data);
+                }
 
             }
 
             return {company: computed(() => store.getters.getCompany), storeCompany}
         },
-        components : {
+        components: {
             CompanyFormFields
         }
     };

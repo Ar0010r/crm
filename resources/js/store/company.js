@@ -1,13 +1,9 @@
-import {createStore} from "vuex";
-import { container } from '../services/index'
+import {container} from '../services/index'
 
 export default {
     namespaced: true,
     state: {
         companies: {},
-    },
-    getters: {
-       // getCompanies: state => state.companies,
     },
     mutations: {
         async setCompanies(state, companies) {
@@ -26,18 +22,21 @@ export default {
         },
     },
     actions: {
-        async setCompaniesToStore({ commit }){
-            let companiesList = await container.CompanyService.getCompanies();
-            companiesList = companiesList.data;
+        async setCompaniesToStore({commit, dispatch}) {
+            try {
+                let companiesList = await container.CompanyService.getCompanies();
+                companiesList = companiesList.data;
 
-            let companies = {};
-            Object.keys(companiesList).map(function (key) {
-                let index = companiesList[key].id;
-                companies[index] = companiesList[key];
-            });
+                let companies = {};
+                Object.keys(companiesList).map(function (key) {
+                    let index = companiesList[key].id;
+                    companies[index] = companiesList[key];
+                });
 
-            commit('setCompanies', companies);
+                commit('setCompanies', companies);
+            } catch (e) {
+                dispatch('notification/activate', e.response.data, {root: true});
+            }
         }
     },
-    modules: {}
 }

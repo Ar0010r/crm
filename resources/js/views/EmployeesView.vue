@@ -19,7 +19,6 @@
 
     export default {
         setup() {
-            const container = inject('container');
             let store = useStore();
 
             let statusesAreUndefined = Object.keys(store.getters.getStatuses).length === 0;
@@ -29,19 +28,10 @@
             let usersAreUndefined = Object.keys(store.getters.getUsers).length === 0;
 
             if (statusesAreUndefined) store.dispatch('employee/setStatusesToStore');
-            //if (statusesAreUndefined) container.EmployeeService.setStatusesToStore();
-
             if (racesAreUndefined) store.dispatch('employee/setRacesToStore');
-            //if (racesAreUndefined) container.EmployeeService.setRacesToStore();
-
             if (companiesAreUndefined) store.dispatch('company/setCompaniesToStore');
-            //if (companiesAreUndefined) container.CompanyService.setCompaniesToStore();
-
             if (employeesAreUndefined) store.dispatch('employee/setEmployeesToStore');
-            //if (employeesAreUndefined) container.EmployeeService.setEmployeesToStore();
-
             if (usersAreUndefined) store.dispatch('user/setUsersToStore');
-            //if (usersAreUndefined) container.UserService.setUsersToStore();
         },
 
         components: {

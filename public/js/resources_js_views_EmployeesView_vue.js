@@ -393,6 +393,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
 
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -404,44 +410,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
-    return {
-      emptyEmployee: (0,vue__WEBPACK_IMPORTED_MODULE_4__.computed)(function () {
-        return (0,vuex__WEBPACK_IMPORTED_MODULE_5__.useStore)().getters.getEmployee;
-      })
-    };
-  },
-  methods: {
-    storeEmployee: function storeEmployee() {
-      var _this = this;
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_5__.useStore)();
+    var employee = (0,vue__WEBPACK_IMPORTED_MODULE_4__.computed)(function () {
+      return store.getters.getEmployee;
+    });
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var _employee$address, _employee$birthday, _employee$city, _employee$company_id, _employee$email, _employee$name, _employee$paypal, _employee$phone_, _employee$phone_2, _employee$race, _employee$state, _employee$zip, _employee$pickup;
+    function storeEmployee() {
+      return _storeEmployee.apply(this, arguments);
+    }
 
-        var employee, companies, users, data, _companies$data$compa, result, savedEmployee;
+    function _storeEmployee() {
+      _storeEmployee = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var employeeToStore, companies, users, emptyEmployee, data, _companies$data$compa, result, savedEmployee;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                employee = _this.$store.getters.getEmployee;
-                companies = _this.$store.getters.getCompanies;
-                users = _this.$store.getters.getUsers;
-                data = {
-                  address: (_employee$address = employee.address) !== null && _employee$address !== void 0 ? _employee$address : "",
-                  birthday: (_employee$birthday = employee.birthday) !== null && _employee$birthday !== void 0 ? _employee$birthday : "",
-                  city: (_employee$city = employee.city) !== null && _employee$city !== void 0 ? _employee$city : "",
-                  company_id: (_employee$company_id = employee.company_id) !== null && _employee$company_id !== void 0 ? _employee$company_id : "",
-                  email: (_employee$email = employee.email) !== null && _employee$email !== void 0 ? _employee$email : null,
-                  name: (_employee$name = employee.name) !== null && _employee$name !== void 0 ? _employee$name : "",
-                  paypal: (_employee$paypal = employee.paypal) !== null && _employee$paypal !== void 0 ? _employee$paypal : null,
-                  phone_1: (_employee$phone_ = employee.phone_1) !== null && _employee$phone_ !== void 0 ? _employee$phone_ : "",
-                  phone_2: (_employee$phone_2 = employee.phone_2) !== null && _employee$phone_2 !== void 0 ? _employee$phone_2 : "",
-                  race: (_employee$race = employee.race) !== null && _employee$race !== void 0 ? _employee$race : "",
-                  state: (_employee$state = employee.state) !== null && _employee$state !== void 0 ? _employee$state : "",
-                  zip: (_employee$zip = employee.zip) !== null && _employee$zip !== void 0 ? _employee$zip : "",
-                  pickup: (_employee$pickup = employee.pickup) !== null && _employee$pickup !== void 0 ? _employee$pickup : ""
-                };
-                console.log('before store', employee);
+                employeeToStore = store.getters.getEmployee;
+                companies = store.getters.getCompanies;
+                users = store.getters.getUsers;
+                emptyEmployee = store.getters.getEmptyEmployee;
+                data = _objectSpread(_objectSpread({}, emptyEmployee), employeeToStore);
                 _context.prev = 5;
                 _context.next = 8;
                 return axios__WEBPACK_IMPORTED_MODULE_3___default().post('api/employees', data);
@@ -451,32 +441,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 savedEmployee = result.data.employee;
                 savedEmployee.company = (_companies$data$compa = companies[data.company_id]) !== null && _companies$data$compa !== void 0 ? _companies$data$compa : {};
                 savedEmployee.hr = users[savedEmployee.hr_id];
-
-                _this.$store.commit('employee/setEmployee', _this.emptyEmployee);
-
-                _this.$store.commit('employee/setEmployeeById', savedEmployee);
-
+                store.commit('formData/setEmployee', emptyEmployee);
+                store.commit('employee/setEmployeeById', savedEmployee);
                 document.getElementById('storeEmployeeFormClose').click();
-                _context.next = 21;
+                _context.next = 20;
                 break;
 
               case 17:
                 _context.prev = 17;
                 _context.t0 = _context["catch"](5);
+                store.dispatch('notification/activate', _context.t0.response.data);
 
-                _this.$store.commit('notification/setMessage', _context.t0.response.data);
-
-                _this.$store.commit('notification/setShow', true);
-
-              case 21:
+              case 20:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee, null, [[5, 17]]);
-      }))();
+      }));
+      return _storeEmployee.apply(this, arguments);
     }
+
+    return {
+      storeEmployee: storeEmployee,
+      employee: employee
+    };
   },
+  methods: {},
   components: {
     EmployeeFormFields: _fields_EmployeeFormFields__WEBPACK_IMPORTED_MODULE_1__.default,
     EmployeePickUpField: _fields_EmployeePickUpField__WEBPACK_IMPORTED_MODULE_2__.default
@@ -618,25 +609,6 @@ __webpack_require__.r(__webpack_exports__);
       console.log('from watcher ' + meta.value.valid);
       console.log("Watch props.selected function called with args:", first, second);
     });
-    /*const validationListeners = computed(() => {
-        // If the field is valid or have not been validated yet
-        // lazy
-        if (nameError.value) {
-            return {
-                blur: handleChange,
-                change: handleChange,
-                input: handleInput,
-            };
-        }
-         // Aggressive
-        return {
-            blur: handleChange,
-            change: handleChange,
-            input: handleChange, // only switched this
-        };
-    });*/
-    // setTimeout(() => meta.value.dirty = true, 5000);
-
     return {
       email: email,
       emailError: emailError,
@@ -837,7 +809,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
-    var container = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)('container');
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_2__.useStore)();
     var activeFilters = (0,vue__WEBPACK_IMPORTED_MODULE_1__.reactive)({
       company_id: '',
@@ -877,15 +848,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   'page': params.page,
                   'recordsPerPage': params.recordsPerPage
                 });
-                /*let employees = await container.EmployeeService.getEmployees({
-                    'filter[company_id]': params.company_id,
-                    'filter[status]': params.status,
-                    'filter[hr_id]': params.hr_id,
-                    'page': params.page,
-                    'recordsPerPage': params.recordsPerPage,
-                });
-                 store.commit('employee/setEmployees', employees.employees);
-                store.commit('employee/setPagination', employees.pagination);*/
 
               case 6:
               case "end":
@@ -957,7 +919,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -965,13 +927,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _layout_EmployeesStatusSelect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../layout/EmployeesStatusSelect */ "./resources/js/components/layout/EmployeesStatusSelect.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _layout_EmployeesStatusSelect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../layout/EmployeesStatusSelect */ "./resources/js/components/layout/EmployeesStatusSelect.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  setup: function setup() {
-    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_1__.useStore)();
+  setup: function setup(props) {
+    var container = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)('container');
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
 
     function putEmployeeInfoToStore(employee) {
       var _employee$id, _employee$name, _employee$email, _employee$paypal, _employee$company, _employee$company_id, _employee$address, _employee$city, _employee$state, _employee$zip, _employee$phone_, _employee$phone_2, _employee$birthday, _employee$race, _employee$status, _employee$pickup;
@@ -997,15 +970,52 @@ __webpack_require__.r(__webpack_exports__);
       store.commit('formData/setEmployee', object);
     }
 
+    function deleteEmployee() {
+      return _deleteEmployee.apply(this, arguments);
+    }
+
+    function _deleteEmployee() {
+      _deleteEmployee = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return container.EmployeeService.deleteEmployee(props.employee);
+
+              case 3:
+                _context.next = 8;
+                break;
+
+              case 5:
+                _context.prev = 5;
+                _context.t0 = _context["catch"](0);
+                return _context.abrupt("return", store.dispatch('notification/activate', _context.t0.response.data));
+
+              case 8:
+                store.dispatch('employee/deleteEmployee', props.employee);
+
+              case 9:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 5]]);
+      }));
+      return _deleteEmployee.apply(this, arguments);
+    }
+
     return {
-      putEmployeeInfoToStore: putEmployeeInfoToStore
+      putEmployeeInfoToStore: putEmployeeInfoToStore,
+      deleteEmployee: deleteEmployee
     };
   },
   props: {
     employee: Object
   },
   components: {
-    StatusSelect: _layout_EmployeesStatusSelect__WEBPACK_IMPORTED_MODULE_0__.default
+    StatusSelect: _layout_EmployeesStatusSelect__WEBPACK_IMPORTED_MODULE_1__.default
   }
 });
 
@@ -1040,22 +1050,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
-    var container = (0,vue__WEBPACK_IMPORTED_MODULE_4__.inject)('container');
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_5__.useStore)();
     var statusesAreUndefined = Object.keys(store.getters.getStatuses).length === 0;
     var racesAreUndefined = Object.keys(store.getters.getRaces).length === 0;
     var companiesAreUndefined = Object.keys(store.getters.getCompanies).length === 0;
     var employeesAreUndefined = Object.keys(store.getters.getEmployees).length === 0;
     var usersAreUndefined = Object.keys(store.getters.getUsers).length === 0;
-    if (statusesAreUndefined) store.dispatch('employee/setStatusesToStore'); //if (statusesAreUndefined) container.EmployeeService.setStatusesToStore();
-
-    if (racesAreUndefined) store.dispatch('employee/setRacesToStore'); //if (racesAreUndefined) container.EmployeeService.setRacesToStore();
-
-    if (companiesAreUndefined) store.dispatch('company/setCompaniesToStore'); //if (companiesAreUndefined) container.CompanyService.setCompaniesToStore();
-
-    if (employeesAreUndefined) store.dispatch('employee/setEmployeesToStore'); //if (employeesAreUndefined) container.EmployeeService.setEmployeesToStore();
-
-    if (usersAreUndefined) store.dispatch('user/setUsersToStore'); //if (usersAreUndefined) container.UserService.setUsersToStore();
+    if (statusesAreUndefined) store.dispatch('employee/setStatusesToStore');
+    if (racesAreUndefined) store.dispatch('employee/setRacesToStore');
+    if (companiesAreUndefined) store.dispatch('company/setCompaniesToStore');
+    if (employeesAreUndefined) store.dispatch('employee/setEmployeesToStore');
+    if (usersAreUndefined) store.dispatch('user/setUsersToStore');
   },
   components: {
     EmployeesTable: _components_tables_employees_EmployeesTable__WEBPACK_IMPORTED_MODULE_0__.default,
@@ -1230,12 +1235,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _StoreEmployeeForm_vue_vue_type_template_id_2c3344e0_bindings_emptyEmployee_setup_storeEmployee_options___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StoreEmployeeForm.vue?vue&type=template&id=2c3344e0&bindings={"emptyEmployee":"setup","storeEmployee":"options"} */ "./resources/js/components/modals/employee/StoreEmployeeForm.vue?vue&type=template&id=2c3344e0&bindings={\"emptyEmployee\":\"setup\",\"storeEmployee\":\"options\"}");
+/* harmony import */ var _StoreEmployeeForm_vue_vue_type_template_id_2c3344e0_bindings_storeEmployee_setup_employee_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StoreEmployeeForm.vue?vue&type=template&id=2c3344e0&bindings={"storeEmployee":"setup","employee":"setup"} */ "./resources/js/components/modals/employee/StoreEmployeeForm.vue?vue&type=template&id=2c3344e0&bindings={\"storeEmployee\":\"setup\",\"employee\":\"setup\"}");
 /* harmony import */ var _StoreEmployeeForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StoreEmployeeForm.vue?vue&type=script&lang=js */ "./resources/js/components/modals/employee/StoreEmployeeForm.vue?vue&type=script&lang=js");
 
 
 
-_StoreEmployeeForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _StoreEmployeeForm_vue_vue_type_template_id_2c3344e0_bindings_emptyEmployee_setup_storeEmployee_options___WEBPACK_IMPORTED_MODULE_0__.render
+_StoreEmployeeForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _StoreEmployeeForm_vue_vue_type_template_id_2c3344e0_bindings_storeEmployee_setup_employee_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -1438,12 +1443,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _EmployeesTableRow_vue_vue_type_template_id_721513f0_bindings_putEmployeeInfoToStore_setup_employee_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"setup","employee":"props"} */ "./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={\"putEmployeeInfoToStore\":\"setup\",\"employee\":\"props\"}");
+/* harmony import */ var _EmployeesTableRow_vue_vue_type_template_id_721513f0_bindings_putEmployeeInfoToStore_setup_deleteEmployee_setup_employee_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"setup","deleteEmployee":"setup","employee":"props"} */ "./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={\"putEmployeeInfoToStore\":\"setup\",\"deleteEmployee\":\"setup\",\"employee\":\"props\"}");
 /* harmony import */ var _EmployeesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmployeesTableRow.vue?vue&type=script&lang=js */ "./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=script&lang=js");
 
 
 
-_EmployeesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _EmployeesTableRow_vue_vue_type_template_id_721513f0_bindings_putEmployeeInfoToStore_setup_employee_props___WEBPACK_IMPORTED_MODULE_0__.render
+_EmployeesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _EmployeesTableRow_vue_vue_type_template_id_721513f0_bindings_putEmployeeInfoToStore_setup_deleteEmployee_setup_employee_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -1823,12 +1828,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/modals/employee/StoreEmployeeForm.vue?vue&type=template&id=2c3344e0&bindings={\"emptyEmployee\":\"setup\",\"storeEmployee\":\"options\"}":
-/*!******************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/modals/employee/StoreEmployeeForm.vue?vue&type=template&id=2c3344e0&bindings={"emptyEmployee":"setup","storeEmployee":"options"} ***!
-  \******************************************************************************************************************************************************************/
+/***/ "./resources/js/components/modals/employee/StoreEmployeeForm.vue?vue&type=template&id=2c3344e0&bindings={\"storeEmployee\":\"setup\",\"employee\":\"setup\"}":
+/*!***********************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/modals/employee/StoreEmployeeForm.vue?vue&type=template&id=2c3344e0&bindings={"storeEmployee":"setup","employee":"setup"} ***!
+  \***********************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/employee/StoreEmployeeForm.vue?vue&type=template&id=2c3344e0&bindings={"emptyEmployee":"setup","storeEmployee":"options"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/employee/StoreEmployeeForm.vue?vue&type=template&id=2c3344e0&bindings={"storeEmployee":"setup","employee":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1836,9 +1841,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StoreEmployeeForm_vue_vue_type_template_id_2c3344e0_bindings_emptyEmployee_setup_storeEmployee_options___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StoreEmployeeForm_vue_vue_type_template_id_2c3344e0_bindings_storeEmployee_setup_employee_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StoreEmployeeForm_vue_vue_type_template_id_2c3344e0_bindings_emptyEmployee_setup_storeEmployee_options___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./StoreEmployeeForm.vue?vue&type=template&id=2c3344e0&bindings={"emptyEmployee":"setup","storeEmployee":"options"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/employee/StoreEmployeeForm.vue?vue&type=template&id=2c3344e0&bindings={\"emptyEmployee\":\"setup\",\"storeEmployee\":\"options\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StoreEmployeeForm_vue_vue_type_template_id_2c3344e0_bindings_storeEmployee_setup_employee_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./StoreEmployeeForm.vue?vue&type=template&id=2c3344e0&bindings={"storeEmployee":"setup","employee":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/employee/StoreEmployeeForm.vue?vue&type=template&id=2c3344e0&bindings={\"storeEmployee\":\"setup\",\"employee\":\"setup\"}");
 
 
 /***/ }),
@@ -1963,12 +1968,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={\"putEmployeeInfoToStore\":\"setup\",\"employee\":\"props\"}":
-/*!*********************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"setup","employee":"props"} ***!
-  \*********************************************************************************************************************************************************************/
+/***/ "./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={\"putEmployeeInfoToStore\":\"setup\",\"deleteEmployee\":\"setup\",\"employee\":\"props\"}":
+/*!**********************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"setup","deleteEmployee":"setup","employee":"props"} ***!
+  \**********************************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"setup","employee":"props"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"setup","deleteEmployee":"setup","employee":"props"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1976,9 +1981,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EmployeesTableRow_vue_vue_type_template_id_721513f0_bindings_putEmployeeInfoToStore_setup_employee_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EmployeesTableRow_vue_vue_type_template_id_721513f0_bindings_putEmployeeInfoToStore_setup_deleteEmployee_setup_employee_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EmployeesTableRow_vue_vue_type_template_id_721513f0_bindings_putEmployeeInfoToStore_setup_employee_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"setup","employee":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={\"putEmployeeInfoToStore\":\"setup\",\"employee\":\"props\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EmployeesTableRow_vue_vue_type_template_id_721513f0_bindings_putEmployeeInfoToStore_setup_deleteEmployee_setup_employee_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"setup","deleteEmployee":"setup","employee":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={\"putEmployeeInfoToStore\":\"setup\",\"deleteEmployee\":\"setup\",\"employee\":\"props\"}");
 
 
 /***/ }),
@@ -2417,10 +2422,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/employee/StoreEmployeeForm.vue?vue&type=template&id=2c3344e0&bindings={\"emptyEmployee\":\"setup\",\"storeEmployee\":\"options\"}":
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/employee/StoreEmployeeForm.vue?vue&type=template&id=2c3344e0&bindings={"emptyEmployee":"setup","storeEmployee":"options"} ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/employee/StoreEmployeeForm.vue?vue&type=template&id=2c3344e0&bindings={\"storeEmployee\":\"setup\",\"employee\":\"setup\"}":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/employee/StoreEmployeeForm.vue?vue&type=template&id=2c3344e0&bindings={"storeEmployee":"setup","employee":"setup"} ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -2460,14 +2465,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", _hoisted_3, [
         _hoisted_4,
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_EmployeeFormFields, { employee: $setup.emptyEmployee }, null, 8 /* PROPS */, ["employee"]),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_EmployeePickUpField, { employee: $setup.emptyEmployee }, null, 8 /* PROPS */, ["employee"])
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_EmployeeFormFields, { employee: $setup.employee }, null, 8 /* PROPS */, ["employee"]),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_EmployeePickUpField, { employee: $setup.employee }, null, 8 /* PROPS */, ["employee"])
         ]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [
           _hoisted_7,
           (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-            disabled: !$setup.emptyEmployee.dataIsValid,
-            onClick: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($event => ($options.storeEmployee()), ["prevent"])),
+            disabled: !$setup.employee.dataIsValid,
+            onClick: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($event => ($setup.storeEmployee()), ["prevent"])),
             type: "button",
             class: "btn btn-primary"
           }, "Add", 8 /* PROPS */, ["disabled"])
@@ -2670,7 +2675,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         _hoisted_25,
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
           type: "text",
-          class: ["form-control col-md-10", { 'is-invalid': !!$setup.phone_2Error}],
+          class: ["form-control col-md-10", { 'is-invalid': !!$setup.zipError}],
           placeholder: "XXXXX-XXXX",
           name: "zip",
           "onUpdate:modelValue": _cache[8] || (_cache[8] = $event => ($props.employee.zip = $event))
@@ -3053,10 +3058,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={\"putEmployeeInfoToStore\":\"setup\",\"employee\":\"props\"}":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"setup","employee":"props"} ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={\"putEmployeeInfoToStore\":\"setup\",\"deleteEmployee\":\"setup\",\"employee\":\"props\"}":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/EmployeesTableRow.vue?vue&type=template&id=721513f0&bindings={"putEmployeeInfoToStore":"setup","deleteEmployee":"setup","employee":"props"} ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -3095,7 +3100,7 @@ const _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextV
 const _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' '), -1 /* HOISTED */)
 const _hoisted_20 = { class: "m-0 p-0" }
 const _hoisted_21 = { class: "m-0 p-0" }
-const _hoisted_22 = { class: "d-flex justify-content-center align-items-center border-0" }
+const _hoisted_22 = { class: "d-flex justify-content-between align-items-center border-0" }
 const _hoisted_23 = {
   "data-toggle": "modal",
   "data-target": "#editEmployeeForm"
@@ -3163,7 +3168,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           title: "Edit",
           onClick: _cache[1] || (_cache[1] = $event => ($setup.putEmployeeInfoToStore($props.employee)))
         })
-      ])
+      ]),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+        onClick: _cache[2] || (_cache[2] = (...args) => ($setup.deleteEmployee(...args))),
+        type: "button",
+        class: "ion ion-md-trash danger"
+      })
     ])
   ]))
 }

@@ -33,12 +33,15 @@
             let users = computed(() => store.getters.getUsers);
 
             async function updateCompany(company) {
-                await container.CompanyService.updateCompany(company);
+                try{
+                    await container.CompanyService.updateCompany(company);
 
-                company.personnel = users.value[company.personnel_id];
-                store.commit('company/setCompanyById', company);
-                document.getElementById('editCompanyFormClose').click()
-
+                    company.personnel = users.value[company.personnel_id];
+                    store.commit('company/setCompanyById', company);
+                    document.getElementById('editCompanyFormClose').click()
+                } catch (e) {
+                    store.dispatch('notification/activate', e.response.data);
+                }
             }
 
             return {company: computed(() => store.getters.getCompany), updateCompany}

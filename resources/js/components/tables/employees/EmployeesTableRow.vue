@@ -34,7 +34,7 @@
                           :update-on-select='true'
             />
         </td>
-        <td class="d-flex justify-content-center align-items-center border-0">
+        <td class="d-flex justify-content-between align-items-center border-0">
             <a data-toggle="modal" data-target="#editEmployeeForm">
                 <button type="button" class="ion ion-md-create p-0 bg-transparent border-0"
                         data-toggle="tooltip" data-target="#editEmployeeForm"
@@ -44,7 +44,7 @@
 
                 </button>
             </a>
-
+            <a @click="deleteEmployee"  type="button" class="ion ion-md-trash danger"></a>
         </td>
     </tr>
 </template>
@@ -52,10 +52,13 @@
 <script>
     import StatusSelect from '../../layout/EmployeesStatusSelect';
     import {useStore} from 'vuex'
+    import { inject} from 'vue';
 
     export default {
 
-        setup() {
+        setup(props) {
+
+            const container = inject('container');
             const store = useStore();
 
             function putEmployeeInfoToStore(employee) {
@@ -81,7 +84,17 @@
                 store.commit('formData/setEmployee', object);
             }
 
-            return {putEmployeeInfoToStore}
+            async function deleteEmployee() {
+                try{
+                    await container.EmployeeService.deleteEmployee(props.employee);
+                } catch (e) {
+                   return store.dispatch('notification/activate', e.response.data);
+                }
+
+                store.dispatch('employee/deleteEmployee', props.employee);
+            }
+
+            return {putEmployeeInfoToStore, deleteEmployee}
 
         },
         props: {employee: Object},

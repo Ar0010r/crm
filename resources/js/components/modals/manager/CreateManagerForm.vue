@@ -33,10 +33,13 @@
             const container = inject('container');
 
             async function storeManager(user) {
-                let storedManager = await container.UserService.storeUser(user);
-                store.commit('user/setUserById', storedManager.data.user);
-                document.getElementById('storeUserFormClose').click()
-
+                try{
+                    let storedManager = await container.UserService.storeUser(user);
+                    store.commit('user/setUserById', storedManager.data.user);
+                    document.getElementById('storeUserFormClose').click()
+                } catch (e) {
+                    store.dispatch('notification/activate', e.response.data, {root: true});
+                }
             }
 
             return {user: computed(() => store.getters.getUser), storeManager}

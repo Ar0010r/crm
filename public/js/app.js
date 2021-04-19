@@ -30436,31 +30436,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_2__.useStore)();
-    var container = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)('container');
-
-    function ok() {
-      return _ok.apply(this, arguments);
-    }
-
-    function _ok() {
-      _ok = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                store.commit('notification/setShow', false);
-                store.commit('notification/setMessage', "");
-
-              case 2:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }));
-      return _ok.apply(this, arguments);
-    }
-
     return {
       show: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
         return store.getters.getShowNotification;
@@ -30468,7 +30443,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       message: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
         return store.getters.getNotificationMessage;
       }),
-      ok: ok
+      ok: function () {
+        var _ok = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  return _context.abrupt("return", store.dispatch('notification/deactivate'));
+
+                case 1:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }));
+
+        function ok() {
+          return _ok.apply(this, arguments);
+        }
+
+        return ok;
+      }()
     };
   }
 });
@@ -30594,10 +30590,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _manager_ManagerFormFields__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../manager/ManagerFormFields */ "./resources/js/components/modals/manager/ManagerFormFields.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -30607,10 +30601,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
-    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_4__.useStore)();
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
     var container = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)('container');
     var user = (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
       return store.getters.getUser;
@@ -30623,7 +30616,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     function _updateProfile() {
       _updateProfile = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(user) {
-        var formData, response, newUser;
+        var formData, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -30635,28 +30628,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append('id', user.id);
                 formData.append('login', user.login);
                 formData.set('_method', 'put');
-                _context.next = 9;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default().post('api/users/' + user.id, formData, {
-                  headers: {
-                    'Content-Type': 'multipart/form-data'
-                  }
-                });
+                _context.prev = 7;
+                _context.next = 10;
+                return container.UserService.updateUser(formData);
 
-              case 9:
+              case 10:
                 response = _context.sent;
-                newUser = response.data;
-                console.log(response);
-                user.login = newUser.login;
-                user.avatar = newUser.avatar;
-                store.commit('user/setProfile', user);
+                store.commit('user/setProfile', response.data);
                 document.getElementById('profileFormClose').click();
+                _context.next = 18;
+                break;
 
-              case 16:
+              case 15:
+                _context.prev = 15;
+                _context.t0 = _context["catch"](7);
+                store.dispatch('notification/activate', _context.t0.response.data);
+
+              case 18:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[7, 15]]);
       }));
       return _updateProfile.apply(this, arguments);
     }
@@ -30917,10 +30910,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var CompanyService = /*#__PURE__*/function () {
-  /*constructor(client, store) {
-      this.client = client;
-      this.store = store;
-  }*/
   function CompanyService(client) {
     _classCallCheck(this, CompanyService);
 
@@ -31016,17 +31005,6 @@ var CompanyService = /*#__PURE__*/function () {
 
   return CompanyService;
 }();
-/*async setCompaniesToStore(){
-        let companiesList = await this.getCompanies();
-        companiesList = companiesList.data;
-
-        let companies = {};
-        Object.keys(companiesList).map(function (key) {
-            let index = companiesList[key].id;
-            companies[index] = companiesList[key];
-        });
-        this.store.commit('company/setCompanies', companies);
-    }*/
 
 /***/ }),
 
@@ -31061,7 +31039,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
- //import {useStore} from 'vuex'
 
 var EmployeeService = /*#__PURE__*/function () {
   function EmployeeService(client) {
@@ -31069,11 +31046,6 @@ var EmployeeService = /*#__PURE__*/function () {
 
     this.client = client;
   }
-  /*constructor(client, store) {
-      this.client = client;
-      this.store = store;
-  }*/
-
 
   _createClass(EmployeeService, [{
     key: "getEmployees",
@@ -31247,25 +31219,38 @@ var EmployeeService = /*#__PURE__*/function () {
       });
       return employees;
     }
+  }, {
+    key: "deleteEmployee",
+    value: function () {
+      var _deleteEmployee = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6(employee) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _context6.next = 2;
+                return this.client["delete"]('api/employees/' + employee.id);
+
+              case 2:
+                return _context6.abrupt("return", _context6.sent);
+
+              case 3:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, this);
+      }));
+
+      function deleteEmployee(_x4) {
+        return _deleteEmployee.apply(this, arguments);
+      }
+
+      return deleteEmployee;
+    }()
   }]);
 
   return EmployeeService;
 }();
-/*async setStatusesToStore() {
-        let statuses = await this.getStatuses();
-        this.store.commit('setStatuses', statuses.data);
-    }*/
-
-/*async setRacesToStore() {
-    let races = await this.getRaces();
-    this.store.commit('setRaces', races.data);
-}*/
-
-/*async setEmployeesToStore(params) {
-    let employees = await this.getEmployees(params);
-    this.store.commit('employee/setEmployees', employees.employees);
-    this.store.commit('employee/setPagination', employees.pagination);
-}*/
 
 /***/ }),
 
@@ -31306,11 +31291,9 @@ var serviceProviders = {
   EmployeeService: function EmployeeService() {
     return new _employee_service__WEBPACK_IMPORTED_MODULE_2__.EmployeeService((axios__WEBPACK_IMPORTED_MODULE_0___default()));
   },
-  //EmployeeService: () => new EmployeeService(axios, store),
   CompanyService: function CompanyService() {
     return new _company_service__WEBPACK_IMPORTED_MODULE_3__.CompanyService((axios__WEBPACK_IMPORTED_MODULE_0___default()));
   },
-  //CompanyService: () => new CompanyService(axios, store),
   UserService: function UserService() {
     return new _user_service__WEBPACK_IMPORTED_MODULE_5__.UserService((axios__WEBPACK_IMPORTED_MODULE_0___default()));
   }
@@ -31365,11 +31348,6 @@ var UserService = /*#__PURE__*/function () {
 
     this.client = client;
   }
-  /*constructor(client, store) {
-      this.client = client;
-      this.store = store;
-  }*/
-
 
   _createClass(UserService, [{
     key: "getUsers",
@@ -31487,29 +31465,30 @@ var UserService = /*#__PURE__*/function () {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                if (!user.file) {
-                  _context5.next = 4;
+                if (!(user instanceof FormData)) {
+                  _context5.next = 5;
                   break;
                 }
 
-                _context5.next = 3;
-                return this.client.put('api/users/' + user.id, user, {
+                console.log('file');
+                _context5.next = 4;
+                return this.client.post('api/users/' + user.get('id'), user, {
                   headers: {
                     'Content-Type': 'multipart/form-data'
                   }
                 });
 
-              case 3:
-                return _context5.abrupt("return", _context5.sent);
-
               case 4:
-                _context5.next = 6;
-                return this.client.put('api/users/' + user.id, user);
-
-              case 6:
                 return _context5.abrupt("return", _context5.sent);
+
+              case 5:
+                _context5.next = 7;
+                return this.client.put('api/users/' + id, user);
 
               case 7:
+                return _context5.abrupt("return", _context5.sent);
+
+              case 8:
               case "end":
                 return _context5.stop();
             }
@@ -31527,45 +31506,6 @@ var UserService = /*#__PURE__*/function () {
 
   return UserService;
 }();
-/*async setRolesToStore() {
-        let response = await this.getRoles();
-        this.store.commit('user/setRoles', response.data);
-    }*/
-
-/*async setProfileToStore() {
-    let response = await this.getProfile();
-    this.store.commit('user/setProfile', response.data);
-}*/
-
-/*async setUsersToStore(params) {
-    let response = await this.getUsers(params);
-
-    let usersList = response.data;
-
-    let hrs = {};
-    Object.keys(usersList).map(function (key) {
-        let index = usersList[key].id;
-        if (usersList[key].role === 'hr' || usersList[key].role === 'top hr') hrs[index] = usersList[key];
-    });
-
-    let personnels = {};
-    Object.keys(usersList).map(function (key) {
-        let index = usersList[key].id;
-        if (usersList[key].role === 'personnel') personnels[index] = usersList[key];
-    });
-
-    let users = {};
-    Object.keys(usersList).map(function (key) {
-        let index = usersList[key].id;
-        users[index] = usersList[key];
-    });
-
-
-    this.store.commit('user/setUsers', users);
-    this.store.commit('user/setHrs', hrs);
-    this.store.commit('user/setPersonnels', personnels);
-
-}*/
 
 /***/ }),
 
@@ -31600,13 +31540,10 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   namespaced: true,
   state: {
     companies: {}
-  },
-  getters: {// getCompanies: state => state.companies,
   },
   mutations: {
     setCompanies: function setCompanies(state, companies) {
@@ -31640,16 +31577,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   actions: {
     setCompaniesToStore: function setCompaniesToStore(_ref) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var commit, companiesList, companies;
+        var commit, dispatch, companiesList, companies;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                commit = _ref.commit;
-                _context2.next = 3;
+                commit = _ref.commit, dispatch = _ref.dispatch;
+                _context2.prev = 1;
+                _context2.next = 4;
                 return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.CompanyService.getCompanies();
 
-              case 3:
+              case 4:
                 companiesList = _context2.sent;
                 companiesList = companiesList.data;
                 companies = {};
@@ -31658,17 +31596,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   companies[index] = companiesList[key];
                 });
                 commit('setCompanies', companies);
+                _context2.next = 14;
+                break;
 
-              case 8:
+              case 11:
+                _context2.prev = 11;
+                _context2.t0 = _context2["catch"](1);
+                dispatch('notification/activate', _context2.t0.response.data, {
+                  root: true
+                });
+
+              case 14:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2);
+        }, _callee2, null, [[1, 11]]);
       }))();
     }
-  },
-  modules: {}
+  }
 });
 
 /***/ }),
@@ -31706,7 +31652,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
- //import {inject} from 'vue';
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   namespaced: true,
@@ -31722,6 +31667,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       status: "",
       page: "",
       recordsPerPage: ""
+    },
+    emptyEmployee: {
+      address: "",
+      birthday: "",
+      city: "",
+      company_id: "",
+      company: {
+        name: ""
+      },
+      hr: {
+        login: ""
+      },
+      email: "",
+      name: "",
+      paypal: "",
+      phone_1: "",
+      phone_2: "",
+      race: "",
+      state: "",
+      zip: "",
+      pickup: ""
     }
   },
   mutations: {
@@ -31746,16 +31712,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     setPagination: function setPagination(state, pagination) {
       state.pagination = pagination;
     },
+    deleteEmployeeById: function deleteEmployeeById(state, id) {
+      delete state.employees[id];
+    },
     setEmployeeById: function setEmployeeById(state, employee) {
       var key = js_md5__WEBPACK_IMPORTED_MODULE_1___default()(employee.id.toString());
 
       if (state.employees[key]) {
         state.employees[key] = _objectSpread(_objectSpread({}, state.employees[key]), employee);
-        state.employees[key].company = employee.company; //state.employees[key].pickup = employee.pickup;
+        state.employees[key].company = employee.company;
       } else {
         var newEmpObj = {};
-        newEmpObj[key] = employee; //newEmpObj[key] = {...state.employee, ...employee};
-
+        newEmpObj[key] = employee;
         state.employees = _objectSpread(_objectSpread({}, newEmpObj), state.employees);
       }
     }
@@ -31763,73 +31731,117 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   actions: {
     setEmployeesToStore: function setEmployeesToStore(_ref2, params) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var commit, employees;
+        var commit, dispatch, employees;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                commit = _ref2.commit;
-                _context.next = 3;
+                commit = _ref2.commit, dispatch = _ref2.dispatch;
+                _context.prev = 1;
+                _context.next = 4;
                 return _services_index__WEBPACK_IMPORTED_MODULE_2__.container.EmployeeService.getEmployees(params);
 
-              case 3:
+              case 4:
                 employees = _context.sent;
                 commit('setEmployees', employees.employees);
                 commit('setPagination', employees.pagination);
+                _context.next = 12;
+                break;
 
-              case 6:
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](1);
+                dispatch('notification/activate', _context.t0.response.data, {
+                  root: true
+                });
+
+              case 12:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[1, 9]]);
       }))();
     },
     setStatusesToStore: function setStatusesToStore(_ref3) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var commit, statuses;
+        var commit, dispatch, statuses;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                commit = _ref3.commit;
-                _context2.next = 3;
+                commit = _ref3.commit, dispatch = _ref3.dispatch;
+                _context2.prev = 1;
+                _context2.next = 4;
                 return _services_index__WEBPACK_IMPORTED_MODULE_2__.container.EmployeeService.getStatuses();
 
-              case 3:
+              case 4:
                 statuses = _context2.sent;
                 commit('setStatuses', statuses.data);
+                _context2.next = 11;
+                break;
 
-              case 5:
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](1);
+                dispatch('notification/activate', _context2.t0.response.data, {
+                  root: true
+                });
+
+              case 11:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2);
+        }, _callee2, null, [[1, 8]]);
       }))();
     },
     setRacesToStore: function setRacesToStore(_ref4) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var commit, races;
+        var commit, dispatch, races;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                commit = _ref4.commit;
-                _context3.next = 3;
+                commit = _ref4.commit, dispatch = _ref4.dispatch;
+                _context3.prev = 1;
+                _context3.next = 4;
                 return _services_index__WEBPACK_IMPORTED_MODULE_2__.container.EmployeeService.getRaces();
 
-              case 3:
+              case 4:
                 races = _context3.sent;
                 commit('setRaces', races.data);
+                _context3.next = 11;
+                break;
 
-              case 5:
+              case 8:
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](1);
+                dispatch('notification/activate', _context3.t0.response.data, {
+                  root: true
+                });
+
+              case 11:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3);
+        }, _callee3, null, [[1, 8]]);
       }))();
+    },
+    deleteEmployee: function deleteEmployee(_ref5, employee) {
+      var commit = _ref5.commit,
+          dispatch = _ref5.dispatch,
+          state = _ref5.state;
+      var key = js_md5__WEBPACK_IMPORTED_MODULE_1___default()(employee.id.toString());
+
+      if (state.employees[key]) {
+        commit('deleteEmployeeById', key);
+      } else {
+        dispatch('notification/activate', e.response.data, {
+          root: true
+        });
+      }
     }
   }
 });
@@ -31989,6 +32001,9 @@ __webpack_require__.r(__webpack_exports__);
     getStatuses: function getStatuses(state) {
       return state.employee.statuses;
     },
+    getEmptyEmployee: function getEmptyEmployee(state) {
+      return state.employee.emptyEmployee;
+    },
     getEmployees: function getEmployees(state) {
       return state.employee.employees;
     },
@@ -32024,7 +32039,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -32032,6 +32047,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   namespaced: true,
   state: {
@@ -32044,6 +32067,63 @@ __webpack_require__.r(__webpack_exports__);
     },
     setMessage: function setMessage(state, message) {
       state.message = message;
+    }
+  },
+  actions: {
+    activate: function activate(_ref, message) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var commit, dispatch;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref.commit, dispatch = _ref.dispatch;
+                document.getElementById('growls-tr').classList.remove('d-none');
+                setTimeout(function () {
+                  commit('notification/setMessage', message, {
+                    root: true
+                  });
+                  commit('notification/setShow', true, {
+                    root: true
+                  });
+                }, 100);
+                setTimeout(function () {
+                  dispatch('deactivate');
+                }, 5000);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    deactivate: function deactivate(_ref2) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var commit;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                commit = _ref2.commit;
+                commit('notification/setShow', false, {
+                  root: true
+                });
+                setTimeout(function () {
+                  commit('notification/setMessage', "", {
+                    root: true
+                  });
+                  document.getElementById('growls-tr').classList.add('d-none');
+                }, 300);
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   }
 });
@@ -32067,9 +32147,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! js-md5 */ "./node_modules/js-md5/src/md5.js");
-/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(js_md5__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _services_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/index */ "./resources/js/services/index.js");
+/* harmony import */ var _services_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/index */ "./resources/js/services/index.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -32081,8 +32159,6 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -32141,19 +32217,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context.prev = _context.next) {
               case 0:
                 commit = _ref.commit;
-                _context.next = 3;
-                return _services_index__WEBPACK_IMPORTED_MODULE_2__.container.UserService.getProfile();
+                _context.prev = 1;
+                _context.next = 4;
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.UserService.getProfile();
 
-              case 3:
+              case 4:
                 response = _context.sent;
                 commit('setProfile', response.data);
+                _context.next = 11;
+                break;
 
-              case 5:
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](1);
+                dispatch('notification/activate', _context.t0.response.data, {
+                  root: true
+                });
+
+              case 11:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[1, 8]]);
       }))();
     },
     setUsersToStore: function setUsersToStore(_ref2, params) {
@@ -32164,10 +32250,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context2.prev = _context2.next) {
               case 0:
                 commit = _ref2.commit;
-                _context2.next = 3;
-                return _services_index__WEBPACK_IMPORTED_MODULE_2__.container.UserService.getUsers(params);
+                _context2.prev = 1;
+                _context2.next = 4;
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.UserService.getUsers(params);
 
-              case 3:
+              case 4:
                 response = _context2.sent;
                 usersList = response.data;
                 hrs = {};
@@ -32188,13 +32275,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 commit('setUsers', users);
                 commit('setHrs', hrs);
                 commit('setPersonnels', personnels);
+                _context2.next = 20;
+                break;
 
-              case 14:
+              case 17:
+                _context2.prev = 17;
+                _context2.t0 = _context2["catch"](1);
+                dispatch('notification/activate', _context2.t0.response.data, {
+                  root: true
+                });
+
+              case 20:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2);
+        }, _callee2, null, [[1, 17]]);
       }))();
     },
     setRolesToStore: function setRolesToStore(_ref3) {
@@ -32205,19 +32301,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context3.prev = _context3.next) {
               case 0:
                 commit = _ref3.commit;
-                _context3.next = 3;
-                return _services_index__WEBPACK_IMPORTED_MODULE_2__.container.UserService.getRoles();
+                _context3.prev = 1;
+                _context3.next = 4;
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.UserService.getRoles();
 
-              case 3:
+              case 4:
                 response = _context3.sent;
                 commit('setRoles', response.data);
+                _context3.next = 11;
+                break;
 
-              case 5:
+              case 8:
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](1);
+                dispatch('notification/activate', _context3.t0.response.data, {
+                  root: true
+                });
+
+              case 11:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3);
+        }, _callee3, null, [[1, 8]]);
       }))();
     }
   }
@@ -32247,34 +32353,6 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody,\n#app {\n  width: 100%;\n  height: 100%;\n  font-family: Arial, Helvetica, sans-serif;\n  background: #e3e4e5;\n}\n.flex {\n  display: flex;\n  height: 100%;\n  width: 100%;\n}\n.flex--column {\n  flex-direction: column;\n}\n.flex--align-center {\n  align-items: center;\n}\n.flex--justify-center {\n  justify-content: center;\n}\n.logos {\n  padding-top: 16px;\n  display: grid;\n  grid-template-columns: auto auto;\n  grid-gap: 32px;\n}\n.title {\n  display: grid;\n  grid-template-columns: auto auto auto;\n  grid-gap: 16px;\n  padding: 32px;\n}\n.title .laravel {\n  color: #ff291a;\n}\n.title .vue {\n  color: #41b883;\n}\n.title .plus {\n  color: #35495e;\n}", ""]);
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/Notification.vue?vue&type=style&index=0&lang=css":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/Notification.vue?vue&type=style&index=0&lang=css ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, module.id, __webpack_require__.d, __webpack_require__.*, module */
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
-// Imports
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.notification-overlay {\n        position: absolute;\n        left: 0;\n        right: 0;\n        top: 0;\n        bottom: 0;\n        z-index: 1300;\n        min-height: 100vh;\n        width: 100%;\n        height: 100%;\n        background-color: rgba(0, 0, 0, 0.7);\n}\n.notification {\n        position: fixed;\n        top: 20%;\n        left: 50%;\n        transform: translate(-50%, -50%);\n        background-color: white;\n        min-height: 130px;\n        min-width: 350px;\n        z-index: 1500;\n}\n.fade-enter-active,\n    .fade-leave-active {\n        transition: opacity .7s;\n}\n.fade-enter,\n    .fade-leave-to {\n        opacity: 0;\n}\n.slide-enter-active,\n    .slide-leave-active {\n        transition: transform .7s;\n}\n.slide-enter,\n    .slide-leave-to {\n        transform: translateY(-50%) translateX(100vw);\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -39933,40 +40011,6 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/Notification.vue?vue&type=style&index=0&lang=css":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/Notification.vue?vue&type=style&index=0&lang=css ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Notification_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Notification.vue?vue&type=style&index=0&lang=css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/Notification.vue?vue&type=style&index=0&lang=css");
-
-            
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Notification_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Notification_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
-
-/***/ }),
-
 /***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
 /*!****************************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
@@ -42385,9 +42429,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Notification_vue_vue_type_template_id_4633c519_bindings_show_setup_message_setup_ok_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Notification.vue?vue&type=template&id=4633c519&bindings={"show":"setup","message":"setup","ok":"setup"} */ "./resources/js/components/modals/Notification.vue?vue&type=template&id=4633c519&bindings={\"show\":\"setup\",\"message\":\"setup\",\"ok\":\"setup\"}");
 /* harmony import */ var _Notification_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Notification.vue?vue&type=script&lang=js */ "./resources/js/components/modals/Notification.vue?vue&type=script&lang=js");
-/* harmony import */ var _Notification_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Notification.vue?vue&type=style&index=0&lang=css */ "./resources/js/components/modals/Notification.vue?vue&type=style&index=0&lang=css");
-
-
 
 
 
@@ -42593,22 +42634,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_use_3_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_App_vue_vue_type_style_index_0_lang_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/style-loader/dist/cjs.js!../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!../../node_modules/vue-loader/dist/stylePostLoader.js!../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12.use[3]!../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./App.vue?vue&type=style&index=0&lang=scss */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/App.vue?vue&type=style&index=0&lang=scss");
-
-
-/***/ }),
-
-/***/ "./resources/js/components/modals/Notification.vue?vue&type=style&index=0&lang=css":
-/*!*****************************************************************************************!*\
-  !*** ./resources/js/components/modals/Notification.vue?vue&type=style&index=0&lang=css ***!
-  \*****************************************************************************************/
-/*! namespace exports */
-/*! exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Notification_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Notification.vue?vue&type=style&index=0&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/Notification.vue?vue&type=style&index=0&lang=css");
 
 
 /***/ }),
@@ -43082,12 +43107,12 @@ const _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Employees")
 ], -1 /* HOISTED */)
 const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", { class: "sidenav-link" }, [
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "sidenav-icon ion ion-md-contacts" }),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Managers")
-], -1 /* HOISTED */)
-const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", { class: "sidenav-link" }, [
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "sidenav-icon ion ion-md-briefcase" }),
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Companies")
+], -1 /* HOISTED */)
+const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", { class: "sidenav-link" }, [
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "sidenav-icon ion ion-md-contacts" }),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Managers")
 ], -1 /* HOISTED */)
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -43107,6 +43132,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         ]),
         _: 1
       }),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+        to: { name : 'companies-table'},
+        tag: "li",
+        class: "sidenav-item"
+      }, {
+        default: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(() => [
+          _hoisted_6
+        ]),
+        _: 1
+      }),
       ($setup.profile.role === 'admin' || $setup.profile.role === 'top hr')
         ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
             key: 0,
@@ -43115,21 +43150,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             class: "sidenav-item"
           }, {
             default: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(() => [
-              _hoisted_6
+              _hoisted_7
             ]),
             _: 1
           }))
-        : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-        to: { name : 'companies-table'},
-        tag: "li",
-        class: "sidenav-item"
-      }, {
-        default: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(() => [
-          _hoisted_7
-        ]),
-        _: 1
-      })
+        : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
     ])
   ]))
 }
@@ -43154,74 +43179,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-const _hoisted_1 = {
-  key: 0,
-  class: "notification"
-}
-const _hoisted_2 = { class: "modal-content" }
-const _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", { class: "modal-header" }, [
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", { class: "modal-title" }, " Notification "),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    type: "button",
-    class: "close",
-    "data-dismiss": "modal",
-    "aria-label": "Close"
-  }, "×")
-], -1 /* HOISTED */)
-const _hoisted_4 = { class: "modal-body" }
-const _hoisted_5 = { class: "form-row mb-2 d-flex flex-column p-0" }
-const _hoisted_6 = { class: " p-0 form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap" }
-const _hoisted_7 = { class: "" }
-const _hoisted_8 = { class: "modal-footer" }
+const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", { class: "growl-close" }, "×", -1 /* HOISTED */)
+const _hoisted_2 = { class: "growl-title" }
+const _hoisted_3 = { class: "growl-message" }
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
-      name: "fade",
-      appear: ""
-    }, {
-      default: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(() => [
-        ($setup.show)
-          ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
-              key: 0,
-              class: "notification-overlay",
-              onClick: _cache[1] || (_cache[1] = (...args) => (_ctx.showModal(...args)))
-            }))
-          : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
-      ]),
-      _: 1
-    }),
-    ($setup.show)
-      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
-            name: "slide",
-            class: "modal-dialog m-0",
-            appear: ""
-          }, {
-            default: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(() => [
-              (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", _hoisted_2, [
-                _hoisted_3,
-                (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [
-                  (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [
-                    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [
-                      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.message), 1 /* TEXT */)
-                    ])
-                  ])
-                ]),
-                (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [
-                  (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-                    type: "button",
-                    class: "btn btn-primary",
-                    onClick: _cache[2] || (_cache[2] = (...args) => ($setup.ok(...args)))
-                  }, "Ok ")
-                ])
-              ])
-            ]),
-            _: 1
-          })
-        ]))
-      : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
-  ], 64 /* STABLE_FRAGMENT */))
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+    id: "growls-tr",
+    onClick: _cache[1] || (_cache[1] = (...args) => ($setup.ok(...args)))
+  }, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+      class: ["growl growl-error growl-medium", { 'growl-outgoing': !$setup.show}]
+    }, [
+      _hoisted_1,
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.message.message), 1 /* TEXT */),
+      ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.message.errors, (error) => {
+        return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(error[0]), 1 /* TEXT */))
+      }), 256 /* UNKEYED_FRAGMENT */))
+    ], 2 /* CLASS */)
+  ]))
 }
 
 /***/ }),

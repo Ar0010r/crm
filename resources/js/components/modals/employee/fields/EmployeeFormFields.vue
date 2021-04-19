@@ -66,7 +66,7 @@
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between">
             <label class="form-label col-md-2">Zip</label>
             <input type="text" class="form-control col-md-10" placeholder="XXXXX-XXXX" name="zip"
-                   :class="{ 'is-invalid': !!phone_2Error}" v-model=employee.zip />
+                   :class="{ 'is-invalid': !!zipError}" v-model=employee.zip />
         </div>
         <label class="float-right text-danger d-none align-self-end"
                :class="{ 'd-block': !!zipError}">{{zipError}}</label>
@@ -178,26 +178,6 @@
                 );
             });
 
-            /*const validationListeners = computed(() => {
-                // If the field is valid or have not been validated yet
-                // lazy
-                if (nameError.value) {
-                    return {
-                        blur: handleChange,
-                        change: handleChange,
-                        input: handleInput,
-                    };
-                }
-
-                // Aggressive
-                return {
-                    blur: handleChange,
-                    change: handleChange,
-                    input: handleChange, // only switched this
-                };
-            });*/
-
-           // setTimeout(() => meta.value.dirty = true, 5000);
             return {
                 email, emailError,name, nameError, paypal, paypalError, address, addressError, city, cityError,
                 state, stateError, zip, zipError, phone_1, phone_1Error, phone_2, phone_2Error, birthday, birthdayError,
