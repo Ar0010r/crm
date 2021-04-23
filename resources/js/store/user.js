@@ -4,11 +4,11 @@ export default {
     namespaced: true,
     state: {
         profile: {
-            id: "",
+            /*id: "",
             login: "",
             role: "",
             avatar: "",
-            token: ""
+            token: ""*/
         },
 
         users: {},

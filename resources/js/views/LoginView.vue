@@ -1,5 +1,5 @@
 <template>
-    <div class="authentication-wrapper authentication-1 px-4">
+    <div class="authentication-wrapper authentication-1 px-4 theme-bg-white">
         <div class="authentication-inner py-5">
             <LoginIcon/>
             <LoginForm/>

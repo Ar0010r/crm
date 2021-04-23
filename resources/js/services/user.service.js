@@ -10,6 +10,7 @@ export class UserService {
     }
 
     async getProfile() {
+        console.log('get profile')
         return await this.client.get('/api/profile');
     }
 

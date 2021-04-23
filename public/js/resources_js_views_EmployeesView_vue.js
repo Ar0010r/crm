@@ -2279,7 +2279,7 @@ const _hoisted_3 = {
   class: "modal-content",
   enctype: "multipart/form-data"
 }
-const _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"modal-header\"><h5 class=\"modal-title\"> Add employees <div class=\"d-flex flex-column mt-1\"><small class=\"text-muted\">Example format of accepted <a href=\"public/example.xls\" download>file</a></small></div></h5><button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">×</button></div>", 1)
+const _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"modal-header\"><h5 class=\"modal-title\"> Add employees <div class=\"d-flex flex-column mt-1\"><small class=\"text-muted\">Example format of accepted <a href=\"/public/example.xlsx\" download>file</a></small></div></h5><button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">×</button></div>", 1)
 const _hoisted_5 = { class: "card-body" }
 const _hoisted_6 = {
   class: "flow-drop py-5 px-3 d-flex align-items-center justify-content-center",
@@ -2353,7 +2353,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   onChange: _cache[1] || (_cache[1] = (...args) => ($setup.setFile(...args))),
                   type: "file",
                   id: "empFileInput",
-                  accept: ".xlsx, .xls",
+                  accept: ".xlsx",
                   style: {"visibility":"hidden","position":"absolute","width":"1px","height":"1px"}
                 }, null, 32 /* HYDRATE_EVENTS */)
               ])

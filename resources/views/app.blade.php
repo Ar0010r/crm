@@ -82,15 +82,13 @@
 <script src="assets/vendor/libs/flow-js/flow.js"></script>--}}
 
 <script src="assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
-<script src="assets/vendor/libs/select2/select2.js"></script>
+{{--<script src="assets/vendor/libs/select2/select2.js"></script>--}}
 <script src="assets/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
 
 <!-- Demo -->
-<script src="assets/js/demo.js"></script>
-<script src="assets/js/forms_selects.js"></script>
 <script src="assets/vendor/libs/growl/growl.js"></script>
 <script src="assets/js/ui_notifications.js"></script>
-<script src="assets/js/forms_selects.js"></script>
+{{--<script src="assets/js/forms_selects.js"></script>--}}
 
 <!-- Demo -->
 <script src="assets/js/demo.js"></script>

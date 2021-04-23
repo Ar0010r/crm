@@ -6,7 +6,7 @@
                     <h5 class="modal-title">
                         Add employees
                         <div class="d-flex flex-column mt-1">
-                            <small class="text-muted">Example format of accepted <a href="public/example.xls" download>file</a>
+                            <small class="text-muted">Example format of accepted <a href="/public/example.xlsx" download>file</a>
                             </small>
                         </div>
                     </h5>
@@ -22,7 +22,7 @@
                             <h4>Drop files here to upload or select</h4>
                             <button @click="selectFile" type="button" class="flow-browse btn btn-secondary">Select from
                                 your computer
-                                <input @change="setFile" type="file" id="empFileInput" accept=".xlsx, .xls"
+                                <input @change="setFile" type="file" id="empFileInput" accept=".xlsx"
                                        style="visibility: hidden; position: absolute; width: 1px; height: 1px;">
                             </button>
                         </div>

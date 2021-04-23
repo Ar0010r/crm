@@ -3,7 +3,7 @@
          id="layout-navbar">
 
         <!-- Brand demo (see assets/css/demo/demo.css) -->
-        <a href="index.html" class="navbar-brand app-brand demo d-lg-none py-0 mr-4">
+        <a class="navbar-brand app-brand demo d-lg-none py-0 mr-4">
             <span class="app-brand-logo demo bg-primary">
               <svg viewBox="0 0 148 80" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><linearGradient
                       id="a" x1="46.49" x2="62.46" y1="53.39" y2="48.2" gradientUnits="userSpaceOnUse"><stop
@@ -57,73 +57,35 @@
                 <div class="nav-item d-none d-lg-block text-big font-weight-light line-height-1 opacity-25 mr-3 ml-1">
                     |
                 </div>
-
-                <div class="demo-navbar-user nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                  <span class="d-inline-flex flex-lg-row-reverse align-items-center align-middle">
-                    <img :src="'images/' + profile.avatar"  alt class="d-block ui-w-30 rounded-circle">
-                    <span class="px-1 mr-lg-2 ml-2 ml-lg-0">{{profile.login}}</span>
-                  </span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a @click="profileForm" data-toggle="modal" data-target="#profileForm" href="javascript:void(0)"
-                           class="dropdown-item">
-                            <i class="ion ion-ios-person text-lightest"></i>
-                            My profile
-                        </a>
-
-                        <div class="dropdown-divider"></div>
-
-                        <a @click="logout" href="javascript:void(0)" class="dropdown-item">
-                            <i class="ion ion-ios-log-out text-danger"></i>
-                            Log Out
-                        </a>
-                    </div>
-                </div>
+                <Dropdown/>
             </div>
         </div>
     </nav>
 </template>
 
 <script>
+    import Dropdown from './NavBarDropdown';
     import {useStore} from 'vuex';
-    import router from '../../router.js'
-    import {inject, computed} from 'vue';
+    import {inject} from 'vue';
 
     export default {
         setup() {
             const container = inject('container');
             const store = useStore();
-            let profile = computed(() => store.getters.getProfile)
 
-            let keyword;
+            let profileIsUndefined = Object.keys(store.getters.getProfile).length === 0;
+            if (profileIsUndefined) setTimeout(() => store.dispatch('user/setProfileToStore'), 1000);
 
             async function search(keyword) {
                 let employees = await container.EmployeeService.search(keyword);
                 store.commit('employee/setEmployees', employees.employees);
                 store.commit('employee/setPagination', employees.pagination);
             }
-
-            async function logout() {
-                localStorage.removeItem('token');
-                window.location.href = '/login';
-            }
-
-            function profileForm() {
-
-                let object = {
-                    id: profile.value.id,
-                    login: profile.value.login,
-                    role: profile.value.role,
-                    avatar: profile.value.avatar,
-                    password: null,
-                };
-
-                store.commit('formData/setUser', object);
-
-            }
-
-            return {keyword, search, logout, profileForm, profile }
+            let keyword;
+            return {keyword, search}
+        },
+        components: {
+            Dropdown
         }
     };
 </script>

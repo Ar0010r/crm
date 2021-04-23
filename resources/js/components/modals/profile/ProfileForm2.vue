@@ -39,18 +39,12 @@
     import ManagerFormFields from '../manager/ManagerFormFields';
     import {useStore} from 'vuex';
     import {computed, inject, ref} from 'vue';
-    import mitt from 'mitt';
 
     export default {
         setup() {
             const store = useStore();
             const container = inject('container');
-            let user = computed(() => store.getters.getUser);
-            //let user;
-
-            const emitter = inject("emitter");
-
-            emitter.on('open-profile-form', e => console.log('foo', e))
+            let user = computed(() => store.getters.getUser)
 
             let file = ref(null);
 
