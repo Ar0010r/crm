@@ -4,7 +4,7 @@
             <form class="modal-content" enctype='multipart/form-data'>
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        Add employees
+                        Add applicants
                         <div class="d-flex flex-column mt-1">
                             <small class="text-muted">Example format of accepted <a href="/public/example.xlsx" download>file</a>
                             </small>

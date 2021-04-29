@@ -25,32 +25,18 @@
     import CompaniesTableRow from './CompaniesTableRow.vue';
     import CreateCompanyForm from '../../modals/company/CreateCompanyForm';
     import EditCompanyForm from '../../modals/company/EditCompanyForm';
-    import {computed} from 'vue';
+    import {computed, inject} from 'vue';
     import {useStore} from 'vuex';
 
     export default {
         setup() {
             const store = useStore();
-
-            function initializeCompanyStoreForm() {
-                let emptyCompany = {
-                    id: null,
-                    name: null,
-                    personnel_id: null,
-                    personnel: {login: null},
-                    domain: null,
-                    email: null,
-                    created_at: null,
-                    dataIsValid: null,
-                };
-
-                store.commit('formData/setCompany', emptyCompany);
-            }
+            const emitter = inject("emitter");
 
             return {
                 profile: computed(() => store.getters.getProfile),
                 companies: computed(() => store.getters.getCompanies),
-                initializeCompanyStoreForm
+                initializeCompanyStoreForm : () =>  emitter.emit('create-company-form'),
             }
         },
 

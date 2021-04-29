@@ -126,7 +126,7 @@
                 zip: yup.string().nullable().matches('^$|\\d{5}(-\\d{4})?$', 'Enter valid zip code'),
                 phone_1: yup.string().nullable().matches('^$|\\d{3}-\\d{3}-\\d{4}$', 'Enter valid phone'),
                 phone_2: yup.string().nullable().matches("^$|\\d{3}-\\d{3}-\\d{4}$", 'Enter valid phone'),
-                birthday: yup.string().nullable().matches("^$|((?:19|20)[1-9][1-9])-(0[1-9]|1[012])-([12][0-9]|3[01]|0[1-9])$",'Valid date format is yyyy-mm-dd'),
+                birthday: yup.string().nullable().matches("^$|((?:19|20)[0-9][0-9])-(0[1-9]|1[012])-([12][0-9]|3[01]|0[1-9])$",'Valid date format is yyyy-mm-dd'),
                 state: yup.string().nullable().test("test-name", "Please enter correct state abbreviation",
                     function (value) {
                         return !!uSstates.includes(value) || value === ""|| value === null
@@ -163,19 +163,19 @@
             phone_2.value = computed(() => props.employee.phone_2);
             birthday.value = computed(() => props.employee.birthday);
 
-            console.log(meta.value.valid);
             const store = useStore();
 
             watch(meta, (first, second) => {
 
-                store.commit('formData/setEmployeeIsValidState', meta.value.valid)
+                //store.commit('formData/setEmployeeIsValidState', meta.value.valid)
+                props.employee.dataIsValid = meta.value.valid
 
-                console.log('from watcher ' + meta.value.valid);
+                /*console.log('from watcher ' + meta.value.valid);
                 console.log(
                     "Watch props.selected function called with args:",
                     first,
                     second
-                );
+                );*/
             });
 
             return {

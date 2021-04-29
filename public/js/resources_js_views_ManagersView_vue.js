@@ -26,6 +26,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -33,13 +39,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   setup: function setup() {
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
     var container = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)('container');
+    var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)("emitter");
 
-    function storeManager(_x) {
+    var emptyManager = _objectSpread({}, store.getters.getEmptyUser);
+
+    var manager = (0,vue__WEBPACK_IMPORTED_MODULE_2__.reactive)(_objectSpread({}, emptyManager));
+    emitter.on('create-manager-form', function () {
+      return clearForm();
+    });
+
+    function storeManager() {
       return _storeManager.apply(this, arguments);
     }
 
     function _storeManager() {
-      _storeManager = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(user) {
+      _storeManager = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         var storedManager;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
@@ -47,36 +61,41 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return container.UserService.storeUser(user);
+                return container.UserService.storeUser(manager);
 
               case 3:
                 storedManager = _context.sent;
                 store.commit('user/setUserById', storedManager.data.user);
                 document.getElementById('storeUserFormClose').click();
-                _context.next = 11;
+                clearForm();
+                _context.next = 12;
                 break;
 
-              case 8:
-                _context.prev = 8;
+              case 9:
+                _context.prev = 9;
                 _context.t0 = _context["catch"](0);
                 store.dispatch('notification/activate', _context.t0.response.data, {
                   root: true
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 8]]);
+        }, _callee, null, [[0, 9]]);
       }));
       return _storeManager.apply(this, arguments);
     }
 
+    var clearForm = function clearForm() {
+      return Object.keys(emptyManager).forEach(function (key) {
+        return manager[key] = emptyManager[key];
+      });
+    };
+
     return {
-      user: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
-        return store.getters.getUser;
-      }),
+      manager: manager,
       storeManager: storeManager
     };
   },
@@ -113,6 +132,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -120,51 +145,58 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   setup: function setup() {
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
     var container = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)('container');
+    var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)("emitter");
 
-    function updateUser(_x) {
-      return _updateUser.apply(this, arguments);
+    var emptyManager = _objectSpread({}, store.getters.getEmptyUser);
+
+    var manager = (0,vue__WEBPACK_IMPORTED_MODULE_2__.reactive)(_objectSpread({}, emptyManager));
+    emitter.on('edit-manager-form', function (managerData) {
+      Object.keys(managerData).forEach(function (key) {
+        return manager[key] = managerData[key];
+      });
+    });
+
+    function updateManager() {
+      return _updateManager.apply(this, arguments);
     }
 
-    function _updateUser() {
-      _updateUser = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(user) {
+    function _updateManager() {
+      _updateManager = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (user.password === null) delete user.password;
-                delete user.dataIsValid;
+                if (manager.password === null) delete manager.password;
+                delete manager.dataIsValid;
                 _context.prev = 2;
-                _context.next = 5;
-                return container.UserService.updateUser(user);
+                console.log(manager);
+                _context.next = 6;
+                return container.UserService.updateUser(manager);
 
-              case 5:
-                store.commit('user/setUserById', user);
+              case 6:
+                store.commit('user/setUserById', manager);
                 document.getElementById('editUserFormClose').click();
-                _context.next = 12;
+                _context.next = 13;
                 break;
 
-              case 9:
-                _context.prev = 9;
+              case 10:
+                _context.prev = 10;
                 _context.t0 = _context["catch"](2);
-                store.dispatch('notification/activate', _context.t0.response.data, {
-                  root: true
-                });
+                emitter.emit('notification-error', _context.t0.response.data); //store.dispatch('notification/activate', e.response.data, {root: true});
 
-              case 12:
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[2, 9]]);
+        }, _callee, null, [[2, 10]]);
       }));
-      return _updateUser.apply(this, arguments);
+      return _updateManager.apply(this, arguments);
     }
 
     return {
-      user: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
-        return store.getters.getUser;
-      }),
-      updateUser: updateUser
+      manager: manager,
+      updateManager: updateManager
     };
   },
   components: {
@@ -204,21 +236,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_5__.useStore)();
-
-    function initializeManagerStoreForm() {
-      var emptyUser = {
-        login: null,
-        role: null,
-        password: null,
-        dataIsValid: false
-      };
-      store.commit('formData/setUser', emptyUser);
-    }
-
+    var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_4__.inject)("emitter");
     return {
-      initializeManagerStoreForm: initializeManagerStoreForm,
+      showManagerStoreForm: function showManagerStoreForm() {
+        return emitter.emit('create-manager-form');
+      },
       users: (0,vue__WEBPACK_IMPORTED_MODULE_4__.computed)(function () {
-        return (0,vuex__WEBPACK_IMPORTED_MODULE_5__.useStore)().getters.getUsers;
+        return store.getters.getUsers;
       })
     };
   },
@@ -239,7 +263,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -247,24 +271,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup(props) {
-    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_0__.useStore)();
-
-    function putUserInfoToStore(user) {
-      var object = {
-        id: user.id,
-        login: user.login,
-        role: user.role,
-        password: null
-      };
-      store.commit('formData/setUser', object);
-    }
-
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_1__.useStore)();
+    var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)("emitter");
     return {
-      putUserInfoToStore: putUserInfoToStore
+      profile: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+        return store.getters.getProfile;
+      }),
+      showEditManagerForm: function showEditManagerForm() {
+        return emitter.emit('edit-manager-form', props.user);
+      }
     };
   },
   props: {
@@ -329,12 +350,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _CreateManagerForm_vue_vue_type_template_id_f71a1956_bindings_user_setup_storeManager_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateManagerForm.vue?vue&type=template&id=f71a1956&bindings={"user":"setup","storeManager":"setup"} */ "./resources/js/components/modals/manager/CreateManagerForm.vue?vue&type=template&id=f71a1956&bindings={\"user\":\"setup\",\"storeManager\":\"setup\"}");
+/* harmony import */ var _CreateManagerForm_vue_vue_type_template_id_f71a1956_bindings_manager_setup_storeManager_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateManagerForm.vue?vue&type=template&id=f71a1956&bindings={"manager":"setup","storeManager":"setup"} */ "./resources/js/components/modals/manager/CreateManagerForm.vue?vue&type=template&id=f71a1956&bindings={\"manager\":\"setup\",\"storeManager\":\"setup\"}");
 /* harmony import */ var _CreateManagerForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateManagerForm.vue?vue&type=script&lang=js */ "./resources/js/components/modals/manager/CreateManagerForm.vue?vue&type=script&lang=js");
 
 
 
-_CreateManagerForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _CreateManagerForm_vue_vue_type_template_id_f71a1956_bindings_user_setup_storeManager_setup___WEBPACK_IMPORTED_MODULE_0__.render
+_CreateManagerForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _CreateManagerForm_vue_vue_type_template_id_f71a1956_bindings_manager_setup_storeManager_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -359,12 +380,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _EditManagerForm_vue_vue_type_template_id_40e60af2_bindings_user_setup_updateUser_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditManagerForm.vue?vue&type=template&id=40e60af2&bindings={"user":"setup","updateUser":"setup"} */ "./resources/js/components/modals/manager/EditManagerForm.vue?vue&type=template&id=40e60af2&bindings={\"user\":\"setup\",\"updateUser\":\"setup\"}");
+/* harmony import */ var _EditManagerForm_vue_vue_type_template_id_40e60af2_bindings_manager_setup_updateManager_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditManagerForm.vue?vue&type=template&id=40e60af2&bindings={"manager":"setup","updateManager":"setup"} */ "./resources/js/components/modals/manager/EditManagerForm.vue?vue&type=template&id=40e60af2&bindings={\"manager\":\"setup\",\"updateManager\":\"setup\"}");
 /* harmony import */ var _EditManagerForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditManagerForm.vue?vue&type=script&lang=js */ "./resources/js/components/modals/manager/EditManagerForm.vue?vue&type=script&lang=js");
 
 
 
-_EditManagerForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _EditManagerForm_vue_vue_type_template_id_40e60af2_bindings_user_setup_updateUser_setup___WEBPACK_IMPORTED_MODULE_0__.render
+_EditManagerForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _EditManagerForm_vue_vue_type_template_id_40e60af2_bindings_manager_setup_updateManager_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -389,12 +410,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _ManagersTable_vue_vue_type_template_id_7aafad2e_bindings_initializeManagerStoreForm_setup_users_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ManagersTable.vue?vue&type=template&id=7aafad2e&bindings={"initializeManagerStoreForm":"setup","users":"setup"} */ "./resources/js/components/tables/managers/ManagersTable.vue?vue&type=template&id=7aafad2e&bindings={\"initializeManagerStoreForm\":\"setup\",\"users\":\"setup\"}");
+/* harmony import */ var _ManagersTable_vue_vue_type_template_id_7aafad2e_bindings_showManagerStoreForm_setup_users_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ManagersTable.vue?vue&type=template&id=7aafad2e&bindings={"showManagerStoreForm":"setup","users":"setup"} */ "./resources/js/components/tables/managers/ManagersTable.vue?vue&type=template&id=7aafad2e&bindings={\"showManagerStoreForm\":\"setup\",\"users\":\"setup\"}");
 /* harmony import */ var _ManagersTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ManagersTable.vue?vue&type=script&lang=js */ "./resources/js/components/tables/managers/ManagersTable.vue?vue&type=script&lang=js");
 
 
 
-_ManagersTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _ManagersTable_vue_vue_type_template_id_7aafad2e_bindings_initializeManagerStoreForm_setup_users_setup___WEBPACK_IMPORTED_MODULE_0__.render
+_ManagersTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _ManagersTable_vue_vue_type_template_id_7aafad2e_bindings_showManagerStoreForm_setup_users_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -447,12 +468,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _ManagersTableRow_vue_vue_type_template_id_f3c50608_bindings_putUserInfoToStore_setup_user_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ManagersTableRow.vue?vue&type=template&id=f3c50608&bindings={"putUserInfoToStore":"setup","user":"props"} */ "./resources/js/components/tables/managers/ManagersTableRow.vue?vue&type=template&id=f3c50608&bindings={\"putUserInfoToStore\":\"setup\",\"user\":\"props\"}");
+/* harmony import */ var _ManagersTableRow_vue_vue_type_template_id_f3c50608_bindings_profile_setup_showEditManagerForm_setup_user_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ManagersTableRow.vue?vue&type=template&id=f3c50608&bindings={"profile":"setup","showEditManagerForm":"setup","user":"props"} */ "./resources/js/components/tables/managers/ManagersTableRow.vue?vue&type=template&id=f3c50608&bindings={\"profile\":\"setup\",\"showEditManagerForm\":\"setup\",\"user\":\"props\"}");
 /* harmony import */ var _ManagersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ManagersTableRow.vue?vue&type=script&lang=js */ "./resources/js/components/tables/managers/ManagersTableRow.vue?vue&type=script&lang=js");
 
 
 
-_ManagersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _ManagersTableRow_vue_vue_type_template_id_f3c50608_bindings_putUserInfoToStore_setup_user_props___WEBPACK_IMPORTED_MODULE_0__.render
+_ManagersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _ManagersTableRow_vue_vue_type_template_id_f3c50608_bindings_profile_setup_showEditManagerForm_setup_user_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -592,12 +613,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/modals/manager/CreateManagerForm.vue?vue&type=template&id=f71a1956&bindings={\"user\":\"setup\",\"storeManager\":\"setup\"}":
-/*!*****************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/modals/manager/CreateManagerForm.vue?vue&type=template&id=f71a1956&bindings={"user":"setup","storeManager":"setup"} ***!
-  \*****************************************************************************************************************************************************/
+/***/ "./resources/js/components/modals/manager/CreateManagerForm.vue?vue&type=template&id=f71a1956&bindings={\"manager\":\"setup\",\"storeManager\":\"setup\"}":
+/*!********************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/modals/manager/CreateManagerForm.vue?vue&type=template&id=f71a1956&bindings={"manager":"setup","storeManager":"setup"} ***!
+  \********************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/CreateManagerForm.vue?vue&type=template&id=f71a1956&bindings={"user":"setup","storeManager":"setup"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/CreateManagerForm.vue?vue&type=template&id=f71a1956&bindings={"manager":"setup","storeManager":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -605,19 +626,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreateManagerForm_vue_vue_type_template_id_f71a1956_bindings_user_setup_storeManager_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreateManagerForm_vue_vue_type_template_id_f71a1956_bindings_manager_setup_storeManager_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreateManagerForm_vue_vue_type_template_id_f71a1956_bindings_user_setup_storeManager_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CreateManagerForm.vue?vue&type=template&id=f71a1956&bindings={"user":"setup","storeManager":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/CreateManagerForm.vue?vue&type=template&id=f71a1956&bindings={\"user\":\"setup\",\"storeManager\":\"setup\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreateManagerForm_vue_vue_type_template_id_f71a1956_bindings_manager_setup_storeManager_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CreateManagerForm.vue?vue&type=template&id=f71a1956&bindings={"manager":"setup","storeManager":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/CreateManagerForm.vue?vue&type=template&id=f71a1956&bindings={\"manager\":\"setup\",\"storeManager\":\"setup\"}");
 
 
 /***/ }),
 
-/***/ "./resources/js/components/modals/manager/EditManagerForm.vue?vue&type=template&id=40e60af2&bindings={\"user\":\"setup\",\"updateUser\":\"setup\"}":
-/*!*************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/modals/manager/EditManagerForm.vue?vue&type=template&id=40e60af2&bindings={"user":"setup","updateUser":"setup"} ***!
-  \*************************************************************************************************************************************************/
+/***/ "./resources/js/components/modals/manager/EditManagerForm.vue?vue&type=template&id=40e60af2&bindings={\"manager\":\"setup\",\"updateManager\":\"setup\"}":
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/modals/manager/EditManagerForm.vue?vue&type=template&id=40e60af2&bindings={"manager":"setup","updateManager":"setup"} ***!
+  \*******************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/EditManagerForm.vue?vue&type=template&id=40e60af2&bindings={"user":"setup","updateUser":"setup"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/EditManagerForm.vue?vue&type=template&id=40e60af2&bindings={"manager":"setup","updateManager":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -625,19 +646,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EditManagerForm_vue_vue_type_template_id_40e60af2_bindings_user_setup_updateUser_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EditManagerForm_vue_vue_type_template_id_40e60af2_bindings_manager_setup_updateManager_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EditManagerForm_vue_vue_type_template_id_40e60af2_bindings_user_setup_updateUser_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./EditManagerForm.vue?vue&type=template&id=40e60af2&bindings={"user":"setup","updateUser":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/EditManagerForm.vue?vue&type=template&id=40e60af2&bindings={\"user\":\"setup\",\"updateUser\":\"setup\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EditManagerForm_vue_vue_type_template_id_40e60af2_bindings_manager_setup_updateManager_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./EditManagerForm.vue?vue&type=template&id=40e60af2&bindings={"manager":"setup","updateManager":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/EditManagerForm.vue?vue&type=template&id=40e60af2&bindings={\"manager\":\"setup\",\"updateManager\":\"setup\"}");
 
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/managers/ManagersTable.vue?vue&type=template&id=7aafad2e&bindings={\"initializeManagerStoreForm\":\"setup\",\"users\":\"setup\"}":
-/*!*****************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/managers/ManagersTable.vue?vue&type=template&id=7aafad2e&bindings={"initializeManagerStoreForm":"setup","users":"setup"} ***!
-  \*****************************************************************************************************************************************************************/
+/***/ "./resources/js/components/tables/managers/ManagersTable.vue?vue&type=template&id=7aafad2e&bindings={\"showManagerStoreForm\":\"setup\",\"users\":\"setup\"}":
+/*!***********************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/managers/ManagersTable.vue?vue&type=template&id=7aafad2e&bindings={"showManagerStoreForm":"setup","users":"setup"} ***!
+  \***********************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/managers/ManagersTable.vue?vue&type=template&id=7aafad2e&bindings={"initializeManagerStoreForm":"setup","users":"setup"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/managers/ManagersTable.vue?vue&type=template&id=7aafad2e&bindings={"showManagerStoreForm":"setup","users":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -645,9 +666,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ManagersTable_vue_vue_type_template_id_7aafad2e_bindings_initializeManagerStoreForm_setup_users_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ManagersTable_vue_vue_type_template_id_7aafad2e_bindings_showManagerStoreForm_setup_users_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ManagersTable_vue_vue_type_template_id_7aafad2e_bindings_initializeManagerStoreForm_setup_users_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ManagersTable.vue?vue&type=template&id=7aafad2e&bindings={"initializeManagerStoreForm":"setup","users":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/managers/ManagersTable.vue?vue&type=template&id=7aafad2e&bindings={\"initializeManagerStoreForm\":\"setup\",\"users\":\"setup\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ManagersTable_vue_vue_type_template_id_7aafad2e_bindings_showManagerStoreForm_setup_users_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ManagersTable.vue?vue&type=template&id=7aafad2e&bindings={"showManagerStoreForm":"setup","users":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/managers/ManagersTable.vue?vue&type=template&id=7aafad2e&bindings={\"showManagerStoreForm\":\"setup\",\"users\":\"setup\"}");
 
 
 /***/ }),
@@ -672,12 +693,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/managers/ManagersTableRow.vue?vue&type=template&id=f3c50608&bindings={\"putUserInfoToStore\":\"setup\",\"user\":\"props\"}":
-/*!***********************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/managers/ManagersTableRow.vue?vue&type=template&id=f3c50608&bindings={"putUserInfoToStore":"setup","user":"props"} ***!
-  \***********************************************************************************************************************************************************/
+/***/ "./resources/js/components/tables/managers/ManagersTableRow.vue?vue&type=template&id=f3c50608&bindings={\"profile\":\"setup\",\"showEditManagerForm\":\"setup\",\"user\":\"props\"}":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/managers/ManagersTableRow.vue?vue&type=template&id=f3c50608&bindings={"profile":"setup","showEditManagerForm":"setup","user":"props"} ***!
+  \******************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/managers/ManagersTableRow.vue?vue&type=template&id=f3c50608&bindings={"putUserInfoToStore":"setup","user":"props"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/managers/ManagersTableRow.vue?vue&type=template&id=f3c50608&bindings={"profile":"setup","showEditManagerForm":"setup","user":"props"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -685,9 +706,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ManagersTableRow_vue_vue_type_template_id_f3c50608_bindings_putUserInfoToStore_setup_user_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ManagersTableRow_vue_vue_type_template_id_f3c50608_bindings_profile_setup_showEditManagerForm_setup_user_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ManagersTableRow_vue_vue_type_template_id_f3c50608_bindings_putUserInfoToStore_setup_user_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ManagersTableRow.vue?vue&type=template&id=f3c50608&bindings={"putUserInfoToStore":"setup","user":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/managers/ManagersTableRow.vue?vue&type=template&id=f3c50608&bindings={\"putUserInfoToStore\":\"setup\",\"user\":\"props\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ManagersTableRow_vue_vue_type_template_id_f3c50608_bindings_profile_setup_showEditManagerForm_setup_user_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ManagersTableRow.vue?vue&type=template&id=f3c50608&bindings={"profile":"setup","showEditManagerForm":"setup","user":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/managers/ManagersTableRow.vue?vue&type=template&id=f3c50608&bindings={\"profile\":\"setup\",\"showEditManagerForm\":\"setup\",\"user\":\"props\"}");
 
 
 /***/ }),
@@ -712,10 +733,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/CreateManagerForm.vue?vue&type=template&id=f71a1956&bindings={\"user\":\"setup\",\"storeManager\":\"setup\"}":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/CreateManagerForm.vue?vue&type=template&id=f71a1956&bindings={"user":"setup","storeManager":"setup"} ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/CreateManagerForm.vue?vue&type=template&id=f71a1956&bindings={\"manager\":\"setup\",\"storeManager\":\"setup\"}":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/CreateManagerForm.vue?vue&type=template&id=f71a1956&bindings={"manager":"setup","storeManager":"setup"} ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -763,15 +784,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         _hoisted_4,
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [
           (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ManagerFormFields, {
-            user: $setup.user,
+            user: $setup.manager,
             "show-role-field": true
           }, null, 8 /* PROPS */, ["user"])
         ]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [
           _hoisted_7,
           (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-            onClick: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($event => ($setup.storeManager($setup.user)), ["prevent"])),
-            disabled: $setup.user.password === null || $setup.user.login === null || $setup.user.role === null || !$setup.user.dataIsValid ,
+            onClick: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)((...args) => ($setup.storeManager(...args)), ["prevent"])),
+            disabled: $setup.manager.password === null || $setup.manager.login === '' || $setup.manager.role === '' || !$setup.manager.dataIsValid ,
             type: "button",
             class: "btn btn-primary"
           }, "Add ", 8 /* PROPS */, ["disabled"])
@@ -783,10 +804,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/EditManagerForm.vue?vue&type=template&id=40e60af2&bindings={\"user\":\"setup\",\"updateUser\":\"setup\"}":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/EditManagerForm.vue?vue&type=template&id=40e60af2&bindings={"user":"setup","updateUser":"setup"} ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/EditManagerForm.vue?vue&type=template&id=40e60af2&bindings={\"manager\":\"setup\",\"updateManager\":\"setup\"}":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/EditManagerForm.vue?vue&type=template&id=40e60af2&bindings={"manager":"setup","updateManager":"setup"} ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -834,18 +855,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         _hoisted_4,
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [
           (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ManagerFormFields, {
-            user: $setup.user,
+            user: $setup.manager,
             "show-role-field": true
           }, null, 8 /* PROPS */, ["user"])
         ]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [
           _hoisted_7,
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<button :disabled=\"!manager.dataIsValid\" type=\"button\" class=\"btn btn-primary\"\n                            @click=\"updateManager\">Update\n                    </button>"),
           (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-            disabled: !$setup.user.dataIsValid,
             type: "button",
             class: "btn btn-primary",
-            onClick: _cache[1] || (_cache[1] = $event => ($setup.updateUser($setup.user)))
-          }, "Update ", 8 /* PROPS */, ["disabled"])
+            onClick: _cache[1] || (_cache[1] = (...args) => ($setup.updateManager(...args)))
+          }, "Update ")
         ])
       ])
     ])
@@ -854,10 +875,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/managers/ManagersTable.vue?vue&type=template&id=7aafad2e&bindings={\"initializeManagerStoreForm\":\"setup\",\"users\":\"setup\"}":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/managers/ManagersTable.vue?vue&type=template&id=7aafad2e&bindings={"initializeManagerStoreForm":"setup","users":"setup"} ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/managers/ManagersTable.vue?vue&type=template&id=7aafad2e&bindings={\"showManagerStoreForm\":\"setup\",\"users\":\"setup\"}":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/managers/ManagersTable.vue?vue&type=template&id=7aafad2e&bindings={"showManagerStoreForm":"setup","users":"setup"} ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -886,7 +907,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _hoisted_2,
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-        onClick: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)((...args) => ($setup.initializeManagerStoreForm(...args)), ["prevent"])),
+        onClick: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)((...args) => ($setup.showManagerStoreForm(...args)), ["prevent"])),
         class: "btn btn-primary btn",
         "data-toggle": "modal",
         "data-target": "#addManagerForm"
@@ -943,10 +964,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/managers/ManagersTableRow.vue?vue&type=template&id=f3c50608&bindings={\"putUserInfoToStore\":\"setup\",\"user\":\"props\"}":
-/*!********************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/managers/ManagersTableRow.vue?vue&type=template&id=f3c50608&bindings={"putUserInfoToStore":"setup","user":"props"} ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/managers/ManagersTableRow.vue?vue&type=template&id=f3c50608&bindings={\"profile\":\"setup\",\"showEditManagerForm\":\"setup\",\"user\":\"props\"}":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/managers/ManagersTableRow.vue?vue&type=template&id=f3c50608&bindings={"profile":"setup","showEditManagerForm":"setup","user":"props"} ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -961,8 +982,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-const _hoisted_1 = { class: "odd gradeX" }
-const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
   type: "button",
   class: "ion ion-md-cog p-0 bg-transparent border-0",
   "data-toggle": "tooltip",
@@ -971,7 +991,9 @@ const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
 }, null, -1 /* HOISTED */)
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_1, [
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
+    class: { 'd-none': $props.user.login === $setup.profile.login}
+  }, [
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.user.created_at), 1 /* TEXT */),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.user.login), 1 /* TEXT */),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.user.role), 1 /* TEXT */),
@@ -979,12 +1001,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
         "data-toggle": "modal",
         "data-target": "#editManagerForm",
-        onClick: _cache[1] || (_cache[1] = $event => ($setup.putUserInfoToStore($props.user)))
+        onClick: _cache[1] || (_cache[1] = (...args) => ($setup.showEditManagerForm(...args)))
       }, [
-        _hoisted_2
+        _hoisted_1
       ])
     ])
-  ]))
+  ], 2 /* CLASS */))
 }
 
 /***/ }),

@@ -40,7 +40,6 @@ class EmployeeImport implements ToModel, WithHeadingRow, WithValidation
             'status' => $row['status'],
             'name' => $row['name'],
             'email' => $row['email'],
-            'paypal' => $row['paypal'],
             'address' => $row['address'],
             'birthday' => $row['birthday'],
             'city' => $row['city'],
@@ -49,14 +48,16 @@ class EmployeeImport implements ToModel, WithHeadingRow, WithValidation
             'phone_1' => $row['phone_1'],
             'phone_2' => $row['phone_2'],
             'race' => $row['race'],
+            //'paypal' => $row['paypal'],
         ]);
     }
 
     public function rules(): array
     {
-        return array_map(function ($rule){
+        return $this->importRules();
+        /*return array_map(function ($rule){
             return 'required|'.$rule;
-        }, $this->basicRules());
+        }, $this->importRules());*/
 
     }
 }

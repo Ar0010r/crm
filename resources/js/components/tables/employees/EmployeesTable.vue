@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid flex-grow-1 container-p-y">
         <h4 class="font-weight-bold py-3 mb-4">
-            Employees
+            Applicants
         </h4>
         <EmployeesTableControl/>
 
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-    import EmployeesTableControl from './EmployeesTableControl.vue';
+    import EmployeesTableControl from './actions/EmployeesTableControl.vue';
     import EmployeesTableRow from './EmployeesTableRow.vue';
     import EmptyTableRow from '../../layout/EmptyEmployeesTableRow';
     import EmployeesTableHead from './EmployeesTableHead.vue';

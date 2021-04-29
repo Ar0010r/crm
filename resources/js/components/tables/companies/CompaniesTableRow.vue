@@ -10,7 +10,7 @@
                 <button type="button" class="ion ion-md-cog p-0 bg-transparent border-0"
                         data-toggle="tooltip" data-target="#editCompanyForm"
                         data-placement="right" title="Edit"
-                        @click="putCompanyInfoToStore(company)"
+                        @click="showEditCompanyForm"
                 >
 
                 </button>
@@ -21,28 +21,17 @@
 
 <script>
     import{useStore} from 'vuex';
-    import {computed} from 'vue';
+    import {computed, inject} from 'vue';
 
     export default {
-        setup(){
+        setup(props){
             const store = useStore();
+            const emitter = inject("emitter");
 
-            function putCompanyInfoToStore(company) {
-                let object = {
-                    id: company.id,
-                    name: company.name,
-                    personnel_id: company.personnel_id,
-                    personnel: company.personnel,
-                    domain: company.domain,
-                    email: company.email,
-                    created_at: company.created_at,
-                    dataIsValid: true,
-                };
-
-                store.commit('formData/setCompany', object);
+            return {
+                profile: computed(() => store.getters.getProfile),
+                showEditCompanyForm: () => emitter.emit('edit-company-form', props.company)
             }
-
-            return {profile: computed(() => store.getters.getProfile), putCompanyInfoToStore }
         },
         props: {company: Object},
     };

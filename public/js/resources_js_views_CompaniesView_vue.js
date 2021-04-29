@@ -26,11 +26,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup(props) {
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_2__.useStore)();
+    var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)("emitter");
     var schema = yup__WEBPACK_IMPORTED_MODULE_1__.object({
       personnel: yup__WEBPACK_IMPORTED_MODULE_1__.string().required(),
-      name: yup__WEBPACK_IMPORTED_MODULE_1__.string().required().trim().matches('^[a-zA-Z]*$', 'login can contain only letters'),
-      domain: yup__WEBPACK_IMPORTED_MODULE_1__.string().required().trim().matches('^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\\.[a-zA-Z]{2,}$', 'please enter valid domain'),
-      email: yup__WEBPACK_IMPORTED_MODULE_1__.string().required().email()
+      name: yup__WEBPACK_IMPORTED_MODULE_1__.string().required().nullable().trim().matches('^[a-zA-Z]*$', 'login can contain only letters'),
+      domain: yup__WEBPACK_IMPORTED_MODULE_1__.string().required().nullable().trim().matches('^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\\.[a-zA-Z]{2,}$', 'please enter valid domain'),
+      email: yup__WEBPACK_IMPORTED_MODULE_1__.string().required().nullable().email()
     });
 
     var _useForm = (0,vee_validate__WEBPACK_IMPORTED_MODULE_3__.useForm)({
@@ -63,14 +64,15 @@ __webpack_require__.r(__webpack_exports__);
       return props.company.domain;
     });
     var resetForm = (0,vee_validate__WEBPACK_IMPORTED_MODULE_3__.useResetForm)();
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(function () {
-      return props.company;
-    }, function (second, first) {
-      resetForm();
-    });
+    emitter.on('create-company-form', resetForm);
+    /*watch(() => props.company, (second, first) => {
+        resetForm()
+    });*/
+
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(errors, function (second, first) {
-      var allFieldsFilled = props.company.domain !== null && props.company.name !== null && props.company.email !== null && props.company.manager !== null;
-      store.commit('formData/setCompanyIsValidState', Object.keys(second).length === 0 && allFieldsFilled);
+      var allFieldsFilled = props.company.domain !== null && props.company.name !== null && props.company.email !== null && props.company.personnel_id !== null; //store.commit('formData/setCompanyIsValidState', Object.keys(second).length === 0 && allFieldsFilled)
+
+      props.company.dataIsValid = Object.keys(second).length === 0 && allFieldsFilled;
     });
     return {
       schema: schema,
@@ -118,6 +120,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -125,8 +133,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   setup: function setup() {
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
     var container = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)('container');
+    var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)("emitter");
+
+    var emptyCompany = _objectSpread({}, store.getters.getEmptyCompany);
+
+    var company = (0,vue__WEBPACK_IMPORTED_MODULE_2__.reactive)(_objectSpread({}, emptyCompany));
     var users = (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
       return store.getters.getUsers;
+    });
+    emitter.on('create-company-form', function () {
+      return clearForm();
     });
 
     function storeCompany(_x) {
@@ -150,29 +166,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 storedCompany.personnel = users.value[storedCompany.personnel_id];
                 store.commit('company/setCompanyById', storedCompany);
                 document.getElementById('storeCompanyFormClose').click();
-                _context.next = 13;
+                clearForm();
+                _context.next = 14;
                 break;
 
-              case 10:
-                _context.prev = 10;
+              case 11:
+                _context.prev = 11;
                 _context.t0 = _context["catch"](0);
                 store.dispatch('notification/activate', _context.t0.response.data);
 
-              case 13:
+              case 14:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 10]]);
+        }, _callee, null, [[0, 11]]);
       }));
       return _storeCompany.apply(this, arguments);
     }
 
+    var clearForm = function clearForm() {
+      return Object.keys(emptyCompany).forEach(function (key) {
+        return company[key] = emptyCompany[key];
+      });
+    };
+
     return {
-      company: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
-        return store.getters.getCompany;
-      }),
-      storeCompany: storeCompany
+      storeCompany: storeCompany,
+      company: company
     };
   },
   components: {
@@ -208,15 +229,31 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
+    var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)("emitter");
     var container = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)('container');
     var users = (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
       return store.getters.getUsers;
+    });
+
+    var emptyCompany = _objectSpread({}, store.getters.getEmptyCompany);
+
+    var company = (0,vue__WEBPACK_IMPORTED_MODULE_2__.reactive)(_objectSpread({}, emptyCompany));
+    emitter.on('edit-company-form', function (companyData) {
+      Object.keys(companyData).forEach(function (key) {
+        return company[key] = companyData[key];
+      });
     });
 
     function updateCompany(_x) {
@@ -256,9 +293,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
 
     return {
-      company: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
-        return store.getters.getCompany;
-      }),
+      company: company,
       updateCompany: updateCompany
     };
   },
@@ -299,23 +334,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_5__.useStore)();
-
-    function initializeCompanyStoreForm() {
-      var emptyCompany = {
-        id: null,
-        name: null,
-        personnel_id: null,
-        personnel: {
-          login: null
-        },
-        domain: null,
-        email: null,
-        created_at: null,
-        dataIsValid: null
-      };
-      store.commit('formData/setCompany', emptyCompany);
-    }
-
+    var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_4__.inject)("emitter");
     return {
       profile: (0,vue__WEBPACK_IMPORTED_MODULE_4__.computed)(function () {
         return store.getters.getProfile;
@@ -323,7 +342,9 @@ __webpack_require__.r(__webpack_exports__);
       companies: (0,vue__WEBPACK_IMPORTED_MODULE_4__.computed)(function () {
         return store.getters.getCompanies;
       }),
-      initializeCompanyStoreForm: initializeCompanyStoreForm
+      initializeCompanyStoreForm: function initializeCompanyStoreForm() {
+        return emitter.emit('create-company-form');
+      }
     };
   },
   components: {
@@ -388,28 +409,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  setup: function setup() {
+  setup: function setup(props) {
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_1__.useStore)();
-
-    function putCompanyInfoToStore(company) {
-      var object = {
-        id: company.id,
-        name: company.name,
-        personnel_id: company.personnel_id,
-        personnel: company.personnel,
-        domain: company.domain,
-        email: company.email,
-        created_at: company.created_at,
-        dataIsValid: true
-      };
-      store.commit('formData/setCompany', object);
-    }
-
+    var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)("emitter");
     return {
       profile: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
         return store.getters.getProfile;
       }),
-      putCompanyInfoToStore: putCompanyInfoToStore
+      showEditCompanyForm: function showEditCompanyForm() {
+        return emitter.emit('edit-company-form', props.company);
+      }
     };
   },
   props: {
@@ -506,12 +515,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _CreateCompanyForm_vue_vue_type_template_id_430100f5_bindings_company_setup_storeCompany_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateCompanyForm.vue?vue&type=template&id=430100f5&bindings={"company":"setup","storeCompany":"setup"} */ "./resources/js/components/modals/company/CreateCompanyForm.vue?vue&type=template&id=430100f5&bindings={\"company\":\"setup\",\"storeCompany\":\"setup\"}");
+/* harmony import */ var _CreateCompanyForm_vue_vue_type_template_id_430100f5_bindings_storeCompany_setup_company_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateCompanyForm.vue?vue&type=template&id=430100f5&bindings={"storeCompany":"setup","company":"setup"} */ "./resources/js/components/modals/company/CreateCompanyForm.vue?vue&type=template&id=430100f5&bindings={\"storeCompany\":\"setup\",\"company\":\"setup\"}");
 /* harmony import */ var _CreateCompanyForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateCompanyForm.vue?vue&type=script&lang=js */ "./resources/js/components/modals/company/CreateCompanyForm.vue?vue&type=script&lang=js");
 
 
 
-_CreateCompanyForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _CreateCompanyForm_vue_vue_type_template_id_430100f5_bindings_company_setup_storeCompany_setup___WEBPACK_IMPORTED_MODULE_0__.render
+_CreateCompanyForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _CreateCompanyForm_vue_vue_type_template_id_430100f5_bindings_storeCompany_setup_company_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -626,12 +635,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _CompaniesTableRow_vue_vue_type_template_id_6c068534_bindings_profile_setup_putCompanyInfoToStore_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","putCompanyInfoToStore":"setup","company":"props"} */ "./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={\"profile\":\"setup\",\"putCompanyInfoToStore\":\"setup\",\"company\":\"props\"}");
+/* harmony import */ var _CompaniesTableRow_vue_vue_type_template_id_6c068534_bindings_profile_setup_showEditCompanyForm_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","showEditCompanyForm":"setup","company":"props"} */ "./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={\"profile\":\"setup\",\"showEditCompanyForm\":\"setup\",\"company\":\"props\"}");
 /* harmony import */ var _CompaniesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CompaniesTableRow.vue?vue&type=script&lang=js */ "./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=script&lang=js");
 
 
 
-_CompaniesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _CompaniesTableRow_vue_vue_type_template_id_6c068534_bindings_profile_setup_putCompanyInfoToStore_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
+_CompaniesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _CompaniesTableRow_vue_vue_type_template_id_6c068534_bindings_profile_setup_showEditCompanyForm_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -831,12 +840,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/modals/company/CreateCompanyForm.vue?vue&type=template&id=430100f5&bindings={\"company\":\"setup\",\"storeCompany\":\"setup\"}":
+/***/ "./resources/js/components/modals/company/CreateCompanyForm.vue?vue&type=template&id=430100f5&bindings={\"storeCompany\":\"setup\",\"company\":\"setup\"}":
 /*!********************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/modals/company/CreateCompanyForm.vue?vue&type=template&id=430100f5&bindings={"company":"setup","storeCompany":"setup"} ***!
+  !*** ./resources/js/components/modals/company/CreateCompanyForm.vue?vue&type=template&id=430100f5&bindings={"storeCompany":"setup","company":"setup"} ***!
   \********************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CreateCompanyForm.vue?vue&type=template&id=430100f5&bindings={"company":"setup","storeCompany":"setup"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CreateCompanyForm.vue?vue&type=template&id=430100f5&bindings={"storeCompany":"setup","company":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -844,9 +853,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreateCompanyForm_vue_vue_type_template_id_430100f5_bindings_company_setup_storeCompany_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreateCompanyForm_vue_vue_type_template_id_430100f5_bindings_storeCompany_setup_company_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreateCompanyForm_vue_vue_type_template_id_430100f5_bindings_company_setup_storeCompany_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CreateCompanyForm.vue?vue&type=template&id=430100f5&bindings={"company":"setup","storeCompany":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CreateCompanyForm.vue?vue&type=template&id=430100f5&bindings={\"company\":\"setup\",\"storeCompany\":\"setup\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreateCompanyForm_vue_vue_type_template_id_430100f5_bindings_storeCompany_setup_company_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CreateCompanyForm.vue?vue&type=template&id=430100f5&bindings={"storeCompany":"setup","company":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CreateCompanyForm.vue?vue&type=template&id=430100f5&bindings={\"storeCompany\":\"setup\",\"company\":\"setup\"}");
 
 
 /***/ }),
@@ -911,12 +920,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={\"profile\":\"setup\",\"putCompanyInfoToStore\":\"setup\",\"company\":\"props\"}":
-/*!*************************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","putCompanyInfoToStore":"setup","company":"props"} ***!
-  \*************************************************************************************************************************************************************************************/
+/***/ "./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={\"profile\":\"setup\",\"showEditCompanyForm\":\"setup\",\"company\":\"props\"}":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","showEditCompanyForm":"setup","company":"props"} ***!
+  \***********************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","putCompanyInfoToStore":"setup","company":"props"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","showEditCompanyForm":"setup","company":"props"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -924,9 +933,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompaniesTableRow_vue_vue_type_template_id_6c068534_bindings_profile_setup_putCompanyInfoToStore_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompaniesTableRow_vue_vue_type_template_id_6c068534_bindings_profile_setup_showEditCompanyForm_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompaniesTableRow_vue_vue_type_template_id_6c068534_bindings_profile_setup_putCompanyInfoToStore_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","putCompanyInfoToStore":"setup","company":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={\"profile\":\"setup\",\"putCompanyInfoToStore\":\"setup\",\"company\":\"props\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompaniesTableRow_vue_vue_type_template_id_6c068534_bindings_profile_setup_showEditCompanyForm_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","showEditCompanyForm":"setup","company":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={\"profile\":\"setup\",\"showEditCompanyForm\":\"setup\",\"company\":\"props\"}");
 
 
 /***/ }),
@@ -1088,9 +1097,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CreateCompanyForm.vue?vue&type=template&id=430100f5&bindings={\"company\":\"setup\",\"storeCompany\":\"setup\"}":
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CreateCompanyForm.vue?vue&type=template&id=430100f5&bindings={\"storeCompany\":\"setup\",\"company\":\"setup\"}":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CreateCompanyForm.vue?vue&type=template&id=430100f5&bindings={"company":"setup","storeCompany":"setup"} ***!
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CreateCompanyForm.vue?vue&type=template&id=430100f5&bindings={"storeCompany":"setup","company":"setup"} ***!
   \*****************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
@@ -1327,10 +1336,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={\"profile\":\"setup\",\"putCompanyInfoToStore\":\"setup\",\"company\":\"props\"}":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","putCompanyInfoToStore":"setup","company":"props"} ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={\"profile\":\"setup\",\"showEditCompanyForm\":\"setup\",\"company\":\"props\"}":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","showEditCompanyForm":"setup","company":"props"} ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -1369,7 +1378,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               "data-target": "#editCompanyForm",
               "data-placement": "right",
               title: "Edit",
-              onClick: _cache[1] || (_cache[1] = $event => ($setup.putCompanyInfoToStore($props.company)))
+              onClick: _cache[1] || (_cache[1] = (...args) => ($setup.showEditCompanyForm(...args)))
             })
           ])
         ]))

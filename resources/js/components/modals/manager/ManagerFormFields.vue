@@ -52,7 +52,7 @@
 </template>
 
 <script>
-    import {computed, watch} from 'vue';
+    import {computed, watch, inject} from 'vue';
     import {useStore} from 'vuex';
     import { Form, Field, ErrorMessage, useForm, useField, useResetForm } from 'vee-validate';
     import * as yup from 'yup';
@@ -60,6 +60,7 @@
     export default {
         setup(props) {
             const store = useStore();
+            const emitter = inject("emitter");
 
             const schema = yup.object({
                 login: yup.string().required().trim().matches('^[a-zA-Z0-9]*$', 'login can contain only letters and numbers'),
@@ -81,11 +82,14 @@
 
             const resetForm = useResetForm();
 
+            emitter.on('create-manager-form', resetForm);
+
             watch(() => props.user, (first, second) => {setTimeout(()=> resetForm(), 100)});
 
 
             watch(errors, (second, first) => {
-                store.commit('formData/setUserIsValidState', Object.keys(second).length === 0)
+                //store.commit('formData/setUserIsValidState', Object.keys(second).length === 0)
+                props.user.dataIsValid = Object.keys(second).length === 0;
             });
 
             function generatePass() {

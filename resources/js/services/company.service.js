@@ -13,7 +13,6 @@ export class CompanyService {
     }
 
     async updateCompany(company) {
-        console.log('sent to server', company);
         return await this.client.put('/api/companies/' + company.id, company);
     }
 }

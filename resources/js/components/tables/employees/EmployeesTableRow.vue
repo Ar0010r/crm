@@ -1,7 +1,8 @@
 <template>
     <tr class="odd gradeX">
         <td>{{employee.created_at}}</td>
-        <td>{{employee.hr.login}}</td>
+        <td v-if="employee.hr">{{employee.hr.login}}</td>
+        <td v-else></td>
         <td v-if="employee.company">{{employee.company.name}}</td>
         <td v-else></td>
         <td class="d-flex flex-column border-0">
@@ -35,71 +36,33 @@
             />
         </td>
         <td class="d-flex justify-content-between align-items-center border-0">
-            <a data-toggle="modal" data-target="#editEmployeeForm">
-                <button type="button" class="ion ion-md-create p-0 bg-transparent border-0"
-                        data-toggle="tooltip" data-target="#editEmployeeForm"
-                        data-placement="right" title="Edit"
-                        @click="putEmployeeInfoToStore(employee)"
-                >
-
-                </button>
-            </a>
-            <a @click="deleteEmployee"  type="button" class="ion ion-md-trash danger"></a>
+            <EditButton :employee="employee"></EditButton>
+            <DeleteButton :employee="employee"></DeleteButton>
         </td>
     </tr>
 </template>
 
 <script>
     import StatusSelect from '../../layout/EmployeesStatusSelect';
+    import DeleteButton from './actions/DeleteButton';
+    import EditButton from './actions/EditButton';
     import {useStore} from 'vuex'
-    import { inject} from 'vue';
 
     export default {
-
         setup(props) {
-
-            const container = inject('container');
             const store = useStore();
+            const emptyEmployee = {...store.getters.getEmptyEmployee};
 
-            function putEmployeeInfoToStore(employee) {
-                let object = {
-                    id: employee.id ?? "",
-                    name: employee.name ?? "",
-                    email: employee.email ?? "",
-                    paypal: employee.paypal ?? "",
-                    company: employee.company ?? "",
-                    company_id: employee.company_id ?? "",
-                    address: employee.address ?? "",
-                    city: employee.city ?? "",
-                    state: employee.state ?? "",
-                    zip: employee.zip ?? "",
-                    phone_1: employee.phone_1 ?? "",
-                    phone_2: employee.phone_2 ?? "",
-                    birthday: employee.birthday ?? null,
-                    race: employee.race ?? "",
-                    status: employee.status ?? "",
-                    pickup: employee.pickup ?? "",
-                };
-
-                store.commit('formData/setEmployee', object);
-            }
-
-            async function deleteEmployee() {
-                try{
-                    await container.EmployeeService.deleteEmployee(props.employee);
-                } catch (e) {
-                   return store.dispatch('notification/activate', e.response.data);
-                }
-
-                store.dispatch('employee/deleteEmployee', props.employee);
-            }
-
-            return {putEmployeeInfoToStore, deleteEmployee}
-
+            if (!props.employee.company) props.employee.company = {...props.employee.company, ...emptyEmployee.company};
+            if (!props.employee.hr) props.employee.hr = {...props.employee.hr, ...emptyEmployee.hr};
         },
-        props: {employee: Object},
+        props: {
+            employee: Object
+        },
         components: {
-            StatusSelect
+            StatusSelect,
+            DeleteButton,
+            EditButton
         }
     };
 </script>

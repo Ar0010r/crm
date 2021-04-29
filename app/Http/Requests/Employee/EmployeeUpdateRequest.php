@@ -31,6 +31,7 @@ class EmployeeUpdateRequest extends FormRequest
 
         $rules['email'] = [Rule::unique('employees')->ignore($updatedId), 'email', 'nullable'];
         $rules['paypal'] = [Rule::unique('employees')->ignore($updatedId), 'email', 'nullable'];
+        $rules['address'] = [Rule::unique('employees')->ignore($updatedId), 'string', 'nullable'];
 
         return $rules;
     }

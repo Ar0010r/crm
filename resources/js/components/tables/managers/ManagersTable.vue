@@ -4,7 +4,7 @@
             Managers
         </h4>
         <div class="d-flex justify-content-between mb-3">
-            <button @click.prevent="initializeManagerStoreForm"
+            <button @click.prevent="showManagerStoreForm"
                     class="btn btn-primary btn"
                     data-toggle="modal"
                     data-target="#addManagerForm">
@@ -32,26 +32,17 @@
     import ManagersTableHead from './ManagersTableHead';
     import ManagersTableRow from './ManagersTableRow';
 
-    import {computed} from 'vue';
+    import {computed, inject} from 'vue';
     import {useStore} from 'vuex';
 
     export default {
         setup() {
             const store = useStore();
-            function initializeManagerStoreForm() {
-                let emptyUser = {
-                    login: null,
-                    role: null,
-                    password: null,
-                    dataIsValid: false,
-                };
-
-                store.commit('formData/setUser', emptyUser);
-            }
+            const emitter = inject("emitter");
 
             return {
-                initializeManagerStoreForm,
-                users: computed(() => useStore().getters.getUsers),
+                showManagerStoreForm : () =>  emitter.emit('create-manager-form'),
+                users: computed(() => store.getters.getUsers),
             }
         },
 

@@ -46,16 +46,7 @@
             });
 
             async function goToPage(page) {
-                store.commit('employee/setQueryParam', {'key': 'page', 'value': page});
-
-                let params = store.getters.getEmployeeQueryParams;
-
-                let employees = await container.EmployeeService.getEmployees({
-                    'filter[company_id]': params.company,
-                    'filter[status]': params.status,
-                    'page': params.page,
-                    'recordsPerPage': params.recordsPerPage
-                });
+                let employees = await container.EmployeeService.getEmployees({'page': page});
 
                 store.commit('employee/setEmployees', employees.employees);
                 store.commit('employee/setPagination', employees.pagination);

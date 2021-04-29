@@ -2,19 +2,50 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6dd06283-79a3-451e-93c8-b1b73cd686ac" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/js/components/modals/notification/Notification.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Helpers/ArrayHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/ArrayHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EmployeesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EmployeesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Employee/EmployeeRequestRulesTrait.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Employee/EmployeeRequestRulesTrait.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Employee/EmployeeUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Employee/EmployeeUpdateRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Imports/EmployeeImport.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Imports/EmployeeImport.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_CompaniesView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_CompaniesView_vue.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_EmployeesView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_EmployeesView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_LoginView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_LoginView_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_ManagersView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_ManagersView_vue.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/auth/LoginForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/auth/LoginForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/auth/LoginIcon.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/auth/LoginIcon.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/layout/NavBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/layout/NavBar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/layout/NavBarDropdown.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/layout/NavBarDropdown.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/layout/Pagination.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/layout/Pagination.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/layout/SideBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/layout/SideBar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/Notification.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/company/CompanyFormFields.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/company/CompanyFormFields.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/company/CreateCompanyForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/company/CreateCompanyForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/company/EditCompanyForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/company/EditCompanyForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/employee/EditEmployeeForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/employee/EditEmployeeForm.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/modals/employee/FileInputForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/employee/FileInputForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/views/LoginView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/LoginView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/app2.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/employee/StoreEmployeeForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/employee/StoreEmployeeForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/employee/fields/EmployeeFormFields.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/employee/fields/EmployeeFormFields.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/manager/CreateManagerForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/manager/CreateManagerForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/manager/EditManagerForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/manager/EditManagerForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/manager/ManagerFormFields.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/manager/ManagerFormFields.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/profile/ProfileForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/profile/ProfileForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/profile/ProfileForm2.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/companies/CompaniesTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/companies/CompaniesTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/companies/CompaniesTableRow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/companies/CompaniesTableRow.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTableControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/employees/actions/EmployeesTableControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTableRow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTableRow.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/managers/ManagersTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/managers/ManagersTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/managers/ManagersTableRow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/managers/ManagersTableRow.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/services/company.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/company.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/services/employee.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/employee.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/services/user.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/user.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/company.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/company.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/employee.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/employee.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/user.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,7 +60,7 @@
     </execution>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -93,19 +124,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Shared/Value/Role.php" />
-        <option value="$PROJECT_DIR$/app/Http/Requests/User/UserStoreRequest.php" />
-        <option value="$PROJECT_DIR$/app/Models/Pivot/TopHrHr.php" />
-        <option value="$PROJECT_DIR$/app/Models/User.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/EmployeesController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Requests/HrAllowedRequest.php" />
-        <option value="$PROJECT_DIR$/resources/js/components/layout/EmployeesStatusSelect.vue" />
         <option value="$PROJECT_DIR$/resources/js/components/layout/EmptyEmployeesTableRow.vue" />
         <option value="$PROJECT_DIR$/resources/js/components/layout/Pagination.vue" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" />
         <option value="$PROJECT_DIR$/app/Services/UserService.php" />
         <option value="$PROJECT_DIR$/app/Models/Company.php" />
-        <option value="$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTable.vue" />
         <option value="$PROJECT_DIR$/public/vendor/libs/vue-multiselect/vue-multiselect.scss" />
         <option value="$PROJECT_DIR$/resources/js/services/index.js" />
         <option value="$PROJECT_DIR$/app/Imports/EmployeeImport.php" />
@@ -117,7 +140,6 @@
         <option value="$PROJECT_DIR$/resources/js/components/modals/company/CreateCompanyForm.vue" />
         <option value="$PROJECT_DIR$/resources/js/components/modals/company/EditCompanyForm.vue" />
         <option value="$PROJECT_DIR$/resources/js/store/notification.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/modals/Notification.vue" />
         <option value="$PROJECT_DIR$/resources/js/store/company.js" />
         <option value="$PROJECT_DIR$/resources/js/store/user.js" />
         <option value="$PROJECT_DIR$/resources/js/services/company.service.js" />
@@ -128,22 +150,31 @@
         <option value="$PROJECT_DIR$/resources/js/components/modals/employee/fields/EmployeeFormFields.vue" />
         <option value="$PROJECT_DIR$/resources/js/store/index.js" />
         <option value="$PROJECT_DIR$/app/Http/Requests/Employee/EmployeeRequestRulesTrait.php" />
-        <option value="$PROJECT_DIR$/resources/js/components/modals/employee/StoreEmployeeForm.vue" />
         <option value="$PROJECT_DIR$/app/Services/EmployeeService.php" />
         <option value="$PROJECT_DIR$/database/migrations/2021_01_12_220008_create_employees_table.php" />
         <option value="$PROJECT_DIR$/resources/js/services/employee.service.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTableRow.vue" />
         <option value="$PROJECT_DIR$/resources/js/store/employee.js" />
-        <option value="$PROJECT_DIR$/resources/js/components/modals/employee/FileInputForm.vue" />
         <option value="$PROJECT_DIR$/resources/views/app.blade.php" />
         <option value="$PROJECT_DIR$/resources/js/components/auth/LoginIcon.vue" />
-        <option value="$PROJECT_DIR$/resources/js/components/modals/employee/EditEmployeeForm.vue" />
         <option value="$PROJECT_DIR$/resources/js/components/auth/LoginForm.vue" />
         <option value="$PROJECT_DIR$/resources/js/App.vue" />
-        <option value="$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTableControl.vue" />
         <option value="$PROJECT_DIR$/resources/js/views/LoginView.vue" />
-        <option value="$PROJECT_DIR$/resources/js/components/layout/NavBar.vue" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/EmployeesController.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTableControl.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/modals/Notification.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/modals/notification/Notification.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/modals/notification/Error.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/tables/employees/actions/EditButton.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/tables/employees/actions/DeleteButton.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTableRow.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTable.vue" />
         <option value="$PROJECT_DIR$/resources/js/components/layout/SideBar.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/tables/employees/actions/EmployeesTableControl.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/modals/employee/EditEmployeeForm.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/modals/employee/FileInputForm.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/modals/employee/StoreEmployeeForm.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/layout/NavBar.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/modals/notification/Warning.vue" />
       </list>
     </option>
   </component>
@@ -271,7 +302,7 @@
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-searchable" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
     <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
@@ -281,6 +312,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -291,12 +323,61 @@
             <path>
               <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
               <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
               <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="layout" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="modals" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="modals" type="462c0819:PsiDirectoryNode" />
+              <item name="employee" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="modals" type="462c0819:PsiDirectoryNode" />
+              <item name="notification" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
@@ -308,13 +389,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/js/components/modals" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/js/components/tables/employees" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -322,16 +402,18 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/resources/js/components/modals" />
-      <recent name="$PROJECT_DIR$/app/Services" />
-      <recent name="$PROJECT_DIR$/database/migrations" />
-      <recent name="$PROJECT_DIR$/resources/js/components/layout" />
-      <recent name="$PROJECT_DIR$/resources/js/components/tables/employees" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/js/components/tables/employees/actions" />
+      <recent name="$PROJECT_DIR$/resources/js/components/modals/notification" />
       <recent name="$PROJECT_DIR$/resources/js/store/forms" />
       <recent name="$PROJECT_DIR$/resources/js" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/js/components/tables/employees" />
+      <recent name="$PROJECT_DIR$/resources/js/components/tables/employees/actions" />
+      <recent name="$PROJECT_DIR$/resources/js/components/modals/notification" />
+      <recent name="$PROJECT_DIR$/resources/js/components/modals" />
+      <recent name="$PROJECT_DIR$/app/Services" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -425,11 +507,12 @@
       <workItem from="1618253700682" duration="5549000" />
       <workItem from="1618433455827" duration="4000" />
       <workItem from="1618848794832" duration="14949000" />
+      <workItem from="1619551451783" duration="8261000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="538495000" />
+    <option name="totallyTimeSpent" value="546756000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -443,7 +526,7 @@
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.38125893" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22961374" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -535,90 +618,10 @@
     </option>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/Notification.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="15" column="37" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/services/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
-          <folding>
-            <element signature="e#63#91#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UsersController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-43">
-          <caret line="53" column="9" selection-start-line="53" selection-start-column="9" selection-end-line="53" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/services/user.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/store/company.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="498">
-          <caret line="41" column="1" selection-start-line="41" selection-start-column="1" selection-end-line="41" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/manager/EditManagerForm.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="38" column="16" selection-start-line="38" selection-start-column="16" selection-end-line="38" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/manager/CreateManagerForm.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="37" column="63" selection-start-line="37" selection-start-column="63" selection-end-line="37" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Requests/Company/CompanyStoreRequest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Requests/Company/CompanyUpdateRequest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Requests/Employee/EmployeeRequestRulesTrait.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="915">
-          <caret line="63" column="12" selection-start-line="63" selection-start-column="12" selection-end-line="63" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Requests/Employee/EmployeeStoreRequest.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/employee/fields/EmployeeFormFields.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="170" column="47" selection-start-line="170" selection-start-column="47" selection-end-line="170" selection-end-column="47" />
         </state>
       </provider>
     </entry>
@@ -705,13 +708,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTableRow.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="536">
-          <caret line="75" column="52" selection-start-line="75" selection-start-column="52" selection-end-line="75" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Downloads/appwork-v1_5_2/laravel-demo/resources/views/charts/c3.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -778,39 +774,9 @@
     <entry file="file://$PROJECT_DIR$/public/images/default.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/logo2.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/logo2.jpg" />
     <entry file="file://$USER_HOME$/Downloads/appwork-v1_5_2/html-demo/forms_input-groups.html">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/employee/FileInputForm.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1815">
-          <caret line="122" column="27" selection-start-line="122" selection-start-column="27" selection-end-line="122" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/employee/EditEmployeeForm.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="42" selection-start-line="5" selection-start-column="42" selection-end-line="5" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/employee/StoreEmployeeForm.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="40" column="44" selection-start-line="40" selection-start-column="44" selection-end-line="40" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/app.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="71" column="12" selection-start-line="71" selection-start-column="12" selection-end-line="71" selection-end-column="12" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$USER_HOME$/Downloads/appwork-v1_5_2/html-demo/pages_authentication_login-v3.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -839,24 +805,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/imageonline-co-transparentimage.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/logo-white.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/imageonline-co-transparentimage.png" />
     <entry file="file://$PROJECT_DIR$/public/logo.png">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/App.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="30" column="37" selection-start-line="30" selection-start-column="37" selection-end-line="30" selection-end-column="37" />
-          <folding>
-            <element signature="e#517#571#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/logo.jpg">
       <provider selected="true" editor-type-id="images" />
@@ -864,36 +815,166 @@
     <entry file="file://$PROJECT_DIR$/public/logo-white.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/layout/NavBar.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="41" selection-start-line="20" selection-start-column="41" selection-end-line="20" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/layout/SideBar.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTableControl.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="39" selection-start-line="3" selection-start-column="28" selection-end-line="3" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/views/LoginView.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="61" selection-start-line="11" selection-start-column="61" selection-end-line="11" selection-end-column="61" />
           <folding>
             <element signature="e#239#296#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/layout/Pagination.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/views/EmployeesView.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/employee/fields/EmployeeFormFields.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="34" column="74" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/app.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="632">
+          <caret line="71" column="20" selection-start-line="71" selection-start-column="20" selection-end-line="71" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
+          <folding>
+            <element signature="e#479#533#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/EmployeesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-520">
+          <caret line="28" column="58" selection-start-line="28" selection-start-column="58" selection-end-line="28" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/notification/Notification2.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="356">
+          <caret line="50" column="83" selection-start-line="50" selection-start-column="67" selection-end-line="50" selection-end-column="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/employees/actions/EditButton.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTableRow2.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="61" column="24" selection-start-line="61" selection-start-column="24" selection-end-line="61" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/layout/NavBar.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="48" column="59" selection-start-line="48" selection-start-column="59" selection-end-line="48" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/employee/StoreEmployeeForm.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/notification/Error.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="31" lean-forward="true" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/notification/Notification.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+          <folding>
+            <element signature="e#108#136#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTableRow.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="50" column="20" selection-start-line="50" selection-start-column="20" selection-end-line="50" selection-end-column="20" />
+          <folding>
+            <element signature="e#1668#1730#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTable.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/employees/actions/EmployeesTableControl.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/employee/EditEmployeeForm.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-64">
+          <caret line="6" column="38" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/employee/FileInputForm.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="6" column="38" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/layout/SideBar.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="10" column="12" lean-forward="true" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/notification/Warning.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="40" column="13" lean-forward="true" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/employees/actions/DeleteButton.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="94">
+          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+          <folding>
+            <element signature="e#122#151#0" expanded="true" />
           </folding>
         </state>
       </provider>

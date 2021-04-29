@@ -29,6 +29,6 @@ export class UserService {
             return await this.client.post('api/users/' + user.get('id'), user, {headers: {'Content-Type': 'multipart/form-data'}});
         }
 
-        return await this.client.put('api/users/' + id, user);
+        return await this.client.put('api/users/' + user.id, user);
     }
 }

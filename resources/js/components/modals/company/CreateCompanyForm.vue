@@ -28,14 +28,20 @@
 <script>
     import CompanyFormFields from './CompanyFormFields';
     import {useStore} from 'vuex';
-    import {computed, inject} from 'vue';
+    import {computed, inject, reactive} from 'vue';
 
     export default {
         setup() {
             const store = useStore();
             const container = inject('container');
+            const emitter = inject("emitter");
+
+            const emptyCompany = {...store.getters.getEmptyCompany};
+            let company = reactive({...emptyCompany});
 
             let users = computed(() => store.getters.getUsers);
+
+            emitter.on('create-company-form', () => clearForm());
 
             async function storeCompany(company) {
                 try {
@@ -47,13 +53,16 @@
 
                     store.commit('company/setCompanyById', storedCompany);
                     document.getElementById('storeCompanyFormClose').click()
+                    clearForm()
                 } catch (e) {
                     store.dispatch('notification/activate', e.response.data);
                 }
 
             }
 
-            return {company: computed(() => store.getters.getCompany), storeCompany}
+            const clearForm = () => Object.keys(emptyCompany).forEach(key => company[key] = emptyCompany[key]);
+
+            return {storeCompany, company}
         },
         components: {
             CompanyFormFields

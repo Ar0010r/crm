@@ -4,7 +4,7 @@
             <form class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        Edit employee
+                        Edit applicant
                         <div class="d-flex flex-column mt-1">
                             <small class="text-muted">We advice to use standard address format with 9-digit zip-code
                             </small>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="modal-footer">
                     <button id="editEmployeeFormClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button :disabled='!employee.dataIsValid'  @click.prevent="updateEmployee(employee)" type="button" class="btn btn-primary">Update</button>
+                    <button :disabled='!employee.dataIsValid'  @click.prevent="updateEmployee" type="button" class="btn btn-primary">Update</button>
                 </div>
             </form>
         </div>
@@ -28,7 +28,7 @@
 
 <script>
     import {useStore} from 'vuex';
-    import {computed} from 'vue';
+    import {computed, reactive, inject} from 'vue';
     import EmployeeFormFields from './fields/EmployeeFormFields';
     import EmployeeStatusField from './fields/EmployeeSatusField.vue';
     import EmployeePickUpField from './fields/EmployeePickUpField';
@@ -37,45 +37,31 @@
     export default {
         setup() {
             const store = useStore();
-            return {
-                employee: computed(() => store.getters.getEmployee)
-            }
-        },
+            const emitter = inject("emitter");
+            const emptyEmployee = {...store.getters.getEmptyEmployee};
+            let companies = computed(() => store.getters.getCompanies);
 
-        methods: {
-           async updateEmployee(employee) {
+            let employee = reactive({...emptyEmployee});
 
-               let companies = await this.$store.getters.getCompanies;
+            emitter.on('edit-employee-form', employeeData => {
+                Object.keys(employeeData).forEach(key => employee[key] = employeeData[key])
+            });
 
-               let company = companies[employee.company_id];
+            async function updateEmployee() {
+                try {
+                    await axios.put('api/employees/' + employee.id, employee);
 
-                let data = {
-                    id: employee.id,
-                    address: employee.address ?? "",
-                    birthday: employee.birthday ?? "",
-                    city: employee.city ?? "",
-                    company_id: employee.company_id ?? "",
-                    company: company ?? "",
-                    email: employee.email ?? null,
-                    name: employee.name ?? "",
-                    paypal: employee.paypal ?? null,
-                    phone_1: employee.phone_1 ?? "",
-                    phone_2: employee.phone_2 ?? "",
-                    race: employee.race ?? "",
-                    state: employee.state ?? "",
-                    zip: employee.zip ?? "",
-                    pickup: employee.pickup ?? "",
-                };
+                    if(employee.company) employee.company = companies.value[employee.company_id];
+                    else employee.company = {...employee.company, ...emptyEmployee.company};
 
-                let result = await axios.put('api/employees/' + employee.id, data);
-                if(result.status === 204){
-                    this.$store.commit('employee/setEmployeeById', data)
+                    store.commit('employee/setEmployeeById', employee)
                     document.getElementById('editEmployeeFormClose').click()
+                } catch (e) {
+                    store.dispatch('notification/activate', e.response.data)
                 }
-
-            },
+            }
+            return {employee, updateEmployee}
         },
-
         components: {
             EmployeeFormFields,
             EmployeeStatusField,

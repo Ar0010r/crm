@@ -3,15 +3,16 @@ import {container} from '../services/index'
 export default {
     namespaced: true,
     state: {
-        profile: {
-            /*id: "",
+        profile: {},
+        users: {},
+        emptyUser:{
+            created_at:"",
+            deleted_at: "",
             login: "",
             role: "",
-            avatar: "",
-            token: ""*/
+            updated_at: "",
+            password: null
         },
-
-        users: {},
         hrs: {},
         personnels: {},
         roles: {},
@@ -102,7 +103,5 @@ export default {
                 dispatch('notification/activate', e.response.data, {root: true});
             }
         }
-
-
     }
 }

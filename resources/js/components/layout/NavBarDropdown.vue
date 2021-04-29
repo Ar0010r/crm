@@ -7,7 +7,7 @@
                   </span>
         </a>
         <div class="dropdown-menu dropdown-menu-right">
-            <a @click="profileForm" data-toggle="modal" data-target="#profileForm" href="javascript:void(0)"
+            <a @click="showProfileForm" data-toggle="modal" data-target="#profileForm" href="javascript:void(0)"
                class="dropdown-item">
                 <i class="ion ion-ios-person text-lightest"></i>
                 My profile
@@ -31,7 +31,6 @@
         setup() {
             const store = useStore();
             const emitter = inject("emitter");
-
             let profile = computed(() => store.getters.getProfile);
 
             async function logout() {
@@ -39,25 +38,11 @@
                 window.location.href = '/login';
             }
 
-            function profileForm() {
-
-                console.log(emitter)
-
-                emitter.emit('open-profile-form', profile)
-
-               /* let object = {
-                    id: profile.value.id,
-                    login: profile.value.login,
-                    role: profile.value.role,
-                    avatar: profile.value.avatar,
-                    password: null,
-                };
-
-                store.commit('formData/setUser', object);*/
-
+            return {
+                logout,
+                profile,
+                showProfileForm: () => emitter.emit('open-profile-form', profile)
             }
-
-            return {logout, profileForm, profile }
         }
     };
 </script>

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Helpers;
+//namespace App\Helpers;
 
 
 class ArrayHelper

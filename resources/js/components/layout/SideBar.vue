@@ -14,7 +14,7 @@
         <ul class="sidenav-inner py-1">
             <router-link tag="li" :to="{ name : 'employees-table'}" class="sidenav-item">
                 <a class="sidenav-link"><i class="sidenav-icon ion ion-ios-people"></i>
-                    <div>Employees</div>
+                    <div>Applicants</div>
                 </a>
             </router-link>
             <router-link :to="{ name : 'companies-table'}" tag="li" class="sidenav-item">

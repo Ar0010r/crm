@@ -38,21 +38,21 @@
 <script>
     import ManagerFormFields from '../manager/ManagerFormFields';
     import {useStore} from 'vuex';
-    import {computed, inject, ref} from 'vue';
-    import mitt from 'mitt';
+    import {computed, inject, ref, reactive} from 'vue';
 
     export default {
         setup() {
             const store = useStore();
             const container = inject('container');
-            let user = computed(() => store.getters.getUser);
-            //let user;
-
             const emitter = inject("emitter");
-
-            emitter.on('open-profile-form', e => console.log('foo', e))
-
+            let user = reactive({});
             let file = ref(null);
+
+
+            emitter.on('open-profile-form', userData => {
+                Object.keys(userData.value).forEach(key => user[key] = userData.value[key])
+            });
+
 
             async function updateProfile(user) {
                 if (user.password === null) delete user.password;
@@ -71,18 +71,17 @@
                     store.commit('user/setProfile', response.data);
                     document.getElementById('profileFormClose').click()
                 } catch (e) {
-                    store.dispatch('notification/activate', e.response.data)
+                    store.dispatch('notification/activate', e.response.data);
+                    emitter.emit('notification-error', e.response.data)
                 }
             }
 
-            function setFile(event) {
-                console.log(event);
-                file.value = event.target.files[0];
-            }
-
             return {
-                user, file: computed(() => file.value),
-                updateProfile, setFile, selectFile: () => document.getElementById("avatarInput").click()
+                user,
+                updateProfile,
+                file: computed(() => file.value),
+                setFile: event => file.value = event.target.files[0],
+                selectFile: () => document.getElementById("avatarInput").click()
             }
         },
 

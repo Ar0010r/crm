@@ -65,19 +65,20 @@
 </template>
 
 <script>
-    import {computed, watch} from 'vue';
+    import {computed, watch, inject} from 'vue';
     import {useStore} from 'vuex';
     import { Form, Field, ErrorMessage, useForm, useField, useResetForm } from 'vee-validate';
     import * as yup from 'yup';
     export default {
         setup(props) {
             const store = useStore();
+            const emitter = inject("emitter");
 
             const schema = yup.object({
                 personnel: yup.string().required(),
-                name: yup.string().required().trim().matches('^[a-zA-Z]*$', 'login can contain only letters'),
-                domain: yup.string().required().trim().matches('^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\\.[a-zA-Z]{2,}$', 'please enter valid domain'),
-                email: yup.string().required().email(),
+                name: yup.string().required().nullable().trim().matches('^[a-zA-Z]*$', 'login can contain only letters'),
+                domain: yup.string().required().nullable().trim().matches('^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\\.[a-zA-Z]{2,}$', 'please enter valid domain'),
+                email: yup.string().required().nullable().email(),
             });
 
             const {errors} = useForm({
@@ -96,9 +97,11 @@
 
             const resetForm = useResetForm();
 
-            watch(() => props.company, (second, first) => {
+            emitter.on('create-company-form', resetForm);
+
+            /*watch(() => props.company, (second, first) => {
                 resetForm()
-            });
+            });*/
 
 
             watch(errors, (second, first) => {
@@ -106,9 +109,10 @@
                 let allFieldsFilled = props.company.domain !== null &&
                     props.company.name !== null &&
                     props.company.email !== null &&
-                    props.company.manager !== null;
+                    props.company.personnel_id !== null;
 
-                store.commit('formData/setCompanyIsValidState', Object.keys(second).length === 0 && allFieldsFilled)
+                //store.commit('formData/setCompanyIsValidState', Object.keys(second).length === 0 && allFieldsFilled)
+                props.company.dataIsValid = Object.keys(second).length === 0 && allFieldsFilled
             });
 
             return {

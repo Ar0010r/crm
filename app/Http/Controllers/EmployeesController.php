@@ -26,7 +26,7 @@ class EmployeesController extends Controller
 
     public function index()
     {
-        $records = request()->get('recordsPerPage') ?? 10;
+        $records = request()->get('recordsPerPage') ?? 100;
 
         switch (auth()->user()->role) {
             case Role::PERSONNEL:
@@ -52,7 +52,9 @@ class EmployeesController extends Controller
     {
         $r->merge(["hr_id" => auth()->user()->getAuthIdentifier()]);
         $employee = Employee::create($r->all());
-        $employee['status'] = Status::NEW;
+        $employee->hr;
+        $employee->company;
+        $employee->status = Status::NEW;
 
         return response(['employee' => $employee], JsonResponse::HTTP_OK);
     }
@@ -83,7 +85,7 @@ class EmployeesController extends Controller
             $employee->delete();
             return response("deleted", JsonResponse::HTTP_NO_CONTENT);
         } catch (\Exception $e) {
-            return response($e->getMessage());
+            return response($e->getMessage(), JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         }
     }
 

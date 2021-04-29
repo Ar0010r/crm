@@ -1,4 +1,5 @@
-import {createWebHistory, createRouter, useRoute} from 'vue-router';
+import {createWebHistory, createRouter} from 'vue-router';
+import store from './store'
 import axios from "axios";
 
 const EmployeesView = () => import('./views/EmployeesView.vue');
@@ -41,20 +42,21 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    const tokenIsOk =  axios.defaults.headers.common['Authorization'] === 'Bearer ' + localStorage.getItem('token');
+
+    if(tokenIsOk && to.name !== 'login') next();
+    if(tokenIsOk && to.name === 'login') next("/employees");
+
     if (localStorage.getItem('token')) {
-         //useStore().state.user.token = localStorage.getItem('token');
-         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
-        if (to.name === 'login') {
-            next("/employees");
-        } else {
-            next();
-        }
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+        let profileIsUndefined = Object.keys(store.getters.getProfile).length === 0;
+        if (profileIsUndefined) store.dispatch('user/setProfileToStore');
+
+        if (to.name === 'login') next("/employees");
+        else next();
     } else {
-        if (to.name === 'login') {
-            next()
-        } else {
-            next("/login")
-        }
+        if (to.name === 'login') next()
+        else next("/login")
     }
 });
 

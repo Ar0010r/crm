@@ -23,14 +23,21 @@
 <script>
     import CompanyFormFields from './CompanyFormFields';
     import {useStore} from 'vuex';
-    import {computed, inject} from 'vue';
+    import {computed, inject, reactive} from 'vue';
 
     export default {
         setup() {
             const store = useStore();
+            const emitter = inject("emitter");
             const container = inject('container');
-
             let users = computed(() => store.getters.getUsers);
+            const emptyCompany = {...store.getters.getEmptyCompany};
+
+            let company = reactive({...emptyCompany});
+
+            emitter.on('edit-company-form', companyData => {
+                Object.keys(companyData).forEach(key => company[key] = companyData[key])
+            });
 
             async function updateCompany(company) {
                 try{
@@ -44,7 +51,7 @@
                 }
             }
 
-            return {company: computed(() => store.getters.getCompany), updateCompany}
+            return {company, updateCompany}
         },
         components : {
             CompanyFormFields

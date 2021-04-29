@@ -4,6 +4,15 @@ export default {
     namespaced: true,
     state: {
         companies: {},
+        emptyCompany: {
+            name: null,
+            personnel_id: null,
+            personnel: {login: null},
+            domain: null,
+            email: null,
+            created_at: null,
+            dataIsValid: null,
+        }
     },
     mutations: {
         async setCompanies(state, companies) {

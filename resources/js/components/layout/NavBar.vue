@@ -46,7 +46,7 @@
                     <i class="ion ion-ios-search navbar-icon align-middle"></i>
                     <span class="navbar-search-input pl-2">
                   <input v-model="keyword" type="text" class="form-control navbar-text mx-2"
-                         placeholder="Search for employees"
+                         placeholder="Search for applicants"
                          style="width:200px">
                 </span>
                 </label>
@@ -66,23 +66,19 @@
 <script>
     import Dropdown from './NavBarDropdown';
     import {useStore} from 'vuex';
-    import {inject} from 'vue';
+    import {inject, ref} from 'vue';
 
     export default {
         setup() {
             const container = inject('container');
             const store = useStore();
 
-            let profileIsUndefined = Object.keys(store.getters.getProfile).length === 0;
-            if (profileIsUndefined) setTimeout(() => store.dispatch('user/setProfileToStore'), 1000);
-
             async function search(keyword) {
                 let employees = await container.EmployeeService.search(keyword);
                 store.commit('employee/setEmployees', employees.employees);
                 store.commit('employee/setPagination', employees.pagination);
             }
-            let keyword;
-            return {keyword, search}
+            return {keyword: ref(null), search}
         },
         components: {
             Dropdown

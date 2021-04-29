@@ -19,7 +19,7 @@
     import SideBar from './components/layout/SideBar.vue';
     import NavBar from './components/layout/NavBar.vue';
     import ProfileForm from './components/modals/profile/ProfileForm';
-    import Notification from './components/modals/Notification';
+    import Notification from './components/modals/notification/Notification';
     import {useRoute} from 'vue-router';
     import {useStore} from 'vuex';
     import {inject} from 'vue';

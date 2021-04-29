@@ -9,36 +9,36 @@ export default {
         companies: {},
         statuses: {},
         pagination: {},
-        queryParams: {
+        /*queryParams: {
             company_id: "",
             hr_id: "",
             status: "",
             page: "",
             recordsPerPage: ""
-        },
+        },*/
 
         emptyEmployee: {
-            address: "",
-            birthday: "",
-            city: "",
-            company_id: "",
-            company: {name: ""},
-            hr: {login: ""},
-            email: "",
+            address: null,
+            birthday: null,
+            city: null,
+            company_id: null,
+            company: {name: null},
+            hr: {login: null},
+            email:null,
             name: "",
-            paypal: "",
-            phone_1: "",
-            phone_2: "",
-            race: "",
-            state: "",
-            zip:"",
-            pickup: "",
+            paypal: null,
+            phone_1: null,
+            phone_2: null,
+            race: null,
+            state: null,
+            zip:null,
+            pickup: null,
         }
     },
     mutations: {
-        setQueryParam(state, {key, value}) {
+        /*setQueryParam(state, {key, value}) {
             state.queryParams[key] = value
-        },
+        },*/
         setEmployeeStatus(state, params) {
             let key = md5(params.id.toString())
             state.employees[key].status = params.newStatus
