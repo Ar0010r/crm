@@ -1,12 +1,12 @@
 <template>
     <thead>
     <tr>
-        <th class="text-left">Created</th>
-        <th class="text-left">Personal manager</th>
-        <th class="text-left">Name</th>
-        <th class="text-left">Domain</th>
-        <th class="text-left">Email</th>
-        <th v-if="profile.role === 'admin'" class="text-left">Actions</th>
+        <th class="text-left font-weight-bold ">Created</th>
+        <th class="text-left font-weight-bold ">Personal manager</th>
+        <th class="text-left font-weight-bold ">Name</th>
+        <th class="text-left font-weight-bold ">Domain</th>
+        <th class="text-left font-weight-bold ">Email</th>
+        <th class="text-left font-weight-bold" v-if="profile.role === 'admin'">Actions</th>
     </tr>
     </thead>
 </template>

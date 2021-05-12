@@ -2,129 +2,123 @@
     <div class="form-row mb-2">
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap">
             <label class="form-label col-md-2">Manager</label>
-            <Field as="select"
-                   v-slot="{ field ,meta }"
-                   v-model=company.personnel_id
-                   class="custom-select form-control form-control-sm col-md-10"
-                   name="role"
-            >
-                <input class="form-control col-md-10" :class="{ 'is-invalid': !!errors.role && meta.dirty}" v-bind="field" />
-                <option disabled selected value> -- select manager --</option>
-                <option
-                        v-for="personnel in personnels"
-                        :value ='personnel.id'
-                        :selected='company.personnel_id === personnel.id'>{{personnel.login}}</option>
-            </Field>
+            <select class="custom-select form-control form-control-sm col-md-10"
+                    name="personnel_id"
+                    v-model=company.personnel_id
+                    @focus="personnel_id.meta.touched = false"
+                    @change=personnel_id.handleChange
+                    @blur="personnel_id.handleBlur"
+                    :class="{'is-invalid': !personnel_id.meta.valid && personnel_id.meta.touched}">
+                <option disabled selected :value=null> -- select manager --</option>
+                <option v-for="personnel in personnels"
+                        :selected='company.personnel_id === personnel.id'
+                        :value='personnel.id'>
+                    {{personnel.login}}
+                </option>
+            </select>
+            <small class="col-md-12 invalid-feedback text-right p-0">please select a personal manager</small>
         </div>
     </div>
     <div class="form-row mb-2">
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap">
             <label class="form-label col-md-2">Name</label>
-            <Field name="Name"
-                   v-slot="{ field , meta }"
+            <input type="text" class="form-control col-md-10" placeholder="Name"
+                   name="name"
                    v-model="company.name"
-                   type="text"
-                   class="form-control col-md-10"
-                   placeholder="Name"
-            >
-                <input class="form-control col-md-10" :class="{ 'is-invalid': !!errors.name && meta.dirty}" v-bind="field" />
-                <small class=" col-md-12 invalid-feedback text-right p-0">{{errors.name}}</small>
-            </Field>
+                   @focus="name.meta.touched = false"
+                   @input="name.handleChange"
+                   @blur="name.handleBlur"
+                   :class="{ 'is-invalid': !name.meta.valid && name.meta.touched}">
+            <small class=" col-md-12 invalid-feedback text-right p-0">{{errors.name || 'name is required'}}</small>
         </div>
     </div>
     <div class="form-row mb-2">
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap">
             <label class="form-label col-md-2">Domain</label>
-            <Field name="Domain"
-                   v-slot="{ field , meta }"
+            <input type="text" class="form-control col-md-10" placeholder="Domain"
+                   name="domain"
                    v-model="company.domain"
-                   type="text"
-                   class="form-control col-md-10"
-                   placeholder="Domain"
-            >
-                <input class="form-control col-md-10" :class="{ 'is-invalid': !!errors.domain && meta.dirty}" v-bind="field" />
-                <small class=" col-md-12 invalid-feedback text-right p-0">{{errors.domain}}</small>
-            </Field>
+                   @focus="domain.meta.touched = false"
+                   @input="domain.handleChange"
+                   @blur="domain.handleBlur"
+                   :class="{'is-invalid': !domain.meta.valid && domain.meta.touched}">
+            <small class="col-md-12 invalid-feedback text-right p-0">{{errors.domain || 'domain is required'}}</small>
         </div>
     </div>
     <div class="form-row mb-2">
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap">
             <label class="form-label col-md-2">Email</label>
-            <Field name="Email"
-                   v-slot="{ field , meta }"
+            <input type="text" class="form-control col-md-10" placeholder="Email"
+                   name="email"
                    v-model="company.email"
-                   type="text"
-                   class="form-control col-md-10"
-                   placeholder="Email"
-            >
-                <input class="form-control col-md-10" :class="{ 'is-invalid': !!errors.email && meta.dirty}" v-bind="field" />
-                <small class=" col-md-12 invalid-feedback text-right p-0">{{errors.email}}</small>
-            </Field>
+                   @focus="email.meta.touched = false"
+                   @input="email.handleChange"
+                   @blur="email.handleBlur"
+                   :class="{'is-invalid': !email.meta.valid && email.meta.touched}">
+            <small class=" col-md-12 invalid-feedback text-right p-0">{{errors.email || 'email is required'}}</small>
         </div>
     </div>
 </template>
 
 <script>
-    import {computed, watch, inject} from 'vue';
+    import {computed, watch, inject, reactive} from 'vue';
     import {useStore} from 'vuex';
-    import { Form, Field, ErrorMessage, useForm, useField, useResetForm } from 'vee-validate';
+    import {Form, Field, useForm, useField, useResetForm} from 'vee-validate';
     import * as yup from 'yup';
+
     export default {
         setup(props) {
             const store = useStore();
             const emitter = inject("emitter");
 
             const schema = yup.object({
-                personnel: yup.string().required(),
-                name: yup.string().required().nullable().trim().matches('^[a-zA-Z]*$', 'login can contain only letters'),
-                domain: yup.string().required().nullable().trim().matches('^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\\.[a-zA-Z]{2,}$', 'please enter valid domain'),
-                email: yup.string().required().nullable().email(),
+                personnel_id: yup.number().nullable().required(),
+                email: yup.string().nullable().required().email(),
+                name: yup.string().nullable().required().trim().matches('^[a-zA-Z ]*$', 'name can contain only letters'),
+                domain: yup.string().nullable().required().trim().matches('^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\\.[a-zA-Z]{2,}$', 'please enter valid domain'),
             });
 
-            const {errors} = useForm({
-                validationSchema: schema.nullable()
+            const {errors, validate: validateForm} = useForm({
+                validationSchema: schema.nullable(),
             });
 
-            const {value: personnel} = useField('personnel');
-            const {value: name} = useField('name');
-            const {value: email} = useField('email');
-            const {value: domain} = useField('domain');
-
-            personnel.value = computed(() => props.company.personnel_id);
-            name.value = computed(() => props.company.name);
-            email.value = computed(() => props.company.email);
-            domain.value = computed(() => props.company.domain);
+            const name = useField('name', {value: computed(() => props.company.name)});
+            const email = useField('email', {value: computed(() => props.company.email)});
+            const domain = useField('domain', {value: computed(() => props.company.domain)});
+            const personnel_id = useField('personnel_id', {value: computed(() => props.company.personnel_id)});
 
             const resetForm = useResetForm();
 
+            emitter.on('edit-company-form', resetForm);
             emitter.on('create-company-form', resetForm);
 
-            /*watch(() => props.company, (second, first) => {
-                resetForm()
-            });*/
+            async function validate() {
+                [personnel_id, name, domain, email].forEach(field => {
+                    field.meta.dirty = true;
+                    field.meta.touched = true;
+                    field.value.value = props.company[field.name];
+                });
 
-
-            watch(errors, (second, first) => {
-
-                let allFieldsFilled = props.company.domain !== null &&
-                    props.company.name !== null &&
-                    props.company.email !== null &&
-                    props.company.personnel_id !== null;
-
-                //store.commit('formData/setCompanyIsValidState', Object.keys(second).length === 0 && allFieldsFilled)
-                props.company.dataIsValid = Object.keys(second).length === 0 && allFieldsFilled
-            });
+                const result = await validateForm();
+                if (!result.valid) {
+                    throw ({
+                        response: {
+                            data: {
+                                message: 'Please fix form errors:',
+                                errors: Object.keys(result.errors).map(key => [result.errors[key]])
+                            }
+                        }
+                    })
+                }
+            }
 
             return {
-                schema, errors, personnels: computed(() => store.getters.getPersonnels)
+                name, email, domain, personnel_id, errors, validate,
+                personnels: computed(() => store.getters.getPersonnels),
             }
         },
         props: {company: Object},
-        components: {
-            Form,
-            Field,
-            ErrorMessage,
-        },
+        components: {Form, Field},
     };
 </script>
 

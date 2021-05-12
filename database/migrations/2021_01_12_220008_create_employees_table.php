@@ -21,7 +21,7 @@ class CreateEmployeesTable extends Migration
             $table->string('status')->default(Status::NEW);
             $table->string('name')->nullable();
             $table->date('birthday')->nullable();
-            $table->string('avatar')->nullable();
+            $table->string('avatar')->default('default.jpg')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('paypal')->nullable()->unique()->nullable();
             $table->string('address')->unique()->nullable();

@@ -4,7 +4,7 @@
             <img src="logo.png" class="w-25 h-25">
         </div>
         <div class="form-group">
-            <label class="float-right text-danger d-none" :class="{ 'd-block': dBlock}"> Invalid credentials</label>
+            <label class="float-right text-danger d-none" :class="{'d-block': dBlock}"> Invalid credentials</label>
             <input placeholder="Login" type="text" class="form-control" v-model="user.login" :class="{ 'is-invalid': isInvalid}">
         </div>
         <div class="form-group">

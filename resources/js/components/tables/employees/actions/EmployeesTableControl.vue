@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex justify-content-start mb-3" style="max-width: 55%">
+    <div class="d-flex justify-content-start mb-3" style="max-width: 60%">
         <button type="button" data-toggle="modal" data-target="#storeEmployeeForm"
                 class=" p-0 btn-primary btn col-sm-2 text-nowrap text-center"
                 @click.prevent="showCreateEmployeeForm"
@@ -33,10 +33,12 @@
             </option>
         </select>
     </div>
+    <SelectedControl/>
 </template>
 <script>
-    import {useStore} from 'vuex'
-    import {computed, reactive, watch, inject} from 'vue'
+    import {useStore} from 'vuex';
+    import {computed, reactive, watch, inject} from 'vue';
+    import SelectedControl from './SelectedEmployeesControl'
 
     export default {
         setup() {
@@ -44,7 +46,7 @@
             const emitter = inject("emitter");
             let activeFilters = reactive({company_id: '', status: '', hr_id: '', recordsPerPage: ''});
 
-            async function filter(){
+            async function filter() {
                 await store.dispatch('employee/setEmployeesToStore', {
                     'page': 1,
                     'filter[hr_id]': activeFilters.hr_id,
@@ -65,6 +67,9 @@
                 companies: computed(() => store.getters.getCompanies),
                 showCreateEmployeeForm: () => emitter.emit('create-employee-form')
             }
+        },
+        components: {
+            SelectedControl
         }
     };
 </script>

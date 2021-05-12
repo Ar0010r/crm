@@ -1,189 +1,287 @@
 <template>
     <div class="form-row mb-2 d-flex flex-column">
-        <div class="form-group col mb-0 d-flex align-items-center justify-content-between">
+        <div class="form-group col mb-0 d-flex align-items-center justify-content-between wrap">
             <label class="form-label col-md-2 ">Name</label>
-            <input type="text" class="form-control col-md-10 " name="name" placeholder="Name"
+            <input type="text" class="form-control col-md-10" placeholder="Name"
+                   name="name"
                    v-model="employee.name"
-                   :class="{ 'is-invalid': !!nameError}" />
+                   @focus="name.meta.touched = false"
+                   @input="name.handleChange"
+                   @blur="name.handleBlur"
+                   :class="{ 'is-invalid': !!errors.name && name.meta.touched}"/>
         </div>
-        <label class="float-right text-danger d-none align-self-end" :class="{ 'd-block': !!nameError}">{{nameError}}</label>
+        <small :class="{ 'd-block': !!errors.name && name.meta.touched}" class="invalid-feedback text-right p-0">
+            {{errors.name}}
+        </small>
+
     </div>
     <div class="form-row mb-2 d-flex flex-column">
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between">
             <label class="form-label col-md-2 ">Email</label>
-            <input type="email" class="form-control col-md-10" name="email" placeholder="email@gmail.com"
-                   :class="{ 'is-invalid': !!emailError}" v-model='employee.email' />
+            <input type="email" class="form-control col-md-10" placeholder="email@gmail.com"
+                   name="email"
+                   v-model='employee.email'
+                   @focus="email.meta.touched = false"
+                   @input="email.handleChange"
+                   @blur="email.handleBlur"
+                   :class="{ 'is-invalid': !!errors.email && email.meta.touched}"/>
         </div>
-        <label class="float-right text-danger d-none align-self-end"
-               :class="{ 'd-block': !!emailError}">{{emailError}}</label>
+        <small :class="{ 'd-block': !!errors.email && email.meta.touched}"
+               class="invalid-feedback text-right p-0">
+            {{errors.email}}
+        </small>
     </div>
     <div class="form-row mb-2 d-flex flex-column">
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between">
             <label class="form-label col-md-2 ">PayPal</label>
-            <input type="email" class="form-control col-md-10" name="paypal" placeholder="paypal@gmail.com"
-                   :class="{ 'is-invalid': !!paypalError}" v-model='employee.paypal' />
+            <input type="email" class="form-control col-md-10" placeholder="paypal@gmail.com"
+                   name="paypal"
+                   v-model='employee.paypal'
+                   @focus="paypal.meta.touched = false"
+                   @input="paypal.handleChange"
+                   @blur="paypal.handleBlur"
+                   :class="{'is-invalid': !!errors.paypal   && paypal.meta.touched}"/>
         </div>
-        <label class="float-right text-danger d-none align-self-end" :class="{ 'd-block': !!paypalError}">{{paypalError}}</label>
+        <small :class="{ 'd-block': !!errors.paypal && paypal.meta.touched}"
+               class="invalid-feedback text-right p-0">
+            {{errors.paypal}}
+        </small>
     </div>
     <div class="form-row mb-2 d-flex flex-column">
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between">
             <label class="form-label col-md-2">Company</label>
-            <select :class="{ 'is-invalid': !!companyError && meta.dirty}" v-model=employee.company_id name="company"
-                    class="custom-select form-control form-control-sm col form-group m-0 col-md-10">
-                <option disabled selected value> -- select company --</option>
-                <option v-for="company in companies" :value='company.id'
-                        :selected='employee.company.name === company.name'>
+            <select class="custom-select form-control form-control-sm col-md-10"
+                    name="company"
+                    v-model=employee.company_id
+                    @focus="race.meta.touched = false"
+                    @change=race.handleChange
+                    @blur="race.handleBlur"
+                    :class="{'is-invalid': !!errors.company   && company.meta.touched}"
+            >
+                <option disabled selected :value=null> -- select company --</option>
+                <option v-for="company in companies"
+                        :value='company.id'
+                        :selected='company.id === employee.company_id'>
                     {{company.name}}
                 </option>
             </select>
         </div>
-        <label class="float-right text-danger d-none align-self-end" :class="{ 'd-block': !!companyError && meta.dirty}">{{companyError}}</label>
+        <small :class="{'d-block': !!errors.company && company.meta.touched}" class="invalid-feedback text-right p-0">
+            {{errors.company}}
+        </small>
     </div>
     <div class="form-row mb-2 ">
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between">
             <label class="form-label col-md-2">Address</label>
-            <input type="text" class="form-control col-md-10" placeholder="Address" name="address"
-                   v-model=employee.address />
+            <input type="text" class="form-control col-md-10" placeholder="Address"
+                   name="address"
+                   v-model=employee.address
+                   @focus="address.meta.touched = false"
+                   @blur="address.handleBlur"
+                   @input="address.handleChange"
+                   :class="{'is-invalid': !!errors.address   && address.meta.touched}"
+            />
         </div>
+        <small :class="{ 'd-block': !!errors.address && address.meta.touched}"
+               class="invalid-feedback text-right p-0">
+            {{errors.address}}
+        </small>
     </div>
     <div class="form-row mb-2 d-flex flex-column">
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between">
             <label class="form-label col-md-2">City</label>
-            <input type="text" class="form-control col-md-10" placeholder="City" name="city" v-model=employee.city />
+            <input type="text" class="form-control col-md-10" placeholder="City"
+                   name="city"
+                   v-model=employee.city
+                   @focus="city.meta.touched = false"
+                   @blur="city.handleBlur"
+                   @input="city.handleChange"
+                   :class="{'is-invalid': !!errors.city  && city.meta.touched}"
+            />
         </div>
+        <small :class="{ 'd-block': !!errors.city && city.meta.touched}"
+               class="invalid-feedback text-right p-0">
+            {{errors.city}}
+        </small>
     </div>
     <div class="form-row mb-2 d-flex flex-column">
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between">
             <label class="form-label col-md-2">State</label>
-            <input type="text" class="form-control col-md-10" placeholder="State" name="state"
-                   :class="{ 'is-invalid': !!stateError}"
-                   v-model=employee.state />
+            <input type="text" class="form-control col-md-10" placeholder="State"
+                   name="state"
+                   v-model=employee.state
+                   @focus="state.meta.touched = false"
+                   @blur="state.handleBlur"
+                   @input="state.handleChange"
+                   :class="{'is-invalid': !!errors.state && state.meta.touched}"
+            />
         </div>
-        <label class="float-right text-danger d-none align-self-end"
-               :class="{ 'd-block': !!stateError}">{{stateError}}</label>
+        <small :class="{ 'd-block': !!errors.state && state.meta.touched}"
+               class="invalid-feedback text-right p-0">
+            {{errors.state}}
+        </small>
     </div>
     <div class="form-row mb-2 d-flex flex-column">
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between">
             <label class="form-label col-md-2">Zip</label>
-            <input type="text" class="form-control col-md-10" placeholder="XXXXX-XXXX" name="zip"
-                   :class="{ 'is-invalid': !!zipError}" v-model=employee.zip />
+            <input type="text" class="form-control col-md-10" placeholder="XXXXX-XXXX"
+                   name="zip"
+                   v-model=employee.zip
+                   @focus="zip.meta.touched = false"
+                   @blur="zip.handleBlur"
+                   @input="zip.handleChange"
+                   :class="{'is-invalid': !!errors.zip && zip.meta.touched}"
+            />
         </div>
-        <label class="float-right text-danger d-none align-self-end"
-               :class="{ 'd-block': !!zipError}">{{zipError}}</label>
+        <small :class="{ 'd-block': !!errors.zip && zip.meta.touched}" class="invalid-feedback text-right p-0">
+            {{errors.zip}}
+        </small>
     </div>
     <div class="form-row mb-2  d-flex flex-column">
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between">
             <label class="form-label col-md-2">Phone</label>
-            <input type="text" class="form-control col-md-10" placeholder="XXX-XXX-XXXX" name="phone_1"
-                   :class="{ 'is-invalid': !!phone_1Error}" v-model=employee.phone_1 />
+            <input type="text" class="form-control col-md-10" placeholder="XXX-XXX-XXXX"
+                   name="phone_1"
+                   v-model=employee.phone_1
+                   @focus="phone_1.meta.touched = false"
+                   @blur="phone_1.handleBlur"
+                   @input="phone_1.handleChange"
+                   :class="{'is-invalid': !!errors.phone_1 && phone_1.meta.touched}"
+            />
         </div>
-        <label class="float-right text-danger d-none align-self-end" :class="{ 'd-block': !!phone_1Error}">{{phone_1Error}}</label>
+        <small :class="{ 'd-block': !!errors.phone_1 && phone_1.meta.touched}"
+               class="invalid-feedback text-right p-0">
+            {{errors.phone_1}}
+        </small>
     </div>
     <div class="form-row mb-2  d-flex flex-column">
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between">
             <label class="form-label col-md-2">Phone 2</label>
-            <input type="text" class="form-control col-md-10" placeholder="XXX-XXX-XXXX" name="phone_2"
-                   :class="{ 'is-invalid': !!phone_2Error}" v-model=employee.phone_2 />
+            <input type="text" class="form-control col-md-10" placeholder="XXX-XXX-XXXX"
+                   name="phone_2"
+                   v-model=employee.phone_2
+                   @focus="phone_2.meta.touched = false"
+                   @blur="phone_2.handleBlur"
+                   @input="phone_2.handleChange"
+                   :class="{'is-invalid': !!errors.phone_2 && phone_2.meta.touched}"
+            />
         </div>
-        <label class="float-right text-danger d-none align-self-end" :class="{ 'd-block': !!phone_2Error}">{{phone_2Error}}</label>
+        <small :class="{ 'd-block': !!errors.phone_2 && phone_2.meta.touched}"
+               class="invalid-feedback text-right p-0">
+            {{errors.phone_2}}
+        </small>
     </div>
     <div class="form-row mb-2  d-flex flex-column">
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between">
             <label class="form-label col-md-2">Birthday</label>
-            <input type="text" class="form-control col-md-10" placeholder="yyyy-mm-dd" name="birthday"
-                   :class="{ 'is-invalid': !!birthdayError}" v-model=employee.birthday />
+            <input type="text" class="form-control col-md-10" placeholder="yyyy-mm-dd"
+                   name="birthday"
+                   v-model=employee.birthday
+                   @focus="birthday.meta.touched = false"
+                   @blur="birthday.handleBlur"
+                   @input="birthday.handleChange"
+                   :class="{'is-invalid': !!errors.birthday && birthday.meta.touched}"
+            />
         </div>
-        <label class="float-right text-danger d-none align-self-end" :class="{ 'd-block': !!birthdayError}">{{birthdayError}}</label>
+        <small :class="{ 'd-block': !!errors.birthday && birthday.meta.touched}"
+               class="invalid-feedback text-right p-0">
+            {{errors.birthday}}
+        </small>
     </div>
     <div class="form-row mb-4 ">
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between">
             <label class="form-label col-md-2">Race</label>
-            <select v-model=employee.race class="custom-select form-control form-control-sm col-md-10" name="race">
-                <option disabled selected value> -- select race --</option>
-                <option v-for="race in races" :selected='employee.race === race'>{{race}}</option>
+            <select class="custom-select form-control form-control-sm col-md-10"
+                    name="race"
+                    v-model=employee.race
+                    @focus="race.meta.touched = false"
+                    @change=race.handleChange
+                    @blur="race.handleBlur"
+                    :class="{'is-invalid': !!errors.race && race.meta.touched}"
+            >
+                <option disabled selected :value=null> -- select race --</option>
+                <option v-for="race in races"
+                        :value=race
+                        :selected='employee.race === race'>
+                    {{race}}
+                </option>
             </select>
         </div>
+        <small :class="{'d-block': !!errors.race && race.meta.touched}" class="invalid-feedback text-right p-0">
+            {{errors.race}}
+        </small>
     </div>
 </template>
 
 <script>
-    import {computed, watch} from 'vue';
+    import {computed, inject} from 'vue';
     import {useStore} from 'vuex';
-    import {useForm, useIsFormDirty, useField} from 'vee-validate';
+    import {useForm, useField, useResetForm} from 'vee-validate';
     import * as yup from 'yup';
-
 
     export default {
         setup(props) {
-
-            const uSstates = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'];
+            const emitter = inject("emitter");
+            const store = useStore();
+            const states = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'];
 
             const schema = yup.object({
-                name: yup.string().nullable().trim().matches('^$|[a-zA-Z ]+$', 'Name can contain only letters'),
+                race: yup.string().nullable(),
+                company: yup.string().nullable(),
                 email: yup.string().nullable().trim().email(),
                 paypal: yup.string().nullable().trim().email(),
-                company: yup.number().nullable(true).integer().default(),
-                zip: yup.string().nullable().matches('^$|\\d{5}(-\\d{4})?$', 'Enter valid zip code'),
-                phone_1: yup.string().nullable().matches('^$|\\d{3}-\\d{3}-\\d{4}$', 'Enter valid phone'),
-                phone_2: yup.string().nullable().matches("^$|\\d{3}-\\d{3}-\\d{4}$", 'Enter valid phone'),
-                birthday: yup.string().nullable().matches("^$|((?:19|20)[0-9][0-9])-(0[1-9]|1[012])-([12][0-9]|3[01]|0[1-9])$",'Valid date format is yyyy-mm-dd'),
-                state: yup.string().nullable().test("test-name", "Please enter correct state abbreviation",
+                zip: yup.string().nullable().matches('^$|\\d{5}(-\\d{4})?$', 'enter valid zip code'),
+                phone_1: yup.string().nullable().matches('^$|\\d{3}-\\d{3}-\\d{4}$', 'enter valid phone'),
+                phone_2: yup.string().nullable().matches("^$|\\d{3}-\\d{3}-\\d{4}$", 'enter valid phone'),
+                name: yup.string().nullable().trim().matches('^$|[a-zA-Z ]+$', 'name can contain only letters'),
+                city: yup.string().nullable().trim().matches('^$|[a-zA-Z ]+$', 'city can contain only letters'),
+                birthday: yup.string().nullable().matches("^$|((?:19|20)[0-9][0-9])-(0[1-9]|1[012])-([12][0-9]|3[01]|0[1-9])$", 'valid date format is yyyy-mm-dd'),
+                state: yup.string().nullable().test("test-name", "please enter correct state abbreviation",
                     function (value) {
-                        return !!uSstates.includes(value) || value === ""|| value === null
+                        return !!states.includes(value) || value === undefined
                     }),
             });
 
-            const {values, meta } = useForm({
+            const {values, errors, validate: validateForm} = useForm({
                 validationSchema: schema.nullable()
             });
 
-            const {value: name, errorMessage: nameError} = useField('name', {
-                validateOnValueUpdate: false,
-            });
-            const {value: email, errorMessage: emailError} = useField('email');
-            const {value: paypal, errorMessage: paypalError} = useField('paypal');
-            const {value: company, errorMessage: companyError, handleInput} = useField('company');
-            const {value: address, errorMessage: addressError} = useField('address');
-            const {value: city, errorMessage: cityError} = useField('city');
-            const {value: state, errorMessage: stateError} = useField('state');
-            const {value: zip, errorMessage: zipError} = useField('zip');
-            const {value: phone_1, errorMessage: phone_1Error} = useField('phone_1');
-            const {value: phone_2, errorMessage: phone_2Error} = useField('phone_2');
-            const {value: birthday, errorMessage: birthdayError} = useField('birthday');
+            const resetForm = useResetForm();
 
-            name.value = computed(() => props.employee.name);
-            email.value = computed(() => props.employee.email);
-            paypal.value = computed(() => props.employee.paypal);
-            company.value = computed(() => props.employee.company_id);
-            address.value = computed(() => props.employee.address);
-            city.value = computed(() => props.employee.city);
-            state.value = computed(() => props.employee.state);
-            zip.value = computed(() => props.employee.zip);
-            phone_1.value = computed(() => props.employee.phone_1);
-            phone_2.value = computed(() => props.employee.phone_2);
-            birthday.value = computed(() => props.employee.birthday);
+            emitter.on('edit-employee-form', resetForm);
+            emitter.on('create-employee-form', resetForm);
 
-            const store = useStore();
-
-            watch(meta, (first, second) => {
-
-                //store.commit('formData/setEmployeeIsValidState', meta.value.valid)
-                props.employee.dataIsValid = meta.value.valid
-
-                /*console.log('from watcher ' + meta.value.valid);
-                console.log(
-                    "Watch props.selected function called with args:",
-                    first,
-                    second
-                );*/
-            });
+            async function validate() {
+                const result = await validateForm();
+                if (!result.valid) {
+                    throw ({
+                        response: {
+                            data: {
+                                message: 'Please fix form errors:',
+                                errors: Object.keys(result.errors).map(key => [result.errors[key]])
+                            }
+                        }
+                    })
+                }
+            }
 
             return {
-                email, emailError,name, nameError, paypal, paypalError, address, addressError, city, cityError,
-                state, stateError, zip, zipError, phone_1, phone_1Error, phone_2, phone_2Error, birthday, birthdayError,
-                company, companyError, values, meta, handleInput,
+                validate, errors, values, schema,
                 races: computed(() => store.getters.getRaces),
                 companies: computed(() => store.getters.getCompanies),
+
+                zip: useField('zip', {value: computed(() => props.employee.zip)}),
+                race: useField('race', {value: computed(() => props.employee.race)}),
+                name: useField('name', {value: computed(() => props.employee.name)}),
+                city: useField('city', {value: computed(() => props.employee.city)}),
+                email: useField('email', {value: computed(() => props.employee.email)}),
+                state: useField('state', {value: computed(() => props.employee.state)}),
+                paypal: useField('paypal', {value: computed(() => props.employee.paypal)}),
+                phone_1: useField('phone_1', {value: computed(() => props.employee.phone_1)}),
+                phone_2: useField('phone_2', {value: computed(() => props.employee.phone_2)}),
+                address: useField('address', {value: computed(() => props.employee.address)}),
+                birthday: useField('birthday', {value: computed(() => props.employee.birthday)}),
+                company: useField('company', {value: computed(() => props.employee.company_id)}),
             }
         },
 

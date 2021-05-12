@@ -9,6 +9,7 @@ use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\Pivot\TopHrHr;
 use App\Models\User;
 use App\Shared\Value\Role;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -74,8 +75,13 @@ class UsersController extends Controller
         try {
             $user->delete();
             return response("deleted", JsonResponse::HTTP_NO_CONTENT);
-        } catch (\Exception $e) {
-            return response($e->getMessage());
+        } catch (QueryException $e) {
+            return response([
+                'message' => 'can`t delete manager ' . $user->login,
+                'errors' => [['he might control some companies']]
+            ], JsonResponse::HTTP_NOT_ACCEPTABLE);
+        } catch (\Exception $e){
+            return response(['message' => $e->getMessage()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -5,8 +5,8 @@
         </h4>
         <EmployeesTableControl/>
 
-        <div class="table-responsive">
-            <table v-if="employees !== {}" class="datatables-demo table table-striped table-bordered">
+        <div v-if="Object.keys(employees).length > 0" class="table-responsive">
+            <table class="datatables-demo table table-striped table-bordered">
                 <EmployeesTableHead/>
                 <tbody>
                 <EmployeesTableRow
@@ -22,6 +22,7 @@
             </table>
             <Pagination :data="pagination"/>
         </div>
+        <NoRecords v-else/>
     </div>
 </template>
 
@@ -34,14 +35,16 @@
     import StoreEmployeeForm from '../../modals/employee/StoreEmployeeForm';
     import EditEmployeeForm from '../../modals/employee/EditEmployeeForm';
     import FileInputForm from '../../modals/employee/FileInputForm';
+    import NoRecords from '../../layout/NoRecords';
     import {computed} from 'vue';
-    import{useStore} from 'vuex';
+    import {useStore} from 'vuex';
 
     export default {
-        setup(){
+        setup() {
+            const store = useStore()
             return {
-                employees: computed(() => useStore().getters.getEmployees),
-                pagination: computed(() => useStore().getters.getEmployeesPagination),
+                employees: computed(() => store.getters.getEmployees),
+                pagination: computed(() => store.getters.getEmployeesPagination),
             }
         },
 
@@ -53,7 +56,8 @@
             StoreEmployeeForm,
             EditEmployeeForm,
             FileInputForm,
-            EmptyTableRow
+            EmptyTableRow,
+            NoRecords
         }
     };
 </script>

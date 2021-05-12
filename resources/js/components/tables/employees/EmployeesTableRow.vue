@@ -1,5 +1,8 @@
 <template>
     <tr class="odd gradeX">
+        <td style="text-align: center; vertical-align: middle;">
+            <Checkbox :employee=employee />
+        </td>
         <td>{{employee.created_at}}</td>
         <td v-if="employee.hr">{{employee.hr.login}}</td>
         <td v-else></td>
@@ -46,6 +49,7 @@
     import StatusSelect from '../../layout/EmployeesStatusSelect';
     import DeleteButton from './actions/DeleteButton';
     import EditButton from './actions/EditButton';
+    import Checkbox from './actions/RowCheckbox';
     import {useStore} from 'vuex'
 
     export default {
@@ -62,7 +66,8 @@
         components: {
             StatusSelect,
             DeleteButton,
-            EditButton
+            EditButton,
+            Checkbox
         }
     };
 </script>

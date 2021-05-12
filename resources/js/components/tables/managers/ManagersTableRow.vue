@@ -3,33 +3,32 @@
         <td>{{user.created_at}}</td>
         <td>{{user.login}}</td>
         <td>{{user.role}}</td>
-        <td>
-            <a data-toggle="modal" data-target="#editManagerForm" @click=showEditManagerForm>
-                <button type="button" class="ion ion-md-cog p-0 bg-transparent border-0"
-                        data-toggle="tooltip"
-                        data-placement="right" title="Edit"
-
-                >
-                </button>
-            </a>
+        <td class="d-flex justify-content-between align-items-center border-0"
+        >
+            <EditButton :user="user" />
+            <DeleteButton :user="user" />
         </td>
     </tr>
 </template>
 
 <script>
+    import DeleteButton from './actions/DeleteButton';
+    import EditButton from './actions/EditButton';
     import {useStore} from 'vuex';
-    import {inject, computed} from 'vue';
+    import {computed} from 'vue';
 
     export default {
-        setup(props) {
+        setup() {
             const store = useStore();
-            const emitter = inject("emitter");
 
             return {
                 profile: computed(() => store.getters.getProfile),
-                showEditManagerForm: () => emitter.emit('edit-manager-form', props.user)
             }
         },
         props: {user: Object},
+        components: {
+            DeleteButton,
+            EditButton
+        }
     };
 </script>

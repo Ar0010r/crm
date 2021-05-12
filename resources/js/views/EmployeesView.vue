@@ -1,9 +1,9 @@
 <template>
     <EmployeesTable/>
 
-    <StoreEmployeeForm/>
     <FileInputForm/>
     <EditEmployeeForm/>
+    <StoreEmployeeForm/>
 
 </template>
 

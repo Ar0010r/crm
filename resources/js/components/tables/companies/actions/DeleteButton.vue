@@ -4,34 +4,31 @@
 
 <script>
     import {useStore} from 'vuex'
-    import {inject, onBeforeUnmount} from 'vue';
+    import {inject, onBeforeUnmount, on} from 'vue';
 
     export default {
         setup(props) {
             const store = useStore();
             const emitter = inject("emitter");
             const container = inject('container');
-            const deleteEventId = 'delete-employee-' + props.employee.id;
+            const deleteEventId = 'delete-company-' + props.company.id;
 
-            emitter.on(deleteEventId, deleteEmployee)
-            onBeforeUnmount(() => emitter.off(deleteEventId, deleteEmployee));
-
+            emitter.on(deleteEventId, deleteCompany);
+            onBeforeUnmount(() => emitter.off(deleteEventId, deleteCompany));
 
             async function deleteWarning() {
                 const warning = {
                     message: generateWarningMessage(),
-                    event_id: deleteEventId,
-                    action: 'deleted'
-                }
-
+                    event_id: deleteEventId
+                };
                 emitter.emit('notification-warning', warning);
             }
 
-            async function deleteEmployee() {
+            async function deleteCompany() {
                 try {
-                    await container.EmployeeService.deleteEmployee(props.employee);
-                    store.dispatch('employee/deleteEmployee', props.employee);
-                    emitter.emit('notification-success', ' applicant was deleted');
+                    console.log('delete company', props.company)
+                    await container.CompanyService.deleteCompany(props.company);
+                    store.dispatch('company/deleteCompany', props.company);
                 } catch (e) {
                     emitter.emit('notification-error', e.response.data)
                 }
@@ -39,18 +36,18 @@
 
             function generateWarningMessage() {
                 let message;
-                if (props.employee.email) message = props.employee.email;
-                else message = props.employee.name;
+                if (props.company.email) message = props.company.email;
+                else message = props.company.name;
 
                 return message
             }
 
             return {
-                deleteWarning,
+                deleteWarning, deleteEventId
             }
         },
         props: {
-            employee: Object
+            company: Object
         },
     };
 </script>

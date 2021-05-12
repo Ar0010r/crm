@@ -16,12 +16,6 @@
 
 <script>
     export default {
-        setup() {
-            console.log("Component mounted.");
-        },
-
-        //props: {employeePickUp:},
-        //props: ['employeePickUp'],
         props: {employee: Object},
     };
 </script>

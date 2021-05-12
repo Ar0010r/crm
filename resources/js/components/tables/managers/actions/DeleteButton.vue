@@ -11,27 +11,23 @@
             const store = useStore();
             const emitter = inject("emitter");
             const container = inject('container');
-            const deleteEventId = 'delete-employee-' + props.employee.id;
+            const deleteEventId = 'delete-user-' + props.user.id;
 
-            emitter.on(deleteEventId, deleteEmployee)
-            onBeforeUnmount(() => emitter.off(deleteEventId, deleteEmployee));
-
+            emitter.on(deleteEventId, deleteUser)
+            onBeforeUnmount(() => emitter.off(deleteEventId, deleteUser));
 
             async function deleteWarning() {
                 const warning = {
                     message: generateWarningMessage(),
-                    event_id: deleteEventId,
-                    action: 'deleted'
+                    event_id: deleteEventId
                 }
-
                 emitter.emit('notification-warning', warning);
             }
 
-            async function deleteEmployee() {
+            async function deleteUser() {
                 try {
-                    await container.EmployeeService.deleteEmployee(props.employee);
-                    store.dispatch('employee/deleteEmployee', props.employee);
-                    emitter.emit('notification-success', ' applicant was deleted');
+                    await container.UserService.deleteUser(props.user);
+                    store.dispatch('user/deleteUser', props.user);
                 } catch (e) {
                     emitter.emit('notification-error', e.response.data)
                 }
@@ -39,8 +35,8 @@
 
             function generateWarningMessage() {
                 let message;
-                if (props.employee.email) message = props.employee.email;
-                else message = props.employee.name;
+                if (props.user.login) message = props.user.login;
+                else message = props.user.role;
 
                 return message
             }
@@ -50,7 +46,7 @@
             }
         },
         props: {
-            employee: Object
+            user: Object
         },
     };
 </script>

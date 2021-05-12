@@ -481,7 +481,7 @@ const render = /*#__PURE__*/_withId(function render(_ctx, _cache, $props, $setup
     _hoisted_2,
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
-        class: ["float-right text-danger d-none", { 'd-block': $setup.dBlock}]
+        class: ["float-right text-danger d-none", {'d-block': $setup.dBlock}]
       }, " Invalid credentials", 2 /* CLASS */),
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
         placeholder: "Login",

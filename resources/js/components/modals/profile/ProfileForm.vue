@@ -10,7 +10,6 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-row mb-2 d-flex flex-column p-0">
-
                         <div class=" p-0 form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap">
                             <label class="form-label col-md-2">Avatar</label>
                             <input v-if="file" v-model="file.name" @click="selectFile" class="form-control col-md-10"
@@ -19,13 +18,13 @@
                                    placeholder="Click to select an image">
                         </div>
                     </div>
-                    <ManagerFormFields :user.sync='user' :show-role-field="false"/>
+                    <ManagerFormFields ref="managerFields" :user.sync='user' :show-role-field="false"/>
                 </div>
                 <div class="modal-footer">
                     <button id="profileFormClose" type="button" class="btn btn-default" data-dismiss="modal">Close
                     </button>
-                    <button :disabled="!user.dataIsValid" type="button" class="btn btn-primary"
-                            @click="updateProfile(user)">Update
+                    <button type="button" class="btn btn-primary" @click="updateProfile(user)">
+                        Update
                     </button>
                 </div>
             </form>
@@ -38,21 +37,19 @@
 <script>
     import ManagerFormFields from '../manager/ManagerFormFields';
     import {useStore} from 'vuex';
-    import {computed, inject, ref, reactive} from 'vue';
+    import {computed, inject, ref, reactive, onBeforeUnmount} from 'vue';
 
     export default {
         setup() {
             const store = useStore();
             const container = inject('container');
             const emitter = inject("emitter");
+            const managerFields = ref(null);
             let user = reactive({});
             let file = ref(null);
 
-
-            emitter.on('open-profile-form', userData => {
-                Object.keys(userData.value).forEach(key => user[key] = userData.value[key])
-            });
-
+            emitter.on('open-profile-form', setProfile);
+            onBeforeUnmount(() => emitter.off('open-profile-form', setProfile));
 
             async function updateProfile(user) {
                 if (user.password === null) delete user.password;
@@ -66,9 +63,11 @@
                 formData.set('_method', 'put');
 
                 try {
+                    await managerFields.value.validate();
                     let response = await container.UserService.updateUser(formData);
 
                     store.commit('user/setProfile', response.data);
+                    emitter.emit('notification-success', 'profile was updated');
                     document.getElementById('profileFormClose').click()
                 } catch (e) {
                     store.dispatch('notification/activate', e.response.data);
@@ -76,10 +75,13 @@
                 }
             }
 
+            function setProfile(userData) {
+                Object.keys(userData.value).forEach(key => user[key] = userData.value[key])
+            }
+
             return {
-                user,
-                updateProfile,
                 file: computed(() => file.value),
+                user, updateProfile, managerFields,
                 setFile: event => file.value = event.target.files[0],
                 selectFile: () => document.getElementById("avatarInput").click()
             }

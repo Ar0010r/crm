@@ -11,18 +11,19 @@
                 Add manager
             </button>
         </div>
-        <div class="table-responsive">
+        <div v-if="Object.keys(users).length > 0" class="table-responsive">
             <table class="datatables-demo table table-striped table-bordered">
                 <ManagersTableHead/>
                 <tbody>
                 <ManagersTableRow
                         v-for="user in users"
-                        :key="user.id"
+                        :key="user.id + user.login"
                         :user.sync='user'
                 />
                 </tbody>
             </table>
         </div>
+        <NoRecords v-else />
     </div>
 </template>
 
@@ -31,6 +32,7 @@
     import EditManagerForm from '../../modals/manager/EditManagerForm';
     import ManagersTableHead from './ManagersTableHead';
     import ManagersTableRow from './ManagersTableRow';
+    import NoRecords from '../../layout/NoRecords';
 
     import {computed, inject} from 'vue';
     import {useStore} from 'vuex';
@@ -50,7 +52,8 @@
             StoreManagerForm,
             EditManagerForm,
             ManagersTableHead,
-            ManagersTableRow
+            ManagersTableRow,
+            NoRecords
         }
     };
 </script>

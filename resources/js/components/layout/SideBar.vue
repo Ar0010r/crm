@@ -1,11 +1,11 @@
 <template>
     <div id="layout-sidenav" class="layout-sidenav sidenav sidenav-vertical bg-dark">
         <div class="app-brand demo">
-          <span class="app-brand-logo demo">
-              <img src="logo-grey.png" class="w-100 h-100">
+            <span class="app-brand-logo demo bg-primary">
+                 <img src="idea.png" class="w-100 h-100">
           </span>
-            <div style="color:darkgrey" class="app-brand-text demo sidenav-text font-weight-normal ml-2">HiringTools</div>
-            <a href="javascript:void(0)" class="layout-sidenav-toggle sidenav-link text-large ml-auto">
+            <div class="app-brand-text demo sidenav-text font-weight-normal ml-2">HiringTools</div>
+            <a href="javascript:void(0)" style="color: #fff;" class="layout-sidenav-toggle sidenav-link text-large ml-auto">
                 <i class="ion ion-md-menu align-middle"></i>
             </a>
         </div>

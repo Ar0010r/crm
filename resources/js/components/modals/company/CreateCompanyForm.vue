@@ -9,15 +9,13 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
                 </div>
                 <div class="modal-body">
-                    <CompanyFormFields :company="company"/>
+                    <CompanyFormFields ref="companyFields" :company="company"/>
                 </div>
                 <div class="modal-footer">
                     <button id="storeCompanyFormClose" type="button" class="btn btn-default" data-dismiss="modal">
                         Close
                     </button>
-                    <button :disabled="!company.dataIsValid" type="button"
-                            class="btn btn-primary"
-                            @click="storeCompany(company)">Add
+                    <button  type="button" class="btn btn-primary" @click="storeCompany(company)">Add
                     </button>
                 </div>
             </form>
@@ -28,23 +26,23 @@
 <script>
     import CompanyFormFields from './CompanyFormFields';
     import {useStore} from 'vuex';
-    import {computed, inject, reactive} from 'vue';
+    import {computed, inject, reactive, ref, onBeforeUnmount} from 'vue';
 
     export default {
         setup() {
             const store = useStore();
             const container = inject('container');
             const emitter = inject("emitter");
+            const companyFields = ref(null);
 
             const emptyCompany = {...store.getters.getEmptyCompany};
             let company = reactive({...emptyCompany});
 
             let users = computed(() => store.getters.getUsers);
 
-            emitter.on('create-company-form', () => clearForm());
-
             async function storeCompany(company) {
                 try {
+                    await companyFields.value.validate();
                     let response = await container.CompanyService.storeCompany(company);
 
                     let storedCompany = response.data.company;
@@ -53,16 +51,20 @@
 
                     store.commit('company/setCompanyById', storedCompany);
                     document.getElementById('storeCompanyFormClose').click()
+                    emitter.emit('notification-success', 'company was created');
                     clearForm()
                 } catch (e) {
-                    store.dispatch('notification/activate', e.response.data);
+                    emitter.emit('notification-error', e.response.data)
                 }
 
             }
 
             const clearForm = () => Object.keys(emptyCompany).forEach(key => company[key] = emptyCompany[key]);
 
-            return {storeCompany, company}
+            emitter.on('create-company-form', clearForm);
+            onBeforeUnmount(() => emitter.off('create-company-form', clearForm));
+
+            return {storeCompany, company, companyFields}
         },
         components: {
             CompanyFormFields

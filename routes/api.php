@@ -22,13 +22,15 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::apiResource('/companies', 'CompaniesController');
         Route::apiResource('/employees', 'EmployeesController');
         Route::post('employees/import', 'EmployeesController@import');
+        Route::patch('employees', 'EmployeesController@bulkDestroy');
+        Route::put('employees', 'EmployeesController@bulkUpdate');
         Route::get('/races', 'EmployeesController@races');
         Route::get('/profile', 'AuthController@profile');
         Route::get('/statuses', 'EmployeesController@statuses');
         Route::get('/available-roles', 'UsersController@getAvailableRoles');
         Route::get('/search', 'EmployeesController@search');
 
-        Route::post('/logout', 'AuthController@logout');
+        Route::get('/logout', 'AuthController@logout');
     });
 });
 

@@ -1,5 +1,6 @@
 import md5 from "js-md5";
-import {container} from '../services/index'
+import {container} from '../services/index';
+import {emitter} from '../app';
 
 export default {
     namespaced: true,
@@ -9,13 +10,6 @@ export default {
         companies: {},
         statuses: {},
         pagination: {},
-        /*queryParams: {
-            company_id: "",
-            hr_id: "",
-            status: "",
-            page: "",
-            recordsPerPage: ""
-        },*/
 
         emptyEmployee: {
             address: null,
@@ -24,21 +18,18 @@ export default {
             company_id: null,
             company: {name: null},
             hr: {login: null},
-            email:null,
-            name: "",
+            email: null,
+            name: null,
             paypal: null,
             phone_1: null,
             phone_2: null,
             race: null,
             state: null,
-            zip:null,
+            zip: null,
             pickup: null,
         }
     },
     mutations: {
-        /*setQueryParam(state, {key, value}) {
-            state.queryParams[key] = value
-        },*/
         setEmployeeStatus(state, params) {
             let key = md5(params.id.toString())
             state.employees[key].status = params.newStatus
@@ -77,34 +68,34 @@ export default {
     },
 
     actions: {
-        async setEmployeesToStore({commit, dispatch}, params) {
+        async setEmployeesToStore({commit}, params) {
             try {
                 let employees = await container.EmployeeService.getEmployees(params);
 
                 commit('setEmployees', employees.employees);
                 commit('setPagination', employees.pagination);
             } catch (e) {
-                dispatch('notification/activate', e.response.data, {root: true});
+                emitter.emit('notification-error', e.response.data)
             }
         },
 
-        async setStatusesToStore({commit, dispatch}) {
-            try{
+        async setStatusesToStore({commit}) {
+            try {
                 let statuses = await container.EmployeeService.getStatuses();
                 commit('setStatuses', statuses.data);
             } catch (e) {
-                dispatch('notification/activate', e.response.data, {root: true});
+                emitter.emit('notification-error', e.response.data)
             }
 
         },
 
-        async setRacesToStore({commit, dispatch}) {
-           try {
-               let races = await container.EmployeeService.getRaces();
-               commit('setRaces', races.data);
-           } catch (e) {
-               dispatch('notification/activate', e.response.data, {root: true});
-           }
+        async setRacesToStore({commit}) {
+            try {
+                let races = await container.EmployeeService.getRaces();
+                commit('setRaces', races.data);
+            } catch (e) {
+                emitter.emit('notification-error', e.response.data)
+            }
         },
 
         deleteEmployee({commit, dispatch, state}, employee) {
@@ -112,8 +103,12 @@ export default {
             if (state.employees[key]) {
                 commit('deleteEmployeeById', key);
             } else {
-                dispatch('notification/activate', e.response.data, {root: true});
+                emitter.emit('notification-error', e.response.data)
             }
         },
+
+        bulkDelete({dispatch}, employees){
+            employees.forEach(employee => dispatch('deleteEmployee', employee))
+        }
     }
 }

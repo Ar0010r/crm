@@ -9,11 +9,12 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
                 </div>
                 <div class="modal-body">
-                    <ManagerFormFields :user.sync='manager' :show-role-field="true"/>
+                    <ManagerFormFields ref="managerFields" :user.sync='manager' :show-role-field="true"/>
                 </div>
                 <div class="modal-footer">
-                    <button id="storeUserFormClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button @click.prevent="storeManager" :disabled="manager.password === null || manager.login === '' || manager.role === '' || !manager.dataIsValid " type="button"
+                    <button id="storeUserFormClose" type="button" class="btn btn-default" data-dismiss="modal">Close
+                    </button>
+                    <button @click.prevent="storeManager" type="button"
                             class="btn btn-primary">Add
                     </button>
                 </div>
@@ -25,33 +26,36 @@
 <script>
     import ManagerFormFields from './ManagerFormFields';
     import {useStore} from 'vuex';
-    import {computed, inject, reactive} from 'vue';
+    import {ref, inject, reactive, onBeforeUnmount} from 'vue';
 
     export default {
         setup() {
             const store = useStore();
             const container = inject('container');
             const emitter = inject("emitter");
-            const emptyManager = { ...store.getters.getEmptyUser};
+            const managerFields = ref(null);
+            const emptyManager = {...store.getters.getEmptyUser};
 
             let manager = reactive({...emptyManager});
 
-            emitter.on('create-manager-form', () => clearForm());
-
             async function storeManager() {
-                try{
+                try {
+                    await managerFields.value.validate();
                     let storedManager = await container.UserService.storeUser(manager);
                     store.commit('user/setUserById', storedManager.data.user);
                     document.getElementById('storeUserFormClose').click()
+                    emitter.emit('notification-success', 'manager was added');
                     clearForm();
                 } catch (e) {
-                    store.dispatch('notification/activate', e.response.data, {root: true});
+                    emitter.emit('notification-error', e.response.data)
                 }
             }
 
             const clearForm = () => Object.keys(emptyManager).forEach(key => manager[key] = emptyManager[key]);
+            emitter.on('create-manager-form', clearForm);
+            onBeforeUnmount(() => emitter.off('create-manager-form', clearForm));
 
-            return {manager, storeManager}
+            return {manager, managerFields, storeManager}
         },
         components: {
             ManagerFormFields

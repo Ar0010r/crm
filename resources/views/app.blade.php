@@ -3,7 +3,7 @@
 <html lang="en" class="light-style">
 
 <head>
-    <title>crm</title>
+    <title>HiringTools</title>
 
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
@@ -44,12 +44,12 @@
     <!-- Theme settings -->
     <!-- This file MUST be included after core stylesheets and layout-helpers.js in the <head> section -->
     <script src="assets/vendor/js/theme-settings.js"></script>
-    <script>
+    {{--<script>
         window.themeSettings = new ThemeSettings({
             cssPath: 'assets/vendor/css/rtl/',
             themesPath: 'assets/vendor/css/rtl/'
         });
-    </script>
+    </script>--}}
 
     <!-- Core scripts -->
     <script src="assets/vendor/js/pace.js"></script>

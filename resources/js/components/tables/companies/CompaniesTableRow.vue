@@ -5,34 +5,33 @@
         <td>{{company.name}}</td>
         <td>{{company.domain}}</td>
         <td>{{company.email}}</td>
-        <td v-if="profile.role === 'admin'" >
-            <a data-toggle="modal" data-target="#editCompanyForm">
-                <button type="button" class="ion ion-md-cog p-0 bg-transparent border-0"
-                        data-toggle="tooltip" data-target="#editCompanyForm"
-                        data-placement="right" title="Edit"
-                        @click="showEditCompanyForm"
-                >
-
-                </button>
-            </a>
+        <td v-if="profile.role === 'admin'"
+            class="d-flex justify-content-between align-items-center border-0"
+        >
+            <EditButton :company="company" />
+            <DeleteButton :company="company" />
         </td>
     </tr>
 </template>
 
 <script>
+    import DeleteButton from './actions/DeleteButton';
+    import EditButton from './actions/EditButton';
     import{useStore} from 'vuex';
-    import {computed, inject} from 'vue';
+    import {computed} from 'vue';
 
     export default {
-        setup(props){
+        setup(){
             const store = useStore();
-            const emitter = inject("emitter");
 
             return {
                 profile: computed(() => store.getters.getProfile),
-                showEditCompanyForm: () => emitter.emit('edit-company-form', props.company)
             }
         },
         props: {company: Object},
+        components: {
+            DeleteButton,
+            EditButton
+        }
     };
 </script>

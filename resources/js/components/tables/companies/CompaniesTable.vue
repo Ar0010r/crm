@@ -5,18 +5,18 @@
         </h4>
         <div v-if="profile.role === 'admin'" class="d-flex justify-content-between mb-3">
             <button @click="initializeCompanyStoreForm" class="btn btn-primary btn" data-toggle="modal"
-                    data-target="#addCompanyForm">Add
-                company
+                    data-target="#addCompanyForm">Add company
             </button>
         </div>
-        <div class="table-responsive">
+        <div v-if="Object.keys(companies).length > 0" class="table-responsive">
             <table class="datatables-demo table table-striped table-bordered">
                 <CompaniesTableHead/>
                 <tbody>
-                <CompaniesTableRow v-for="company in companies" :company="company"/>
+                <CompaniesTableRow v-for="company in companies" :company="company" :key="company.id + company.name"/>
                 </tbody>
             </table>
         </div>
+        <NoRecords v-else />
     </div>
 </template>
 
@@ -25,6 +25,7 @@
     import CompaniesTableRow from './CompaniesTableRow.vue';
     import CreateCompanyForm from '../../modals/company/CreateCompanyForm';
     import EditCompanyForm from '../../modals/company/EditCompanyForm';
+    import NoRecords from '../../layout/NoRecords';
     import {computed, inject} from 'vue';
     import {useStore} from 'vuex';
 
@@ -36,7 +37,7 @@
             return {
                 profile: computed(() => store.getters.getProfile),
                 companies: computed(() => store.getters.getCompanies),
-                initializeCompanyStoreForm : () =>  emitter.emit('create-company-form'),
+                initializeCompanyStoreForm : () =>  emitter.emit('create-company-form')
             }
         },
 
@@ -44,7 +45,8 @@
             CompaniesTableHead,
             CompaniesTableRow,
             CreateCompanyForm,
-            EditCompanyForm
+            EditCompanyForm,
+            NoRecords
         }
     };
 </script>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Employee\EmployeeBulkDestroyRequest;
+use App\Http\Requests\Employee\EmployeeBulkUpdateRequest;
 use App\Http\Requests\Employee\EmployeeStoreRequest;
 use App\Http\Requests\Employee\EmployeeUpdateRequest;
 use App\Imports\EmployeeImport;
@@ -79,6 +81,16 @@ class EmployeesController extends Controller
         return response("updated", JsonResponse::HTTP_NO_CONTENT);
     }
 
+    public function bulkUpdate(EmployeeBulkUpdateRequest $r)
+    {
+        $ids = array_map(function ($employee) {
+            return $employee['id'];
+        }, $r->employees);
+
+        Employee::whereIn('id', $ids)->update(['status' => $r->status]);
+        return response("updated", JsonResponse::HTTP_NO_CONTENT);
+    }
+
     public function destroy(Employee $employee)
     {
         try {
@@ -89,9 +101,21 @@ class EmployeesController extends Controller
         }
     }
 
+    public function bulkDestroy(EmployeeBulkDestroyRequest $r)
+    {
+        $ids = array_map(function ($employee) {
+            return $employee['id'];
+        }, $r->employees);
+
+        Employee::destroy($ids);
+        return response("deleted", JsonResponse::HTTP_NO_CONTENT);
+    }
+
     public function search(Request $r)
     {
-        if (!$r->keyword) return $this->index();
+        if (!$r->keyword) {
+            return $this->index();
+        }
 
         $data = $this->employeeService->search($r->keyword);
 

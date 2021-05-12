@@ -15,22 +15,26 @@ const router = createRouter({
         {
             path: '/employees',
             component: EmployeesView,
-            name: 'employees-table'
+            name: 'employees-table',
+            meta: {title: 'employees'}
         },
         {
             path: '/managers',
             component: ManagersView,
-            name: 'managers-table'
+            name: 'managers-table',
+            meta: {title: 'managers'}
         },
         {
             path: '/companies',
             component: CompaniesView,
-            name: 'companies-table'
+            name: 'companies-table',
+            meta: {title: 'companies'}
         },
         {
             path: '/login',
             component: LoginView,
-            name: 'login'
+            name: 'login',
+            meta: {title: 'login'}
         },
         {
             path: '/',
@@ -42,21 +46,22 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    const tokenIsOk =  axios.defaults.headers.common['Authorization'] === 'Bearer ' + localStorage.getItem('token');
+    document.title = to.meta.title;
+    const tokenIsOk = axios.defaults.headers.common['Authorization'] === 'Bearer ' + localStorage.getItem('token');
 
-    if(tokenIsOk && to.name !== 'login') next();
-    if(tokenIsOk && to.name === 'login') next("/employees");
+    if (tokenIsOk && to.name !== 'login') return next();
+    if (tokenIsOk && to.name === 'login') return next("/employees");
 
     if (localStorage.getItem('token')) {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
         let profileIsUndefined = Object.keys(store.getters.getProfile).length === 0;
         if (profileIsUndefined) store.dispatch('user/setProfileToStore');
 
-        if (to.name === 'login') next("/employees");
-        else next();
+        if (to.name === 'login') return next("/employees");
+        next();
     } else {
-        if (to.name === 'login') next()
-        else next("/login")
+        if (to.name === 'login') return next();
+        next("/login")
     }
 });
 

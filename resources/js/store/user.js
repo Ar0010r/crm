@@ -1,4 +1,5 @@
 import {container} from '../services/index'
+import {emitter} from '../app';
 
 export default {
     namespaced: true,
@@ -49,6 +50,10 @@ export default {
             state.personnels = personnels;
         },
 
+        deleteUserById(state, id) {
+            delete state.users[id];
+        },
+
     },
     actions: {
         async setProfileToStore({commit}) {
@@ -56,41 +61,17 @@ export default {
                 let response = await container.UserService.getProfile();
                 commit('setProfile', response.data);
             } catch (e) {
-                dispatch('notification/activate', e.response.data, {root: true});
+                emitter.emit('notification-error', e.response.data)
             }
         },
 
-        async setUsersToStore({commit}, params) {
+        async setUsersToStore({commit, dispatch}, params) {
             try {
                 let response = await container.UserService.getUsers(params);
 
-                let usersList = response.data;
-
-                let hrs = {};
-                Object.keys(usersList).map(function (key) {
-                    let index = usersList[key].id;
-                    if (usersList[key].role === 'hr' || usersList[key].role === 'top hr') hrs[index] = usersList[key];
-                });
-
-                let personnels = {};
-                Object.keys(usersList).map(function (key) {
-                    let index = usersList[key].id;
-                    if (usersList[key].role === 'personnel') personnels[index] = usersList[key];
-                });
-
-                let users = {};
-                Object.keys(usersList).map(function (key) {
-                    let index = usersList[key].id;
-                    users[index] = usersList[key];
-                });
-
-
-                commit('setUsers', users);
-                commit('setHrs', hrs);
-                commit('setPersonnels', personnels);
-
+                dispatch('sort', response.data);
             } catch (e) {
-                dispatch('notification/activate', e.response.data, {root: true});
+                emitter.emit('notification-error', e.response.data)
             }
 
         },
@@ -100,8 +81,26 @@ export default {
                 let response = await container.UserService.getRoles();
                 commit('setRoles', response.data);
             } catch (e) {
-                dispatch('notification/activate', e.response.data, {root: true});
+                emitter.emit('notification-error', e.response.data)
             }
-        }
+        },
+
+        deleteUser({commit, dispatch, state}, user) {
+            let key = user.id;
+            if (state.users[key]) {
+                commit('deleteUserById', key);
+                dispatch('sort', state.users);
+            } else {
+                emitter.emit('notification-error', e.response.data)
+            }
+        },
+
+        async sort({commit}, data) {
+            let users = container.UserService.sort(data);
+
+            commit('setUsers', users.users);
+            commit('setHrs', users.hrs);
+            commit('setPersonnels', users.personnels);
+        },
     }
 }

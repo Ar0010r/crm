@@ -1,4 +1,6 @@
 import {container} from '../services/index'
+import {emitter} from '../app';
+import md5 from "js-md5";
 
 export default {
     namespaced: true,
@@ -29,6 +31,9 @@ export default {
                 state.companies = {...newCompanyObj, ...state.companies};
             }
         },
+        deleteCompanyById(state, id) {
+            delete state.companies[id];
+        },
     },
     actions: {
         async setCompaniesToStore({commit, dispatch}) {
@@ -44,8 +49,17 @@ export default {
 
                 commit('setCompanies', companies);
             } catch (e) {
-                dispatch('notification/activate', e.response.data, {root: true});
+                emitter.emit('notification-error', e.response.data)
             }
-        }
+        },
+
+        deleteCompany({commit, dispatch, state}, company) {
+            let key = company.id;
+            if (state.companies[key]) {
+                commit('deleteCompanyById', key);
+            } else {
+                emitter.emit('notification-error', e.response.data)
+            }
+        },
     },
 }

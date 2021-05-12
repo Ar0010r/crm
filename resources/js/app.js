@@ -6,7 +6,7 @@ import Store from "./store";
 import {container} from './services'
 import mitt from 'mitt';
 
-const emitter = mitt();
+export const emitter = mitt();
 
 createApp(App)
     .use(Router)

@@ -1,5 +1,5 @@
 <template>
-    <div v-for="error in errors" class="growl growl-error growl-medium" :id="error.id">
+    <div v-for="error in errors" class="growl growl-incoming growl-error growl-medium" :id="error.id">
         <div class="growl-close" @click="close(error.id)">×</div>
         <div class="growl-title">{{error.message.message}}</div>
         <div class="growl-message" v-for="errorMessage in error.message.errors">{{errorMessage[0]}}</div>
@@ -12,29 +12,30 @@
         setup() {
             const emitter = inject("emitter");
             let errors = ref([]);
-            const delay = 5000;
-
-            emitter.on('notification-error', showError);
+            const delay = 7000;
 
             async function showError(message) {
-                let id = Math.floor(Math.random() * 100)
+                let id = setTimeout(() => close(id), delay);
+
                 errors.value.push({
                     id: id,
                     message: message
                 });
 
-                setTimeout(() => close(id), delay);
+                setTimeout(() => document.getElementById(id).classList.remove('growl-incoming'), 500)
             }
+
+            emitter.on('notification-error', showError);
 
             async function close(id) {
                 const error = document.getElementById(id);
-                if(error){
+                if (error) {
                     error.classList.add('growl-outgoing');
-                    setTimeout(() => errors.value = errors.value.filter(error => error.id !== id), delay/9);
+                    setTimeout(() => document.getElementById(id).classList.add('d-none'), 500);
                 }
             }
 
-            return {close}
+            return {errors, close}
         },
     };
 </script>

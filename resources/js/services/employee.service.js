@@ -7,6 +7,12 @@ export class EmployeeService {
         this.client = client;
     }
 
+    async store(employee)
+    {
+        console.log('in serv', employee);
+        return await this.client.post('api/employees', employee)
+    }
+
     async getEmployees(params)
     {
         let response = await this.client.get('/api/employees', {params});
@@ -58,6 +64,11 @@ export class EmployeeService {
     async deleteEmployee(employee)
     {
         return await this.client.delete('api/employees/' + employee.id);
+    }
+
+    async deleteSelected(employees)
+    {
+        return await this.client.patch('api/employees', {'employees':employees});
     }
 
 }

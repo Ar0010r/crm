@@ -89,6 +89,7 @@
         setup() {
 
             const container = inject('container');
+            const emitter = inject('emitter');
             const store = useStore();
 
             let file = ref(null);
@@ -112,7 +113,9 @@
 
                 try {
                    await container.EmployeeService.sendFile(formData);
+                    emitter.emit('notification-success', 'file was exported');
                 } catch (e) {
+                    emitter.emit('notification-error', e.response.data)
                     success.value = false;
                     if (e.response.status === 422) {
                         errors.value = e.response.data.errors;
