@@ -17,8 +17,23 @@
             </div>
         </td>
         <td>
-            <p class="m-0 p-0">{{employee.email}}</p>
-            <p class="m-0 p-0">{{employee.paypal}}</p>
+            <div class="d-flex align-items-center">
+                <i class="fas fa-envelope d-block" v-if="employee.email" ></i>
+                <p class="m-0 ml-1 p-0">{{employee.email}}</p>
+            </div>
+            <div class="d-flex align-items-center" v-if="employee.paypal" >
+                <i class="fab fa-paypal d-block"></i>
+                <p class="m-0 ml-1 p-0">{{employee.paypal}}</p>
+            </div>
+            <div class="d-flex mt-2 align-items-center" v-if="employee.phone_1 || employee.phone_2" >
+                <i class="fas fa-phone-volume d-block"></i>
+                <span class="m-0 p-0 ml-1">{{employee.phone_1}}</span>
+                <span class="m-0 p-0 ml-1 pl-1" style="border-left: 1px solid gray" >{{employee.phone_2}}</span>
+            </div>
+           <!-- <div class="d-flex align-items-center" v-if="employee.phone_2" >
+                <i class="fas fa-phone-volume d-block"></i>
+                <p class="m-0 p-0 ml-1">{{employee.phone_2}}</p>
+            </div>-->
         </td>
         <td>
             <span>{{employee.address}}</span> <br>
@@ -26,11 +41,6 @@
             <span>{{employee.state}}</span> <span>{{' '}}</span>
             <span>{{employee.zip}}</span> <span>{{' '}}</span>
         </td>
-        <td>
-            <p class="m-0 p-0">{{employee.phone_1}}</p>
-            <p class="m-0 p-0">{{employee.phone_2}}</p>
-        </td>
-
         <td>
             <StatusSelect v-if="employee.status"
                           :status='employee.status'
