@@ -8,7 +8,7 @@
         <td v-else></td>
         <td v-if="employee.company">{{employee.company.name}}</td>
         <td v-else></td>
-        <td class="d-flex flex-column">
+        <td>
             <p class="m-0 p-0">{{employee.name}}</p>
             <div>
                 <i class="mr-1">{{employee.birthday}}</i>

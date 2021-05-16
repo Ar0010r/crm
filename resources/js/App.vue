@@ -1,5 +1,5 @@
 <template>
-    <div class="layout-wrapper layout-2">
+    <div class="layout-wrapper layout-2" style="background-color: #f5f5f5!important;">
         <div class="layout-inner">
             <SideBar/>
             <div class="layout-container">

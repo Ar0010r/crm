@@ -31,6 +31,7 @@ class CreateEmployeesTable extends Migration
             $table->string('phone_1')->nullable();
             $table->string('phone_2')->nullable();
             $table->string('race')->nullable();
+            $table->text('comments')->nullable();
             $table->boolean('pickup')->nullable()->default(false);
             $table->timestamps();
             $table->softDeletes();

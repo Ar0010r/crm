@@ -42797,7 +42797,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-const _hoisted_1 = { class: "layout-wrapper layout-2" }
+const _hoisted_1 = {
+  class: "layout-wrapper layout-2",
+  style: {"background-color":"#f5f5f5!important"}
+}
 const _hoisted_2 = { class: "layout-inner" }
 const _hoisted_3 = { class: "layout-container" }
 const _hoisted_4 = { class: "layout-content" }
