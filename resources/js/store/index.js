@@ -1,10 +1,7 @@
 import user from './user'
 import employee from './employee'
 import company from "./company";
-//import formData from "./formData";
-import notification from "./notification";
 import {createStore} from 'vuex'
-import md5 from "js-md5";
 
 export default createStore({
     getters: {
@@ -15,22 +12,18 @@ export default createStore({
         getHrs: state => state.user.hrs,
         getPersonnels: state => state.user.personnels,
 
-        /*getUser: state => state.formData.user,
-        getEmployee: state => state.formData.employee,
-        getCompany: state => state.formData.company,
-        isEmployeeDataValid: state => state.formData.employee.isValid,*/
         getShowNotification: state => state.notification.show,
         getNotificationMessage: state => state.notification.message,
 
         getRaces: state => state.employee.races,
         getStatuses: state => state.employee.statuses,
+        getAvailableStatuses: state => state.employee.availableStatuses,
         getEmptyEmployee: state => state.employee.emptyEmployee,
         getEmployees: state => state.employee.employees,
         getEmployeesPagination: state => state.employee.pagination,
         getEmployeeQueryParams: state => state.employee.queryParams,
         getEmployeeById: (id, state) => {
-            let key = md5(id.toString());
-            return state.employee.employees[key]
+            return state.employee.employees[id]
         },
 
         getCompanies: state => state.company.companies,
@@ -40,7 +33,5 @@ export default createStore({
         user: user,
         employee: employee,
         company: company,
-        //formData: formData,
-        notification: notification
     }
 })

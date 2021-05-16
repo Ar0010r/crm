@@ -1,9 +1,9 @@
 <template>
-    <tr :class="{ 'd-none': user.login === profile.login}">
-        <td>{{user.created_at}}</td>
-        <td>{{user.login}}</td>
-        <td>{{user.role}}</td>
-        <td class="d-flex justify-content-between align-items-center border-0"
+    <tr class="d-flex" :class="{ 'd-none': user.login === profile.login}">
+        <td class="col-2">{{user.created_at}}</td>
+        <td class="col-4">{{user.login}}</td>
+        <td class="col-4">{{user.role}}</td>
+        <td class="d-flex col-2 justify-content-between align-items-center"
         >
             <EditButton :user="user" />
             <DeleteButton :user="user" />

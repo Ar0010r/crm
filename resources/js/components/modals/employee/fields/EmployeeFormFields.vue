@@ -228,12 +228,12 @@
             const schema = yup.object({
                 race: yup.string().nullable(),
                 company: yup.string().nullable(),
-                email: yup.string().nullable().trim().email(),
+                email: yup.string().nullable().trim().email().required(),
                 paypal: yup.string().nullable().trim().email(),
                 zip: yup.string().nullable().matches('^$|\\d{5}(-\\d{4})?$', 'enter valid zip code'),
                 phone_1: yup.string().nullable().matches('^$|\\d{3}-\\d{3}-\\d{4}$', 'enter valid phone'),
                 phone_2: yup.string().nullable().matches("^$|\\d{3}-\\d{3}-\\d{4}$", 'enter valid phone'),
-                name: yup.string().nullable().trim().matches('^$|[a-zA-Z ]+$', 'name can contain only letters'),
+                name: yup.string().nullable().trim().matches('^$|[a-zA-Z ]+$', 'name can contain only letters').required(),
                 city: yup.string().nullable().trim().matches('^$|[a-zA-Z ]+$', 'city can contain only letters'),
                 birthday: yup.string().nullable().matches("^$|((?:19|20)[0-9][0-9])-(0[1-9]|1[012])-([12][0-9]|3[01]|0[1-9])$", 'valid date format is yyyy-mm-dd'),
                 state: yup.string().nullable().test("test-name", "please enter correct state abbreviation",
@@ -246,12 +246,30 @@
                 validationSchema: schema.nullable()
             });
 
+            const zip = useField('zip', {value: computed(() => props.employee.zip)});
+            const race = useField('race', {value: computed(() => props.employee.race)});
+            const name = useField('name', {value: computed(() => props.employee.name)});
+            const city = useField('city', {value: computed(() => props.employee.city)});
+            const email = useField('email', {value: computed(() => props.employee.email)});
+            const state = useField('state', {value: computed(() => props.employee.state)});
+            const paypal = useField('paypal', {value: computed(() => props.employee.paypal)});
+            const phone_1 = useField('phone_1', {value: computed(() => props.employee.phone_1)});
+            const phone_2 = useField('phone_2', {value: computed(() => props.employee.phone_2)});
+            const address = useField('address', {value: computed(() => props.employee.address)});
+            const birthday = useField('birthday', {value: computed(() => props.employee.birthday)});
+            const company = useField('company', {value: computed(() => props.employee.company_id)});
+
             const resetForm = useResetForm();
 
             emitter.on('edit-employee-form', resetForm);
             emitter.on('create-employee-form', resetForm);
 
             async function validate() {
+                [name, email].forEach(field => {
+                    field.meta.dirty = true;
+                    field.meta.touched = true;
+                    field.value.value = props.employee[field.name];
+                })
                 const result = await validateForm();
                 if (!result.valid) {
                     throw ({
@@ -269,19 +287,8 @@
                 validate, errors, values, schema,
                 races: computed(() => store.getters.getRaces),
                 companies: computed(() => store.getters.getCompanies),
-
-                zip: useField('zip', {value: computed(() => props.employee.zip)}),
-                race: useField('race', {value: computed(() => props.employee.race)}),
-                name: useField('name', {value: computed(() => props.employee.name)}),
-                city: useField('city', {value: computed(() => props.employee.city)}),
-                email: useField('email', {value: computed(() => props.employee.email)}),
-                state: useField('state', {value: computed(() => props.employee.state)}),
-                paypal: useField('paypal', {value: computed(() => props.employee.paypal)}),
-                phone_1: useField('phone_1', {value: computed(() => props.employee.phone_1)}),
-                phone_2: useField('phone_2', {value: computed(() => props.employee.phone_2)}),
-                address: useField('address', {value: computed(() => props.employee.address)}),
-                birthday: useField('birthday', {value: computed(() => props.employee.birthday)}),
-                company: useField('company', {value: computed(() => props.employee.company_id)}),
+                zip, race, name, city, email, state, paypal, phone_1,
+                phone_2, address, birthday, company,
             }
         },
 

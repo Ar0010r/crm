@@ -1,7 +1,7 @@
 <template>
-    <div @click="deleteWarning" class="text-danger ml-2 d-flex align-items-center cursor-pointer">
-        <a class="ion ion-ios-close-circle-outline"></a>
-        <span class="ml-1"> delete</span>
+    <div @click="deleteWarning" class="text-danger d-flex align-items-center cursor-pointer">
+       <!-- <a class="ion ion-ios-close-circle-outline"></a>-->
+        <button class="btn btn-danger">delete selected</button>
     </div>
 </template>
 
@@ -19,10 +19,13 @@
             let selectedEmployees = [];
 
             emitter.on('add-selected-employee', addSelectedEmployee);
-            onBeforeUnmount(() => emitter.off('add-selected-employee', addSelectedEmployee));
-
             emitter.on('delete-selected-employees', deleteSelected);
-            onBeforeUnmount(() => emitter.off('delete-selected-employees', deleteSelected));
+
+            onBeforeUnmount(() => {
+                emitter.off('add-selected-employee', addSelectedEmployee)
+                emitter.off('delete-selected-employees', deleteSelected)
+            });
+
 
             async function deleteSelected() {
                 try {

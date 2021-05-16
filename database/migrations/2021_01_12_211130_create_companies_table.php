@@ -14,10 +14,11 @@ class CreateCompaniesTable extends Migration
     public function up()
     {
         Schema::create('companies', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name')->unique();
-            $table->foreignId('personnel_id');
+            $table->uuid('personnel_id');
             $table->string('domain')->unique();
+            $table->string('pseudonym')->unique();
             $table->string('email')->unique();
             $table->timestamps();
             $table->softDeletes();

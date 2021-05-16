@@ -23,7 +23,6 @@ export class UserService {
 
     async updateUser(user) {
         if (user instanceof FormData) {
-            console.log('file');
             return await this.client.post('api/users/' + user.get('id'), user, {headers: {'Content-Type': 'multipart/form-data'}});
         }
 

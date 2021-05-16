@@ -15,7 +15,7 @@
     </thead>
 </template>
 <script>
-    import Checkbox from './actions/HeadCheckbox';
+    import Checkbox from './control/HeadCheckbox';
     export default {
         components: {
             Checkbox

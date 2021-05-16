@@ -4,90 +4,56 @@
 namespace App\Services;
 
 use App\Models\Employee;
-use App\Models\User;
 use App\Shared\Value\Status;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\DB;
-use Spatie\QueryBuilder\QueryBuilder;
-use Spatie\Searchable\ModelSearchAspect;
-use Spatie\Searchable\Search;
 
 class EmployeeService
 {
-    private QueryBuilder $basicQuery;
-    private CompanyService $companyService;
-    private UserService $userService;
-    private Search $search;
+    private UserEmployeeService $userEmployeeService;
+    private EmployeeSearchService $searchService;
 
-    public function __construct(UserService $userService, CompanyService $companyService, Search $search)
+    public function __construct(EmployeeSearchService $searchService, UserEmployeeService $userEmployeeService )
     {
-        $this->companyService = $companyService;
-        $this->userService = $userService;
-        $this->search = $search;
-
-        $this->basicQuery = QueryBuilder::for(Employee::class)
-            ->orderByDesc('employees.created_at')
-            ->allowedFilters(['company_id', 'status', 'page', 'hr_id'])
-            ->with('hr')
-            ->with('company');
+        $this->searchService = $searchService;
+        $this->userEmployeeService = $userEmployeeService;
     }
 
-    public function getAdminEmployees(int $recordsPerPage): LengthAwarePaginator
+    public function get(int $recordsPerPage): LengthAwarePaginator
     {
-        return $this->basicQuery->paginate($recordsPerPage);
-    }
-
-    public function getHrEmployees(int $recordsPerPage, User $user = null): LengthAwarePaginator
-    {
-        $user = $user ?? auth()->user();
-        return $this->basicQuery
-            ->where('hr_id', $user->id)
-            ->paginate($recordsPerPage);
-    }
-
-    public function getPersonnelEmployees(int $recordsPerPage, User $personnel = null): LengthAwarePaginator
-    {
-        $companyIds = $this->companyService->getUserCompanyIds($personnel);
-
-        return $this->basicQuery
-            ->whereIn('company_id', $companyIds)
-            ->whereIn('status', [Status::READY, Status::GREETED, Status::EXPORTED])
-            ->paginate($recordsPerPage);
-    }
-
-    public function getTopHrEmployees(int $recordsPerPage, User $topHr = null): LengthAwarePaginator
-    {
-        $hrIds = $this->userService->getTopHrTeamIds($topHr);
-
-        return $this->basicQuery
-            ->whereIn('hr_id', $hrIds)
-            ->paginate($recordsPerPage);
+        return $this->userEmployeeService->getUserEmployees($recordsPerPage);
     }
 
     public function search(string $keyword): array
     {
-        $search = $this->search
-            ->registerModel(Employee::class, $this->getSearchAspect())
-            ->search($keyword)
-            ->toArray();
-
-        return array_map(function ($item) {
-            return $item->searchable;
-        }, $search);
+        return $this->searchService->search($keyword);
     }
 
-    private function getSearchAspect(): callable
+    public function store(Employee $employee): Employee
     {
-        return function (ModelSearchAspect $modelSearchAspect) {
-            $modelSearchAspect
-                ->addSearchableAttribute('name')
-                ->addSearchableAttribute('email')
-                ->addSearchableAttribute('paypal')
-                ->addSearchableAttribute('address')
-                ->addSearchableAttribute('city')
-                ->addSearchableAttribute('state')
-                ->with('hr')
-                ->with('company');
-        };
+        $employee->status = Status::NEW;
+        $employee->save();
+        $employee->hr;
+        $employee->company;
+
+        return $employee;
     }
+
+    public function bulkUpdate(array $employees, string $status): bool
+    {
+        $ids = array_map(function ($employee) {
+            return $employee['id'];
+        }, $employees);
+
+        return Employee::whereIn('id', $ids)->update(['status' => $status]);
+    }
+
+    public function bulkDestroy(array $employees): bool
+    {
+        $ids = array_map(function ($employee) {
+            return $employee['id'];
+        }, $employees);
+
+        return Employee::destroy($ids);
+    }
+
 }

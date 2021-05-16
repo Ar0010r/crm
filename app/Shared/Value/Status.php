@@ -2,6 +2,8 @@
 
 namespace App\Shared\Value;
 
+use App\Models\User;
+
 class Status
 {
     public const NEW = 'New';
@@ -14,6 +16,7 @@ class Status
     public const READY = 'Ready';
     public const GREETED = 'Greeted';
     public const EXPORTED = 'Exported';
+    public const AGREEMENT_SENT = 'Agreement sent';
 
     private const WHITE_COLOR_STYLE = 'btn-white';
     private const BLUE_COLOR_STYLE = 'btn-primary';
@@ -35,10 +38,12 @@ class Status
         self::READY,
         self::GREETED,
         self::EXPORTED,
+        self::AGREEMENT_SENT
     ];
 
-    public const STATUSES_CSS_CLASSES = [
+    public const All_STATUSES = [
         self::NEW => self::WHITE_COLOR_STYLE,
+        self::AGREEMENT_SENT =>self::OCEAN_COLOR_STYLE,
         self::WAITING_AGREEMENT => self::GREY_COLOR_STYLE,
         self::WAITING_DATA => self::GREY_COLOR_STYLE,
         self::NEED_CALL => self::OCEAN_COLOR_STYLE,
@@ -49,4 +54,36 @@ class Status
         self::GREETED => self::GREY_COLOR_STYLE,
         self::EXPORTED => self::GREEN_COLOR_STYLE,
     ];
+
+    public const HR_STATUSES = [
+        self::NEW => self::WHITE_COLOR_STYLE,
+        self::AGREEMENT_SENT =>self::OCEAN_COLOR_STYLE,
+        self::WAITING_AGREEMENT => self::GREY_COLOR_STYLE,
+        self::WAITING_DATA => self::GREY_COLOR_STYLE,
+        self::NEED_CALL => self::OCEAN_COLOR_STYLE,
+        self::NEED_INFO_REQUEST => self::OCEAN_COLOR_STYLE,
+        self::NO_ANSWER => self::YELLOW_COLOR_STYLE,
+        self::BAD => self::RED_COLOR_STYLE,
+        self::READY => self::BLUE_COLOR_STYLE,
+    ];
+
+    public const PERSONNEL_STATUSES = [
+        self::READY => self::BLUE_COLOR_STYLE,
+        self::GREETED => self::GREY_COLOR_STYLE,
+        self::EXPORTED => self::GREEN_COLOR_STYLE,
+    ];
+
+    public static function getAvailableRoles(User $user = null): array
+    {
+        $user = $user ?? auth()->user();
+
+        switch ($user->role) {
+            case Role::PERSONNEL:
+                return self::PERSONNEL_STATUSES;
+            case Role::ADMIN:
+                return self::All_STATUSES;
+            default:
+                return self::HR_STATUSES;
+        }
+    }
 }

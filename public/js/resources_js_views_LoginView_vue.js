@@ -144,68 +144,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=style&index=0&id=5547a011&scoped=true&lang=css":
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=style&index=0&id=5547a011&scoped=true&lang=css ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, module.id, __webpack_require__.d, __webpack_require__.*, module */
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
-// Imports
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.custom-checkbox .custom-control-input:checked ~ .custom-control-label[data-v-5547a011]::before {\n        background-color: black !important;\n}\n.custom-checkbox .custom-control-input:checked:focus ~ .custom-control-label[data-v-5547a011]::before {\n        box-shadow: 0 0 0 0 #fff, 0 0 0 0 black;\n        border:1px solid black !important;\n}\n.custom-checkbox .custom-control-input:focus ~ .custom-control-label[data-v-5547a011]::before {\n        box-shadow: 0 0 0 0 #fff, 0 0 0 0 black;\n        border:1px solid black !important;\n}\n.custom-checkbox .custom-control-input:active ~ .custom-control-label[data-v-5547a011]::before {\n        background-color: black;\n}\ninput[data-v-5547a011]:focus{\n        border:1px solid black !important;\n}\n\n    /*#app{\n        background-color: #fff !important;\n    }*/\n", ""]);
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=style&index=0&id=5547a011&scoped=true&lang=css":
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=style&index=0&id=5547a011&scoped=true&lang=css ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LoginForm_vue_vue_type_style_index_0_id_5547a011_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LoginForm.vue?vue&type=style&index=0&id=5547a011&scoped=true&lang=css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=style&index=0&id=5547a011&scoped=true&lang=css");
-
-            
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LoginForm_vue_vue_type_style_index_0_id_5547a011_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LoginForm_vue_vue_type_style_index_0_id_5547a011_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
-
-/***/ }),
-
 /***/ "./resources/js/components/auth/LoginForm.vue":
 /*!****************************************************!*\
   !*** ./resources/js/components/auth/LoginForm.vue ***!
@@ -221,16 +159,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _LoginForm_vue_vue_type_template_id_5547a011_scoped_true_bindings_user_setup_isInvalid_setup_dBlock_setup_login_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LoginForm.vue?vue&type=template&id=5547a011&scoped=true&bindings={"user":"setup","isInvalid":"setup","dBlock":"setup","login":"setup"} */ "./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&scoped=true&bindings={\"user\":\"setup\",\"isInvalid\":\"setup\",\"dBlock\":\"setup\",\"login\":\"setup\"}");
+/* harmony import */ var _LoginForm_vue_vue_type_template_id_5547a011_bindings_user_setup_isInvalid_setup_dBlock_setup_login_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LoginForm.vue?vue&type=template&id=5547a011&bindings={"user":"setup","isInvalid":"setup","dBlock":"setup","login":"setup"} */ "./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={\"user\":\"setup\",\"isInvalid\":\"setup\",\"dBlock\":\"setup\",\"login\":\"setup\"}");
 /* harmony import */ var _LoginForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LoginForm.vue?vue&type=script&lang=js */ "./resources/js/components/auth/LoginForm.vue?vue&type=script&lang=js");
-/* harmony import */ var _LoginForm_vue_vue_type_style_index_0_id_5547a011_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LoginForm.vue?vue&type=style&index=0&id=5547a011&scoped=true&lang=css */ "./resources/js/components/auth/LoginForm.vue?vue&type=style&index=0&id=5547a011&scoped=true&lang=css");
 
 
 
-
-
-_LoginForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _LoginForm_vue_vue_type_template_id_5547a011_scoped_true_bindings_user_setup_isInvalid_setup_dBlock_setup_login_setup___WEBPACK_IMPORTED_MODULE_0__.render
-_LoginForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__scopeId = "data-v-5547a011"
+_LoginForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _LoginForm_vue_vue_type_template_id_5547a011_bindings_user_setup_isInvalid_setup_dBlock_setup_login_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -360,28 +294,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/auth/LoginForm.vue?vue&type=style&index=0&id=5547a011&scoped=true&lang=css":
-/*!************************************************************************************************************!*\
-  !*** ./resources/js/components/auth/LoginForm.vue?vue&type=style&index=0&id=5547a011&scoped=true&lang=css ***!
-  \************************************************************************************************************/
+/***/ "./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={\"user\":\"setup\",\"isInvalid\":\"setup\",\"dBlock\":\"setup\",\"login\":\"setup\"}":
+/*!*****************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={"user":"setup","isInvalid":"setup","dBlock":"setup","login":"setup"} ***!
+  \*****************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LoginForm_vue_vue_type_style_index_0_id_5547a011_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LoginForm.vue?vue&type=style&index=0&id=5547a011&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=style&index=0&id=5547a011&scoped=true&lang=css");
-
-
-/***/ }),
-
-/***/ "./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&scoped=true&bindings={\"user\":\"setup\",\"isInvalid\":\"setup\",\"dBlock\":\"setup\",\"login\":\"setup\"}":
-/*!*****************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&scoped=true&bindings={"user":"setup","isInvalid":"setup","dBlock":"setup","login":"setup"} ***!
-  \*****************************************************************************************************************************************************************************/
-/*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&scoped=true&bindings={"user":"setup","isInvalid":"setup","dBlock":"setup","login":"setup"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={"user":"setup","isInvalid":"setup","dBlock":"setup","login":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -389,9 +307,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LoginForm_vue_vue_type_template_id_5547a011_scoped_true_bindings_user_setup_isInvalid_setup_dBlock_setup_login_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LoginForm_vue_vue_type_template_id_5547a011_bindings_user_setup_isInvalid_setup_dBlock_setup_login_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LoginForm_vue_vue_type_template_id_5547a011_scoped_true_bindings_user_setup_isInvalid_setup_dBlock_setup_login_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LoginForm.vue?vue&type=template&id=5547a011&scoped=true&bindings={"user":"setup","isInvalid":"setup","dBlock":"setup","login":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&scoped=true&bindings={\"user\":\"setup\",\"isInvalid\":\"setup\",\"dBlock\":\"setup\",\"login\":\"setup\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LoginForm_vue_vue_type_template_id_5547a011_bindings_user_setup_isInvalid_setup_dBlock_setup_login_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LoginForm.vue?vue&type=template&id=5547a011&bindings={"user":"setup","isInvalid":"setup","dBlock":"setup","login":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={\"user\":\"setup\",\"isInvalid\":\"setup\",\"dBlock\":\"setup\",\"login\":\"setup\"}");
 
 
 /***/ }),
@@ -436,10 +354,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&scoped=true&bindings={\"user\":\"setup\",\"isInvalid\":\"setup\",\"dBlock\":\"setup\",\"login\":\"setup\"}":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&scoped=true&bindings={"user":"setup","isInvalid":"setup","dBlock":"setup","login":"setup"} ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={\"user\":\"setup\",\"isInvalid\":\"setup\",\"dBlock\":\"setup\",\"login\":\"setup\"}":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/auth/LoginForm.vue?vue&type=template&id=5547a011&bindings={"user":"setup","isInvalid":"setup","dBlock":"setup","login":"setup"} ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -453,20 +371,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-const _withId = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.withScopeId)("data-v-5547a011")
 
-;(0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-5547a011")
 const _hoisted_1 = { class: "my-5" }
-const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", { class: "form-group d-flex align-items-center justify-content-center" }, [
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
-    src: "logo.png",
-    class: "w-25 h-25"
-  })
-], -1 /* HOISTED */)
+const _hoisted_2 = { class: "form-group" }
 const _hoisted_3 = { class: "form-group" }
-const _hoisted_4 = { class: "form-group" }
-const _hoisted_5 = { class: "d-flex justify-content-between align-items-center m-0" }
-const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "custom-control custom-checkbox m-0" }, [
+const _hoisted_4 = { class: "d-flex justify-content-between align-items-center m-0" }
+const _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "custom-control custom-checkbox m-0" }, [
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     style: {"background-color":"black"},
     type: "checkbox",
@@ -474,12 +384,10 @@ const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
   }),
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", { class: "custom-control-label dark-style" }, "Remember me")
 ], -1 /* HOISTED */)
-;(0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)()
 
-const render = /*#__PURE__*/_withId(function render(_ctx, _cache, $props, $setup, $data, $options) {
+function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("form", _hoisted_1, [
-    _hoisted_2,
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
         class: ["float-right text-danger d-none", {'d-block': $setup.dBlock}]
       }, " Invalid credentials", 2 /* CLASS */),
@@ -492,7 +400,7 @@ const render = /*#__PURE__*/_withId(function render(_ctx, _cache, $props, $setup
         [vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.user.login]
       ])
     ]),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
         placeholder: "Pass",
         type: "password",
@@ -502,16 +410,16 @@ const render = /*#__PURE__*/_withId(function render(_ctx, _cache, $props, $setup
         [vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.user.password]
       ])
     ]),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [
-      _hoisted_6,
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [
+      _hoisted_5,
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
         type: "button",
-        class: "btn btn-dark",
+        class: "btn btn-primary",
         onClick: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($event => ($setup.login($setup.user)), ["prevent"]))
       }, "Sign In")
     ])
   ]))
-})
+}
 
 /***/ }),
 
@@ -535,10 +443,16 @@ __webpack_require__.r(__webpack_exports__);
 
 const _hoisted_1 = { class: "d-flex justify-content-center align-items-center" }
 const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", { class: "ui-w-60" }, [
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-    class: "w-100 position-relative",
-    style: {"padding-bottom":"54%"}
-  }, [
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", { class: "w-100 position-relative d-flex justify-content-center" }, [
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+      class: "bg-primary form-group d-flex align-items-center justify-content-center m-0",
+      style: {"border-radius":"50%","width":"75px"}
+    }, [
+      /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+        src: "idea.png",
+        style: {"width":"75px","height":"75px"}
+      })
+    ]),
     /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<img  src=\"logo6.png\" alt=\"\">"),
     /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <svg class=\"w-100 h-100 position-absolute\" viewBox=\"0 0 148 80\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><defs><linearGradient id=\"a\" x1=\"46.49\" x2=\"62.46\" y1=\"53.39\" y2=\"48.2\" gradientUnits=\"userSpaceOnUse\"><stop stop-opacity=\".25\" offset=\"0\"></stop><stop stop-opacity=\".1\" offset=\".3\"></stop><stop stop-opacity=\"0\" offset=\".9\"></stop></linearGradient><linearGradient id=\"e\" x1=\"76.9\" x2=\"92.64\" y1=\"26.38\" y2=\"31.49\" xlink:href=\"#a\"></linearGradient><linearGradient id=\"d\" x1=\"107.12\" x2=\"122.74\" y1=\"53.41\" y2=\"48.33\" xlink:href=\"#a\"></linearGradient></defs><path class=\"fill-primary\" transform=\"translate(-.1)\" d=\"M121.36,0,104.42,45.08,88.71,3.28A5.09,5.09,0,0,0,83.93,0H64.27A5.09,5.09,0,0,0,59.5,3.28L43.79,45.08,26.85,0H.1L29.43,76.74A5.09,5.09,0,0,0,34.19,80H53.39a5.09,5.09,0,0,0,4.77-3.26L74.1,35l16,41.74A5.09,5.09,0,0,0,94.82,80h18.95a5.09,5.09,0,0,0,4.76-3.24L148.1,0Z\"></path><path transform=\"translate(-.1)\" d=\"M52.19,22.73l-8.4,22.35L56.51,78.94a5,5,0,0,0,1.64-2.19l7.34-19.2Z\" fill=\"url(#a)\"></path><path transform=\"translate(-.1)\" d=\"M95.73,22l-7-18.69a5,5,0,0,0-1.64-2.21L74.1,35l8.33,21.79Z\" fill=\"url(#e)\"></path><path transform=\"translate(-.1)\" d=\"M112.73,23l-8.31,22.12,12.66,33.7a5,5,0,0,0,1.45-2l7.3-18.93Z\" fill=\"url(#d)\"></path></svg>\n            ")
   ])

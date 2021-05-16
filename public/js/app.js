@@ -30324,6 +30324,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   setup: function setup() {
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_2__.useStore)();
     var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)("emitter");
+    var container = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)("container");
     var profile = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
       return store.getters.getProfile;
     });
@@ -30338,8 +30339,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                localStorage.removeItem('token');
-                window.location.href = '/login';
+                _context.next = 2;
+                return container.AuthService.logout();
 
               case 2:
               case "end":
@@ -30581,6 +30582,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)("emitter");
     var errors = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
     var delay = 7000;
+    var transition = 500;
 
     function showError(_x) {
       return _showError.apply(this, arguments);
@@ -30602,7 +30604,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
                 setTimeout(function () {
                   return document.getElementById(id).classList.remove('growl-incoming');
-                }, 500);
+                }, transition);
 
               case 3:
               case "end":
@@ -30633,7 +30635,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   error.classList.add('growl-outgoing');
                   setTimeout(function () {
                     return document.getElementById(id).classList.add('d-none');
-                  }, 500);
+                  }, transition);
                 }
 
               case 2:
@@ -30678,9 +30680,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    Error: _Error__WEBPACK_IMPORTED_MODULE_0__.default,
     Warning: _Warning__WEBPACK_IMPORTED_MODULE_1__.default,
-    Success: _Success__WEBPACK_IMPORTED_MODULE_2__.default
+    Success: _Success__WEBPACK_IMPORTED_MODULE_2__.default,
+    Error: _Error__WEBPACK_IMPORTED_MODULE_0__.default
   }
 });
 
@@ -30716,6 +30718,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)("emitter");
     var successes = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
     var delay = 4500;
+    var transition = 500;
     emitter.on('notification-success', showSuccess);
 
     function showSuccess(_x) {
@@ -30738,7 +30741,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
                 setTimeout(function () {
                   return document.getElementById(id).classList.remove('growl-incoming');
-                }, 500);
+                }, transition);
 
               case 3:
               case "end":
@@ -30758,7 +30761,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         document.getElementById(id).classList.add('growl-outgoing');
         setTimeout(function () {
           return document.getElementById(id).classList.add('d-none');
-        }, 500);
+        }, transition);
       }
     }
 
@@ -30802,6 +30805,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)("emitter");
     var warnings = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]);
     var delay = 7000;
+    var transition = 150;
     emitter.on('notification-warning', showWarning);
 
     function showWarning(_x) {
@@ -30824,7 +30828,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
                 setTimeout(function () {
                   return document.getElementById(id).classList.remove('growl-incoming');
-                }, 150);
+                }, transition);
 
               case 3:
               case "end":
@@ -30837,7 +30841,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
 
     function close(event_id, div_id) {
-      emitDeleteEvent(event_id, div_id);
+      emitEvent(event_id, div_id);
       disappear(div_id);
     }
 
@@ -30849,11 +30853,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         document.getElementById(id).classList.add('growl-outgoing');
         setTimeout(function () {
           return document.getElementById(id).classList.add('d-none');
-        }, 500);
+        }, 3 * transition);
       }
     }
 
-    function emitDeleteEvent(event_id, div_id) {
+    function emitEvent(event_id, div_id) {
       var warning = document.getElementById(div_id);
       if (warning) emitter.emit(event_id);
     }
@@ -31204,6 +31208,44 @@ var AuthService = /*#__PURE__*/function () {
 
       return login;
     }()
+  }, {
+    key: "logout",
+    value: function () {
+      var _logout = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return this.client.get("/api/logout");
+
+              case 3:
+                localStorage.removeItem('token');
+                window.location.href = '/login';
+                _context2.next = 11;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                localStorage.removeItem('token');
+                window.location.href = '/login';
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 7]]);
+      }));
+
+      function logout() {
+        return _logout.apply(this, arguments);
+      }
+
+      return logout;
+    }()
   }]);
 
   return AuthService;
@@ -31383,8 +31425,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! js-md5 */ "./node_modules/js-md5/src/md5.js");
-/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(js_md5__WEBPACK_IMPORTED_MODULE_1__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -31396,7 +31436,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 
 var EmployeeService = /*#__PURE__*/function () {
   function EmployeeService(client) {
@@ -31413,14 +31452,13 @@ var EmployeeService = /*#__PURE__*/function () {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log('in serv', employee);
-                _context.next = 3;
+                _context.next = 2;
                 return this.client.post('api/employees', employee);
 
-              case 3:
+              case 2:
                 return _context.abrupt("return", _context.sent);
 
-              case 4:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -31450,7 +31488,7 @@ var EmployeeService = /*#__PURE__*/function () {
 
               case 2:
                 response = _context2.sent;
-                employees = this.setMd5Keys(response.data.data);
+                employees = this.setIdKeys(response.data.data);
                 return _context2.abrupt("return", {
                   employees: employees,
                   pagination: response.data.pagination
@@ -31488,7 +31526,7 @@ var EmployeeService = /*#__PURE__*/function () {
 
               case 2:
                 response = _context3.sent;
-                employees = this.setMd5Keys(response.data.data);
+                employees = this.setIdKeys(response.data.data);
                 return _context3.abrupt("return", {
                   employees: employees,
                   pagination: response.data.pagination
@@ -31597,11 +31635,11 @@ var EmployeeService = /*#__PURE__*/function () {
       return getStatuses;
     }()
   }, {
-    key: "setMd5Keys",
-    value: function setMd5Keys(employeesList) {
+    key: "setIdKeys",
+    value: function setIdKeys(employeesList) {
       var employees = {};
       Object.keys(employeesList).map(function (key) {
-        var index = js_md5__WEBPACK_IMPORTED_MODULE_1___default()(employeesList[key].id.toString());
+        var index = employeesList[key].id;
         employees[index] = employeesList[key];
       });
       return employees;
@@ -31663,6 +31701,65 @@ var EmployeeService = /*#__PURE__*/function () {
       }
 
       return deleteSelected;
+    }()
+  }, {
+    key: "update",
+    value: function () {
+      var _update = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9(employee) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                _context9.next = 2;
+                return this.client.put('api/employees/' + employee.id, employee);
+
+              case 2:
+                return _context9.abrupt("return", _context9.sent);
+
+              case 3:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9, this);
+      }));
+
+      function update(_x7) {
+        return _update.apply(this, arguments);
+      }
+
+      return update;
+    }()
+  }, {
+    key: "updateSelected",
+    value: function () {
+      var _updateSelected = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee10(employees, status) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                _context10.next = 2;
+                return this.client.put('api/employees', {
+                  employees: employees,
+                  status: status
+                });
+
+              case 2:
+                return _context10.abrupt("return", _context10.sent);
+
+              case 3:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10, this);
+      }));
+
+      function updateSelected(_x8, _x9) {
+        return _updateSelected.apply(this, arguments);
+      }
+
+      return updateSelected;
     }()
   }]);
 
@@ -31883,29 +31980,28 @@ var UserService = /*#__PURE__*/function () {
             switch (_context5.prev = _context5.next) {
               case 0:
                 if (!(user instanceof FormData)) {
-                  _context5.next = 5;
+                  _context5.next = 4;
                   break;
                 }
 
-                console.log('file');
-                _context5.next = 4;
+                _context5.next = 3;
                 return this.client.post('api/users/' + user.get('id'), user, {
                   headers: {
                     'Content-Type': 'multipart/form-data'
                   }
                 });
 
-              case 4:
+              case 3:
                 return _context5.abrupt("return", _context5.sent);
 
-              case 5:
-                _context5.next = 7;
+              case 4:
+                _context5.next = 6;
                 return this.client.put('api/users/' + user.id, user);
 
-              case 7:
+              case 6:
                 return _context5.abrupt("return", _context5.sent);
 
-              case 8:
+              case 7:
               case "end":
                 return _context5.stop();
             }
@@ -31997,8 +32093,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/index */ "./resources/js/services/index.js");
 /* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../app */ "./resources/js/app.js");
-/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! js-md5 */ "./node_modules/js-md5/src/md5.js");
-/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(js_md5__WEBPACK_IMPORTED_MODULE_3__);
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -32013,7 +32107,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   namespaced: true,
   state: {
@@ -32025,6 +32118,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         login: null
       },
       domain: null,
+      pseudonym: null,
       email: null,
       created_at: null,
       dataIsValid: null
@@ -32084,15 +32178,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   companies[index] = companiesList[key];
                 });
                 commit('setCompanies', companies);
-                _context2.next = 14;
+                _context2.next = 15;
                 break;
 
               case 11:
                 _context2.prev = 11;
                 _context2.t0 = _context2["catch"](1);
                 _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context2.t0.response.data);
+                if (_context2.t0.response.status === 401) _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
 
-              case 14:
+              case 15:
               case "end":
                 return _context2.stop();
             }
@@ -32134,10 +32229,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! js-md5 */ "./node_modules/js-md5/src/md5.js");
-/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(js_md5__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _services_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/index */ "./resources/js/services/index.js");
-/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../app */ "./resources/js/app.js");
+/* harmony import */ var _services_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/index */ "./resources/js/services/index.js");
+/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../app */ "./resources/js/app.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -32152,7 +32245,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   namespaced: true,
   state: {
@@ -32160,6 +32252,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     races: {},
     companies: {},
     statuses: {},
+    availableStatuses: {},
     pagination: {},
     emptyEmployee: {
       address: null,
@@ -32185,14 +32278,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   mutations: {
     setEmployeeStatus: function setEmployeeStatus(state, params) {
-      var key = js_md5__WEBPACK_IMPORTED_MODULE_1___default()(params.id.toString());
+      var key = params.id;
       state.employees[key].status = params.newStatus;
     },
     setRaces: function setRaces(state, races) {
       state.races = races;
     },
     setStatuses: function setStatuses(state, statuses) {
-      state.statuses = statuses;
+      state.statuses = statuses.all;
+      state.availableStatuses = statuses.available;
     },
     setEmployees: function setEmployees(state, employees) {
       state.employees = employees;
@@ -32204,7 +32298,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       delete state.employees[id];
     },
     setEmployeeById: function setEmployeeById(state, employee) {
-      var key = js_md5__WEBPACK_IMPORTED_MODULE_1___default()(employee.id.toString());
+      var key = employee.id;
 
       if (state.employees[key]) {
         state.employees[key] = _objectSpread(_objectSpread({}, state.employees[key]), employee);
@@ -32227,21 +32321,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 commit = _ref.commit;
                 _context.prev = 1;
                 _context.next = 4;
-                return _services_index__WEBPACK_IMPORTED_MODULE_2__.container.EmployeeService.getEmployees(params);
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.EmployeeService.getEmployees(params);
 
               case 4:
                 employees = _context.sent;
                 commit('setEmployees', employees.employees);
                 commit('setPagination', employees.pagination);
-                _context.next = 12;
+                _context.next = 13;
                 break;
 
               case 9:
                 _context.prev = 9;
                 _context.t0 = _context["catch"](1);
-                _app__WEBPACK_IMPORTED_MODULE_3__.emitter.emit('notification-error', _context.t0.response.data);
+                _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context.t0.response.data);
+                if (_context.t0.response.status === 401) _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
 
-              case 12:
+              case 13:
               case "end":
                 return _context.stop();
             }
@@ -32259,20 +32354,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 commit = _ref2.commit;
                 _context2.prev = 1;
                 _context2.next = 4;
-                return _services_index__WEBPACK_IMPORTED_MODULE_2__.container.EmployeeService.getStatuses();
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.EmployeeService.getStatuses();
 
               case 4:
                 statuses = _context2.sent;
                 commit('setStatuses', statuses.data);
-                _context2.next = 11;
+                _context2.next = 12;
                 break;
 
               case 8:
                 _context2.prev = 8;
                 _context2.t0 = _context2["catch"](1);
-                _app__WEBPACK_IMPORTED_MODULE_3__.emitter.emit('notification-error', _context2.t0.response.data);
+                _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context2.t0.response.data);
 
-              case 11:
+                if (_context2.t0.response.status === 401) {
+                  _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
+                }
+
+              case 12:
               case "end":
                 return _context2.stop();
             }
@@ -32290,7 +32389,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 commit = _ref3.commit;
                 _context3.prev = 1;
                 _context3.next = 4;
-                return _services_index__WEBPACK_IMPORTED_MODULE_2__.container.EmployeeService.getRaces();
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.EmployeeService.getRaces();
 
               case 4:
                 races = _context3.sent;
@@ -32301,7 +32400,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 8:
                 _context3.prev = 8;
                 _context3.t0 = _context3["catch"](1);
-                _app__WEBPACK_IMPORTED_MODULE_3__.emitter.emit('notification-error', _context3.t0.response.data);
+                _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context3.t0.response.data);
 
               case 11:
               case "end":
@@ -32315,18 +32414,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var commit = _ref4.commit,
           dispatch = _ref4.dispatch,
           state = _ref4.state;
-      var key = js_md5__WEBPACK_IMPORTED_MODULE_1___default()(employee.id.toString());
+      var key = employee.id;
 
       if (state.employees[key]) {
         commit('deleteEmployeeById', key);
       } else {
-        _app__WEBPACK_IMPORTED_MODULE_3__.emitter.emit('notification-error', e.response.data);
+        _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', e.response.data);
       }
     },
     bulkDelete: function bulkDelete(_ref5, employees) {
       var dispatch = _ref5.dispatch;
       employees.forEach(function (employee) {
         return dispatch('deleteEmployee', employee);
+      });
+    },
+    bulkUpdate: function bulkUpdate(_ref6, employees) {
+      var commit = _ref6.commit;
+      employees.forEach(function (employee) {
+        return commit('setEmployeeById', employee);
       });
     }
   }
@@ -32341,7 +32446,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -32352,18 +32457,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./user */ "./resources/js/store/user.js");
 /* harmony import */ var _employee__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./employee */ "./resources/js/store/employee.js");
 /* harmony import */ var _company__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./company */ "./resources/js/store/company.js");
-/* harmony import */ var _notification__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./notification */ "./resources/js/store/notification.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
-/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! js-md5 */ "./node_modules/js-md5/src/md5.js");
-/* harmony import */ var js_md5__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(js_md5__WEBPACK_IMPORTED_MODULE_4__);
-
-
- //import formData from "./formData";
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
 
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vuex__WEBPACK_IMPORTED_MODULE_5__.createStore)({
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vuex__WEBPACK_IMPORTED_MODULE_3__.createStore)({
   getters: {
     getProfile: function getProfile(state) {
       return state.user.profile;
@@ -32383,11 +32482,6 @@ __webpack_require__.r(__webpack_exports__);
     getPersonnels: function getPersonnels(state) {
       return state.user.personnels;
     },
-
-    /*getUser: state => state.formData.user,
-    getEmployee: state => state.formData.employee,
-    getCompany: state => state.formData.company,
-    isEmployeeDataValid: state => state.formData.employee.isValid,*/
     getShowNotification: function getShowNotification(state) {
       return state.notification.show;
     },
@@ -32399,6 +32493,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     getStatuses: function getStatuses(state) {
       return state.employee.statuses;
+    },
+    getAvailableStatuses: function getAvailableStatuses(state) {
+      return state.employee.availableStatuses;
     },
     getEmptyEmployee: function getEmptyEmployee(state) {
       return state.employee.emptyEmployee;
@@ -32413,8 +32510,7 @@ __webpack_require__.r(__webpack_exports__);
       return state.employee.queryParams;
     },
     getEmployeeById: function getEmployeeById(id, state) {
-      var key = js_md5__WEBPACK_IMPORTED_MODULE_4___default()(id.toString());
-      return state.employee.employees[key];
+      return state.employee.employees[id];
     },
     getCompanies: function getCompanies(state) {
       return state.company.companies;
@@ -32426,109 +32522,9 @@ __webpack_require__.r(__webpack_exports__);
   modules: {
     user: _user__WEBPACK_IMPORTED_MODULE_0__.default,
     employee: _employee__WEBPACK_IMPORTED_MODULE_1__.default,
-    company: _company__WEBPACK_IMPORTED_MODULE_2__.default,
-    //formData: formData,
-    notification: _notification__WEBPACK_IMPORTED_MODULE_3__.default
+    company: _company__WEBPACK_IMPORTED_MODULE_2__.default
   }
 }));
-
-/***/ }),
-
-/***/ "./resources/js/store/notification.js":
-/*!********************************************!*\
-  !*** ./resources/js/store/notification.js ***!
-  \********************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  namespaced: true,
-  state: {
-    show: false,
-    message: ""
-  },
-  mutations: {
-    setShow: function setShow(state, show) {
-      state.show = show;
-    },
-    setMessage: function setMessage(state, message) {
-      state.message = message;
-    }
-  },
-  actions: {
-    activate: function activate(_ref, message) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var commit, dispatch;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                commit = _ref.commit, dispatch = _ref.dispatch;
-                document.getElementById('growls-tr').classList.remove('d-none');
-                setTimeout(function () {
-                  commit('notification/setMessage', message, {
-                    root: true
-                  });
-                  commit('notification/setShow', true, {
-                    root: true
-                  });
-                }, 100);
-                setTimeout(function () {
-                  dispatch('deactivate');
-                }, 5000);
-
-              case 4:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    deactivate: function deactivate(_ref2) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var commit;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                commit = _ref2.commit;
-                commit('notification/setShow', false, {
-                  root: true
-                });
-                setTimeout(function () {
-                  commit('notification/setMessage', "", {
-                    root: true
-                  });
-                  document.getElementById('growls-tr').classList.add('d-none');
-                }, 300);
-
-              case 3:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    }
-  }
-});
 
 /***/ }),
 
@@ -32664,15 +32660,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 4:
                 response = _context2.sent;
                 dispatch('sort', response.data);
-                _context2.next = 11;
+                _context2.next = 12;
                 break;
 
               case 8:
                 _context2.prev = 8;
                 _context2.t0 = _context2["catch"](1);
                 _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context2.t0.response.data);
+                if (_context2.t0.response.status === 401) _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
 
-              case 11:
+              case 12:
               case "end":
                 return _context2.stop();
             }
@@ -33115,702 +33112,6 @@ async function asyncWalk(
 }
 
 
-
-
-/***/ }),
-
-/***/ "./node_modules/js-md5/src/md5.js":
-/*!****************************************!*\
-  !*** ./node_modules/js-md5/src/md5.js ***!
-  \****************************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements: module, __webpack_require__.g, __webpack_require__.amdO, __webpack_require__, __webpack_exports__, __webpack_require__.* */
-/***/ ((module, exports, __webpack_require__) => {
-
-var __WEBPACK_AMD_DEFINE_RESULT__;/**
- * [js-md5]{@link https://github.com/emn178/js-md5}
- *
- * @namespace md5
- * @version 0.7.3
- * @author Chen, Yi-Cyuan [emn178@gmail.com]
- * @copyright Chen, Yi-Cyuan 2014-2017
- * @license MIT
- */
-(function () {
-  'use strict';
-
-  var ERROR = 'input is invalid type';
-  var WINDOW = typeof window === 'object';
-  var root = WINDOW ? window : {};
-  if (root.JS_MD5_NO_WINDOW) {
-    WINDOW = false;
-  }
-  var WEB_WORKER = !WINDOW && typeof self === 'object';
-  var NODE_JS = !root.JS_MD5_NO_NODE_JS && typeof process === 'object' && process.versions && process.versions.node;
-  if (NODE_JS) {
-    root = __webpack_require__.g;
-  } else if (WEB_WORKER) {
-    root = self;
-  }
-  var COMMON_JS = !root.JS_MD5_NO_COMMON_JS && "object" === 'object' && module.exports;
-  var AMD =  true && __webpack_require__.amdO;
-  var ARRAY_BUFFER = !root.JS_MD5_NO_ARRAY_BUFFER && typeof ArrayBuffer !== 'undefined';
-  var HEX_CHARS = '0123456789abcdef'.split('');
-  var EXTRA = [128, 32768, 8388608, -2147483648];
-  var SHIFT = [0, 8, 16, 24];
-  var OUTPUT_TYPES = ['hex', 'array', 'digest', 'buffer', 'arrayBuffer', 'base64'];
-  var BASE64_ENCODE_CHAR = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split('');
-
-  var blocks = [], buffer8;
-  if (ARRAY_BUFFER) {
-    var buffer = new ArrayBuffer(68);
-    buffer8 = new Uint8Array(buffer);
-    blocks = new Uint32Array(buffer);
-  }
-
-  if (root.JS_MD5_NO_NODE_JS || !Array.isArray) {
-    Array.isArray = function (obj) {
-      return Object.prototype.toString.call(obj) === '[object Array]';
-    };
-  }
-
-  if (ARRAY_BUFFER && (root.JS_MD5_NO_ARRAY_BUFFER_IS_VIEW || !ArrayBuffer.isView)) {
-    ArrayBuffer.isView = function (obj) {
-      return typeof obj === 'object' && obj.buffer && obj.buffer.constructor === ArrayBuffer;
-    };
-  }
-
-  /**
-   * @method hex
-   * @memberof md5
-   * @description Output hash as hex string
-   * @param {String|Array|Uint8Array|ArrayBuffer} message message to hash
-   * @returns {String} Hex string
-   * @example
-   * md5.hex('The quick brown fox jumps over the lazy dog');
-   * // equal to
-   * md5('The quick brown fox jumps over the lazy dog');
-   */
-  /**
-   * @method digest
-   * @memberof md5
-   * @description Output hash as bytes array
-   * @param {String|Array|Uint8Array|ArrayBuffer} message message to hash
-   * @returns {Array} Bytes array
-   * @example
-   * md5.digest('The quick brown fox jumps over the lazy dog');
-   */
-  /**
-   * @method array
-   * @memberof md5
-   * @description Output hash as bytes array
-   * @param {String|Array|Uint8Array|ArrayBuffer} message message to hash
-   * @returns {Array} Bytes array
-   * @example
-   * md5.array('The quick brown fox jumps over the lazy dog');
-   */
-  /**
-   * @method arrayBuffer
-   * @memberof md5
-   * @description Output hash as ArrayBuffer
-   * @param {String|Array|Uint8Array|ArrayBuffer} message message to hash
-   * @returns {ArrayBuffer} ArrayBuffer
-   * @example
-   * md5.arrayBuffer('The quick brown fox jumps over the lazy dog');
-   */
-  /**
-   * @method buffer
-   * @deprecated This maybe confuse with Buffer in node.js. Please use arrayBuffer instead.
-   * @memberof md5
-   * @description Output hash as ArrayBuffer
-   * @param {String|Array|Uint8Array|ArrayBuffer} message message to hash
-   * @returns {ArrayBuffer} ArrayBuffer
-   * @example
-   * md5.buffer('The quick brown fox jumps over the lazy dog');
-   */
-  /**
-   * @method base64
-   * @memberof md5
-   * @description Output hash as base64 string
-   * @param {String|Array|Uint8Array|ArrayBuffer} message message to hash
-   * @returns {String} base64 string
-   * @example
-   * md5.base64('The quick brown fox jumps over the lazy dog');
-   */
-  var createOutputMethod = function (outputType) {
-    return function (message) {
-      return new Md5(true).update(message)[outputType]();
-    };
-  };
-
-  /**
-   * @method create
-   * @memberof md5
-   * @description Create Md5 object
-   * @returns {Md5} Md5 object.
-   * @example
-   * var hash = md5.create();
-   */
-  /**
-   * @method update
-   * @memberof md5
-   * @description Create and update Md5 object
-   * @param {String|Array|Uint8Array|ArrayBuffer} message message to hash
-   * @returns {Md5} Md5 object.
-   * @example
-   * var hash = md5.update('The quick brown fox jumps over the lazy dog');
-   * // equal to
-   * var hash = md5.create();
-   * hash.update('The quick brown fox jumps over the lazy dog');
-   */
-  var createMethod = function () {
-    var method = createOutputMethod('hex');
-    if (NODE_JS) {
-      method = nodeWrap(method);
-    }
-    method.create = function () {
-      return new Md5();
-    };
-    method.update = function (message) {
-      return method.create().update(message);
-    };
-    for (var i = 0; i < OUTPUT_TYPES.length; ++i) {
-      var type = OUTPUT_TYPES[i];
-      method[type] = createOutputMethod(type);
-    }
-    return method;
-  };
-
-  var nodeWrap = function (method) {
-    var crypto = eval("require('crypto')");
-    var Buffer = eval("require('buffer').Buffer");
-    var nodeMethod = function (message) {
-      if (typeof message === 'string') {
-        return crypto.createHash('md5').update(message, 'utf8').digest('hex');
-      } else {
-        if (message === null || message === undefined) {
-          throw ERROR;
-        } else if (message.constructor === ArrayBuffer) {
-          message = new Uint8Array(message);
-        }
-      }
-      if (Array.isArray(message) || ArrayBuffer.isView(message) ||
-        message.constructor === Buffer) {
-        return crypto.createHash('md5').update(new Buffer(message)).digest('hex');
-      } else {
-        return method(message);
-      }
-    };
-    return nodeMethod;
-  };
-
-  /**
-   * Md5 class
-   * @class Md5
-   * @description This is internal class.
-   * @see {@link md5.create}
-   */
-  function Md5(sharedMemory) {
-    if (sharedMemory) {
-      blocks[0] = blocks[16] = blocks[1] = blocks[2] = blocks[3] =
-      blocks[4] = blocks[5] = blocks[6] = blocks[7] =
-      blocks[8] = blocks[9] = blocks[10] = blocks[11] =
-      blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
-      this.blocks = blocks;
-      this.buffer8 = buffer8;
-    } else {
-      if (ARRAY_BUFFER) {
-        var buffer = new ArrayBuffer(68);
-        this.buffer8 = new Uint8Array(buffer);
-        this.blocks = new Uint32Array(buffer);
-      } else {
-        this.blocks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-      }
-    }
-    this.h0 = this.h1 = this.h2 = this.h3 = this.start = this.bytes = this.hBytes = 0;
-    this.finalized = this.hashed = false;
-    this.first = true;
-  }
-
-  /**
-   * @method update
-   * @memberof Md5
-   * @instance
-   * @description Update hash
-   * @param {String|Array|Uint8Array|ArrayBuffer} message message to hash
-   * @returns {Md5} Md5 object.
-   * @see {@link md5.update}
-   */
-  Md5.prototype.update = function (message) {
-    if (this.finalized) {
-      return;
-    }
-
-    var notString, type = typeof message;
-    if (type !== 'string') {
-      if (type === 'object') {
-        if (message === null) {
-          throw ERROR;
-        } else if (ARRAY_BUFFER && message.constructor === ArrayBuffer) {
-          message = new Uint8Array(message);
-        } else if (!Array.isArray(message)) {
-          if (!ARRAY_BUFFER || !ArrayBuffer.isView(message)) {
-            throw ERROR;
-          }
-        }
-      } else {
-        throw ERROR;
-      }
-      notString = true;
-    }
-    var code, index = 0, i, length = message.length, blocks = this.blocks;
-    var buffer8 = this.buffer8;
-
-    while (index < length) {
-      if (this.hashed) {
-        this.hashed = false;
-        blocks[0] = blocks[16];
-        blocks[16] = blocks[1] = blocks[2] = blocks[3] =
-        blocks[4] = blocks[5] = blocks[6] = blocks[7] =
-        blocks[8] = blocks[9] = blocks[10] = blocks[11] =
-        blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
-      }
-
-      if (notString) {
-        if (ARRAY_BUFFER) {
-          for (i = this.start; index < length && i < 64; ++index) {
-            buffer8[i++] = message[index];
-          }
-        } else {
-          for (i = this.start; index < length && i < 64; ++index) {
-            blocks[i >> 2] |= message[index] << SHIFT[i++ & 3];
-          }
-        }
-      } else {
-        if (ARRAY_BUFFER) {
-          for (i = this.start; index < length && i < 64; ++index) {
-            code = message.charCodeAt(index);
-            if (code < 0x80) {
-              buffer8[i++] = code;
-            } else if (code < 0x800) {
-              buffer8[i++] = 0xc0 | (code >> 6);
-              buffer8[i++] = 0x80 | (code & 0x3f);
-            } else if (code < 0xd800 || code >= 0xe000) {
-              buffer8[i++] = 0xe0 | (code >> 12);
-              buffer8[i++] = 0x80 | ((code >> 6) & 0x3f);
-              buffer8[i++] = 0x80 | (code & 0x3f);
-            } else {
-              code = 0x10000 + (((code & 0x3ff) << 10) | (message.charCodeAt(++index) & 0x3ff));
-              buffer8[i++] = 0xf0 | (code >> 18);
-              buffer8[i++] = 0x80 | ((code >> 12) & 0x3f);
-              buffer8[i++] = 0x80 | ((code >> 6) & 0x3f);
-              buffer8[i++] = 0x80 | (code & 0x3f);
-            }
-          }
-        } else {
-          for (i = this.start; index < length && i < 64; ++index) {
-            code = message.charCodeAt(index);
-            if (code < 0x80) {
-              blocks[i >> 2] |= code << SHIFT[i++ & 3];
-            } else if (code < 0x800) {
-              blocks[i >> 2] |= (0xc0 | (code >> 6)) << SHIFT[i++ & 3];
-              blocks[i >> 2] |= (0x80 | (code & 0x3f)) << SHIFT[i++ & 3];
-            } else if (code < 0xd800 || code >= 0xe000) {
-              blocks[i >> 2] |= (0xe0 | (code >> 12)) << SHIFT[i++ & 3];
-              blocks[i >> 2] |= (0x80 | ((code >> 6) & 0x3f)) << SHIFT[i++ & 3];
-              blocks[i >> 2] |= (0x80 | (code & 0x3f)) << SHIFT[i++ & 3];
-            } else {
-              code = 0x10000 + (((code & 0x3ff) << 10) | (message.charCodeAt(++index) & 0x3ff));
-              blocks[i >> 2] |= (0xf0 | (code >> 18)) << SHIFT[i++ & 3];
-              blocks[i >> 2] |= (0x80 | ((code >> 12) & 0x3f)) << SHIFT[i++ & 3];
-              blocks[i >> 2] |= (0x80 | ((code >> 6) & 0x3f)) << SHIFT[i++ & 3];
-              blocks[i >> 2] |= (0x80 | (code & 0x3f)) << SHIFT[i++ & 3];
-            }
-          }
-        }
-      }
-      this.lastByteIndex = i;
-      this.bytes += i - this.start;
-      if (i >= 64) {
-        this.start = i - 64;
-        this.hash();
-        this.hashed = true;
-      } else {
-        this.start = i;
-      }
-    }
-    if (this.bytes > 4294967295) {
-      this.hBytes += this.bytes / 4294967296 << 0;
-      this.bytes = this.bytes % 4294967296;
-    }
-    return this;
-  };
-
-  Md5.prototype.finalize = function () {
-    if (this.finalized) {
-      return;
-    }
-    this.finalized = true;
-    var blocks = this.blocks, i = this.lastByteIndex;
-    blocks[i >> 2] |= EXTRA[i & 3];
-    if (i >= 56) {
-      if (!this.hashed) {
-        this.hash();
-      }
-      blocks[0] = blocks[16];
-      blocks[16] = blocks[1] = blocks[2] = blocks[3] =
-      blocks[4] = blocks[5] = blocks[6] = blocks[7] =
-      blocks[8] = blocks[9] = blocks[10] = blocks[11] =
-      blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
-    }
-    blocks[14] = this.bytes << 3;
-    blocks[15] = this.hBytes << 3 | this.bytes >>> 29;
-    this.hash();
-  };
-
-  Md5.prototype.hash = function () {
-    var a, b, c, d, bc, da, blocks = this.blocks;
-
-    if (this.first) {
-      a = blocks[0] - 680876937;
-      a = (a << 7 | a >>> 25) - 271733879 << 0;
-      d = (-1732584194 ^ a & 2004318071) + blocks[1] - 117830708;
-      d = (d << 12 | d >>> 20) + a << 0;
-      c = (-271733879 ^ (d & (a ^ -271733879))) + blocks[2] - 1126478375;
-      c = (c << 17 | c >>> 15) + d << 0;
-      b = (a ^ (c & (d ^ a))) + blocks[3] - 1316259209;
-      b = (b << 22 | b >>> 10) + c << 0;
-    } else {
-      a = this.h0;
-      b = this.h1;
-      c = this.h2;
-      d = this.h3;
-      a += (d ^ (b & (c ^ d))) + blocks[0] - 680876936;
-      a = (a << 7 | a >>> 25) + b << 0;
-      d += (c ^ (a & (b ^ c))) + blocks[1] - 389564586;
-      d = (d << 12 | d >>> 20) + a << 0;
-      c += (b ^ (d & (a ^ b))) + blocks[2] + 606105819;
-      c = (c << 17 | c >>> 15) + d << 0;
-      b += (a ^ (c & (d ^ a))) + blocks[3] - 1044525330;
-      b = (b << 22 | b >>> 10) + c << 0;
-    }
-
-    a += (d ^ (b & (c ^ d))) + blocks[4] - 176418897;
-    a = (a << 7 | a >>> 25) + b << 0;
-    d += (c ^ (a & (b ^ c))) + blocks[5] + 1200080426;
-    d = (d << 12 | d >>> 20) + a << 0;
-    c += (b ^ (d & (a ^ b))) + blocks[6] - 1473231341;
-    c = (c << 17 | c >>> 15) + d << 0;
-    b += (a ^ (c & (d ^ a))) + blocks[7] - 45705983;
-    b = (b << 22 | b >>> 10) + c << 0;
-    a += (d ^ (b & (c ^ d))) + blocks[8] + 1770035416;
-    a = (a << 7 | a >>> 25) + b << 0;
-    d += (c ^ (a & (b ^ c))) + blocks[9] - 1958414417;
-    d = (d << 12 | d >>> 20) + a << 0;
-    c += (b ^ (d & (a ^ b))) + blocks[10] - 42063;
-    c = (c << 17 | c >>> 15) + d << 0;
-    b += (a ^ (c & (d ^ a))) + blocks[11] - 1990404162;
-    b = (b << 22 | b >>> 10) + c << 0;
-    a += (d ^ (b & (c ^ d))) + blocks[12] + 1804603682;
-    a = (a << 7 | a >>> 25) + b << 0;
-    d += (c ^ (a & (b ^ c))) + blocks[13] - 40341101;
-    d = (d << 12 | d >>> 20) + a << 0;
-    c += (b ^ (d & (a ^ b))) + blocks[14] - 1502002290;
-    c = (c << 17 | c >>> 15) + d << 0;
-    b += (a ^ (c & (d ^ a))) + blocks[15] + 1236535329;
-    b = (b << 22 | b >>> 10) + c << 0;
-    a += (c ^ (d & (b ^ c))) + blocks[1] - 165796510;
-    a = (a << 5 | a >>> 27) + b << 0;
-    d += (b ^ (c & (a ^ b))) + blocks[6] - 1069501632;
-    d = (d << 9 | d >>> 23) + a << 0;
-    c += (a ^ (b & (d ^ a))) + blocks[11] + 643717713;
-    c = (c << 14 | c >>> 18) + d << 0;
-    b += (d ^ (a & (c ^ d))) + blocks[0] - 373897302;
-    b = (b << 20 | b >>> 12) + c << 0;
-    a += (c ^ (d & (b ^ c))) + blocks[5] - 701558691;
-    a = (a << 5 | a >>> 27) + b << 0;
-    d += (b ^ (c & (a ^ b))) + blocks[10] + 38016083;
-    d = (d << 9 | d >>> 23) + a << 0;
-    c += (a ^ (b & (d ^ a))) + blocks[15] - 660478335;
-    c = (c << 14 | c >>> 18) + d << 0;
-    b += (d ^ (a & (c ^ d))) + blocks[4] - 405537848;
-    b = (b << 20 | b >>> 12) + c << 0;
-    a += (c ^ (d & (b ^ c))) + blocks[9] + 568446438;
-    a = (a << 5 | a >>> 27) + b << 0;
-    d += (b ^ (c & (a ^ b))) + blocks[14] - 1019803690;
-    d = (d << 9 | d >>> 23) + a << 0;
-    c += (a ^ (b & (d ^ a))) + blocks[3] - 187363961;
-    c = (c << 14 | c >>> 18) + d << 0;
-    b += (d ^ (a & (c ^ d))) + blocks[8] + 1163531501;
-    b = (b << 20 | b >>> 12) + c << 0;
-    a += (c ^ (d & (b ^ c))) + blocks[13] - 1444681467;
-    a = (a << 5 | a >>> 27) + b << 0;
-    d += (b ^ (c & (a ^ b))) + blocks[2] - 51403784;
-    d = (d << 9 | d >>> 23) + a << 0;
-    c += (a ^ (b & (d ^ a))) + blocks[7] + 1735328473;
-    c = (c << 14 | c >>> 18) + d << 0;
-    b += (d ^ (a & (c ^ d))) + blocks[12] - 1926607734;
-    b = (b << 20 | b >>> 12) + c << 0;
-    bc = b ^ c;
-    a += (bc ^ d) + blocks[5] - 378558;
-    a = (a << 4 | a >>> 28) + b << 0;
-    d += (bc ^ a) + blocks[8] - 2022574463;
-    d = (d << 11 | d >>> 21) + a << 0;
-    da = d ^ a;
-    c += (da ^ b) + blocks[11] + 1839030562;
-    c = (c << 16 | c >>> 16) + d << 0;
-    b += (da ^ c) + blocks[14] - 35309556;
-    b = (b << 23 | b >>> 9) + c << 0;
-    bc = b ^ c;
-    a += (bc ^ d) + blocks[1] - 1530992060;
-    a = (a << 4 | a >>> 28) + b << 0;
-    d += (bc ^ a) + blocks[4] + 1272893353;
-    d = (d << 11 | d >>> 21) + a << 0;
-    da = d ^ a;
-    c += (da ^ b) + blocks[7] - 155497632;
-    c = (c << 16 | c >>> 16) + d << 0;
-    b += (da ^ c) + blocks[10] - 1094730640;
-    b = (b << 23 | b >>> 9) + c << 0;
-    bc = b ^ c;
-    a += (bc ^ d) + blocks[13] + 681279174;
-    a = (a << 4 | a >>> 28) + b << 0;
-    d += (bc ^ a) + blocks[0] - 358537222;
-    d = (d << 11 | d >>> 21) + a << 0;
-    da = d ^ a;
-    c += (da ^ b) + blocks[3] - 722521979;
-    c = (c << 16 | c >>> 16) + d << 0;
-    b += (da ^ c) + blocks[6] + 76029189;
-    b = (b << 23 | b >>> 9) + c << 0;
-    bc = b ^ c;
-    a += (bc ^ d) + blocks[9] - 640364487;
-    a = (a << 4 | a >>> 28) + b << 0;
-    d += (bc ^ a) + blocks[12] - 421815835;
-    d = (d << 11 | d >>> 21) + a << 0;
-    da = d ^ a;
-    c += (da ^ b) + blocks[15] + 530742520;
-    c = (c << 16 | c >>> 16) + d << 0;
-    b += (da ^ c) + blocks[2] - 995338651;
-    b = (b << 23 | b >>> 9) + c << 0;
-    a += (c ^ (b | ~d)) + blocks[0] - 198630844;
-    a = (a << 6 | a >>> 26) + b << 0;
-    d += (b ^ (a | ~c)) + blocks[7] + 1126891415;
-    d = (d << 10 | d >>> 22) + a << 0;
-    c += (a ^ (d | ~b)) + blocks[14] - 1416354905;
-    c = (c << 15 | c >>> 17) + d << 0;
-    b += (d ^ (c | ~a)) + blocks[5] - 57434055;
-    b = (b << 21 | b >>> 11) + c << 0;
-    a += (c ^ (b | ~d)) + blocks[12] + 1700485571;
-    a = (a << 6 | a >>> 26) + b << 0;
-    d += (b ^ (a | ~c)) + blocks[3] - 1894986606;
-    d = (d << 10 | d >>> 22) + a << 0;
-    c += (a ^ (d | ~b)) + blocks[10] - 1051523;
-    c = (c << 15 | c >>> 17) + d << 0;
-    b += (d ^ (c | ~a)) + blocks[1] - 2054922799;
-    b = (b << 21 | b >>> 11) + c << 0;
-    a += (c ^ (b | ~d)) + blocks[8] + 1873313359;
-    a = (a << 6 | a >>> 26) + b << 0;
-    d += (b ^ (a | ~c)) + blocks[15] - 30611744;
-    d = (d << 10 | d >>> 22) + a << 0;
-    c += (a ^ (d | ~b)) + blocks[6] - 1560198380;
-    c = (c << 15 | c >>> 17) + d << 0;
-    b += (d ^ (c | ~a)) + blocks[13] + 1309151649;
-    b = (b << 21 | b >>> 11) + c << 0;
-    a += (c ^ (b | ~d)) + blocks[4] - 145523070;
-    a = (a << 6 | a >>> 26) + b << 0;
-    d += (b ^ (a | ~c)) + blocks[11] - 1120210379;
-    d = (d << 10 | d >>> 22) + a << 0;
-    c += (a ^ (d | ~b)) + blocks[2] + 718787259;
-    c = (c << 15 | c >>> 17) + d << 0;
-    b += (d ^ (c | ~a)) + blocks[9] - 343485551;
-    b = (b << 21 | b >>> 11) + c << 0;
-
-    if (this.first) {
-      this.h0 = a + 1732584193 << 0;
-      this.h1 = b - 271733879 << 0;
-      this.h2 = c - 1732584194 << 0;
-      this.h3 = d + 271733878 << 0;
-      this.first = false;
-    } else {
-      this.h0 = this.h0 + a << 0;
-      this.h1 = this.h1 + b << 0;
-      this.h2 = this.h2 + c << 0;
-      this.h3 = this.h3 + d << 0;
-    }
-  };
-
-  /**
-   * @method hex
-   * @memberof Md5
-   * @instance
-   * @description Output hash as hex string
-   * @returns {String} Hex string
-   * @see {@link md5.hex}
-   * @example
-   * hash.hex();
-   */
-  Md5.prototype.hex = function () {
-    this.finalize();
-
-    var h0 = this.h0, h1 = this.h1, h2 = this.h2, h3 = this.h3;
-
-    return HEX_CHARS[(h0 >> 4) & 0x0F] + HEX_CHARS[h0 & 0x0F] +
-      HEX_CHARS[(h0 >> 12) & 0x0F] + HEX_CHARS[(h0 >> 8) & 0x0F] +
-      HEX_CHARS[(h0 >> 20) & 0x0F] + HEX_CHARS[(h0 >> 16) & 0x0F] +
-      HEX_CHARS[(h0 >> 28) & 0x0F] + HEX_CHARS[(h0 >> 24) & 0x0F] +
-      HEX_CHARS[(h1 >> 4) & 0x0F] + HEX_CHARS[h1 & 0x0F] +
-      HEX_CHARS[(h1 >> 12) & 0x0F] + HEX_CHARS[(h1 >> 8) & 0x0F] +
-      HEX_CHARS[(h1 >> 20) & 0x0F] + HEX_CHARS[(h1 >> 16) & 0x0F] +
-      HEX_CHARS[(h1 >> 28) & 0x0F] + HEX_CHARS[(h1 >> 24) & 0x0F] +
-      HEX_CHARS[(h2 >> 4) & 0x0F] + HEX_CHARS[h2 & 0x0F] +
-      HEX_CHARS[(h2 >> 12) & 0x0F] + HEX_CHARS[(h2 >> 8) & 0x0F] +
-      HEX_CHARS[(h2 >> 20) & 0x0F] + HEX_CHARS[(h2 >> 16) & 0x0F] +
-      HEX_CHARS[(h2 >> 28) & 0x0F] + HEX_CHARS[(h2 >> 24) & 0x0F] +
-      HEX_CHARS[(h3 >> 4) & 0x0F] + HEX_CHARS[h3 & 0x0F] +
-      HEX_CHARS[(h3 >> 12) & 0x0F] + HEX_CHARS[(h3 >> 8) & 0x0F] +
-      HEX_CHARS[(h3 >> 20) & 0x0F] + HEX_CHARS[(h3 >> 16) & 0x0F] +
-      HEX_CHARS[(h3 >> 28) & 0x0F] + HEX_CHARS[(h3 >> 24) & 0x0F];
-  };
-
-  /**
-   * @method toString
-   * @memberof Md5
-   * @instance
-   * @description Output hash as hex string
-   * @returns {String} Hex string
-   * @see {@link md5.hex}
-   * @example
-   * hash.toString();
-   */
-  Md5.prototype.toString = Md5.prototype.hex;
-
-  /**
-   * @method digest
-   * @memberof Md5
-   * @instance
-   * @description Output hash as bytes array
-   * @returns {Array} Bytes array
-   * @see {@link md5.digest}
-   * @example
-   * hash.digest();
-   */
-  Md5.prototype.digest = function () {
-    this.finalize();
-
-    var h0 = this.h0, h1 = this.h1, h2 = this.h2, h3 = this.h3;
-    return [
-      h0 & 0xFF, (h0 >> 8) & 0xFF, (h0 >> 16) & 0xFF, (h0 >> 24) & 0xFF,
-      h1 & 0xFF, (h1 >> 8) & 0xFF, (h1 >> 16) & 0xFF, (h1 >> 24) & 0xFF,
-      h2 & 0xFF, (h2 >> 8) & 0xFF, (h2 >> 16) & 0xFF, (h2 >> 24) & 0xFF,
-      h3 & 0xFF, (h3 >> 8) & 0xFF, (h3 >> 16) & 0xFF, (h3 >> 24) & 0xFF
-    ];
-  };
-
-  /**
-   * @method array
-   * @memberof Md5
-   * @instance
-   * @description Output hash as bytes array
-   * @returns {Array} Bytes array
-   * @see {@link md5.array}
-   * @example
-   * hash.array();
-   */
-  Md5.prototype.array = Md5.prototype.digest;
-
-  /**
-   * @method arrayBuffer
-   * @memberof Md5
-   * @instance
-   * @description Output hash as ArrayBuffer
-   * @returns {ArrayBuffer} ArrayBuffer
-   * @see {@link md5.arrayBuffer}
-   * @example
-   * hash.arrayBuffer();
-   */
-  Md5.prototype.arrayBuffer = function () {
-    this.finalize();
-
-    var buffer = new ArrayBuffer(16);
-    var blocks = new Uint32Array(buffer);
-    blocks[0] = this.h0;
-    blocks[1] = this.h1;
-    blocks[2] = this.h2;
-    blocks[3] = this.h3;
-    return buffer;
-  };
-
-  /**
-   * @method buffer
-   * @deprecated This maybe confuse with Buffer in node.js. Please use arrayBuffer instead.
-   * @memberof Md5
-   * @instance
-   * @description Output hash as ArrayBuffer
-   * @returns {ArrayBuffer} ArrayBuffer
-   * @see {@link md5.buffer}
-   * @example
-   * hash.buffer();
-   */
-  Md5.prototype.buffer = Md5.prototype.arrayBuffer;
-
-  /**
-   * @method base64
-   * @memberof Md5
-   * @instance
-   * @description Output hash as base64 string
-   * @returns {String} base64 string
-   * @see {@link md5.base64}
-   * @example
-   * hash.base64();
-   */
-  Md5.prototype.base64 = function () {
-    var v1, v2, v3, base64Str = '', bytes = this.array();
-    for (var i = 0; i < 15;) {
-      v1 = bytes[i++];
-      v2 = bytes[i++];
-      v3 = bytes[i++];
-      base64Str += BASE64_ENCODE_CHAR[v1 >>> 2] +
-        BASE64_ENCODE_CHAR[(v1 << 4 | v2 >>> 4) & 63] +
-        BASE64_ENCODE_CHAR[(v2 << 2 | v3 >>> 6) & 63] +
-        BASE64_ENCODE_CHAR[v3 & 63];
-    }
-    v1 = bytes[i];
-    base64Str += BASE64_ENCODE_CHAR[v1 >>> 2] +
-      BASE64_ENCODE_CHAR[(v1 << 4) & 63] +
-      '==';
-    return base64Str;
-  };
-
-  var exports = createMethod();
-
-  if (COMMON_JS) {
-    module.exports = exports;
-  } else {
-    /**
-     * @method md5
-     * @description Md5 hash function, export to global in browsers.
-     * @param {String|Array|Uint8Array|ArrayBuffer} message message to hash
-     * @returns {String} md5 hashes
-     * @example
-     * md5(''); // d41d8cd98f00b204e9800998ecf8427e
-     * md5('The quick brown fox jumps over the lazy dog'); // 9e107d9d372bb6826bd81d3542a419d6
-     * md5('The quick brown fox jumps over the lazy dog.'); // e4d909c290d0fb1ca068ffaddf22cbd0
-     *
-     * // It also supports UTF-8 encoding
-     * md5('中文'); // a7bac2239fcdcb3a067903d8077c4a07
-     *
-     * // It also supports byte `Array`, `Uint8Array`, `ArrayBuffer`
-     * md5([]); // d41d8cd98f00b204e9800998ecf8427e
-     * md5(new Uint8Array([])); // d41d8cd98f00b204e9800998ecf8427e
-     */
-    root.md5 = exports;
-    if (AMD) {
-      !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
-        return exports;
-      }).call(exports, __webpack_require__, exports, module),
-		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-    }
-  }
-})();
 
 
 /***/ }),
@@ -44087,11 +43388,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
           class: "btn btn-warning align-center",
           onClick: $event => ($setup.disappear(warning.id))
-        }, "Undo", 8 /* PROPS */, ["onClick"]),
+        }, "Discard", 8 /* PROPS */, ["onClick"]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
           class: "btn btn-warning align-center",
           onClick: $event => ($setup.close(warning.message.event_id, warning.id))
-        }, "Delete", 8 /* PROPS */, ["onClick"])
+        }, "Confirm ", 8 /* PROPS */, ["onClick"])
       ])
     ], 8 /* PROPS */, ["id"]))
   }), 256 /* UNKEYED_FRAGMENT */))

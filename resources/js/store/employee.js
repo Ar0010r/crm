@@ -1,4 +1,3 @@
-import md5 from "js-md5";
 import {container} from '../services/index';
 import {emitter} from '../app';
 
@@ -9,6 +8,7 @@ export default {
         races: {},
         companies: {},
         statuses: {},
+        availableStatuses: {},
         pagination: {},
 
         emptyEmployee: {
@@ -31,14 +31,15 @@ export default {
     },
     mutations: {
         setEmployeeStatus(state, params) {
-            let key = md5(params.id.toString())
+            let key = params.id
             state.employees[key].status = params.newStatus
         },
         setRaces(state, races) {
             state.races = races;
         },
         setStatuses(state, statuses) {
-            state.statuses = statuses;
+            state.statuses = statuses.all;
+            state.availableStatuses = statuses.available;
         },
 
         setEmployees(state, employees) {
@@ -54,7 +55,7 @@ export default {
         },
 
         setEmployeeById(state, employee) {
-            let key = md5(employee.id.toString());
+            let key = employee.id
             if (state.employees[key]) {
                 state.employees[key] = {...state.employees[key], ...employee};
                 state.employees[key].company = employee.company;
@@ -76,6 +77,7 @@ export default {
                 commit('setPagination', employees.pagination);
             } catch (e) {
                 emitter.emit('notification-error', e.response.data)
+                if(e.response.status === 401) container.AuthService.logout()
             }
         },
 
@@ -85,6 +87,9 @@ export default {
                 commit('setStatuses', statuses.data);
             } catch (e) {
                 emitter.emit('notification-error', e.response.data)
+                if(e.response.status === 401) {
+                    container.AuthService.logout()
+                }
             }
 
         },
@@ -99,7 +104,7 @@ export default {
         },
 
         deleteEmployee({commit, dispatch, state}, employee) {
-            let key = md5(employee.id.toString());
+            let key = employee.id;
             if (state.employees[key]) {
                 commit('deleteEmployeeById', key);
             } else {
@@ -109,6 +114,10 @@ export default {
 
         bulkDelete({dispatch}, employees){
             employees.forEach(employee => dispatch('deleteEmployee', employee))
+        },
+
+        bulkUpdate({commit}, employees){
+            employees.forEach(employee => commit('setEmployeeById', employee))
         }
     }
 }

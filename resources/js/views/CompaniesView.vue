@@ -17,8 +17,10 @@
             let store = useStore();
             let companiesAreUndefined = Object.keys(store.getters.getCompanies).length === 0;
             let usersAreUndefined = Object.keys(store.getters.getUsers).length === 0;
+            let employeesAreUndefined = Object.keys(store.getters.getEmployees).length === 0;
 
             if (companiesAreUndefined) store.dispatch('company/setCompaniesToStore');
+            if (employeesAreUndefined) store.dispatch('employee/setEmployeesToStore');
             if (usersAreUndefined) store.dispatch('user/setUsersToStore');
         },
         components: {

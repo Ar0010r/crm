@@ -29,23 +29,7 @@ class EmployeesController extends Controller
     public function index()
     {
         $records = request()->get('recordsPerPage') ?? 100;
-
-        switch (auth()->user()->role) {
-            case Role::PERSONNEL:
-                $data = $this->employeeService->getPersonnelEmployees($records);
-                break;
-            case Role::HR:
-                $data = $this->employeeService->getHrEmployees($records);
-                break;
-            case Role::ADMIN:
-                $data = $this->employeeService->getAdminEmployees($records);
-                break;
-            case Role::TOP_HR:
-                $data = $this->employeeService->getTopHrEmployees($records);
-                break;
-            default:
-                $data = [];
-        }
+        $data = $this->employeeService->get($records);
 
         return response(['data' => $data->items(), 'pagination' => $data], JsonResponse::HTTP_OK);
     }
@@ -53,12 +37,9 @@ class EmployeesController extends Controller
     public function store(EmployeeStoreRequest $r)
     {
         $r->merge(["hr_id" => auth()->user()->getAuthIdentifier()]);
-        $employee = Employee::create($r->all());
-        $employee->hr;
-        $employee->company;
-        $employee->status = Status::NEW;
+        $employee = Employee::make($r->all());
 
-        return response(['employee' => $employee], JsonResponse::HTTP_OK);
+        return response(['employee' => $this->employeeService->store($employee)], JsonResponse::HTTP_OK);
     }
 
     public function import(Request $r, EmployeeImport $import)
@@ -83,11 +64,8 @@ class EmployeesController extends Controller
 
     public function bulkUpdate(EmployeeBulkUpdateRequest $r)
     {
-        $ids = array_map(function ($employee) {
-            return $employee['id'];
-        }, $r->employees);
+        $this->employeeService->bulkUpdate($r->employees, $r->status);
 
-        Employee::whereIn('id', $ids)->update(['status' => $r->status]);
         return response("updated", JsonResponse::HTTP_NO_CONTENT);
     }
 
@@ -103,11 +81,8 @@ class EmployeesController extends Controller
 
     public function bulkDestroy(EmployeeBulkDestroyRequest $r)
     {
-        $ids = array_map(function ($employee) {
-            return $employee['id'];
-        }, $r->employees);
+        $this->employeeService->bulkDestroy($r->employees);
 
-        Employee::destroy($ids);
         return response("deleted", JsonResponse::HTTP_NO_CONTENT);
     }
 
@@ -124,7 +99,10 @@ class EmployeesController extends Controller
 
     public function statuses()
     {
-        return response(Status::STATUSES_CSS_CLASSES, JsonResponse::HTTP_OK);
+        return response([
+            'all' => Status::All_STATUSES,
+            'available' => Status::getAvailableRoles()
+        ], JsonResponse::HTTP_OK);
     }
 
     public function races()

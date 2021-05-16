@@ -15,8 +15,8 @@ class CreateTopHrHrsTable extends Migration
     {
         Schema::create('top_hr_hrs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('top_hr_id')->nullable();
-            $table->foreignId('hr_id')->nullable();
+            $table->uuid('top_hr_id');
+            $table->uuid('hr_id');
             $table->timestamps();
             $table->softDeletes();
 

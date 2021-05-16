@@ -12,6 +12,7 @@
             const emitter = inject("emitter");
             let successes = ref([]);
             const delay = 4500;
+            const transition = 500;
 
             emitter.on('notification-success', showSuccess);
 
@@ -23,7 +24,7 @@
                     message: message
                 });
 
-                setTimeout(() => document.getElementById(id).classList.remove('growl-incoming'), 500)
+                setTimeout(() => document.getElementById(id).classList.remove('growl-incoming'), transition)
 
             }
 
@@ -32,7 +33,7 @@
                 if (success) {
                     clearTimeout(id);
                     document.getElementById(id).classList.add('growl-outgoing');
-                    setTimeout(() => document.getElementById(id).classList.add('d-none'), 500);
+                    setTimeout(() => document.getElementById(id).classList.add('d-none'), transition);
                 }
             }
 

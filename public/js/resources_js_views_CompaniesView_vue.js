@@ -36,9 +36,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
     var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)("emitter");
     var schema = yup__WEBPACK_IMPORTED_MODULE_2__.object({
-      personnel_id: yup__WEBPACK_IMPORTED_MODULE_2__.number().nullable().required(),
+      personnel: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().required(),
       email: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().required().email(),
-      name: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().required().trim().matches('^[a-zA-Z ]*$', 'name can contain only letters'),
+      name: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().required().trim().matches('^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$', 'company name can contain only letters numbers and spaces'),
+      manager: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().required().trim().matches('^[a-zA-Z ]*$', 'manager name can contain only letters'),
       domain: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().required().trim().matches('^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\\.[a-zA-Z]{2,}$', 'please enter valid domain')
     });
 
@@ -53,6 +54,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return props.company.name;
       })
     });
+    var manager = (0,vee_validate__WEBPACK_IMPORTED_MODULE_4__.useField)('manager', {
+      value: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+        return props.company.pseudonym;
+      })
+    });
     var email = (0,vee_validate__WEBPACK_IMPORTED_MODULE_4__.useField)('email', {
       value: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
         return props.company.email;
@@ -63,7 +69,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return props.company.domain;
       })
     });
-    var personnel_id = (0,vee_validate__WEBPACK_IMPORTED_MODULE_4__.useField)('personnel_id', {
+    var personnel = (0,vee_validate__WEBPACK_IMPORTED_MODULE_4__.useField)('personnel', {
       value: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
         return props.company.personnel_id;
       })
@@ -83,10 +89,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                [personnel_id, name, domain, email].forEach(function (field) {
-                  field.meta.dirty = true;
-                  field.meta.touched = true;
-                  field.value.value = props.company[field.name];
+                [{
+                  field: personnel,
+                  name: 'personnel_id'
+                }, {
+                  field: name,
+                  name: 'name'
+                }, {
+                  field: domain,
+                  name: 'domain'
+                }, {
+                  field: email,
+                  name: 'email'
+                }, {
+                  field: manager,
+                  name: 'pseudonym'
+                }].forEach(function (item) {
+                  item.field.meta.dirty = true;
+                  item.field.meta.touched = true;
+                  item.field.value.value = props.company[item.name];
                 });
                 _context.next = 3;
                 return validateForm();
@@ -124,7 +145,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       name: name,
       email: email,
       domain: domain,
-      personnel_id: personnel_id,
+      personnel: personnel,
+      manager: manager,
       errors: errors,
       validate: validate,
       personnels: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
@@ -445,18 +467,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var _layouts_AdminCompaniesTableHead__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./layouts/AdminCompaniesTableHead */ "./resources/js/components/tables/companies/layouts/AdminCompaniesTableHead.vue");
+/* harmony import */ var _layouts_HrCompaniesTableHead__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./layouts/HrCompaniesTableHead */ "./resources/js/components/tables/companies/layouts/HrCompaniesTableHead.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
-    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_1__.useStore)();
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
     return {
-      profile: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
-        return store.getters.getProfile;
+      profileIsAdmin: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return store.getters.getProfile.role === 'admin';
+      }),
+      profileIsPersonnel: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return store.getters.getProfile.role === 'personnel';
+      }),
+      profileIsHr: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return store.getters.getProfile.role === 'hr' || store.getters.getProfile.role === 'top hr';
       })
     };
+  },
+  components: {
+    AdminHead: _layouts_AdminCompaniesTableHead__WEBPACK_IMPORTED_MODULE_0__.default,
+    HrHead: _layouts_HrCompaniesTableHead__WEBPACK_IMPORTED_MODULE_1__.default
   }
 });
 
@@ -477,8 +513,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _actions_DeleteButton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions/DeleteButton */ "./resources/js/components/tables/companies/actions/DeleteButton.vue");
-/* harmony import */ var _actions_EditButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./actions/EditButton */ "./resources/js/components/tables/companies/actions/EditButton.vue");
+/* harmony import */ var _layouts_AdminCompaniesTableRow__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./layouts/AdminCompaniesTableRow */ "./resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue");
+/* harmony import */ var _layouts_HrCompaniesTableRow__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./layouts/HrCompaniesTableRow */ "./resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
@@ -491,6 +527,15 @@ __webpack_require__.r(__webpack_exports__);
     return {
       profile: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
         return store.getters.getProfile;
+      }),
+      profileIsAdmin: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return store.getters.getProfile.role === 'admin';
+      }),
+      profileIsPersonnel: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return store.getters.getProfile.role === 'personnel';
+      }),
+      profileIsHr: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return store.getters.getProfile.role === 'hr';
       })
     };
   },
@@ -498,8 +543,8 @@ __webpack_require__.r(__webpack_exports__);
     company: Object
   },
   components: {
-    DeleteButton: _actions_DeleteButton__WEBPACK_IMPORTED_MODULE_0__.default,
-    EditButton: _actions_EditButton__WEBPACK_IMPORTED_MODULE_1__.default
+    AdminRow: _layouts_AdminCompaniesTableRow__WEBPACK_IMPORTED_MODULE_0__.default,
+    HrRow: _layouts_HrCompaniesTableRow__WEBPACK_IMPORTED_MODULE_1__.default
   }
 });
 
@@ -586,21 +631,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return container.CompanyService.deleteCompany(props.company);
 
               case 4:
+                emitter.emit('notification-success', ' company ' + props.company.name + ' was deleted');
                 store.dispatch('company/deleteCompany', props.company);
-                _context2.next = 10;
+                _context2.next = 11;
                 break;
 
-              case 7:
-                _context2.prev = 7;
+              case 8:
+                _context2.prev = 8;
                 _context2.t0 = _context2["catch"](0);
                 emitter.emit('notification-error', _context2.t0.response.data);
 
-              case 10:
+              case 11:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[0, 7]]);
+        }, _callee2, null, [[0, 8]]);
       }));
       return _deleteCompany.apply(this, arguments);
     }
@@ -656,6 +702,114 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _actions_DeleteButton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/DeleteButton */ "./resources/js/components/tables/companies/actions/DeleteButton.vue");
+/* harmony import */ var _actions_EditButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/EditButton */ "./resources/js/components/tables/companies/actions/EditButton.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  setup: function setup(props) {
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
+    return {
+      employeesCount: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        var employees = _objectSpread({}, store.getters.getEmployees);
+
+        Object.keys(employees).map(function (key) {
+          if (employees[key].company_id !== props.company.id) delete employees[key];
+        });
+        return Object.keys(employees).length;
+      })
+    };
+  },
+  props: {
+    company: Object
+  },
+  components: {
+    DeleteButton: _actions_DeleteButton__WEBPACK_IMPORTED_MODULE_0__.default,
+    EditButton: _actions_EditButton__WEBPACK_IMPORTED_MODULE_1__.default
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue?vue&type=script&lang=js":
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue?vue&type=script&lang=js ***!
+  \**************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _actions_DeleteButton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/DeleteButton */ "./resources/js/components/tables/companies/actions/DeleteButton.vue");
+/* harmony import */ var _actions_EditButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/EditButton */ "./resources/js/components/tables/companies/actions/EditButton.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  setup: function setup(props) {
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
+    return {
+      employeesCount: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        var employees = _objectSpread({}, store.getters.getEmployees);
+
+        Object.keys(employees).map(function (key) {
+          if (employees[key].company_id !== props.company.id) delete employees[key];
+        });
+        return Object.keys(employees).length;
+      })
+    };
+  },
+  props: {
+    company: Object
+  },
+  components: {
+    DeleteButton: _actions_DeleteButton__WEBPACK_IMPORTED_MODULE_0__.default,
+    EditButton: _actions_EditButton__WEBPACK_IMPORTED_MODULE_1__.default
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/views/CompaniesView.vue?vue&type=script&lang=js":
 /*!**************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/views/CompaniesView.vue?vue&type=script&lang=js ***!
@@ -686,7 +840,9 @@ __webpack_require__.r(__webpack_exports__);
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_4__.useStore)();
     var companiesAreUndefined = Object.keys(store.getters.getCompanies).length === 0;
     var usersAreUndefined = Object.keys(store.getters.getUsers).length === 0;
+    var employeesAreUndefined = Object.keys(store.getters.getEmployees).length === 0;
     if (companiesAreUndefined) store.dispatch('company/setCompaniesToStore');
+    if (employeesAreUndefined) store.dispatch('employee/setEmployeesToStore');
     if (usersAreUndefined) store.dispatch('user/setUsersToStore');
   },
   components: {
@@ -741,12 +897,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _CompanyFormFields_vue_vue_type_template_id_e6b269ac_bindings_name_setup_email_setup_domain_setup_personnel_id_setup_errors_setup_validate_setup_personnels_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel_id":"setup","errors":"setup","validate":"setup","personnels":"setup","company":"props"} */ "./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={\"name\":\"setup\",\"email\":\"setup\",\"domain\":\"setup\",\"personnel_id\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"personnels\":\"setup\",\"company\":\"props\"}");
+/* harmony import */ var _CompanyFormFields_vue_vue_type_template_id_e6b269ac_bindings_name_setup_email_setup_domain_setup_personnel_setup_manager_setup_errors_setup_validate_setup_personnels_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel":"setup","manager":"setup","errors":"setup","validate":"setup","personnels":"setup","company":"props"} */ "./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={\"name\":\"setup\",\"email\":\"setup\",\"domain\":\"setup\",\"personnel\":\"setup\",\"manager\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"personnels\":\"setup\",\"company\":\"props\"}");
 /* harmony import */ var _CompanyFormFields_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CompanyFormFields.vue?vue&type=script&lang=js */ "./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=script&lang=js");
 
 
 
-_CompanyFormFields_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _CompanyFormFields_vue_vue_type_template_id_e6b269ac_bindings_name_setup_email_setup_domain_setup_personnel_id_setup_errors_setup_validate_setup_personnels_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
+_CompanyFormFields_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _CompanyFormFields_vue_vue_type_template_id_e6b269ac_bindings_name_setup_email_setup_domain_setup_personnel_setup_manager_setup_errors_setup_validate_setup_personnels_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -861,12 +1017,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _CompaniesTableHead_vue_vue_type_template_id_5b649a14_bindings_profile_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CompaniesTableHead.vue?vue&type=template&id=5b649a14&bindings={"profile":"setup"} */ "./resources/js/components/tables/companies/CompaniesTableHead.vue?vue&type=template&id=5b649a14&bindings={\"profile\":\"setup\"}");
+/* harmony import */ var _CompaniesTableHead_vue_vue_type_template_id_5b649a14_bindings_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CompaniesTableHead.vue?vue&type=template&id=5b649a14&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} */ "./resources/js/components/tables/companies/CompaniesTableHead.vue?vue&type=template&id=5b649a14&bindings={\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\"}");
 /* harmony import */ var _CompaniesTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CompaniesTableHead.vue?vue&type=script&lang=js */ "./resources/js/components/tables/companies/CompaniesTableHead.vue?vue&type=script&lang=js");
 
 
 
-_CompaniesTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _CompaniesTableHead_vue_vue_type_template_id_5b649a14_bindings_profile_setup___WEBPACK_IMPORTED_MODULE_0__.render
+_CompaniesTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _CompaniesTableHead_vue_vue_type_template_id_5b649a14_bindings_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -891,12 +1047,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _CompaniesTableRow_vue_vue_type_template_id_6c068534_bindings_profile_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","company":"props"} */ "./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={\"profile\":\"setup\",\"company\":\"props\"}");
+/* harmony import */ var _CompaniesTableRow_vue_vue_type_template_id_6c068534_bindings_profile_setup_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup","company":"props"} */ "./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={\"profile\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\",\"company\":\"props\"}");
 /* harmony import */ var _CompaniesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CompaniesTableRow.vue?vue&type=script&lang=js */ "./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=script&lang=js");
 
 
 
-_CompaniesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _CompaniesTableRow_vue_vue_type_template_id_6c068534_bindings_profile_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
+_CompaniesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _CompaniesTableRow_vue_vue_type_template_id_6c068534_bindings_profile_setup_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -963,6 +1119,122 @@ if (false) {}
 _EditButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/companies/actions/EditButton.vue"
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_EditButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/companies/layouts/AdminCompaniesTableHead.vue":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/tables/companies/layouts/AdminCompaniesTableHead.vue ***!
+  \**************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _AdminCompaniesTableHead_vue_vue_type_template_id_4d9589ae__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminCompaniesTableHead.vue?vue&type=template&id=4d9589ae */ "./resources/js/components/tables/companies/layouts/AdminCompaniesTableHead.vue?vue&type=template&id=4d9589ae");
+
+const script = {}
+script.render = _AdminCompaniesTableHead_vue_vue_type_template_id_4d9589ae__WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+script.__file = "resources/js/components/tables/companies/layouts/AdminCompaniesTableHead.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (script);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue ***!
+  \*************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _AdminCompaniesTableRow_vue_vue_type_template_id_7cc3aaa1_bindings_employeesCount_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminCompaniesTableRow.vue?vue&type=template&id=7cc3aaa1&bindings={"employeesCount":"setup","company":"props"} */ "./resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue?vue&type=template&id=7cc3aaa1&bindings={\"employeesCount\":\"setup\",\"company\":\"props\"}");
+/* harmony import */ var _AdminCompaniesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminCompaniesTableRow.vue?vue&type=script&lang=js */ "./resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue?vue&type=script&lang=js");
+
+
+
+_AdminCompaniesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _AdminCompaniesTableRow_vue_vue_type_template_id_7cc3aaa1_bindings_employeesCount_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_AdminCompaniesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_AdminCompaniesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/companies/layouts/HrCompaniesTableHead.vue":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/tables/companies/layouts/HrCompaniesTableHead.vue ***!
+  \***********************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _HrCompaniesTableHead_vue_vue_type_template_id_b689b8b4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HrCompaniesTableHead.vue?vue&type=template&id=b689b8b4 */ "./resources/js/components/tables/companies/layouts/HrCompaniesTableHead.vue?vue&type=template&id=b689b8b4");
+
+const script = {}
+script.render = _HrCompaniesTableHead_vue_vue_type_template_id_b689b8b4__WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+script.__file = "resources/js/components/tables/companies/layouts/HrCompaniesTableHead.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (script);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue ***!
+  \**********************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _HrCompaniesTableRow_vue_vue_type_template_id_72d03e84_bindings_employeesCount_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HrCompaniesTableRow.vue?vue&type=template&id=72d03e84&bindings={"employeesCount":"setup","company":"props"} */ "./resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue?vue&type=template&id=72d03e84&bindings={\"employeesCount\":\"setup\",\"company\":\"props\"}");
+/* harmony import */ var _HrCompaniesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HrCompaniesTableRow.vue?vue&type=script&lang=js */ "./resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue?vue&type=script&lang=js");
+
+
+
+_HrCompaniesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _HrCompaniesTableRow_vue_vue_type_template_id_72d03e84_bindings_employeesCount_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_HrCompaniesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_HrCompaniesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
 
 /***/ }),
 
@@ -1156,6 +1428,46 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue?vue&type=script&lang=js":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue?vue&type=script&lang=js .default */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminCompaniesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminCompaniesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AdminCompaniesTableRow.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue?vue&type=script&lang=js":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue?vue&type=script&lang=js ***!
+  \**********************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue?vue&type=script&lang=js .default */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrCompaniesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrCompaniesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HrCompaniesTableRow.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/views/CompaniesView.vue?vue&type=script&lang=js":
 /*!**********************************************************************!*\
   !*** ./resources/js/views/CompaniesView.vue?vue&type=script&lang=js ***!
@@ -1196,12 +1508,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={\"name\":\"setup\",\"email\":\"setup\",\"domain\":\"setup\",\"personnel_id\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"personnels\":\"setup\",\"company\":\"props\"}":
-/*!*****************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel_id":"setup","errors":"setup","validate":"setup","personnels":"setup","company":"props"} ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={\"name\":\"setup\",\"email\":\"setup\",\"domain\":\"setup\",\"personnel\":\"setup\",\"manager\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"personnels\":\"setup\",\"company\":\"props\"}":
+/*!********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel":"setup","manager":"setup","errors":"setup","validate":"setup","personnels":"setup","company":"props"} ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel_id":"setup","errors":"setup","validate":"setup","personnels":"setup","company":"props"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel":"setup","manager":"setup","errors":"setup","validate":"setup","personnels":"setup","company":"props"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1209,9 +1521,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompanyFormFields_vue_vue_type_template_id_e6b269ac_bindings_name_setup_email_setup_domain_setup_personnel_id_setup_errors_setup_validate_setup_personnels_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompanyFormFields_vue_vue_type_template_id_e6b269ac_bindings_name_setup_email_setup_domain_setup_personnel_setup_manager_setup_errors_setup_validate_setup_personnels_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompanyFormFields_vue_vue_type_template_id_e6b269ac_bindings_name_setup_email_setup_domain_setup_personnel_id_setup_errors_setup_validate_setup_personnels_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel_id":"setup","errors":"setup","validate":"setup","personnels":"setup","company":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={\"name\":\"setup\",\"email\":\"setup\",\"domain\":\"setup\",\"personnel_id\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"personnels\":\"setup\",\"company\":\"props\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompanyFormFields_vue_vue_type_template_id_e6b269ac_bindings_name_setup_email_setup_domain_setup_personnel_setup_manager_setup_errors_setup_validate_setup_personnels_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel":"setup","manager":"setup","errors":"setup","validate":"setup","personnels":"setup","company":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={\"name\":\"setup\",\"email\":\"setup\",\"domain\":\"setup\",\"personnel\":\"setup\",\"manager\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"personnels\":\"setup\",\"company\":\"props\"}");
 
 
 /***/ }),
@@ -1276,12 +1588,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/companies/CompaniesTableHead.vue?vue&type=template&id=5b649a14&bindings={\"profile\":\"setup\"}":
-/*!************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/companies/CompaniesTableHead.vue?vue&type=template&id=5b649a14&bindings={"profile":"setup"} ***!
-  \************************************************************************************************************************************/
+/***/ "./resources/js/components/tables/companies/CompaniesTableHead.vue?vue&type=template&id=5b649a14&bindings={\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\"}":
+/*!**********************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/companies/CompaniesTableHead.vue?vue&type=template&id=5b649a14&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} ***!
+  \**********************************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableHead.vue?vue&type=template&id=5b649a14&bindings={"profile":"setup"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableHead.vue?vue&type=template&id=5b649a14&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1289,19 +1601,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompaniesTableHead_vue_vue_type_template_id_5b649a14_bindings_profile_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompaniesTableHead_vue_vue_type_template_id_5b649a14_bindings_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompaniesTableHead_vue_vue_type_template_id_5b649a14_bindings_profile_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CompaniesTableHead.vue?vue&type=template&id=5b649a14&bindings={"profile":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableHead.vue?vue&type=template&id=5b649a14&bindings={\"profile\":\"setup\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompaniesTableHead_vue_vue_type_template_id_5b649a14_bindings_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CompaniesTableHead.vue?vue&type=template&id=5b649a14&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableHead.vue?vue&type=template&id=5b649a14&bindings={\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\"}");
 
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={\"profile\":\"setup\",\"company\":\"props\"}":
-/*!*****************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","company":"props"} ***!
-  \*****************************************************************************************************************************************************/
+/***/ "./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={\"profile\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\",\"company\":\"props\"}":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup","company":"props"} ***!
+  \*********************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","company":"props"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup","company":"props"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1309,9 +1621,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompaniesTableRow_vue_vue_type_template_id_6c068534_bindings_profile_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompaniesTableRow_vue_vue_type_template_id_6c068534_bindings_profile_setup_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompaniesTableRow_vue_vue_type_template_id_6c068534_bindings_profile_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","company":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={\"profile\":\"setup\",\"company\":\"props\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompaniesTableRow_vue_vue_type_template_id_6c068534_bindings_profile_setup_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup","company":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={\"profile\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\",\"company\":\"props\"}");
 
 
 /***/ }),
@@ -1352,6 +1664,86 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EditButton_vue_vue_type_template_id_d669c71e_bindings_showEditCompanyForm_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EditButton_vue_vue_type_template_id_d669c71e_bindings_showEditCompanyForm_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./EditButton.vue?vue&type=template&id=d669c71e&bindings={"showEditCompanyForm":"setup","company":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/actions/EditButton.vue?vue&type=template&id=d669c71e&bindings={\"showEditCompanyForm\":\"setup\",\"company\":\"props\"}");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/companies/layouts/AdminCompaniesTableHead.vue?vue&type=template&id=4d9589ae":
+/*!********************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/companies/layouts/AdminCompaniesTableHead.vue?vue&type=template&id=4d9589ae ***!
+  \********************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/AdminCompaniesTableHead.vue?vue&type=template&id=4d9589ae .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminCompaniesTableHead_vue_vue_type_template_id_4d9589ae__WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminCompaniesTableHead_vue_vue_type_template_id_4d9589ae__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AdminCompaniesTableHead.vue?vue&type=template&id=4d9589ae */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/AdminCompaniesTableHead.vue?vue&type=template&id=4d9589ae");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue?vue&type=template&id=7cc3aaa1&bindings={\"employeesCount\":\"setup\",\"company\":\"props\"}":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue?vue&type=template&id=7cc3aaa1&bindings={"employeesCount":"setup","company":"props"} ***!
+  \*************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue?vue&type=template&id=7cc3aaa1&bindings={"employeesCount":"setup","company":"props"} .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminCompaniesTableRow_vue_vue_type_template_id_7cc3aaa1_bindings_employeesCount_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminCompaniesTableRow_vue_vue_type_template_id_7cc3aaa1_bindings_employeesCount_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AdminCompaniesTableRow.vue?vue&type=template&id=7cc3aaa1&bindings={"employeesCount":"setup","company":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue?vue&type=template&id=7cc3aaa1&bindings={\"employeesCount\":\"setup\",\"company\":\"props\"}");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/companies/layouts/HrCompaniesTableHead.vue?vue&type=template&id=b689b8b4":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/companies/layouts/HrCompaniesTableHead.vue?vue&type=template&id=b689b8b4 ***!
+  \*****************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/HrCompaniesTableHead.vue?vue&type=template&id=b689b8b4 .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrCompaniesTableHead_vue_vue_type_template_id_b689b8b4__WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrCompaniesTableHead_vue_vue_type_template_id_b689b8b4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HrCompaniesTableHead.vue?vue&type=template&id=b689b8b4 */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/HrCompaniesTableHead.vue?vue&type=template&id=b689b8b4");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue?vue&type=template&id=72d03e84&bindings={\"employeesCount\":\"setup\",\"company\":\"props\"}":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue?vue&type=template&id=72d03e84&bindings={"employeesCount":"setup","company":"props"} ***!
+  \**********************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue?vue&type=template&id=72d03e84&bindings={"employeesCount":"setup","company":"props"} .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrCompaniesTableRow_vue_vue_type_template_id_72d03e84_bindings_employeesCount_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrCompaniesTableRow_vue_vue_type_template_id_72d03e84_bindings_employeesCount_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HrCompaniesTableRow.vue?vue&type=template&id=72d03e84&bindings={"employeesCount":"setup","company":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue?vue&type=template&id=72d03e84&bindings={\"employeesCount\":\"setup\",\"company\":\"props\"}");
 
 
 /***/ }),
@@ -1405,10 +1797,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={\"name\":\"setup\",\"email\":\"setup\",\"domain\":\"setup\",\"personnel_id\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"personnels\":\"setup\",\"company\":\"props\"}":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel_id":"setup","errors":"setup","validate":"setup","personnels":"setup","company":"props"} ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={\"name\":\"setup\",\"email\":\"setup\",\"domain\":\"setup\",\"personnel\":\"setup\",\"manager\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"personnels\":\"setup\",\"company\":\"props\"}":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel":"setup","manager":"setup","errors":"setup","validate":"setup","personnels":"setup","company":"props"} ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -1425,13 +1817,13 @@ __webpack_require__.r(__webpack_exports__);
 
 const _hoisted_1 = { class: "form-row mb-2" }
 const _hoisted_2 = { class: "form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap" }
-const _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Manager", -1 /* HOISTED */)
+const _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Personnel", -1 /* HOISTED */)
 const _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
   disabled: "",
   selected: "",
   value: null
 }, " -- select manager --", -1 /* HOISTED */)
-const _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("small", { class: "col-md-12 invalid-feedback text-right p-0" }, "please select a personal manager", -1 /* HOISTED */)
+const _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("small", { class: "col-md-12 invalid-feedback text-right p-0" }, "please select a personnel manager", -1 /* HOISTED */)
 const _hoisted_6 = { class: "form-row mb-2" }
 const _hoisted_7 = { class: "form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap" }
 const _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Name", -1 /* HOISTED */)
@@ -1442,8 +1834,12 @@ const _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode
 const _hoisted_13 = { class: "col-md-12 invalid-feedback text-right p-0" }
 const _hoisted_14 = { class: "form-row mb-2" }
 const _hoisted_15 = { class: "form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap" }
-const _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Email", -1 /* HOISTED */)
+const _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Manager", -1 /* HOISTED */)
 const _hoisted_17 = { class: " col-md-12 invalid-feedback text-right p-0" }
+const _hoisted_18 = { class: "form-row mb-2" }
+const _hoisted_19 = { class: "form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap" }
+const _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Email", -1 /* HOISTED */)
+const _hoisted_21 = { class: " col-md-12 invalid-feedback text-right p-0" }
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [
@@ -1451,12 +1847,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [
         _hoisted_3,
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-          class: ["custom-select form-control form-control-sm col-md-10", {'is-invalid': !$setup.personnel_id.meta.valid && $setup.personnel_id.meta.touched}],
-          name: "personnel_id",
+          class: ["custom-select form-control form-control-sm col-md-10", {'is-invalid': !$setup.personnel.meta.valid && $setup.personnel.meta.touched}],
+          name: "personnel",
           "onUpdate:modelValue": _cache[1] || (_cache[1] = $event => ($props.company.personnel_id = $event)),
-          onFocus: _cache[2] || (_cache[2] = $event => ($setup.personnel_id.meta.touched = false)),
-          onChange: _cache[3] || (_cache[3] = (...args) => ($setup.personnel_id.handleChange(...args))),
-          onBlur: _cache[4] || (_cache[4] = (...args) => ($setup.personnel_id.handleBlur(...args)))
+          onFocus: _cache[2] || (_cache[2] = $event => ($setup.personnel.meta.touched = false)),
+          onChange: _cache[3] || (_cache[3] = (...args) => ($setup.personnel.handleChange(...args))),
+          onBlur: _cache[4] || (_cache[4] = (...args) => ($setup.personnel.handleBlur(...args)))
         }, [
           _hoisted_4,
           ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.personnels, (personnel) => {
@@ -1512,17 +1908,35 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         _hoisted_16,
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
           type: "text",
+          class: ["form-control col-md-10", {'is-invalid': !$setup.manager.meta.valid && $setup.manager.meta.touched}],
+          placeholder: "Manager name",
+          name: "manager",
+          "onUpdate:modelValue": _cache[13] || (_cache[13] = $event => ($props.company.pseudonym = $event)),
+          onFocus: _cache[14] || (_cache[14] = $event => ($setup.manager.meta.touched = false)),
+          onInput: _cache[15] || (_cache[15] = (...args) => ($setup.manager.handleChange(...args))),
+          onBlur: _cache[16] || (_cache[16] = (...args) => ($setup.manager.handleBlur(...args)))
+        }, null, 34 /* CLASS, HYDRATE_EVENTS */), [
+          [vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.company.pseudonym]
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("small", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.manager || 'manager name is required'), 1 /* TEXT */)
+      ])
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_18, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_19, [
+        _hoisted_20,
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+          type: "text",
           class: ["form-control col-md-10", {'is-invalid': !$setup.email.meta.valid && $setup.email.meta.touched}],
           placeholder: "Email",
           name: "email",
-          "onUpdate:modelValue": _cache[13] || (_cache[13] = $event => ($props.company.email = $event)),
-          onFocus: _cache[14] || (_cache[14] = $event => ($setup.email.meta.touched = false)),
-          onInput: _cache[15] || (_cache[15] = (...args) => ($setup.email.handleChange(...args))),
-          onBlur: _cache[16] || (_cache[16] = (...args) => ($setup.email.handleBlur(...args)))
+          "onUpdate:modelValue": _cache[17] || (_cache[17] = $event => ($props.company.email = $event)),
+          onFocus: _cache[18] || (_cache[18] = $event => ($setup.email.meta.touched = false)),
+          onInput: _cache[19] || (_cache[19] = (...args) => ($setup.email.handleChange(...args))),
+          onBlur: _cache[20] || (_cache[20] = (...args) => ($setup.email.handleBlur(...args)))
         }, null, 34 /* CLASS, HYDRATE_EVENTS */), [
           [vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.company.email]
         ]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("small", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.email || 'email is required'), 1 /* TEXT */)
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("small", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.email || 'email is required'), 1 /* TEXT */)
       ])
     ])
   ], 64 /* STABLE_FRAGMENT */))
@@ -1692,11 +2106,11 @@ const _hoisted_1 = { class: "container-fluid flex-grow-1 container-p-y" }
 const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h4", { class: "font-weight-bold py-3 mb-4" }, " Companies ", -1 /* HOISTED */)
 const _hoisted_3 = {
   key: 0,
-  class: "d-flex justify-content-between mb-3"
+  class: "d-flex justify-content-between mb-3 mt-2"
 }
 const _hoisted_4 = {
   key: 1,
-  class: "table-responsive"
+  class: " table-responsive"
 }
 const _hoisted_5 = { class: "datatables-demo table table-striped table-bordered" }
 
@@ -1707,7 +2121,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
     _hoisted_2,
-    ($setup.profile.role === 'admin')
+    ($setup.profile.role === 'admin' || $setup.profile.role === 'personnel')
       ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_3, [
           (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
             onClick: _cache[1] || (_cache[1] = (...args) => ($setup.initializeCompanyStoreForm(...args))),
@@ -1737,10 +2151,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableHead.vue?vue&type=template&id=5b649a14&bindings={\"profile\":\"setup\"}":
-/*!*********************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableHead.vue?vue&type=template&id=5b649a14&bindings={"profile":"setup"} ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableHead.vue?vue&type=template&id=5b649a14&bindings={\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\"}":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableHead.vue?vue&type=template&id=5b649a14&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -1755,37 +2169,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold " }, "Created", -1 /* HOISTED */)
-const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold " }, "Personal manager", -1 /* HOISTED */)
-const _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold " }, "Name", -1 /* HOISTED */)
-const _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold " }, "Domain", -1 /* HOISTED */)
-const _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold " }, "Email", -1 /* HOISTED */)
-const _hoisted_6 = {
-  key: 0,
-  class: "text-left font-weight-bold"
-}
-
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("thead", null, [
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", null, [
-      _hoisted_1,
-      _hoisted_2,
-      _hoisted_3,
-      _hoisted_4,
-      _hoisted_5,
-      ($setup.profile.role === 'admin')
-        ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("th", _hoisted_6, "Actions"))
-        : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
-    ])
-  ]))
+  const _component_HrHead = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("HrHead")
+  const _component_AdminHead = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("AdminHead")
+
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [
+    ($setup.profileIsHr)
+      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_HrHead, { key: 0 }))
+      : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
+    ($setup.profileIsPersonnel || $setup.profileIsAdmin)
+      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_AdminHead, { key: 1 }))
+      : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
+  ], 64 /* STABLE_FRAGMENT */))
 }
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={\"profile\":\"setup\",\"company\":\"props\"}":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","company":"props"} ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={\"profile\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\",\"company\":\"props\"}":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/CompaniesTableRow.vue?vue&type=template&id=6c068534&bindings={"profile":"setup","profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup","company":"props"} ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -1800,29 +2203,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-const _hoisted_1 = { class: "odd gradeX" }
-const _hoisted_2 = {
-  key: 0,
-  class: "d-flex justify-content-between align-items-center border-0"
-}
-
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  const _component_EditButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("EditButton")
-  const _component_DeleteButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DeleteButton")
+  const _component_HrRow = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("HrRow")
+  const _component_AdminRow = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("AdminRow")
 
-  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_1, [
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.company.created_at), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.company.personnel.login), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.company.name), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.company.domain), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.company.email), 1 /* TEXT */),
-    ($setup.profile.role === 'admin')
-      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_2, [
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_EditButton, { company: $props.company }, null, 8 /* PROPS */, ["company"]),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DeleteButton, { company: $props.company }, null, 8 /* PROPS */, ["company"])
-        ]))
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [
+    ($setup.profileIsHr)
+      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_HrRow, {
+          key: 0,
+          company: $props.company
+        }, null, 8 /* PROPS */, ["company"]))
+      : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
+    ($setup.profileIsPersonnel || $setup.profileIsAdmin)
+      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_AdminRow, {
+          key: 1,
+          company: $props.company
+        }, null, 8 /* PROPS */, ["company"]))
       : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
-  ]))
+  ], 64 /* STABLE_FRAGMENT */))
 }
 
 /***/ }),
@@ -1889,6 +2287,168 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       title: "Edit",
       onClick: _cache[1] || (_cache[1] = (...args) => ($setup.showEditCompanyForm(...args)))
     })
+  ]))
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/AdminCompaniesTableHead.vue?vue&type=template&id=4d9589ae":
+/*!*****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/AdminCompaniesTableHead.vue?vue&type=template&id=4d9589ae ***!
+  \*****************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", { class: "d-flex" }, [
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold col-1 " }, "Created"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold col-1 " }, "Personnel"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold col-2" }, "Name"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold col-4" }, "Domain/Email"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold col-2" }, "Manager"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold col-1" }, "Applicants"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold col-1" }, "Actions")
+], -1 /* HOISTED */)
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("thead", null, [
+    _hoisted_1
+  ]))
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue?vue&type=template&id=7cc3aaa1&bindings={\"employeesCount\":\"setup\",\"company\":\"props\"}":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue?vue&type=template&id=7cc3aaa1&bindings={"employeesCount":"setup","company":"props"} ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+const _hoisted_1 = { class: "odd gradeX d-flex" }
+const _hoisted_2 = { class: "col-1" }
+const _hoisted_3 = { class: "col-1" }
+const _hoisted_4 = { class: "col-2" }
+const _hoisted_5 = { class: "col-4 d-flex flex-column" }
+const _hoisted_6 = { class: "col-2" }
+const _hoisted_7 = { class: "col-1" }
+const _hoisted_8 = { class: "d-flex col-1 justify-content-between align-items-center " }
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_EditButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("EditButton")
+  const _component_DeleteButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DeleteButton")
+
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_1, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.company.created_at), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.company.personnel.login), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.company.name), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_5, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+        href: $props.company.domain
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.company.domain), 9 /* TEXT, PROPS */, ["href"]),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.company.email), 1 /* TEXT */)
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.company.pseudonym), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.employeesCount), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_8, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_EditButton, { company: $props.company }, null, 8 /* PROPS */, ["company"]),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DeleteButton, { company: $props.company }, null, 8 /* PROPS */, ["company"])
+    ])
+  ]))
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/HrCompaniesTableHead.vue?vue&type=template&id=b689b8b4":
+/*!**************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/HrCompaniesTableHead.vue?vue&type=template&id=b689b8b4 ***!
+  \**************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", { class: "d-flex" }, [
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", { class: "text-left font-weight-bold col-1" }, "Created"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", { class: "text-left font-weight-bold col-2" }, "Name"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", { class: "text-left font-weight-bold col-3" }, "Domain"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", { class: "text-left font-weight-bold col-3" }, "Email"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", { class: "text-left font-weight-bold col-2" }, "Manager"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", { class: "text-left font-weight-bold col-1" }, "Applicants")
+], -1 /* HOISTED */)
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("thead", null, [
+    _hoisted_1
+  ]))
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue?vue&type=template&id=72d03e84&bindings={\"employeesCount\":\"setup\",\"company\":\"props\"}":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue?vue&type=template&id=72d03e84&bindings={"employeesCount":"setup","company":"props"} ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+const _hoisted_1 = { class: "odd gradeX d-flex" }
+const _hoisted_2 = { class: "col-1" }
+const _hoisted_3 = { class: "col-2" }
+const _hoisted_4 = { class: "col-3" }
+const _hoisted_5 = { class: "col-3" }
+const _hoisted_6 = { class: "col-2" }
+const _hoisted_7 = { class: "col-1" }
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_1, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.company.created_at), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.company.name), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.company.domain), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.company.email), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.company.pseudonym), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.employeesCount), 1 /* TEXT */)
   ]))
 }
 

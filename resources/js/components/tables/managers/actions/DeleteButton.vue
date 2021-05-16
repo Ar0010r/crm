@@ -27,8 +27,10 @@
             async function deleteUser() {
                 try {
                     await container.UserService.deleteUser(props.user);
+                    emitter.emit('notification-success', ' manager ' + props.user.login +' was deleted');
                     store.dispatch('user/deleteUser', props.user);
                 } catch (e) {
+                    console.log(e);
                     emitter.emit('notification-error', e.response.data)
                 }
             }

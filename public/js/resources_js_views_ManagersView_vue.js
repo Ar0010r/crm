@@ -400,21 +400,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return container.UserService.deleteUser(props.user);
 
               case 3:
+                emitter.emit('notification-success', ' manager ' + props.user.login + ' was deleted');
                 store.dispatch('user/deleteUser', props.user);
-                _context2.next = 9;
+                _context2.next = 11;
                 break;
 
-              case 6:
-                _context2.prev = 6;
+              case 7:
+                _context2.prev = 7;
                 _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0);
                 emitter.emit('notification-error', _context2.t0.response.data);
 
-              case 9:
+              case 11:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[0, 6]]);
+        }, _callee2, null, [[0, 7]]);
       }));
       return _deleteUser.apply(this, arguments);
     }
@@ -1285,13 +1287,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const _hoisted_1 = { class: "container-fluid flex-grow-1 container-p-y" }
-const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h4", { class: "font-weight-bold py-3 mb-4" }, " Managers ", -1 /* HOISTED */)
+const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h4", { class: "font-weight-bold py-3 mb-4" }, "Managers", -1 /* HOISTED */)
 const _hoisted_3 = { class: "d-flex justify-content-between mb-3" }
 const _hoisted_4 = {
   key: 0,
   class: "table-responsive"
 }
-const _hoisted_5 = { class: "datatables-demo table table-striped table-bordered" }
+const _hoisted_5 = { class: "datatables-demo table table-striped table-bordered col-8" }
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_ManagersTableHead = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ManagersTableHead")
@@ -1346,11 +1348,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", null, [
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left  font-weight-bold" }, "Created"),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left  font-weight-bold" }, "Login"),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left  font-weight-bold" }, "Role"),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left  font-weight-bold" }, "Actions")
+const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", { class: "d-flex" }, [
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left col-2 font-weight-bold" }, "Created"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left col-4 font-weight-bold" }, "Login"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left col-4 font-weight-bold" }, "Role"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left col-2 font-weight-bold" }, "Actions")
 ], -1 /* HOISTED */)
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -1379,19 +1381,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-const _hoisted_1 = { class: "d-flex justify-content-between align-items-center border-0" }
+const _hoisted_1 = { class: "col-2" }
+const _hoisted_2 = { class: "col-4" }
+const _hoisted_3 = { class: "col-4" }
+const _hoisted_4 = { class: "d-flex col-2 justify-content-between align-items-center" }
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_EditButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("EditButton")
   const _component_DeleteButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DeleteButton")
 
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
-    class: { 'd-none': $props.user.login === $setup.profile.login}
+    class: ["d-flex", { 'd-none': $props.user.login === $setup.profile.login}]
   }, [
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.user.created_at), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.user.login), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.user.role), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_1, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.user.created_at), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.user.login), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.user.role), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_4, [
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_EditButton, { user: $props.user }, null, 8 /* PROPS */, ["user"]),
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DeleteButton, { user: $props.user }, null, 8 /* PROPS */, ["user"])
     ])

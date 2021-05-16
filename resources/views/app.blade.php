@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" class="light-style">
+<html lang="en" >
 
 <head>
     <title>HiringTools</title>
@@ -64,12 +64,12 @@
     <link rel="stylesheet" href="assets/vendor/libs/flow-js/flow.css">
 </head>
 
-<body style="background: white;">
+<body class="light-style" style="background-color: #f5f5f5!important;">
 <div class="page-loader">
     <div class="bg-primary"></div>
 </div>
 
-<div id="app"></div>
+<div id="app" style="background-color: #f5f5f5!important;" ></div>
 
 <script src="{{asset('js/app.js')}}"></script>
 <script src="assets/vendor/libs/popper/popper.js"></script>
@@ -88,10 +88,12 @@
 <!-- Demo -->
 <script src="assets/vendor/libs/growl/growl.js"></script>
 <script src="assets/js/ui_notifications.js"></script>
+<script src="assets/vendor/libs/datatables/datatables.js"></script>
 {{--<script src="assets/js/forms_selects.js"></script>--}}
 
 <!-- Demo -->
 <script src="assets/js/demo.js"></script>
+<script src="assets/js/tables_datatables.js"></script>
 
 </body>
 

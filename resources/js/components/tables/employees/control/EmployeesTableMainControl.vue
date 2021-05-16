@@ -33,12 +33,10 @@
             </option>
         </select>
     </div>
-    <SelectedControl/>
 </template>
 <script>
     import {useStore} from 'vuex';
     import {computed, reactive, watch, inject} from 'vue';
-    import SelectedControl from './SelectedEmployeesControl'
 
     export default {
         setup() {
@@ -68,8 +66,5 @@
                 showCreateEmployeeForm: () => emitter.emit('create-employee-form')
             }
         },
-        components: {
-            SelectedControl
-        }
     };
 </script>

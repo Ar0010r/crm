@@ -1,5 +1,6 @@
 <template>
-    <tr class="" style="background-color: #e3e4e5; border: none">
+    <!--<tr class="" style="background-color: #e3e4e5; border: none">-->
+    <tr class="" style="background-color: #f5f5f5!important; border: none">
         <td style="border: none"></td>
         <td style="border: none"></td>
         <td style="border: none"></td>

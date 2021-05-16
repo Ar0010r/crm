@@ -13,6 +13,7 @@
             const emitter = inject("emitter");
             let errors = ref([]);
             const delay = 7000;
+            const transition = 500;
 
             async function showError(message) {
                 let id = setTimeout(() => close(id), delay);
@@ -22,7 +23,7 @@
                     message: message
                 });
 
-                setTimeout(() => document.getElementById(id).classList.remove('growl-incoming'), 500)
+                setTimeout(() => document.getElementById(id).classList.remove('growl-incoming'), transition)
             }
 
             emitter.on('notification-error', showError);
@@ -31,7 +32,7 @@
                 const error = document.getElementById(id);
                 if (error) {
                     error.classList.add('growl-outgoing');
-                    setTimeout(() => document.getElementById(id).classList.add('d-none'), 500);
+                    setTimeout(() => document.getElementById(id).classList.add('d-none'), transition);
                 }
             }
 

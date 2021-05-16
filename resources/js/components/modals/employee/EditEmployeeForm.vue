@@ -37,6 +37,7 @@
         setup() {
             const store = useStore();
             const emitter = inject("emitter");
+            const container = inject("container");
             const emptyEmployee = {...store.getters.getEmptyEmployee};
             let companies = computed(() => store.getters.getCompanies);
             const employeeFields = ref(null);
@@ -48,7 +49,8 @@
             async function updateEmployee() {
                 try {
                     employeeFields.value.validate()
-                    await axios.put('api/employees/' + employee.id, employee);
+                   // await axios.put('api/employees/' + employee.id, employee);
+                    await container.EmployeeService.update(employee);
 
                     if(employee.company) employee.company = companies.value[employee.company_id];
                     else employee.company = {...employee.company, ...emptyEmployee.company};

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasUuid;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,13 +11,11 @@ use Spatie\Searchable\SearchResult;
 
 class Employee extends Model implements Searchable
 {
-    use HasFactory;
+    use HasFactory, HasUuid;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+   /* public $incrementing = false;
+    protected $keyType = 'string';*/
+
     protected $fillable = [
         'id',
         'company_id',
@@ -60,6 +59,6 @@ class Employee extends Model implements Searchable
 
     protected function serializeDate(DateTimeInterface $date)
     {
-        return $date->format('Y-m-d H:i');
+        return $date->format('Y-m-d');
     }
 }

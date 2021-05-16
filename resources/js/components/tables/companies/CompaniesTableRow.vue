@@ -1,22 +1,11 @@
 <template>
-    <tr class="odd gradeX">
-        <td>{{company.created_at}}</td>
-        <td>{{company.personnel.login}}</td>
-        <td>{{company.name}}</td>
-        <td>{{company.domain}}</td>
-        <td>{{company.email}}</td>
-        <td v-if="profile.role === 'admin'"
-            class="d-flex justify-content-between align-items-center border-0"
-        >
-            <EditButton :company="company" />
-            <DeleteButton :company="company" />
-        </td>
-    </tr>
+    <HrRow v-if="profileIsHr" :company="company" />
+    <AdminRow v-if="profileIsPersonnel || profileIsAdmin" :company="company" />
 </template>
 
 <script>
-    import DeleteButton from './actions/DeleteButton';
-    import EditButton from './actions/EditButton';
+    import AdminRow from './layouts/AdminCompaniesTableRow';
+    import HrRow from './layouts/HrCompaniesTableRow';
     import{useStore} from 'vuex';
     import {computed} from 'vue';
 
@@ -26,12 +15,21 @@
 
             return {
                 profile: computed(() => store.getters.getProfile),
+                profileIsAdmin: computed(() => {
+                    return store.getters.getProfile.role === 'admin'
+                }),
+                profileIsPersonnel: computed(() => {
+                    return store.getters.getProfile.role === 'personnel'
+                }),
+                profileIsHr: computed(() => {
+                    return store.getters.getProfile.role === 'hr'
+                })
             }
         },
         props: {company: Object},
         components: {
-            DeleteButton,
-            EditButton
+            AdminRow,
+            HrRow
         }
     };
 </script>

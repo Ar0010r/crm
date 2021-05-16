@@ -1,8 +1,6 @@
 <template>
     <div class="container-fluid flex-grow-1 container-p-y">
-        <h4 class="font-weight-bold py-3 mb-4">
-            Managers
-        </h4>
+        <h4 class="font-weight-bold py-3 mb-4">Managers</h4>
         <div class="d-flex justify-content-between mb-3">
             <button @click.prevent="showManagerStoreForm"
                     class="btn btn-primary btn"
@@ -12,7 +10,7 @@
             </button>
         </div>
         <div v-if="Object.keys(users).length > 0" class="table-responsive">
-            <table class="datatables-demo table table-striped table-bordered">
+            <table class="datatables-demo table table-striped table-bordered col-8">
                 <ManagersTableHead/>
                 <tbody>
                 <ManagersTableRow
@@ -23,7 +21,7 @@
                 </tbody>
             </table>
         </div>
-        <NoRecords v-else />
+        <NoRecords v-else/>
     </div>
 </template>
 
@@ -43,7 +41,7 @@
             const emitter = inject("emitter");
 
             return {
-                showManagerStoreForm : () =>  emitter.emit('create-manager-form'),
+                showManagerStoreForm: () => emitter.emit('create-manager-form'),
                 users: computed(() => store.getters.getUsers),
             }
         },

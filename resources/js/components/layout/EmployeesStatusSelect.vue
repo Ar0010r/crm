@@ -4,7 +4,7 @@
                 data-toggle="dropdown">{{status}}
         </button>
         <div class="dropdown-menu m-0 p-0 w-100 text-center">
-            <a v-for="(cssClass, status) in statuses" :key="status" @click='activateStatus(id, status)'
+            <a v-for="(cssClass, status) in availableStatuses" :key="status" @click='activateStatus(id, status)'
                class="dropdown-item" :class="cssClass"
                href="javascript:void(0)"
             >
@@ -30,12 +30,13 @@
 
             return {
                 statuses: computed(() => store.getters.getStatuses),
+                availableStatuses: computed(() => store.getters.getAvailableStatuses),
                 employeeStatus: ref(props.status),
                 activateStatus
             }
         },
 
-        props: ['status', 'id', 'updateOnSelect'],
+        props: ['status', 'id'],
     };
 </script>
 

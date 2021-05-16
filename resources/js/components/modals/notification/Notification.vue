@@ -12,9 +12,9 @@
 
     export default {
         components: {
-            Error,
             Warning,
-            Success
+            Success,
+            Error
         }
     };
 </script>

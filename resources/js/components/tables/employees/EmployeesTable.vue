@@ -27,7 +27,7 @@
 </template>
 
 <script>
-    import EmployeesTableControl from './actions/EmployeesTableControl.vue';
+    import EmployeesTableControl from './control/EmployeesTableControl.vue';
     import EmployeesTableRow from './EmployeesTableRow.vue';
     import EmptyTableRow from '../../layout/EmptyEmployeesTableRow';
     import EmployeesTableHead from './EmployeesTableHead.vue';
@@ -50,13 +50,13 @@
 
         components: {
             EmployeesTableControl,
-            EmployeesTableRow,
             EmployeesTableHead,
-            Pagination,
             StoreEmployeeForm,
+            EmployeesTableRow,
             EditEmployeeForm,
             FileInputForm,
             EmptyTableRow,
+            Pagination,
             NoRecords
         }
     };

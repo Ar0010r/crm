@@ -3,12 +3,12 @@
         <h4 class="font-weight-bold py-3 mb-4">
             Companies
         </h4>
-        <div v-if="profile.role === 'admin'" class="d-flex justify-content-between mb-3">
+        <div v-if="profile.role === 'admin' || profile.role === 'personnel'" class="d-flex justify-content-between mb-3 mt-2">
             <button @click="initializeCompanyStoreForm" class="btn btn-primary btn" data-toggle="modal"
                     data-target="#addCompanyForm">Add company
             </button>
         </div>
-        <div v-if="Object.keys(companies).length > 0" class="table-responsive">
+        <div v-if="Object.keys(companies).length > 0" class=" table-responsive">
             <table class="datatables-demo table table-striped table-bordered">
                 <CompaniesTableHead/>
                 <tbody>

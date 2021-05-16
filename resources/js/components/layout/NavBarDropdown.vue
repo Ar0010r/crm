@@ -31,11 +31,11 @@
         setup() {
             const store = useStore();
             const emitter = inject("emitter");
+            const container = inject("container");
             let profile = computed(() => store.getters.getProfile);
 
             async function logout() {
-                localStorage.removeItem('token');
-                window.location.href = '/login';
+                await container.AuthService.logout();
             }
 
             return {

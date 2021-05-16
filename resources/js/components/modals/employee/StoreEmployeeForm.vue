@@ -32,7 +32,6 @@
 <script>
     import EmployeeFormFields from './fields/EmployeeFormFields'
     import EmployeePickUpField from './fields/EmployeePickUpField'
-    import axios from 'axios';
     import {computed, reactive, inject, ref, onBeforeUnmount} from 'vue';
     import {useStore} from 'vuex';
 

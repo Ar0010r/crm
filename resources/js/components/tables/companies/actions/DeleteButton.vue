@@ -28,6 +28,7 @@
                 try {
                     console.log('delete company', props.company)
                     await container.CompanyService.deleteCompany(props.company);
+                    emitter.emit('notification-success', ' company ' + props.company.name +' was deleted');
                     store.dispatch('company/deleteCompany', props.company);
                 } catch (e) {
                     emitter.emit('notification-error', e.response.data)

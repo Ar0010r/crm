@@ -37,7 +37,7 @@ class UsersController extends Controller
         $r->merge(["password" => bcrypt($r->password)]);
         $user = User::create($r->all());
 
-        if(auth()->user()->role === Role::TOP_HR){
+        if (auth()->user()->role === Role::TOP_HR && $user->role === Role::HR) {
             TopHrHr::create(['top_hr_id' => auth()->user()->id, 'hr_id' => $user->id]);
         }
 
@@ -51,9 +51,6 @@ class UsersController extends Controller
 
     public function update(UserUpdateRequest $r, User $user)
     {
-
-       // dd($r->all());
-
         $avatar = $r->file('file');
 
         if ($avatar) {
@@ -80,7 +77,7 @@ class UsersController extends Controller
                 'message' => 'can`t delete manager ' . $user->login,
                 'errors' => [['he might control some companies']]
             ], JsonResponse::HTTP_NOT_ACCEPTABLE);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             return response(['message' => $e->getMessage()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

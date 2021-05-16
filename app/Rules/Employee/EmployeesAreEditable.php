@@ -4,11 +4,14 @@ namespace App\Rules\Employee;
 
 use App\Models\Employee;
 use Illuminate\Contracts\Validation\Rule;
+use phpDocumentor\Reflection\Types\Array_;
+use function PHPUnit\Framework\isEmpty;
 
 class EmployeesAreEditable implements Rule
 {
-    private $employee;
-
+    private const EMPTY_DATA_ERROR = 'Array with applicants that must be deleted is empty';
+    private const WRONG_DATA_ERROR = 'One employee that you try to delete does not exist. Please reload the page';
+    private array $employee = [];
 
     public function passes($attribute, $value)
     {
@@ -19,16 +22,12 @@ class EmployeesAreEditable implements Rule
                 return false;
             }
         }
-        return true;
+
+        return ! empty($value);
     }
 
-    /**
-     * Get the validation error message.
-     *
-     * @return string
-     */
     public function message()
     {
-        return 'One employee that you try to delete does not exist. Please reload the page';
+        return empty($this->employee) ? self::EMPTY_DATA_ERROR : self::WRONG_DATA_ERROR;
     }
 }

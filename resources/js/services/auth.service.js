@@ -1,4 +1,3 @@
-
 export class AuthService {
 
     constructor(client, store) {
@@ -19,5 +18,16 @@ export class AuthService {
             return true;
         }
         return false;
+    }
+
+    async logout() {
+        try{
+            await this.client.get("/api/logout");
+            localStorage.removeItem('token');
+            window.location.href = '/login';
+        } catch (e) {
+            localStorage.removeItem('token');
+            window.location.href = '/login';
+        }
     }
 }

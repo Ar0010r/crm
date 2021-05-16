@@ -1,11 +1,13 @@
 <template>
-    <div v-for="warning in warnings" class="growl growl-incoming growl-warning growl-medium text-center" :id="warning.id">
+    <div v-for="warning in warnings" class="growl growl-incoming growl-warning growl-medium text-center"
+         :id="warning.id">
         <div class="growl-title">{{warning.message.message}}</div>
         <div class="growl-message">will be {{warning.message.action}} in {{delay/1000}} seconds</div>
-       <div>
-           <button class="btn btn-warning align-center" @click="disappear(warning.id)">Undo</button>
-           <button class="btn btn-warning align-center" @click="close(warning.message.event_id, warning.id)">Delete</button>
-       </div>
+        <div>
+            <button class="btn btn-warning align-center" @click="disappear(warning.id)">Discard</button>
+            <button class="btn btn-warning align-center" @click="close(warning.message.event_id, warning.id)">Confirm
+            </button>
+        </div>
     </div>
 </template>
 <script>
@@ -16,6 +18,7 @@
             const emitter = inject("emitter");
             let warnings = ref([]);
             const delay = 7000;
+            const transition = 150;
 
             emitter.on('notification-warning', showWarning);
 
@@ -27,26 +30,26 @@
                     message: message
                 });
 
-                setTimeout(() => document.getElementById(id).classList.remove('growl-incoming'), 150)
+                setTimeout(() => document.getElementById(id).classList.remove('growl-incoming'), transition)
             }
 
             function close(event_id, div_id) {
-                emitDeleteEvent(event_id, div_id);
+                emitEvent(event_id, div_id);
                 disappear(div_id);
             }
 
             function disappear(id) {
                 const warning = document.getElementById(id);
-                if(warning) {
+                if (warning) {
                     clearTimeout(id);
                     document.getElementById(id).classList.add('growl-outgoing');
-                    setTimeout(() => document.getElementById(id).classList.add('d-none'), 500);
+                    setTimeout(() => document.getElementById(id).classList.add('d-none'), 3 * transition);
                 }
             }
 
-            function emitDeleteEvent(event_id, div_id) {
+            function emitEvent(event_id, div_id) {
                 const warning = document.getElementById(div_id);
-                if(warning) emitter.emit(event_id)
+                if (warning) emitter.emit(event_id)
             }
 
             return {disappear, close, delay, warnings}

@@ -3,14 +3,14 @@
         <td style="text-align: center; vertical-align: middle;">
             <Checkbox :employee=employee />
         </td>
-        <td>{{employee.created_at}}</td>
+        <td class="text-center">{{employee.created_at}}</td>
         <td v-if="employee.hr">{{employee.hr.login}}</td>
         <td v-else></td>
         <td v-if="employee.company">{{employee.company.name}}</td>
         <td v-else></td>
-        <td class="d-flex flex-column border-0">
+        <td class="d-flex flex-column">
             <p class="m-0 p-0">{{employee.name}}</p>
-            <div class="d-flex">
+            <div>
                 <i class="mr-1">{{employee.birthday}}</i>
                 <i class="mr-1">{{employee.race}}</i>
                 <strong class="mr-1 m-0 p-0 text-success" v-if="employee.pickup == 1">P</strong>
@@ -38,9 +38,12 @@
                           :update-on-select='true'
             />
         </td>
-        <td class="d-flex justify-content-between align-items-center border-0">
-            <EditButton :employee="employee"></EditButton>
-            <DeleteButton :employee="employee"></DeleteButton>
+        <!--<td class="d-flex justify-content-between align-items-center">-->
+        <td class="">
+           <div class="d-flex justify-content-between align-items-center">
+               <EditButton :employee="employee"></EditButton>
+               <DeleteButton :employee="employee"></DeleteButton>
+           </div>
         </td>
     </tr>
 </template>
@@ -49,7 +52,7 @@
     import StatusSelect from '../../layout/EmployeesStatusSelect';
     import DeleteButton from './actions/DeleteButton';
     import EditButton from './actions/EditButton';
-    import Checkbox from './actions/RowCheckbox';
+    import Checkbox from './control/RowCheckbox';
     import {useStore} from 'vuex'
 
     export default {

@@ -1,6 +1,5 @@
 import {container} from '../services/index'
 import {emitter} from '../app';
-import md5 from "js-md5";
 
 export default {
     namespaced: true,
@@ -11,6 +10,7 @@ export default {
             personnel_id: null,
             personnel: {login: null},
             domain: null,
+            pseudonym: null,
             email: null,
             created_at: null,
             dataIsValid: null,
@@ -50,6 +50,7 @@ export default {
                 commit('setCompanies', companies);
             } catch (e) {
                 emitter.emit('notification-error', e.response.data)
+                if(e.response.status === 401) container.AuthService.logout()
             }
         },
 

@@ -72,6 +72,7 @@ export default {
                 dispatch('sort', response.data);
             } catch (e) {
                 emitter.emit('notification-error', e.response.data)
+                if(e.response.status === 401) container.AuthService.logout()
             }
 
         },
