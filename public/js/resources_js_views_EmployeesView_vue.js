@@ -4339,7 +4339,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
       type: "button",
-      class: [" pl-0 pr-0 btn btn dropdown-toggle", $setup.statuses[$props.status]],
+      class: [" pl-0 pr-0 btn btn dropdown-toggle", $setup.availableStatuses[$props.status] ?? $setup.statuses[$props.status]],
       "data-toggle": "dropdown"
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.status), 3 /* TEXT, CLASS */),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [
