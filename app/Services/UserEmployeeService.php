@@ -61,11 +61,10 @@ class UserEmployeeService
             ->whereIn('status', [
                 Status::NEW,
                 Status::WAITING_AGREEMENT,
-                Status::WAITING_DATA,
-                Status::NEED_CALL,
-                Status::NEED_INFO_REQUEST,
-                Status::NO_ANSWER,
+                Status::NEED_DATA,
+                Status::INFO,
                 Status::BAD,
+                Status::DIED,
                 Status::READY,
             ])
             ->paginate($recordsPerPage);
@@ -77,7 +76,7 @@ class UserEmployeeService
 
         return $this->basicQuery
             ->whereIn('company_id', $companyIds)
-            ->whereIn('status', [Status::READY, Status::GREETED, Status::EXPORTED, Status::AGREEMENT_SENT])
+            ->whereIn('status', [Status::READY, Status::GREETED, Status::EXPORTED])
             ->paginate($recordsPerPage);
     }
 
@@ -90,11 +89,10 @@ class UserEmployeeService
             ->whereIn('status', [
                 Status::NEW,
                 Status::WAITING_AGREEMENT,
-                Status::WAITING_DATA,
-                Status::NEED_CALL,
-                Status::NEED_INFO_REQUEST,
-                Status::NO_ANSWER,
+                Status::NEED_DATA,
+                Status::INFO,
                 Status::BAD,
+                Status::DIED,
                 Status::READY,
             ])
             ->paginate($recordsPerPage);
