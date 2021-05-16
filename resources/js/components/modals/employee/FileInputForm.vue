@@ -86,7 +86,7 @@
 </template>
 
 <script>
-    import {computed, ref, inject} from 'vue';
+    import {computed, ref, inject, onBeforeUnmount} from 'vue';
     import {useStore} from 'vuex';
 
     export default {
@@ -108,6 +108,7 @@
             function deleteFile() {
                 file.value = null;
                 errors.value = null;
+                success.value = false;
                 document.getElementById("empFileInput").value = null;
             }
 
@@ -134,6 +135,9 @@
                 store.commit('employee/setEmployees', data.employees);
                 store.commit('employee/setPagination', data.pagination);
             }
+
+            emitter.on('file-input-form', deleteFile);
+            onBeforeUnmount(() => emitter.off('file-input-form', deleteFile));
 
             return {
                 setFile,

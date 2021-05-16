@@ -6,7 +6,8 @@
         >Add applicant
         </button>
         <button type="button" data-toggle="modal" data-target="#fileInputForm"
-                class=" p-0 btn-primary btn  ml-2 col-sm-2 text-nowrap">File upload
+                class=" p-0 btn-primary btn  ml-2 col-sm-2 text-nowrap"
+                @click="showFileUploadForm">File upload
         </button>
         <select v-model="activeFilters.company_id" class="custom-select form-control ml-2 col-sm-2">
             <option value="" selected>Company</option>
@@ -63,7 +64,8 @@
                 profile: computed(() => store.getters.getProfile),
                 statuses: computed(() => store.getters.getStatuses),
                 companies: computed(() => store.getters.getCompanies),
-                showCreateEmployeeForm: () => emitter.emit('create-employee-form')
+                showCreateEmployeeForm: () => emitter.emit('create-employee-form'),
+                showFileUploadForm: () => emitter.emit('file-input-form'),
             }
         },
     };
