@@ -21,6 +21,7 @@ export default {
     mutations: {
         setProfile(state, user) {
             state.profile = user;
+            state.profile.password = null;
         },
         setUsers(state, users) {
             state.users = users;
@@ -65,11 +66,12 @@ export default {
             }
         },
 
-        async setUsersToStore({commit, dispatch}, params) {
+        async setUsersToStore({commit, dispatch, state}, params) {
             try {
                 let response = await container.UserService.getUsers(params);
+                let users = response.data.filter(user => user.id !== state.profile.id)
 
-                dispatch('sort', response.data);
+                dispatch('sort', users);
             } catch (e) {
                 emitter.emit('notification-error', e.response.data)
                 if(e.response.status === 401) container.AuthService.logout()

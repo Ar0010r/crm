@@ -172,14 +172,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (manager.password === null) delete manager.password;
-                delete manager.dataIsValid;
-                delete manager.avatar;
-                _context.prev = 3;
-                _context.next = 6;
+                _context.prev = 0;
+                _context.next = 3;
                 return managerFields.value.validate();
 
-              case 6:
+              case 3:
+                if (manager.password === null || manager.password.length === 0) delete manager.password;
+                delete manager.dataIsValid;
+                delete manager.avatar;
                 _context.next = 8;
                 return container.UserService.updateUser(manager);
 
@@ -192,7 +192,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 13:
                 _context.prev = 13;
-                _context.t0 = _context["catch"](3);
+                _context.t0 = _context["catch"](0);
                 emitter.emit('notification-error', _context.t0.response.data);
 
               case 16:
@@ -200,7 +200,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return _context.stop();
             }
           }
-        }, _callee, null, [[3, 13]]);
+        }, _callee, null, [[0, 13]]);
       }));
       return _updateManager.apply(this, arguments);
     }

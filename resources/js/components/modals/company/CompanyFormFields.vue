@@ -74,7 +74,7 @@
 </template>
 
 <script>
-    import {computed, watch, inject, reactive} from 'vue';
+    import {computed, watch, inject, onBeforeUnmount} from 'vue';
     import {useStore} from 'vuex';
     import {Form, Field, useForm, useField, useResetForm} from 'vee-validate';
     import * as yup from 'yup';
@@ -102,34 +102,36 @@
             const domain = useField('domain', {value: computed(() => props.company.domain)});
             const personnel = useField('personnel', {value: computed(() => props.company.personnel_id)});
 
+            const config = [
+                {
+                    field : personnel,
+                    name : 'personnel_id'
+                },
+                {
+                    field : name,
+                    name : 'name'
+                },
+                {
+                    field: domain,
+                    name : 'domain'
+                },
+                {
+                    field : email,
+                    name : 'email'
+                },
+                {
+                    field : manager,
+                    name : 'pseudonym'
+                }
+            ];
+
             const resetForm = useResetForm();
 
-            emitter.on('edit-company-form', resetForm);
+            emitter.on('edit-company-form', setValues);
             emitter.on('create-company-form', resetForm);
 
             async function validate() {
-                [
-                    {
-                        field : personnel,
-                        name : 'personnel_id'
-                    },
-                    {
-                        field : name,
-                        name : 'name'
-                    },
-                    {
-                        field: domain,
-                        name : 'domain'
-                    },
-                    {
-                        field : email,
-                        name : 'email'
-                    },
-                    {
-                        field : manager,
-                        name : 'pseudonym'
-                    }
-                ].forEach(item => {
+                config.forEach(item => {
                     item.field.meta.dirty = true;
                     item.field.meta.touched = true;
                     item.field.value.value = props.company[item.name];
@@ -147,6 +149,15 @@
                     })
                 }
             }
+
+            function setValues() {
+                config.forEach(item => item.field.value.value = props.company[item.name]);
+            }
+
+            onBeforeUnmount(() => {
+                emitter.off('edit-company-form', setValues);
+                emitter.off('create-company-form', resetForm);
+            })
 
             return {
                 name, email, domain, personnel, manager, errors, validate,

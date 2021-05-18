@@ -74,8 +74,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return props.company.personnel_id;
       })
     });
+    var config = [{
+      field: personnel,
+      name: 'personnel_id'
+    }, {
+      field: name,
+      name: 'name'
+    }, {
+      field: domain,
+      name: 'domain'
+    }, {
+      field: email,
+      name: 'email'
+    }, {
+      field: manager,
+      name: 'pseudonym'
+    }];
     var resetForm = (0,vee_validate__WEBPACK_IMPORTED_MODULE_4__.useResetForm)();
-    emitter.on('edit-company-form', resetForm);
+    emitter.on('edit-company-form', setValues);
     emitter.on('create-company-form', resetForm);
 
     function validate() {
@@ -89,22 +105,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                [{
-                  field: personnel,
-                  name: 'personnel_id'
-                }, {
-                  field: name,
-                  name: 'name'
-                }, {
-                  field: domain,
-                  name: 'domain'
-                }, {
-                  field: email,
-                  name: 'email'
-                }, {
-                  field: manager,
-                  name: 'pseudonym'
-                }].forEach(function (item) {
+                config.forEach(function (item) {
                   item.field.meta.dirty = true;
                   item.field.meta.touched = true;
                   item.field.value.value = props.company[item.name];
@@ -141,6 +142,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return _validate.apply(this, arguments);
     }
 
+    function setValues() {
+      config.forEach(function (item) {
+        return item.field.value.value = props.company[item.name];
+      });
+    }
+
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.onBeforeUnmount)(function () {
+      emitter.off('edit-company-form', setValues);
+      emitter.off('create-company-form', resetForm);
+    });
     return {
       name: name,
       email: email,

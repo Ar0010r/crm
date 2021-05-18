@@ -31,13 +31,13 @@
                        @blur="login.handleBlur"
                        :class="{ 'is-invalid': !login.meta.valid && login.meta.touched}"
                 >
-                <small class=" col-md-12 invalid-feedback text-right p-0">{{errors.login}}</small>
+                <small class=" col-md-12 invalid-feedback text-right p-0">{{errors.login || 'login is required'}}</small>
             </div>
         </div>
         <div class="form-row mb-2 d-flex flex-column">
             <div class="form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap">
                 <label class="form-label col-md-2">Password</label>
-                <input class="form-control col-md-10" type="text" placeholder="Password"
+                <input ref='passwordField' class="form-control col-md-10" type="text" placeholder="Password"
                        name="password"
                        v-model="user.password"
                        @focus="password.meta.touched = false"
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-    import {computed, inject, ref} from 'vue';
+    import {computed, inject, ref, onBeforeUnmount} from 'vue';
     import {useStore} from 'vuex';
     import {useForm, useField, useResetForm} from 'vee-validate';
     import * as yup from 'yup';
@@ -66,9 +66,11 @@
         setup(props) {
             const store = useStore();
             const emitter = inject("emitter");
+            const passwordField = ref(null)
             let passwordRequired = ref(null);
             emitter.on('create-manager-form', () => passwordRequired.value = true);
             emitter.on('edit-manager-form', () => passwordRequired.value = false);
+            emitter.on('open-profile-form', () => passwordRequired.value = false);
 
             const schema = yup.object({
                 login: yup.string().required().trim().matches('^[a-zA-Z0-9]*$', 'login can contain only letters and numbers'),
@@ -87,7 +89,8 @@
             const resetForm = useResetForm();
 
             emitter.on('create-manager-form', resetForm);
-            emitter.on('edit-manager-form', resetForm);
+            emitter.on('edit-manager-form', setValues);
+            emitter.on('open-profile-form', setValues);
 
 
             function generatePass() {
@@ -124,9 +127,20 @@
                 }
             }
 
+            function setValues() {
+                [login, role, password].forEach(field => {
+                    field.value.value = props.user[field.name];
+                });
+            }
+
+            onBeforeUnmount(() => {
+                emitter.off('create-manager-form', resetForm);
+                emitter.off('edit-manager-form', setValues);
+            })
+
             return {
                 schema, errors, validate, passwordRequired,
-                login, role, password, generatePass,
+                login, role, password, generatePass, passwordField,
                 roles: computed(() => store.getters.getRoles),
             }
         },

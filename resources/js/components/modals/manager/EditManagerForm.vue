@@ -43,12 +43,11 @@
             onBeforeUnmount(() => emitter.off('edit-manager-form', setUser));
 
             async function updateManager() {
-                if (manager.password === null) delete manager.password;
-                delete manager.dataIsValid;
-                delete manager.avatar;
-
                 try {
                     await managerFields.value.validate();
+                    if (manager.password === null || manager.password.length === 0) delete manager.password;
+                    delete manager.dataIsValid;
+                    delete manager.avatar;
                     await container.UserService.updateUser(manager);
                     store.commit('user/setUserById', manager);
                     emitter.emit('notification-success', 'manager was updated');
