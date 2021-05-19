@@ -11,7 +11,7 @@
         </div>
         <div v-if="Object.keys(users).length > 0" class="table-responsive d-flex align-items-start">
             <Managers/>
-            <div class="d-flex flex-column align-items-center col-8">
+            <div class="d-flex flex-column align-items-center col-6">
                 <PersonnelStatistics/>
                 <HrStatistics/>
             </div>

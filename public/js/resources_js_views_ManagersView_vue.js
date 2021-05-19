@@ -1877,7 +1877,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-const _hoisted_1 = { class: "datatables-demo table table-striped table-bordered col-5" }
+const _hoisted_1 = { class: "datatables-demo table table-striped table-bordered col-9" }
 const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", { class: "d-flex" }, [
     /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left col-3 font-weight-bold" }, "HR"),
@@ -1923,7 +1923,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-const _hoisted_1 = { class: "datatables-demo table table-striped table-bordered col-4" }
+const _hoisted_1 = { class: "datatables-demo table table-striped table-bordered col-6" }
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_ManagersTableHead = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ManagersTableHead")
@@ -1969,7 +1969,7 @@ const _hoisted_4 = {
   key: 0,
   class: "table-responsive d-flex align-items-start"
 }
-const _hoisted_5 = { class: "d-flex flex-column align-items-center col-8" }
+const _hoisted_5 = { class: "d-flex flex-column align-items-center col-6" }
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_Managers = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Managers")
@@ -2052,7 +2052,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-const _hoisted_1 = { class: "datatables-demo table table-striped table-bordered col-5" }
+const _hoisted_1 = { class: "datatables-demo table table-striped table-bordered col-9" }
 const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", { class: "d-flex" }, [
     /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left col-3 font-weight-bold" }, "Personnel"),

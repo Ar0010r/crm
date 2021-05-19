@@ -30484,6 +30484,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       props.user.password = password;
+      password.value = password;
     }
 
     function validate() {

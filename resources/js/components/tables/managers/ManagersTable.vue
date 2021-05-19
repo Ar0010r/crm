@@ -1,5 +1,5 @@
 <template>
-    <table class="datatables-demo table table-striped table-bordered col-4">
+    <table class="datatables-demo table table-striped table-bordered col-6">
         <ManagersTableHead/>
         <tbody>
         <ManagersTableRow

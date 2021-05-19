@@ -102,6 +102,7 @@
                     password += charset.charAt(Math.floor(Math.random() * n));
                 }
                 props.user.password = password;
+                password.value = password;
             }
 
             async function validate() {
