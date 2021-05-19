@@ -18,7 +18,7 @@
             const store = useStore();
 
             const all = computed(() => {
-                const employees = {...store.getters.getEmployees};
+                let employees = {...store.getters.getEmployees};
 
                 Object.keys(employees).map(key => {
                     if (employees[key].hr_id !== props.user.id) delete employees[key]

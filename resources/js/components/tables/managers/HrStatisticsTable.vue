@@ -26,9 +26,14 @@
     export default {
         setup() {
             const store = useStore();
+            const profile = computed(() => store.getters.getProfile);
 
             return {
-                users: computed(() => store.getters.getHrs),
+                users: computed(() => {
+                    let hrs = store.getters.getHrs;
+                    if(profile.value.role === 'top hr') hrs[profile.value.id] = profile.value
+                    return hrs
+                }),
             }
         },
         components: {

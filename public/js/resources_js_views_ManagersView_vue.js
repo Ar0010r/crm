@@ -248,9 +248,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_2__.useStore)();
+    var profile = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+      return store.getters.getProfile;
+    });
     return {
       users: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
-        return store.getters.getHrs;
+        var hrs = store.getters.getHrs;
+        if (profile.value.role === 'top hr') hrs[profile.value.id] = profile.value;
+        return hrs;
       })
     };
   },

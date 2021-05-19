@@ -22,7 +22,7 @@
                     return store.getters.getProfile.role === 'personnel'
                 }),
                 profileIsHr: computed(() => {
-                    return store.getters.getProfile.role === 'hr'
+                    return store.getters.getProfile.role === 'hr' || store.getters.getProfile.role === 'top hr'
                 })
             }
         },

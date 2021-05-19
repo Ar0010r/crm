@@ -546,7 +546,7 @@ __webpack_require__.r(__webpack_exports__);
         return store.getters.getProfile.role === 'personnel';
       }),
       profileIsHr: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
-        return store.getters.getProfile.role === 'hr';
+        return store.getters.getProfile.role === 'hr' || store.getters.getProfile.role === 'top hr';
       })
     };
   },
