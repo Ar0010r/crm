@@ -1,7 +1,10 @@
 <template>
     <div @click="deleteWarning" class="text-danger d-flex align-items-center cursor-pointer">
-       <!-- <a class="ion ion-ios-close-circle-outline"></a>-->
-        <button class="btn btn-danger">delete selected</button>
+        <div class="bs-bars float-left">
+            <button class="btn btn-danger">
+                <i class="ion ion-md-close"></i> Delete
+            </button>
+        </div>
     </div>
 </template>
 
@@ -62,6 +65,7 @@
             function generateWarningMessage() {
                 return selectedEmployees.length + ' applicants'
             }
+
             return {
                 deleteWarning
             }

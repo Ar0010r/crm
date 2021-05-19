@@ -41,7 +41,7 @@
             <span>{{employee.state}}</span> <span>{{' '}}</span>
             <span>{{employee.zip}}</span> <span>{{' '}}</span>
         </td>
-        <td>
+        <td style="text-align: center; vertical-align: middle;" >
             <StatusSelect v-if="employee.status"
                           :status='employee.status'
                           :id='employee.id'
@@ -49,9 +49,10 @@
             />
         </td>
         <!--<td class="d-flex justify-content-between align-items-center">-->
-        <td class="">
+        <td style="text-align: center; vertical-align: middle;">
            <div class="d-flex justify-content-between align-items-center">
                <EditButton :employee="employee"></EditButton>
+               <ExportButton :employee="employee"></ExportButton>
                <DeleteButton :employee="employee"></DeleteButton>
            </div>
         </td>
@@ -61,6 +62,7 @@
 <script>
     import StatusSelect from '../../layout/EmployeesStatusSelect';
     import DeleteButton from './actions/DeleteButton';
+    import ExportButton from './actions/ExportButton';
     import EditButton from './actions/EditButton';
     import Checkbox from './control/RowCheckbox';
     import {useStore} from 'vuex'
@@ -79,6 +81,7 @@
         components: {
             StatusSelect,
             DeleteButton,
+            ExportButton,
             EditButton,
             Checkbox
         }

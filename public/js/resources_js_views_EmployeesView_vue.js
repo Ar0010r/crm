@@ -875,9 +875,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _layout_EmployeesStatusSelect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../layout/EmployeesStatusSelect */ "./resources/js/components/layout/EmployeesStatusSelect.vue");
 /* harmony import */ var _actions_DeleteButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./actions/DeleteButton */ "./resources/js/components/tables/employees/actions/DeleteButton.vue");
-/* harmony import */ var _actions_EditButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./actions/EditButton */ "./resources/js/components/tables/employees/actions/EditButton.vue");
-/* harmony import */ var _control_RowCheckbox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./control/RowCheckbox */ "./resources/js/components/tables/employees/control/RowCheckbox.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var _actions_ExportButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./actions/ExportButton */ "./resources/js/components/tables/employees/actions/ExportButton.vue");
+/* harmony import */ var _actions_EditButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./actions/EditButton */ "./resources/js/components/tables/employees/actions/EditButton.vue");
+/* harmony import */ var _control_RowCheckbox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./control/RowCheckbox */ "./resources/js/components/tables/employees/control/RowCheckbox.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -889,9 +890,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup(props) {
-    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_4__.useStore)();
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_5__.useStore)();
 
     var emptyEmployee = _objectSpread({}, store.getters.getEmptyEmployee);
 
@@ -904,8 +906,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     StatusSelect: _layout_EmployeesStatusSelect__WEBPACK_IMPORTED_MODULE_0__.default,
     DeleteButton: _actions_DeleteButton__WEBPACK_IMPORTED_MODULE_1__.default,
-    EditButton: _actions_EditButton__WEBPACK_IMPORTED_MODULE_2__.default,
-    Checkbox: _control_RowCheckbox__WEBPACK_IMPORTED_MODULE_3__.default
+    ExportButton: _actions_ExportButton__WEBPACK_IMPORTED_MODULE_2__.default,
+    EditButton: _actions_EditButton__WEBPACK_IMPORTED_MODULE_3__.default,
+    Checkbox: _control_RowCheckbox__WEBPACK_IMPORTED_MODULE_4__.default
   }
 });
 
@@ -1192,6 +1195,82 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/ExportButton.vue?vue&type=script&lang=js":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/ExportButton.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    employee: Object
+  },
+  setup: function setup() {
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_1__.useStore)();
+    return {
+      profileIsAdmin: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+        return store.getters.getProfile.role === 'admin';
+      }),
+      profileIsPersonnel: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+        return store.getters.getProfile.role === 'personnel';
+      })
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/ExportSelectedButton.vue?vue&type=script&lang=js":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/ExportSelectedButton.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    employee: Object
+  },
+  setup: function setup() {
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_1__.useStore)();
+    return {
+      profileIsAdmin: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+        return store.getters.getProfile.role === 'admin';
+      }),
+      profileIsPersonnel: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+        return store.getters.getProfile.role === 'personnel';
+      })
+    };
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue?vue&type=script&lang=js":
 /*!***************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue?vue&type=script&lang=js ***!
@@ -1217,12 +1296,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -1234,31 +1307,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var updateEventId = 'update-selected-employees';
     var selectedEmployees = [];
     var status;
-    var availableStatuses = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
-      var profile = _objectSpread({}, store.getters.getProfile);
-
-      switch (profile.role) {
-        case "admin":
-          return ['New', 'Waiting agreement', 'Agreement sent', 'Ready'];
-
-        case ("hr", "top hr"):
-          return ['New', 'Waiting agreement'];
-
-        case "personnel":
-          return ['Ready', 'Agreement sent'];
-
-        default:
-          return [];
-      }
-    });
-    var statuses = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
-      var allStatuses = _objectSpread({}, store.getters.getStatuses);
-
-      Object.keys(allStatuses).forEach(function (status) {
-        if (!availableStatuses.value.includes(status)) delete allStatuses[status];
-      });
-      return allStatuses;
-    });
     emitter.on('add-selected-employee', addSelectedEmployee);
     emitter.on('update-selected-employees', updateSelected);
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.onBeforeUnmount)(function () {
@@ -1353,8 +1401,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     return {
       updateWarning: updateWarning,
-      availableStatuses: availableStatuses,
-      statuses: statuses
+      availableStatuses: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+        return store.getters.getAvailableStatuses;
+      })
     };
   }
 });
@@ -1541,13 +1590,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _actions_DeleteSelectedButton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/DeleteSelectedButton */ "./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue");
 /* harmony import */ var _actions_UpdateSelectedButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/UpdateSelectedButton */ "./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue");
+/* harmony import */ var _actions_ExportSelectedButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/ExportSelectedButton */ "./resources/js/components/tables/employees/actions/ExportSelectedButton.vue");
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "SelectedEmployeesControl",
   components: {
     DeleteButton: _actions_DeleteSelectedButton__WEBPACK_IMPORTED_MODULE_0__.default,
-    UpdateButton: _actions_UpdateSelectedButton__WEBPACK_IMPORTED_MODULE_1__.default
+    UpdateButton: _actions_UpdateSelectedButton__WEBPACK_IMPORTED_MODULE_1__.default,
+    ExportButton: _actions_ExportSelectedButton__WEBPACK_IMPORTED_MODULE_2__.default
   }
 });
 
@@ -1850,8 +1902,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n.custom-control-label[data-v-2eaf9cf
   \****************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__.g, __webpack_require__.amdO, __webpack_require__, __webpack_exports__, __webpack_require__.* */
-/*! CommonJS bailout: module.exports is used directly at 26:77-91 */
-/*! CommonJS bailout: module.exports is used directly at 657:4-18 */
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -3158,6 +3208,66 @@ _EditButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__f
 
 /***/ }),
 
+/***/ "./resources/js/components/tables/employees/actions/ExportButton.vue":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/tables/employees/actions/ExportButton.vue ***!
+  \***************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _ExportButton_vue_vue_type_template_id_55b16ff1_bindings_employee_props_profileIsAdmin_setup_profileIsPersonnel_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ExportButton.vue?vue&type=template&id=55b16ff1&bindings={"employee":"props","profileIsAdmin":"setup","profileIsPersonnel":"setup"} */ "./resources/js/components/tables/employees/actions/ExportButton.vue?vue&type=template&id=55b16ff1&bindings={\"employee\":\"props\",\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\"}");
+/* harmony import */ var _ExportButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ExportButton.vue?vue&type=script&lang=js */ "./resources/js/components/tables/employees/actions/ExportButton.vue?vue&type=script&lang=js");
+
+
+
+_ExportButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _ExportButton_vue_vue_type_template_id_55b16ff1_bindings_employee_props_profileIsAdmin_setup_profileIsPersonnel_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_ExportButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/employees/actions/ExportButton.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_ExportButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/employees/actions/ExportSelectedButton.vue":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/tables/employees/actions/ExportSelectedButton.vue ***!
+  \***********************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _ExportSelectedButton_vue_vue_type_template_id_c18e3c28_bindings_employee_props_profileIsAdmin_setup_profileIsPersonnel_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ExportSelectedButton.vue?vue&type=template&id=c18e3c28&bindings={"employee":"props","profileIsAdmin":"setup","profileIsPersonnel":"setup"} */ "./resources/js/components/tables/employees/actions/ExportSelectedButton.vue?vue&type=template&id=c18e3c28&bindings={\"employee\":\"props\",\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\"}");
+/* harmony import */ var _ExportSelectedButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ExportSelectedButton.vue?vue&type=script&lang=js */ "./resources/js/components/tables/employees/actions/ExportSelectedButton.vue?vue&type=script&lang=js");
+
+
+
+_ExportSelectedButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _ExportSelectedButton_vue_vue_type_template_id_c18e3c28_bindings_employee_props_profileIsAdmin_setup_profileIsPersonnel_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_ExportSelectedButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/employees/actions/ExportSelectedButton.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_ExportSelectedButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
 /***/ "./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue":
 /*!***********************************************************************************!*\
   !*** ./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue ***!
@@ -3173,12 +3283,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _UpdateSelectedButton_vue_vue_type_template_id_5d2a687e_bindings_updateWarning_setup_availableStatuses_setup_statuses_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UpdateSelectedButton.vue?vue&type=template&id=5d2a687e&bindings={"updateWarning":"setup","availableStatuses":"setup","statuses":"setup"} */ "./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue?vue&type=template&id=5d2a687e&bindings={\"updateWarning\":\"setup\",\"availableStatuses\":\"setup\",\"statuses\":\"setup\"}");
+/* harmony import */ var _UpdateSelectedButton_vue_vue_type_template_id_5d2a687e_bindings_updateWarning_setup_availableStatuses_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UpdateSelectedButton.vue?vue&type=template&id=5d2a687e&bindings={"updateWarning":"setup","availableStatuses":"setup"} */ "./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue?vue&type=template&id=5d2a687e&bindings={\"updateWarning\":\"setup\",\"availableStatuses\":\"setup\"}");
 /* harmony import */ var _UpdateSelectedButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UpdateSelectedButton.vue?vue&type=script&lang=js */ "./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue?vue&type=script&lang=js");
 
 
 
-_UpdateSelectedButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _UpdateSelectedButton_vue_vue_type_template_id_5d2a687e_bindings_updateWarning_setup_availableStatuses_setup_statuses_setup___WEBPACK_IMPORTED_MODULE_0__.render
+_UpdateSelectedButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _UpdateSelectedButton_vue_vue_type_template_id_5d2a687e_bindings_updateWarning_setup_availableStatuses_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -3656,6 +3766,46 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EditButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EditButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./EditButton.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/EditButton.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/employees/actions/ExportButton.vue?vue&type=script&lang=js":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/tables/employees/actions/ExportButton.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/ExportButton.vue?vue&type=script&lang=js .default */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ExportButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ExportButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ExportButton.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/ExportButton.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/employees/actions/ExportSelectedButton.vue?vue&type=script&lang=js":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/tables/employees/actions/ExportSelectedButton.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/ExportSelectedButton.vue?vue&type=script&lang=js .default */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ExportSelectedButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ExportSelectedButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ExportSelectedButton.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/ExportSelectedButton.vue?vue&type=script&lang=js");
  
 
 /***/ }),
@@ -4184,12 +4334,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue?vue&type=template&id=5d2a687e&bindings={\"updateWarning\":\"setup\",\"availableStatuses\":\"setup\",\"statuses\":\"setup\"}":
-/*!***************************************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue?vue&type=template&id=5d2a687e&bindings={"updateWarning":"setup","availableStatuses":"setup","statuses":"setup"} ***!
-  \***************************************************************************************************************************************************************************************************/
+/***/ "./resources/js/components/tables/employees/actions/ExportButton.vue?vue&type=template&id=55b16ff1&bindings={\"employee\":\"props\",\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\"}":
+/*!*********************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/employees/actions/ExportButton.vue?vue&type=template&id=55b16ff1&bindings={"employee":"props","profileIsAdmin":"setup","profileIsPersonnel":"setup"} ***!
+  \*********************************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue?vue&type=template&id=5d2a687e&bindings={"updateWarning":"setup","availableStatuses":"setup","statuses":"setup"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/ExportButton.vue?vue&type=template&id=55b16ff1&bindings={"employee":"props","profileIsAdmin":"setup","profileIsPersonnel":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -4197,9 +4347,49 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_UpdateSelectedButton_vue_vue_type_template_id_5d2a687e_bindings_updateWarning_setup_availableStatuses_setup_statuses_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ExportButton_vue_vue_type_template_id_55b16ff1_bindings_employee_props_profileIsAdmin_setup_profileIsPersonnel_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_UpdateSelectedButton_vue_vue_type_template_id_5d2a687e_bindings_updateWarning_setup_availableStatuses_setup_statuses_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./UpdateSelectedButton.vue?vue&type=template&id=5d2a687e&bindings={"updateWarning":"setup","availableStatuses":"setup","statuses":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue?vue&type=template&id=5d2a687e&bindings={\"updateWarning\":\"setup\",\"availableStatuses\":\"setup\",\"statuses\":\"setup\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ExportButton_vue_vue_type_template_id_55b16ff1_bindings_employee_props_profileIsAdmin_setup_profileIsPersonnel_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ExportButton.vue?vue&type=template&id=55b16ff1&bindings={"employee":"props","profileIsAdmin":"setup","profileIsPersonnel":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/ExportButton.vue?vue&type=template&id=55b16ff1&bindings={\"employee\":\"props\",\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\"}");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/employees/actions/ExportSelectedButton.vue?vue&type=template&id=c18e3c28&bindings={\"employee\":\"props\",\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\"}":
+/*!*****************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/employees/actions/ExportSelectedButton.vue?vue&type=template&id=c18e3c28&bindings={"employee":"props","profileIsAdmin":"setup","profileIsPersonnel":"setup"} ***!
+  \*****************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/ExportSelectedButton.vue?vue&type=template&id=c18e3c28&bindings={"employee":"props","profileIsAdmin":"setup","profileIsPersonnel":"setup"} .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ExportSelectedButton_vue_vue_type_template_id_c18e3c28_bindings_employee_props_profileIsAdmin_setup_profileIsPersonnel_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ExportSelectedButton_vue_vue_type_template_id_c18e3c28_bindings_employee_props_profileIsAdmin_setup_profileIsPersonnel_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ExportSelectedButton.vue?vue&type=template&id=c18e3c28&bindings={"employee":"props","profileIsAdmin":"setup","profileIsPersonnel":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/ExportSelectedButton.vue?vue&type=template&id=c18e3c28&bindings={\"employee\":\"props\",\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\"}");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue?vue&type=template&id=5d2a687e&bindings={\"updateWarning\":\"setup\",\"availableStatuses\":\"setup\"}":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue?vue&type=template&id=5d2a687e&bindings={"updateWarning":"setup","availableStatuses":"setup"} ***!
+  \********************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue?vue&type=template&id=5d2a687e&bindings={"updateWarning":"setup","availableStatuses":"setup"} .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_UpdateSelectedButton_vue_vue_type_template_id_5d2a687e_bindings_updateWarning_setup_availableStatuses_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_UpdateSelectedButton_vue_vue_type_template_id_5d2a687e_bindings_updateWarning_setup_availableStatuses_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./UpdateSelectedButton.vue?vue&type=template&id=5d2a687e&bindings={"updateWarning":"setup","availableStatuses":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue?vue&type=template&id=5d2a687e&bindings={\"updateWarning\":\"setup\",\"availableStatuses\":\"setup\"}");
 
 
 /***/ }),
@@ -5403,13 +5593,15 @@ const _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextV
 const _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' '), -1 /* HOISTED */)
 const _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()
 const _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' '), -1 /* HOISTED */)
-const _hoisted_30 = { class: "" }
-const _hoisted_31 = { class: "d-flex justify-content-between align-items-center" }
+const _hoisted_30 = { style: {"text-align":"center","vertical-align":"middle"} }
+const _hoisted_31 = { style: {"text-align":"center","vertical-align":"middle"} }
+const _hoisted_32 = { class: "d-flex justify-content-between align-items-center" }
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_Checkbox = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Checkbox")
   const _component_StatusSelect = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("StatusSelect")
   const _component_EditButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("EditButton")
+  const _component_ExportButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ExportButton")
   const _component_DeleteButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DeleteButton")
 
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_1, [
@@ -5469,7 +5661,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       _hoisted_28,
       _hoisted_29
     ]),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_30, [
       ($props.employee.status)
         ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_StatusSelect, {
             key: 0,
@@ -5480,9 +5672,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
     ]),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<td class=\"d-flex justify-content-between align-items-center\">"),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_30, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_31, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_31, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_32, [
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_EditButton, { employee: $props.employee }, null, 8 /* PROPS */, ["employee"]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ExportButton, { employee: $props.employee }, null, 8 /* PROPS */, ["employee"]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DeleteButton, { employee: $props.employee }, null, 8 /* PROPS */, ["employee"])
       ])
     ])
@@ -5513,7 +5706,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
     onClick: _cache[1] || (_cache[1] = (...args) => ($setup.deleteWarning(...args))),
     type: "button",
-    class: "ion ion-md-trash danger"
+    class: "fas fa-trash-alt danger"
   }))
 }
 
@@ -5539,7 +5732,12 @@ __webpack_require__.r(__webpack_exports__);
 const _withId = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.withScopeId)("data-v-4bc06423")
 
 ;(0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-4bc06423")
-const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", { class: "btn btn-danger" }, "delete selected", -1 /* HOISTED */)
+const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", { class: "bs-bars float-left" }, [
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", { class: "btn btn-danger" }, [
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "ion ion-md-close" }),
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Delete ")
+  ])
+], -1 /* HOISTED */)
 ;(0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)()
 
 const render = /*#__PURE__*/_withId(function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -5547,7 +5745,6 @@ const render = /*#__PURE__*/_withId(function render(_ctx, _cache, $props, $setup
     onClick: _cache[1] || (_cache[1] = (...args) => ($setup.deleteWarning(...args))),
     class: "text-danger d-flex align-items-center cursor-pointer"
   }, [
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <a class=\"ion ion-ios-close-circle-outline\"></a>"),
     _hoisted_1
   ]))
 })
@@ -5579,9 +5776,9 @@ const _hoisted_1 = {
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", _hoisted_1, [
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
       type: "button",
-      class: "ion ion-md-create p-0 bg-transparent border-0",
+      class: "fas fa-user-edit p-0 bg-transparent border-0",
       "data-toggle": "tooltip",
       "data-target": "#editEmployeeForm",
       "data-placement": "right",
@@ -5593,10 +5790,83 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue?vue&type=template&id=5d2a687e&bindings={\"updateWarning\":\"setup\",\"availableStatuses\":\"setup\",\"statuses\":\"setup\"}":
-/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue?vue&type=template&id=5d2a687e&bindings={"updateWarning":"setup","availableStatuses":"setup","statuses":"setup"} ***!
-  \************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/ExportButton.vue?vue&type=template&id=55b16ff1&bindings={\"employee\":\"props\",\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\"}":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/ExportButton.vue?vue&type=template&id=55b16ff1&bindings={"employee":"props","profileIsAdmin":"setup","profileIsPersonnel":"setup"} ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+const _hoisted_1 = {
+  key: 0,
+  type: "button",
+  class: "fas fa-paper-plane p-0 bg-transparent border-0",
+  "data-toggle": "tooltip",
+  "data-placement": "right"
+}
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return ($setup.profileIsPersonnel || $setup.profileIsAdmin)
+    ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", _hoisted_1))
+    : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/ExportSelectedButton.vue?vue&type=template&id=c18e3c28&bindings={\"employee\":\"props\",\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\"}":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/ExportSelectedButton.vue?vue&type=template&id=c18e3c28&bindings={"employee":"props","profileIsAdmin":"setup","profileIsPersonnel":"setup"} ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+const _hoisted_1 = {
+  key: 0,
+  class: "d-flex align-items-center cursor-pointer ml-2"
+}
+const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", { class: "bs-bars float-left" }, [
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", { class: "btn btn-primary" }, [
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "far fa-paper-plane" }),
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Export ")
+  ])
+], -1 /* HOISTED */)
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return ($setup.profileIsPersonnel || $setup.profileIsAdmin)
+    ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
+        _hoisted_2
+      ]))
+    : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue?vue&type=template&id=5d2a687e&bindings={\"updateWarning\":\"setup\",\"availableStatuses\":\"setup\"}":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/UpdateSelectedButton.vue?vue&type=template&id=5d2a687e&bindings={"updateWarning":"setup","availableStatuses":"setup"} ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -5613,10 +5883,13 @@ __webpack_require__.r(__webpack_exports__);
 
 const _hoisted_1 = { class: "btn-group btn-s ml-2" }
 const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-  class: "btn btn-white dropdown-toggle ",
+  class: "btn btn-secondary dropdown-toggle ",
   type: "button",
   "data-toggle": "dropdown"
-}, "update selected", -1 /* HOISTED */)
+}, [
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "ion ion-md-create" }),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Mark as ")
+], -1 /* HOISTED */)
 const _hoisted_3 = { class: "dropdown-menu p-0 m-0 text-center" }
 const _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
   class: "dropdown-item disabled",
@@ -5630,7 +5903,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [
       _hoisted_4,
       _hoisted_5,
-      ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.statuses, (cssClass, status) => {
+      ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.availableStatuses, (cssClass, status) => {
         return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
           key: status,
           onClick: $event => ($setup.updateWarning(status)),
@@ -5810,10 +6083,12 @@ const _hoisted_1 = { class: "d-flex align-items-center mb-3" }
 const render = /*#__PURE__*/_withId(function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_DeleteButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DeleteButton")
   const _component_UpdateButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("UpdateButton")
+  const _component_ExportButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ExportButton")
 
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DeleteButton),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_UpdateButton)
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_UpdateButton),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ExportButton)
   ]))
 })
 

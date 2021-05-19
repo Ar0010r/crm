@@ -1,5 +1,5 @@
 <template>
-    <a @click="deleteWarning" type="button" class="ion ion-md-trash danger"></a>
+    <a @click="deleteWarning" type="button" class="fas fa-trash-alt danger"></a>
 </template>
 
 <script>

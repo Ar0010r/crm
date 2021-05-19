@@ -1,10 +1,10 @@
 <template>
     <a data-toggle="modal" data-target="#editEmployeeForm">
-        <button type="button" class="ion ion-md-create p-0 bg-transparent border-0"
+        <a type="button" class="fas fa-user-edit p-0 bg-transparent border-0"
                 data-toggle="tooltip" data-target="#editEmployeeForm"
                 data-placement="right" title="Edit"
                 @click="showEditEmployeeForm"
-        ></button>
+        ></a>
     </a>
 </template>
 

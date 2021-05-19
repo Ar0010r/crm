@@ -1,10 +1,13 @@
 <template>
     <div class="btn-group btn-s ml-2">
-        <button class="btn btn-white dropdown-toggle " type="button" data-toggle="dropdown">update selected</button>
+        <button class="btn btn-secondary dropdown-toggle " type="button" data-toggle="dropdown">
+            <i class="ion ion-md-create"></i>
+            Mark as
+        </button>
         <div class="dropdown-menu p-0 m-0 text-center">
             <a class="dropdown-item disabled" href="javascript:void(0)">Select status</a>
             <div class="dropdown-divider m-0"></div>
-            <a v-for="(cssClass, status) in statuses" :key="status" @click='updateWarning(status)'
+            <a v-for="(cssClass, status) in availableStatuses" :key="status" @click='updateWarning(status)'
                class="dropdown-item" :class="cssClass"
                href="javascript:void(0)"
             >
@@ -27,34 +30,6 @@
             const updateEventId = 'update-selected-employees';
             let selectedEmployees = [];
             let status;
-            let availableStatuses = computed(() => {
-                    let profile = {...store.getters.getProfile};
-
-                    switch (profile.role) {
-                        case "admin":
-                            return ['New', 'Waiting agreement', 'Agreement sent', 'Ready']
-
-                        case "hr", "top hr" :
-                            return ['New', 'Waiting agreement'];
-
-                        case "personnel":
-                            return ['Ready',  'Agreement sent'];
-
-                        default:
-                            return [];
-                    }
-                }
-            );
-
-            let statuses = computed(() => {
-                let allStatuses = {...store.getters.getStatuses};
-
-                Object.keys(allStatuses).forEach((status) => {
-                    if (!availableStatuses.value.includes(status)) delete allStatuses[status];
-                });
-
-                return allStatuses;
-            });
 
             emitter.on('add-selected-employee', addSelectedEmployee);
             emitter.on('update-selected-employees', updateSelected);
@@ -105,7 +80,7 @@
             }
 
             return {
-                updateWarning, availableStatuses, statuses
+                updateWarning, availableStatuses: computed(() => store.getters.getAvailableStatuses)
             }
         }
     }

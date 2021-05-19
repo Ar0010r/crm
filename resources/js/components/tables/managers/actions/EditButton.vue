@@ -1,9 +1,9 @@
 <template>
     <a data-toggle="modal" data-target="#editManagerForm" @click=showEditManagerForm >
-        <button type="button" class="ion ion-md-cog p-0 bg-transparent border-0" title="Edit"
+        <a type="button" class="fas fa-user-edit p-0 bg-transparent border-0" title="Edit"
                 data-toggle="tooltip"
                 data-placement="right">
-        </button>
+        </a>
     </a>
 </template>
 
