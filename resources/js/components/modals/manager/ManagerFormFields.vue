@@ -73,7 +73,7 @@
             emitter.on('open-profile-form', () => passwordRequired.value = false);
 
             const schema = yup.object({
-                login: yup.string().required().trim().matches('^[a-zA-Z0-9]*$', 'login can contain only letters and numbers'),
+                login: yup.string().required().trim().matches('^[a-zA-Z0-9 ]*$', 'login can contain only letters and numbers'),
                 role: yup.string().required(),
                 password: yup.string().nullable(),
             });

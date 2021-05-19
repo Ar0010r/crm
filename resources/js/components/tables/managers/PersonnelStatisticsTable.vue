@@ -1,5 +1,5 @@
 <template>
-    <table class="datatables-demo table table-striped table-bordered col-9">
+    <table v-if="Object.keys(users).length > 0" class="datatables-demo table table-striped table-bordered col-9">
         <thead>
         <tr class="d-flex">
             <th class="text-left col-3 font-weight-bold">Personnel</th>

@@ -30443,7 +30443,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return passwordRequired.value = false;
     });
     var schema = yup__WEBPACK_IMPORTED_MODULE_2__.object({
-      login: yup__WEBPACK_IMPORTED_MODULE_2__.string().required().trim().matches('^[a-zA-Z0-9]*$', 'login can contain only letters and numbers'),
+      login: yup__WEBPACK_IMPORTED_MODULE_2__.string().required().trim().matches('^[a-zA-Z0-9 ]*$', 'login can contain only letters and numbers'),
       role: yup__WEBPACK_IMPORTED_MODULE_2__.string().required(),
       password: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable()
     });
