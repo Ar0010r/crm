@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services;
+namespace App\Services\Employee;
 
 use App\Models\Employee;
 use App\Shared\Value\Status;

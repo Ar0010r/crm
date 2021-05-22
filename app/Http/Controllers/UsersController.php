@@ -2,32 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\User\UserDeleteRequest;
-use App\Http\Requests\User\UserShowRequest;
 use App\Http\Requests\User\UserStoreRequest;
 use App\Http\Requests\User\UserUpdateRequest;
-use App\Models\Pivot\TopHrHr;
 use App\Models\User;
+use App\Services\User\UserService;
+use App\Services\User\UserSubordinateService;
 use App\Shared\Value\Role;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
+    private UserSubordinateService $userSubordinateService;
+    private UserService $userService;
+
+    public function __construct(
+        UserService $userService,
+        UserSubordinateService $userSubordinateService
+    ) {
+        $this->userSubordinateService = $userSubordinateService;
+        $this->userService = $userService;
+    }
+
     public function index()
     {
-        switch (auth()->user()->role) {
-            case Role::TOP_HR:
-                $data = auth()->user()->topHrHrs()->get()->toArray();
-                $data[] = auth()->user();
-                break;
-            case Role::ADMIN:
-                $data = User::all();
-                break;
-            default:
-                $data = [];
-        }
+        $data = $this
+            ->userSubordinateService
+            ->getUserSubordinates(auth()->user());
 
         return response($data, JsonResponse::HTTP_OK);
     }
@@ -35,11 +36,9 @@ class UsersController extends Controller
     public function store(UserStoreRequest $r)
     {
         $r->merge(["password" => bcrypt($r->password)]);
-        $user = User::create($r->all());
+        $user = User::make($r->all());
 
-        if (auth()->user()->role === Role::TOP_HR && $user->role === Role::HR) {
-            TopHrHr::create(['top_hr_id' => auth()->user()->id, 'hr_id' => $user->id]);
-        }
+        $user = $this->userService->store($user);
 
         return response(['user' => $user], JsonResponse::HTTP_OK);
     }
@@ -54,9 +53,8 @@ class UsersController extends Controller
         $avatar = $r->file('file');
 
         if ($avatar) {
-            $new_name = rand() . '.' . $avatar->getClientOriginalExtension();
-            $avatar->move(public_path('images'), $new_name);
-            $r->merge(["avatar" => $new_name]);
+            $newName = $this->userService->saveAvatar($avatar);
+            $r->merge(["avatar" => $newName]);
         }
         if ($r->password) {
             $r->merge(["password" => bcrypt($r->password)]);

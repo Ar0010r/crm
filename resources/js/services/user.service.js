@@ -35,6 +35,7 @@ export class UserService {
 
     sort(usersList){
         let hrs = {};
+
         Object.keys(usersList).map(function (key) {
             let index = usersList[key].id;
             if (usersList[key].role === 'hr' || usersList[key].role === 'top hr') hrs[index] = usersList[key];

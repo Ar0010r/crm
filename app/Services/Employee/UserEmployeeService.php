@@ -1,10 +1,12 @@
 <?php
 
 
-namespace App\Services;
+namespace App\Services\Employee;
 
 use App\Models\Employee;
 use App\Models\User;
+use App\Services\Company\CompanyService;
+use App\Services\User\UserService;
 use App\Shared\Value\Role;
 use App\Shared\Value\Status;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -37,13 +39,13 @@ class UserEmployeeService
 
         switch ($user->role) {
             case Role::PERSONNEL:
-                return $this->getPersonnelEmployees($recordsPerPage);
+                return $this->getPersonnelEmployees($recordsPerPage, $user);
             case Role::ADMIN:
                 return $this->getAdminEmployees($recordsPerPage);
             case Role::TOP_HR:
-                return $this->getTopHrEmployees($recordsPerPage);
+                return $this->getTopHrEmployees($recordsPerPage, $user);
             default:
-                return $this->getHrEmployees($recordsPerPage);
+                return $this->getHrEmployees($recordsPerPage, $user);
         }
     }
 
@@ -82,7 +84,7 @@ class UserEmployeeService
 
     private function getTopHrEmployees(int $recordsPerPage, User $topHr = null): LengthAwarePaginator
     {
-        $hrIds = $this->userService->getTopHrTeamIds($topHr);
+        $hrIds = UserService::getTopHrTeamIds($topHr);
 
         return $this->basicQuery
             ->whereIn('hr_id', $hrIds)

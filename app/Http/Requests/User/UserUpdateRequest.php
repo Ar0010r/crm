@@ -4,9 +4,10 @@ namespace App\Http\Requests\User;
 
 use App\Http\Requests\OwnerAllowedRequest;
 use App\Shared\Value\Role;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UserUpdateRequest extends OwnerAllowedRequest
+class UserUpdateRequest extends FormRequest
 {
     public const ENTITY = 'user';
     /**
@@ -40,7 +41,7 @@ class UserUpdateRequest extends OwnerAllowedRequest
         ];
     }
 
-    protected function entityOwnerId(): int
+    protected function entityOwnerId(): string
     {
         return $this->requestId;
     }

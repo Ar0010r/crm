@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use App\Models\Traits\HasUuid;
+use App\Services\UserService;
+use App\Shared\Value\Role;
+use App\Shared\Value\Status;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +24,32 @@ class Company extends Model
 
     public function personnel()
     {
-      return $this->belongsTo(User::class, 'personnel_id', 'id');
+        return $this->belongsTo(User::class, 'personnel_id', 'id');
+    }
+
+    public function employees()
+    {
+        return $this->hasMany(Employee::class, 'company_id', 'id');
+    }
+
+    public function goodEmployees()
+    {
+        return $this->employees()
+            ->whereIn('status', [
+                    Status::READY,
+                    Status::GREETED,
+                    Status::EXPORTED
+                ]
+            );
+    }
+
+    public function exportedEmployees()
+    {
+        return $this->employees()
+            ->whereIn('status', [
+                    Status::EXPORTED
+                ]
+            );
     }
 
     protected function serializeDate(DateTimeInterface $date)

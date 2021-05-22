@@ -5,33 +5,29 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Company\CompanyStoreRequest;
 use App\Http\Requests\Company\CompanyUpdateRequest;
 use App\Models\Company;
-use App\Shared\Value\Role;
+use App\Services\Company\CompanyService;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 
 class CompaniesController extends Controller
 {
+    private CompanyService $companyService;
+
+    public function __construct(CompanyService $companyService)
+    {
+        $this->companyService = $companyService;
+    }
+
     public function index()
     {
-        switch (auth()->user()->role) {
-            case Role::PERSONNEL:
-                $data = auth()->user()->companies()->with('personnel')->get();
-                break;
-            case Role::TOP_HR || Role::HR || Role::ADMIN:
-                $data = Company::with('personnel')->get();
-                break;
-            default:
-                $data = [];
-        }
-
-        return response($data, JsonResponse::HTTP_OK);
+        return response($this->companyService->get(), JsonResponse::HTTP_OK);
     }
 
     public function store(CompanyStoreRequest $r)
     {
-        $company = Company::create($r->all());
+        $company = Company::make($r->all());
 
-        return response(['company' => $company], JsonResponse::HTTP_OK);
+        return response(['company' => $this->companyService->store($company)], JsonResponse::HTTP_OK);
     }
 
     public function show(Company $company)

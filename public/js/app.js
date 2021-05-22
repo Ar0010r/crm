@@ -32271,6 +32271,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     statuses: {},
     availableStatuses: {},
     pagination: {},
+    queryParams: {
+      company_id: "",
+      status: "",
+      page: "",
+      hr_id: "",
+      recordsPerPage: ""
+    },
     emptyEmployee: {
       address: null,
       birthday: null,
@@ -32294,6 +32301,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mutations: {
+    setQueryParam: function setQueryParam(state, _ref) {
+      var key = _ref.key,
+          value = _ref.value;
+      state.queryParams[key] = value;
+    },
     setEmployeeStatus: function setEmployeeStatus(state, params) {
       var key = params.id;
       state.employees[key].status = params.newStatus;
@@ -32328,14 +32340,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   actions: {
-    setEmployeesToStore: function setEmployeesToStore(_ref, params) {
+    setEmployeesToStore: function setEmployeesToStore(_ref2, params) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         var commit, employees;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                commit = _ref.commit;
+                commit = _ref2.commit;
                 _context.prev = 1;
                 _context.next = 4;
                 return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.EmployeeService.getEmployees(params);
@@ -32361,14 +32373,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee, null, [[1, 9]]);
       }))();
     },
-    setStatusesToStore: function setStatusesToStore(_ref2) {
+    setStatusesToStore: function setStatusesToStore(_ref3) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         var commit, statuses;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                commit = _ref2.commit;
+                commit = _ref3.commit;
                 _context2.prev = 1;
                 _context2.next = 4;
                 return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.EmployeeService.getStatuses();
@@ -32396,14 +32408,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee2, null, [[1, 8]]);
       }))();
     },
-    setRacesToStore: function setRacesToStore(_ref3) {
+    setRacesToStore: function setRacesToStore(_ref4) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
         var commit, races;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                commit = _ref3.commit;
+                commit = _ref4.commit;
                 _context3.prev = 1;
                 _context3.next = 4;
                 return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.EmployeeService.getRaces();
@@ -32427,10 +32439,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee3, null, [[1, 8]]);
       }))();
     },
-    deleteEmployee: function deleteEmployee(_ref4, employee) {
-      var commit = _ref4.commit,
-          dispatch = _ref4.dispatch,
-          state = _ref4.state;
+    deleteEmployee: function deleteEmployee(_ref5, employee) {
+      var commit = _ref5.commit,
+          dispatch = _ref5.dispatch,
+          state = _ref5.state;
       var key = employee.id;
 
       if (state.employees[key]) {
@@ -32439,14 +32451,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', e.response.data);
       }
     },
-    bulkDelete: function bulkDelete(_ref5, employees) {
-      var dispatch = _ref5.dispatch;
+    bulkDelete: function bulkDelete(_ref6, employees) {
+      var dispatch = _ref6.dispatch;
       employees.forEach(function (employee) {
         return dispatch('deleteEmployee', employee);
       });
     },
-    bulkUpdate: function bulkUpdate(_ref6, employees) {
-      var commit = _ref6.commit;
+    bulkUpdate: function bulkUpdate(_ref7, employees) {
+      var commit = _ref7.commit;
       employees.forEach(function (employee) {
         return commit('setEmployeeById', employee);
       });
@@ -32677,25 +32689,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 4:
                 response = _context2.sent;
-                users = response.data.filter(function (user) {
-                  return user.id !== state.profile.id;
-                });
+
+                if (state.profile.role !== 'top hr') {
+                  users = response.data.filter(function (user) {
+                    return user.id !== state.profile.id;
+                  });
+                }
+
+                users = response.data;
                 dispatch('sort', users);
-                _context2.next = 13;
+                _context2.next = 14;
                 break;
 
-              case 9:
-                _context2.prev = 9;
+              case 10:
+                _context2.prev = 10;
                 _context2.t0 = _context2["catch"](1);
                 _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context2.t0.response.data);
                 if (_context2.t0.response.status === 401) _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
 
-              case 13:
+              case 14:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[1, 9]]);
+        }, _callee2, null, [[1, 10]]);
       }))();
     },
     setRolesToStore: function setRolesToStore(_ref3) {
@@ -32790,6 +32807,34 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody,\n#app {\n  width: 100%;\n  height: 100%;\n  font-family: Arial, Helvetica, sans-serif;\n  background: #e3e4e5;\n}\n.flex {\n  display: flex;\n  height: 100%;\n  width: 100%;\n}\n.flex--column {\n  flex-direction: column;\n}\n.flex--align-center {\n  align-items: center;\n}\n.flex--justify-center {\n  justify-content: center;\n}\n.logos {\n  padding-top: 16px;\n  display: grid;\n  grid-template-columns: auto auto;\n  grid-gap: 32px;\n}\n.title {\n  display: grid;\n  grid-template-columns: auto auto auto;\n  grid-gap: 16px;\n  padding: 32px;\n}\n.title .laravel {\n  color: #ff291a;\n}\n.title .vue {\n  color: #41b883;\n}\n.title .plus {\n  color: #35495e;\n}", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/NavBarDropdown.vue?vue&type=style&index=0&id=207ec18b&scoped=true&lang=css":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/NavBarDropdown.vue?vue&type=style&index=0&id=207ec18b&scoped=true&lang=css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, module.id, __webpack_require__.d, __webpack_require__.*, module */
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.image-cropper[data-v-207ec18b] {\n\n        width: 35px;\n\n        height: 35px;\n\n        position: relative;\n\n        overflow: hidden;\n\n        border-radius: 50%;\n}\n.image-cropper__image[data-v-207ec18b] {\n\n        display: inline;\n\n        margin: 0 auto;\n\n        height: 100%;\n\n        min-width: 100%;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -39773,6 +39818,40 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/NavBarDropdown.vue?vue&type=style&index=0&id=207ec18b&scoped=true&lang=css":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/NavBarDropdown.vue?vue&type=style&index=0&id=207ec18b&scoped=true&lang=css ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NavBarDropdown_vue_vue_type_style_index_0_id_207ec18b_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./NavBarDropdown.vue?vue&type=style&index=0&id=207ec18b&scoped=true&lang=css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/NavBarDropdown.vue?vue&type=style&index=0&id=207ec18b&scoped=true&lang=css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NavBarDropdown_vue_vue_type_style_index_0_id_207ec18b_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NavBarDropdown_vue_vue_type_style_index_0_id_207ec18b_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
 /*!****************************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
@@ -42159,12 +42238,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _NavBarDropdown_vue_vue_type_template_id_207ec18b_bindings_logout_setup_profile_setup_showProfileForm_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NavBarDropdown.vue?vue&type=template&id=207ec18b&bindings={"logout":"setup","profile":"setup","showProfileForm":"setup"} */ "./resources/js/components/layout/NavBarDropdown.vue?vue&type=template&id=207ec18b&bindings={\"logout\":\"setup\",\"profile\":\"setup\",\"showProfileForm\":\"setup\"}");
+/* harmony import */ var _NavBarDropdown_vue_vue_type_template_id_207ec18b_scoped_true_bindings_logout_setup_profile_setup_showProfileForm_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NavBarDropdown.vue?vue&type=template&id=207ec18b&scoped=true&bindings={"logout":"setup","profile":"setup","showProfileForm":"setup"} */ "./resources/js/components/layout/NavBarDropdown.vue?vue&type=template&id=207ec18b&scoped=true&bindings={\"logout\":\"setup\",\"profile\":\"setup\",\"showProfileForm\":\"setup\"}");
 /* harmony import */ var _NavBarDropdown_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NavBarDropdown.vue?vue&type=script&lang=js */ "./resources/js/components/layout/NavBarDropdown.vue?vue&type=script&lang=js");
+/* harmony import */ var _NavBarDropdown_vue_vue_type_style_index_0_id_207ec18b_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NavBarDropdown.vue?vue&type=style&index=0&id=207ec18b&scoped=true&lang=css */ "./resources/js/components/layout/NavBarDropdown.vue?vue&type=style&index=0&id=207ec18b&scoped=true&lang=css");
 
 
 
-_NavBarDropdown_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _NavBarDropdown_vue_vue_type_template_id_207ec18b_bindings_logout_setup_profile_setup_showProfileForm_setup___WEBPACK_IMPORTED_MODULE_0__.render
+
+
+_NavBarDropdown_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _NavBarDropdown_vue_vue_type_template_id_207ec18b_scoped_true_bindings_logout_setup_profile_setup_showProfileForm_setup___WEBPACK_IMPORTED_MODULE_0__.render
+_NavBarDropdown_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__scopeId = "data-v-207ec18b"
 /* hot reload */
 if (false) {}
 
@@ -42600,6 +42683,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/layout/NavBarDropdown.vue?vue&type=style&index=0&id=207ec18b&scoped=true&lang=css":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/layout/NavBarDropdown.vue?vue&type=style&index=0&id=207ec18b&scoped=true&lang=css ***!
+  \*******************************************************************************************************************/
+/*! namespace exports */
+/*! exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NavBarDropdown_vue_vue_type_style_index_0_id_207ec18b_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./NavBarDropdown.vue?vue&type=style&index=0&id=207ec18b&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/NavBarDropdown.vue?vue&type=style&index=0&id=207ec18b&scoped=true&lang=css");
+
+
+/***/ }),
+
 /***/ "./resources/js/App.vue?vue&type=template&id=f348271a&bindings={}":
 /*!************************************************************************!*\
   !*** ./resources/js/App.vue?vue&type=template&id=f348271a&bindings={} ***!
@@ -42640,12 +42739,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/layout/NavBarDropdown.vue?vue&type=template&id=207ec18b&bindings={\"logout\":\"setup\",\"profile\":\"setup\",\"showProfileForm\":\"setup\"}":
-/*!*****************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/layout/NavBarDropdown.vue?vue&type=template&id=207ec18b&bindings={"logout":"setup","profile":"setup","showProfileForm":"setup"} ***!
-  \*****************************************************************************************************************************************************************/
+/***/ "./resources/js/components/layout/NavBarDropdown.vue?vue&type=template&id=207ec18b&scoped=true&bindings={\"logout\":\"setup\",\"profile\":\"setup\",\"showProfileForm\":\"setup\"}":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/layout/NavBarDropdown.vue?vue&type=template&id=207ec18b&scoped=true&bindings={"logout":"setup","profile":"setup","showProfileForm":"setup"} ***!
+  \*****************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/NavBarDropdown.vue?vue&type=template&id=207ec18b&bindings={"logout":"setup","profile":"setup","showProfileForm":"setup"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/NavBarDropdown.vue?vue&type=template&id=207ec18b&scoped=true&bindings={"logout":"setup","profile":"setup","showProfileForm":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -42653,9 +42752,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NavBarDropdown_vue_vue_type_template_id_207ec18b_bindings_logout_setup_profile_setup_showProfileForm_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NavBarDropdown_vue_vue_type_template_id_207ec18b_scoped_true_bindings_logout_setup_profile_setup_showProfileForm_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NavBarDropdown_vue_vue_type_template_id_207ec18b_bindings_logout_setup_profile_setup_showProfileForm_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./NavBarDropdown.vue?vue&type=template&id=207ec18b&bindings={"logout":"setup","profile":"setup","showProfileForm":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/NavBarDropdown.vue?vue&type=template&id=207ec18b&bindings={\"logout\":\"setup\",\"profile\":\"setup\",\"showProfileForm\":\"setup\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NavBarDropdown_vue_vue_type_template_id_207ec18b_scoped_true_bindings_logout_setup_profile_setup_showProfileForm_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./NavBarDropdown.vue?vue&type=template&id=207ec18b&scoped=true&bindings={"logout":"setup","profile":"setup","showProfileForm":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/NavBarDropdown.vue?vue&type=template&id=207ec18b&scoped=true&bindings={\"logout\":\"setup\",\"profile\":\"setup\",\"showProfileForm\":\"setup\"}");
 
 
 /***/ }),
@@ -42997,10 +43096,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/NavBarDropdown.vue?vue&type=template&id=207ec18b&bindings={\"logout\":\"setup\",\"profile\":\"setup\",\"showProfileForm\":\"setup\"}":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/NavBarDropdown.vue?vue&type=template&id=207ec18b&bindings={"logout":"setup","profile":"setup","showProfileForm":"setup"} ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/NavBarDropdown.vue?vue&type=template&id=207ec18b&scoped=true&bindings={\"logout\":\"setup\",\"profile\":\"setup\",\"showProfileForm\":\"setup\"}":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/NavBarDropdown.vue?vue&type=template&id=207ec18b&scoped=true&bindings={"logout":"setup","profile":"setup","showProfileForm":"setup"} ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -43014,7 +43113,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
+const _withId = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.withScopeId)("data-v-207ec18b")
 
+;(0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-207ec18b")
 const _hoisted_1 = { class: "demo-navbar-user nav-item dropdown" }
 const _hoisted_2 = {
   class: "nav-link dropdown-toggle",
@@ -43022,27 +43123,32 @@ const _hoisted_2 = {
   "data-toggle": "dropdown"
 }
 const _hoisted_3 = { class: "d-inline-flex flex-lg-row-reverse align-items-center align-middle" }
-const _hoisted_4 = { class: "px-1 mr-lg-2 ml-2 ml-lg-0" }
-const _hoisted_5 = { class: "dropdown-menu dropdown-menu-right" }
-const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "ion ion-ios-person text-lightest" }, null, -1 /* HOISTED */)
-const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" My profile ")
-const _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", { class: "dropdown-divider" }, null, -1 /* HOISTED */)
-const _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "ion ion-ios-log-out text-danger" }, null, -1 /* HOISTED */)
-const _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Log Out ")
+const _hoisted_4 = { class: "image-cropper" }
+const _hoisted_5 = { class: "px-1 mr-lg-2 ml-2 ml-lg-0" }
+const _hoisted_6 = { class: "dropdown-menu dropdown-menu-right" }
+const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "ion ion-ios-person text-lightest" }, null, -1 /* HOISTED */)
+const _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" My profile ")
+const _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", { class: "dropdown-divider" }, null, -1 /* HOISTED */)
+const _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "ion ion-ios-log-out text-danger" }, null, -1 /* HOISTED */)
+const _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Log Out ")
+;(0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)()
 
-function render(_ctx, _cache, $props, $setup, $data, $options) {
+const render = /*#__PURE__*/_withId(function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", _hoisted_2, [
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_3, [
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
-          src: 'images/' + $setup.profile.avatar,
-          alt: "",
-          class: "d-block ui-w-30 rounded-circle"
-        }, null, 8 /* PROPS */, ["src"]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.profile.login), 1 /* TEXT */)
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+            src: 'images/' + $setup.profile.avatar,
+            alt: "",
+            class: " image-cropper__image d-block ui-w-30 rounded-circle",
+            style: {"border-radius":"50%"}
+          }, null, 8 /* PROPS */, ["src"])
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.profile.login), 1 /* TEXT */)
       ])
     ]),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
         onClick: _cache[1] || (_cache[1] = (...args) => ($setup.showProfileForm(...args))),
         "data-toggle": "modal",
@@ -43050,21 +43156,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         href: "javascript:void(0)",
         class: "dropdown-item"
       }, [
-        _hoisted_6,
-        _hoisted_7
+        _hoisted_7,
+        _hoisted_8
       ]),
-      _hoisted_8,
+      _hoisted_9,
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
         onClick: _cache[2] || (_cache[2] = (...args) => ($setup.logout(...args))),
         href: "javascript:void(0)",
         class: "dropdown-item"
       }, [
-        _hoisted_9,
-        _hoisted_10
+        _hoisted_10,
+        _hoisted_11
       ])
     ])
   ]))
-}
+})
 
 /***/ }),
 
@@ -51400,11 +51506,6 @@ function toArray(value) {
 /******/ 	__webpack_require__.m = __webpack_modules__;
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/amd options */
-/******/ 	(() => {
-/******/ 		__webpack_require__.amdO = {};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules

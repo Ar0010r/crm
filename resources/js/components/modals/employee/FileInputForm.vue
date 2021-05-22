@@ -8,9 +8,8 @@
                         <div class="d-flex flex-column mt-1">
                             <small class="text-muted">Example of accepted .xlsx <a href="/example.xlsx" download>file</a>
                             </small>
-                            <small>Please make sure that head of the table is present. <br>
-                                Data without head above it will not be exported. <br>
-                                Head columns could be in any order and with spaces between them if needed
+                            <small>Please make sure that head of the table is present. Data without head above it will not be exported.<br>
+                                Head columns could be in any order and with spaces between them if needed<br>
                             </small>
                         </div>
                     </h5>

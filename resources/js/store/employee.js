@@ -10,6 +10,13 @@ export default {
         statuses: {},
         availableStatuses: {},
         pagination: {},
+        queryParams: {
+            company_id: "",
+            status: "",
+            page: "",
+            hr_id: "",
+            recordsPerPage: ""
+        },
 
         emptyEmployee: {
             address: null,
@@ -30,6 +37,9 @@ export default {
         }
     },
     mutations: {
+        setQueryParam(state, {key, value}) {
+            state.queryParams[key] = value
+        },
         setEmployeeStatus(state, params) {
             let key = params.id
             state.employees[key].status = params.newStatus

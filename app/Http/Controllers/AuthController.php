@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Services\User\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+    private UserService $userService;
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     public function login(Request $r)
     {
         $credentials = $r->only('login', 'password');
@@ -21,7 +29,9 @@ class AuthController extends Controller
 
     public function profile()
     {
-        return response(auth()->user(), JsonResponse::HTTP_OK);
+        $user = $this->userService->getProfile(auth()->user());
+
+        return response($user, JsonResponse::HTTP_OK);
     }
 
     public function logout()

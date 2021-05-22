@@ -2,7 +2,10 @@
     <div class="demo-navbar-user nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
                   <span class="d-inline-flex flex-lg-row-reverse align-items-center align-middle">
-                    <img :src="'images/' + profile.avatar"  alt class="d-block ui-w-30 rounded-circle">
+                    <div class="image-cropper">
+                        <img :src="'images/' + profile.avatar"  alt class=" image-cropper__image d-block ui-w-30 rounded-circle"
+                             style="border-radius: 50%">
+                    </div>
                     <span class="px-1 mr-lg-2 ml-2 ml-lg-0">{{profile.login}}</span>
                   </span>
         </a>
@@ -46,3 +49,31 @@
         }
     };
 </script>
+
+<style scoped>
+    .image-cropper {
+
+        width: 35px;
+
+        height: 35px;
+
+        position: relative;
+
+        overflow: hidden;
+
+        border-radius: 50%;
+
+    }
+
+    .image-cropper__image {
+
+        display: inline;
+
+        margin: 0 auto;
+
+        height: 100%;
+
+        min-width: 100%;
+
+    }
+</style>

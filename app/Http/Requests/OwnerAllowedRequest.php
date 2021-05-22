@@ -24,5 +24,5 @@ abstract class OwnerAllowedRequest extends FormRequest
         return [];
     }
 
-    abstract protected function entityOwnerId(): int;
+    abstract protected function entityOwnerId(): string;
 }

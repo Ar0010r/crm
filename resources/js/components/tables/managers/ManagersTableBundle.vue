@@ -1,9 +1,12 @@
 <template>
     <div class="container-fluid flex-grow-1 container-p-y">
         <h4 class="font-weight-bold py-3 mb-4">Managers</h4>
-        <div class="d-flex justify-content-between mb-3">
+        <div class="d-flex mb-3">
+            <button @click="refresh" class="btn btn-secondary" type="button" title="Refresh">
+                <i class="opacity-75 ion ion-md-refresh icon-refresh"></i>
+            </button>
             <button @click.prevent="showManagerStoreForm"
-                    class="btn btn-primary btn"
+                    class="btn btn-primary btn ml-2"
                     data-toggle="modal"
                     data-target="#addManagerForm">
                 Add manager
@@ -38,6 +41,7 @@
             return {
                 showManagerStoreForm: () => emitter.emit('create-manager-form'),
                 users: computed(() => store.getters.getUsers),
+                refresh: () => store.dispatch('user/setUsersToStore')
             }
         },
 

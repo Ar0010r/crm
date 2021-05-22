@@ -1,10 +1,12 @@
 <?php
 
 
-namespace App\Services;
+namespace App\Services\Employee;
 
 use App\Models\Employee;
 use App\Models\User;
+use App\Services\Company\CompanyService;
+use App\Services\User\UserService;
 use App\Shared\Value\Role;
 use App\Shared\Value\Status;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -92,7 +94,7 @@ class EmployeeSearchService
 
     private function getTopHrSearchAspect(): callable
     {
-        $hrIds = $this->userService->getTopHrTeamIds();
+        $hrIds = UserService::getTopHrTeamIds();
         return function (ModelSearchAspect $modelSearchAspect) use ($hrIds) {
             $this->basicSearchAspect($modelSearchAspect)
                 ->whereIn('employees.hr_id', $hrIds);

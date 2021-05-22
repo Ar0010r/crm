@@ -29,9 +29,7 @@
     import {useStore} from 'vuex';
     import {computed, reactive, inject, ref, onBeforeUnmount} from 'vue';
     import EmployeeFormFields from './fields/EmployeeFormFields';
-    import EmployeeStatusField from './fields/EmployeeSatusField.vue';
     import EmployeePickUpField from './fields/EmployeePickUpField';
-    import axios from 'axios';
 
     export default {
         setup() {
@@ -48,7 +46,7 @@
 
             async function updateEmployee() {
                 try {
-                    employeeFields.value.validate()
+                    await employeeFields.value.validate()
                    // await axios.put('api/employees/' + employee.id, employee);
                     await container.EmployeeService.update(employee);
 
@@ -70,7 +68,6 @@
         },
         components: {
             EmployeeFormFields,
-            EmployeeStatusField,
             EmployeePickUpField,
         }
     };

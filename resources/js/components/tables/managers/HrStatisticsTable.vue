@@ -31,7 +31,7 @@
             return {
                 users: computed(() => {
                     let hrs = store.getters.getHrs;
-                    if(profile.value.role === 'top hr') hrs[profile.value.id] = profile.value
+                    //if(profile.value.role === 'top hr') hrs[profile.value.id] = profile.value
                     return hrs
                 }),
             }

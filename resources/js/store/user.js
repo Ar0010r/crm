@@ -69,7 +69,11 @@ export default {
         async setUsersToStore({commit, dispatch, state}, params) {
             try {
                 let response = await container.UserService.getUsers(params);
-                let users = response.data.filter(user => user.id !== state.profile.id)
+                let users;
+                if(state.profile.role !== 'top hr') {
+                    users = response.data.filter(user => user.id !== state.profile.id)
+                }
+                users = response.data;
 
                 dispatch('sort', users);
             } catch (e) {

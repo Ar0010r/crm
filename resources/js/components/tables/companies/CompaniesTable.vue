@@ -3,8 +3,13 @@
         <h4 class="font-weight-bold py-3 mb-4">
             Companies
         </h4>
-        <div v-if="profile.role === 'admin' || profile.role === 'personnel'" class="d-flex justify-content-between mb-3 mt-2">
-            <button @click="initializeCompanyStoreForm" class="btn btn-primary btn" data-toggle="modal"
+
+        <div class="d-flex mb-3 mt-2">
+            <button @click="refresh" class="btn btn-secondary" type="button" title="Refresh">
+                <i class="opacity-75 ion ion-md-refresh icon-refresh"></i>
+            </button>
+            <button v-if="profile.role === 'admin' || profile.role === 'personnel'"
+                    @click="initializeCompanyStoreForm" class="btn btn-primary btn ml-2" data-toggle="modal"
                     data-target="#addCompanyForm">Add company
             </button>
         </div>
@@ -37,7 +42,8 @@
             return {
                 profile: computed(() => store.getters.getProfile),
                 companies: computed(() => store.getters.getCompanies),
-                initializeCompanyStoreForm : () =>  emitter.emit('create-company-form')
+                initializeCompanyStoreForm : () =>  emitter.emit('create-company-form'),
+                refresh: () => store.dispatch('company/setCompaniesToStore')
             }
         },
 
