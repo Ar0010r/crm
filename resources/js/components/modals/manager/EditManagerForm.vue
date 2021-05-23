@@ -45,7 +45,7 @@
             async function updateManager() {
                 try {
                     await managerFields.value.validate();
-                    if (manager.password === null || manager.password.length === 0) delete manager.password;
+                    if (manager.password === null || manager.password === undefined) delete manager.password;
                     delete manager.dataIsValid;
                     delete manager.avatar;
                     await container.UserService.updateUser(manager);
@@ -53,12 +53,14 @@
                     emitter.emit('notification-success', 'manager was updated');
                     document.getElementById('editUserFormClose').click();
                 } catch (e) {
+                    console.log(e)
                     emitter.emit('notification-error', e.response.data)
                 }
             }
 
             function setUser(userData) {
                 Object.keys(userData).forEach(key => manager[key] = userData[key])
+                manager.password = null;
             }
 
             return {manager, managerFields, updateManager}

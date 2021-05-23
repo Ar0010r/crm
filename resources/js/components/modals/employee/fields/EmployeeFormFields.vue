@@ -233,7 +233,7 @@
                 zip: yup.string().nullable().matches('^$|\\d{5}(-\\d{4})?$', 'enter valid zip code'),
                 phone_1: yup.string().nullable().matches('^$|\\d{3}-\\d{3}-\\d{4}$', 'enter valid phone'),
                 phone_2: yup.string().nullable().matches("^$|\\d{3}-\\d{3}-\\d{4}$", 'enter valid phone'),
-                name: yup.string().nullable().trim().matches('^$|[a-zA-Z ]+$', 'name can contain only letters').required(),
+                name: yup.string().nullable().trim().matches('^[a-zA-Z ]+$', 'name can contain only letters').required(),
                 city: yup.string().nullable().trim().matches('^$|[a-zA-Z ]+$', 'city can contain only letters'),
                 birthday: yup.string().nullable().matches("^$|((?:19|20)[0-9][0-9])-(0[1-9]|1[012])-([12][0-9]|3[01]|0[1-9])$", 'valid date format is yyyy-mm-dd'),
                 state: yup.string().nullable().test("test-name", "please enter correct state abbreviation",

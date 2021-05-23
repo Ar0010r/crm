@@ -34,11 +34,17 @@
             const container = inject('container');
             const emitter = inject("emitter");
             const companyFields = ref(null);
+            const profile = computed(() => store.getters.getProfile)
 
-            const emptyCompany = {...store.getters.getEmptyCompany};
+            let emptyCompany = {...store.getters.getEmptyCompany};
+
+            if(profile.role === 'personnel'){
+
+
+                emptyCompany.personnel_id = profile.id
+            }
+
             let company = reactive({...emptyCompany});
-
-            let users = computed(() => store.getters.getUsers);
 
             async function storeCompany(company) {
                 try {
@@ -47,22 +53,28 @@
 
                     let storedCompany = response.data.company;
 
-                    storedCompany.personnel = users.value[storedCompany.personnel_id];
-
                     store.commit('company/setCompanyById', storedCompany);
                     document.getElementById('storeCompanyFormClose').click()
                     emitter.emit('notification-success', 'company was created');
-                    clearForm()
+                    resetForm()
                 } catch (e) {
                     emitter.emit('notification-error', e.response.data)
                 }
 
             }
 
-            const clearForm = () => Object.keys(emptyCompany).forEach(key => company[key] = emptyCompany[key]);
+            function resetForm() {
+                Object.keys(emptyCompany).forEach(key => company[key] = emptyCompany[key]);
 
-            emitter.on('create-company-form', clearForm);
-            onBeforeUnmount(() => emitter.off('create-company-form', clearForm));
+                if(profile.value.role === 'personnel'){
+                    company.personnel_id = profile.value.id
+                    company.personnel = profile.value
+                    console.log(company.personnel.login)
+                }
+            }
+
+            emitter.on('create-company-form', resetForm);
+            onBeforeUnmount(() => emitter.off('create-company-form', resetForm));
 
             return {storeCompany, company, companyFields}
         },

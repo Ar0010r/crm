@@ -7,11 +7,6 @@ use Illuminate\Validation\Rule;
 
 class CompanyUpdateRequest extends CompanyOwnerAllowedRequest
 {
-   /* public function authorize()
-    {
-        return auth()->user()->tokenCan(Permission::COMPANY_UPDATE);
-    }*/
-
     public function rules()
     {
         $updatedId = $this->route()->parameter('company');

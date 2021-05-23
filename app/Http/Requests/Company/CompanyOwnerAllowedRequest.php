@@ -15,11 +15,11 @@ abstract class CompanyOwnerAllowedRequest extends OwnerAllowedRequest
     {
         $authorize = parent::authorize();
 
-        return $authorize || auth()->user()->role === Role::HR;
+        return $authorize || auth()->user()->role === Role::ADMIN;
     }
 
-    protected function entityOwnerId(): int
+    protected function entityOwnerId(): string
     {
-        return Company::find($this->requestId)->user_id ?? self::OWNER_ID_NOT_FOUND;
+        return Company::find($this->requestId)->personnel_id ?? self::OWNER_ID_NOT_FOUND;
     }
 }

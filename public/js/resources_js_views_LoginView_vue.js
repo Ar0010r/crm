@@ -19,6 +19,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _router_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../router.js */ "./resources/js/router.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -27,9 +28,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
     var container = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)('container');
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
     var user = (0,vue__WEBPACK_IMPORTED_MODULE_2__.reactive)({
       login: "",
       password: ""
@@ -52,22 +55,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return container.AuthService.login(user);
 
               case 3:
+                _context.next = 5;
+                return store.dispatch('user/setProfileToStore');
+
+              case 5:
                 _router_js__WEBPACK_IMPORTED_MODULE_1__.default.push("/employees");
-                _context.next = 10;
+                _context.next = 12;
                 break;
 
-              case 6:
-                _context.prev = 6;
+              case 8:
+                _context.prev = 8;
                 _context.t0 = _context["catch"](0);
                 isInvalid.value = true;
                 dBlock.value = true;
 
-              case 10:
+              case 12:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 6]]);
+        }, _callee, null, [[0, 8]]);
       }));
       return _login.apply(this, arguments);
     }

@@ -162,6 +162,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       validate: validate,
       personnels: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
         return store.getters.getPersonnels;
+      }),
+      profile: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+        return store.getters.getProfile;
       })
     };
   },
@@ -217,13 +220,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var container = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)('container');
     var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_2__.inject)("emitter");
     var companyFields = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)(null);
+    var profile = (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+      return store.getters.getProfile;
+    });
 
     var emptyCompany = _objectSpread({}, store.getters.getEmptyCompany);
 
+    if (profile.role === 'personnel') {
+      emptyCompany.personnel_id = profile.id;
+    }
+
     var company = (0,vue__WEBPACK_IMPORTED_MODULE_2__.reactive)(_objectSpread({}, emptyCompany));
-    var users = (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
-      return store.getters.getUsers;
-    });
 
     function storeCompany(_x) {
       return _storeCompany.apply(this, arguments);
@@ -247,38 +254,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 5:
                 response = _context.sent;
                 storedCompany = response.data.company;
-                storedCompany.personnel = users.value[storedCompany.personnel_id];
                 store.commit('company/setCompanyById', storedCompany);
                 document.getElementById('storeCompanyFormClose').click();
                 emitter.emit('notification-success', 'company was created');
-                clearForm();
-                _context.next = 17;
+                resetForm();
+                _context.next = 16;
                 break;
 
-              case 14:
-                _context.prev = 14;
+              case 13:
+                _context.prev = 13;
                 _context.t0 = _context["catch"](0);
                 emitter.emit('notification-error', _context.t0.response.data);
 
-              case 17:
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 14]]);
+        }, _callee, null, [[0, 13]]);
       }));
       return _storeCompany.apply(this, arguments);
     }
 
-    var clearForm = function clearForm() {
-      return Object.keys(emptyCompany).forEach(function (key) {
+    function resetForm() {
+      Object.keys(emptyCompany).forEach(function (key) {
         return company[key] = emptyCompany[key];
       });
-    };
 
-    emitter.on('create-company-form', clearForm);
+      if (profile.value.role === 'personnel') {
+        company.personnel_id = profile.value.id;
+        company.personnel = profile.value;
+        console.log(company.personnel.login);
+      }
+    }
+
+    emitter.on('create-company-form', resetForm);
     (0,vue__WEBPACK_IMPORTED_MODULE_2__.onBeforeUnmount)(function () {
-      return emitter.off('create-company-form', clearForm);
+      return emitter.off('create-company-form', resetForm);
     });
     return {
       storeCompany: storeCompany,
@@ -337,6 +349,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var users = (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
       return store.getters.getUsers;
     });
+    var profile = (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+      return store.getters.getProfile;
+    });
 
     var emptyCompany = _objectSpread({}, store.getters.getEmptyCompany);
 
@@ -365,7 +380,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return container.CompanyService.updateCompany(company);
 
               case 5:
-                company.personnel = users.value[company.personnel_id];
+                if (profile.value.role !== 'personnel') {
+                  company.personnel = users.value[company.personnel_id];
+                }
+
                 store.commit('company/setCompanyById', company);
                 emitter.emit('notification-success', 'company was updated');
                 document.getElementById('editCompanyFormClose').click();
@@ -615,7 +633,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 warning = {
                   message: generateWarningMessage(),
-                  event_id: deleteEventId
+                  event_id: deleteEventId,
+                  action: 'deleted'
                 };
                 emitter.emit('notification-warning', warning);
 
@@ -640,35 +659,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.prev = 0;
-                console.log('delete company', props.company);
-                _context2.next = 4;
+                _context2.next = 3;
                 return container.CompanyService.deleteCompany(props.company);
 
-              case 4:
+              case 3:
                 emitter.emit('notification-success', ' company ' + props.company.name + ' was deleted');
                 store.dispatch('company/deleteCompany', props.company);
-                _context2.next = 11;
+                _context2.next = 10;
                 break;
 
-              case 8:
-                _context2.prev = 8;
+              case 7:
+                _context2.prev = 7;
                 _context2.t0 = _context2["catch"](0);
                 emitter.emit('notification-error', _context2.t0.response.data);
 
-              case 11:
+              case 10:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[0, 8]]);
+        }, _callee2, null, [[0, 7]]);
       }));
       return _deleteCompany.apply(this, arguments);
     }
 
     function generateWarningMessage() {
-      var message;
-      if (props.company.email) message = props.company.email;else message = props.company.name;
-      return message;
+      return props.company.name;
     }
 
     return {
@@ -871,12 +887,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _CompanyFormFields_vue_vue_type_template_id_e6b269ac_bindings_name_setup_email_setup_domain_setup_personnel_setup_manager_setup_errors_setup_validate_setup_personnels_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel":"setup","manager":"setup","errors":"setup","validate":"setup","personnels":"setup","company":"props"} */ "./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={\"name\":\"setup\",\"email\":\"setup\",\"domain\":\"setup\",\"personnel\":\"setup\",\"manager\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"personnels\":\"setup\",\"company\":\"props\"}");
+/* harmony import */ var _CompanyFormFields_vue_vue_type_template_id_e6b269ac_bindings_name_setup_email_setup_domain_setup_personnel_setup_manager_setup_errors_setup_validate_setup_personnels_setup_profile_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel":"setup","manager":"setup","errors":"setup","validate":"setup","personnels":"setup","profile":"setup","company":"props"} */ "./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={\"name\":\"setup\",\"email\":\"setup\",\"domain\":\"setup\",\"personnel\":\"setup\",\"manager\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"personnels\":\"setup\",\"profile\":\"setup\",\"company\":\"props\"}");
 /* harmony import */ var _CompanyFormFields_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CompanyFormFields.vue?vue&type=script&lang=js */ "./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=script&lang=js");
 
 
 
-_CompanyFormFields_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _CompanyFormFields_vue_vue_type_template_id_e6b269ac_bindings_name_setup_email_setup_domain_setup_personnel_setup_manager_setup_errors_setup_validate_setup_personnels_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
+_CompanyFormFields_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _CompanyFormFields_vue_vue_type_template_id_e6b269ac_bindings_name_setup_email_setup_domain_setup_personnel_setup_manager_setup_errors_setup_validate_setup_personnels_setup_profile_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -1482,12 +1498,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={\"name\":\"setup\",\"email\":\"setup\",\"domain\":\"setup\",\"personnel\":\"setup\",\"manager\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"personnels\":\"setup\",\"company\":\"props\"}":
-/*!********************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel":"setup","manager":"setup","errors":"setup","validate":"setup","personnels":"setup","company":"props"} ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={\"name\":\"setup\",\"email\":\"setup\",\"domain\":\"setup\",\"personnel\":\"setup\",\"manager\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"personnels\":\"setup\",\"profile\":\"setup\",\"company\":\"props\"}":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel":"setup","manager":"setup","errors":"setup","validate":"setup","personnels":"setup","profile":"setup","company":"props"} ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel":"setup","manager":"setup","errors":"setup","validate":"setup","personnels":"setup","company":"props"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel":"setup","manager":"setup","errors":"setup","validate":"setup","personnels":"setup","profile":"setup","company":"props"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1495,9 +1511,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompanyFormFields_vue_vue_type_template_id_e6b269ac_bindings_name_setup_email_setup_domain_setup_personnel_setup_manager_setup_errors_setup_validate_setup_personnels_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompanyFormFields_vue_vue_type_template_id_e6b269ac_bindings_name_setup_email_setup_domain_setup_personnel_setup_manager_setup_errors_setup_validate_setup_personnels_setup_profile_setup_company_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompanyFormFields_vue_vue_type_template_id_e6b269ac_bindings_name_setup_email_setup_domain_setup_personnel_setup_manager_setup_errors_setup_validate_setup_personnels_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel":"setup","manager":"setup","errors":"setup","validate":"setup","personnels":"setup","company":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={\"name\":\"setup\",\"email\":\"setup\",\"domain\":\"setup\",\"personnel\":\"setup\",\"manager\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"personnels\":\"setup\",\"company\":\"props\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CompanyFormFields_vue_vue_type_template_id_e6b269ac_bindings_name_setup_email_setup_domain_setup_personnel_setup_manager_setup_errors_setup_validate_setup_personnels_setup_profile_setup_company_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel":"setup","manager":"setup","errors":"setup","validate":"setup","personnels":"setup","profile":"setup","company":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={\"name\":\"setup\",\"email\":\"setup\",\"domain\":\"setup\",\"personnel\":\"setup\",\"manager\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"personnels\":\"setup\",\"profile\":\"setup\",\"company\":\"props\"}");
 
 
 /***/ }),
@@ -1771,10 +1787,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={\"name\":\"setup\",\"email\":\"setup\",\"domain\":\"setup\",\"personnel\":\"setup\",\"manager\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"personnels\":\"setup\",\"company\":\"props\"}":
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel":"setup","manager":"setup","errors":"setup","validate":"setup","personnels":"setup","company":"props"} ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={\"name\":\"setup\",\"email\":\"setup\",\"domain\":\"setup\",\"personnel\":\"setup\",\"manager\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"personnels\":\"setup\",\"profile\":\"setup\",\"company\":\"props\"}":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/company/CompanyFormFields.vue?vue&type=template&id=e6b269ac&bindings={"name":"setup","email":"setup","domain":"setup","personnel":"setup","manager":"setup","errors":"setup","validate":"setup","personnels":"setup","profile":"setup","company":"props"} ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -1790,7 +1806,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const _hoisted_1 = { class: "form-row mb-2" }
-const _hoisted_2 = { class: "form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap" }
+const _hoisted_2 = {
+  key: 0,
+  class: "form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap"
+}
 const _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Personnel", -1 /* HOISTED */)
 const _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
   disabled: "",
@@ -1818,28 +1837,30 @@ const _hoisted_21 = { class: " col-md-12 invalid-feedback text-right p-0" }
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [
-        _hoisted_3,
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-          class: ["custom-select form-control form-control-sm col-md-10", {'is-invalid': !$setup.personnel.meta.valid && $setup.personnel.meta.touched}],
-          name: "personnel",
-          "onUpdate:modelValue": _cache[1] || (_cache[1] = $event => ($props.company.personnel_id = $event)),
-          onFocus: _cache[2] || (_cache[2] = $event => ($setup.personnel.meta.touched = false)),
-          onChange: _cache[3] || (_cache[3] = (...args) => ($setup.personnel.handleChange(...args))),
-          onBlur: _cache[4] || (_cache[4] = (...args) => ($setup.personnel.handleBlur(...args)))
-        }, [
-          _hoisted_4,
-          ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.personnels, (personnel) => {
-            return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
-              selected: $props.company.personnel_id === personnel.id,
-              value: personnel.id
-            }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(personnel.login), 9 /* TEXT, PROPS */, ["selected", "value"]))
-          }), 256 /* UNKEYED_FRAGMENT */))
-        ], 34 /* CLASS, HYDRATE_EVENTS */), [
-          [vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.company.personnel_id]
-        ]),
-        _hoisted_5
-      ])
+      ($setup.profile.role === 'admin')
+        ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_2, [
+            _hoisted_3,
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+              class: ["custom-select form-control form-control-sm col-md-10", {'is-invalid': !$setup.personnel.meta.valid && $setup.personnel.meta.touched}],
+              name: "personnel",
+              "onUpdate:modelValue": _cache[1] || (_cache[1] = $event => ($props.company.personnel_id = $event)),
+              onFocus: _cache[2] || (_cache[2] = $event => ($setup.personnel.meta.touched = false)),
+              onChange: _cache[3] || (_cache[3] = (...args) => ($setup.personnel.handleChange(...args))),
+              onBlur: _cache[4] || (_cache[4] = (...args) => ($setup.personnel.handleBlur(...args)))
+            }, [
+              _hoisted_4,
+              ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.personnels, (personnel) => {
+                return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
+                  selected: $props.company.personnel_id === personnel.id,
+                  value: personnel.id
+                }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(personnel.login), 9 /* TEXT, PROPS */, ["selected", "value"]))
+              }), 256 /* UNKEYED_FRAGMENT */))
+            ], 34 /* CLASS, HYDRATE_EVENTS */), [
+              [vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.company.personnel_id]
+            ]),
+            _hoisted_5
+          ]))
+        : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
     ]),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [
@@ -2028,7 +2049,7 @@ const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
   type: "button",
   class: "btn btn-default",
   "data-dismiss": "modal"
-}, "Close", -1 /* HOISTED */)
+}, "Close ", -1 /* HOISTED */)
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_CompanyFormFields = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("CompanyFormFields")

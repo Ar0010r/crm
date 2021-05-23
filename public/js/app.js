@@ -30477,14 +30477,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     function generatePass() {
       var length = 8,
           charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
-          password = "";
+          generatedPassword = "";
 
       for (var i = 0, n = charset.length; i < length; ++i) {
-        password += charset.charAt(Math.floor(Math.random() * n));
+        generatedPassword += charset.charAt(Math.floor(Math.random() * n));
       }
 
-      props.user.password = password;
-      password.value = password;
+      props.user.password = generatedPassword; //password.value = generatedPassword;
+
+      password.meta.touched = true;
+      password.meta.valid = true;
     }
 
     function validate() {
@@ -30558,6 +30560,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       passwordField: passwordField,
       roles: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
         return store.getters.getRoles;
+      }),
+      profile: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+        return store.getters.getProfile;
       })
     };
   },
@@ -31060,10 +31065,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm-bundler.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm-bundler.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -31084,8 +31097,8 @@ var LoginView = function LoginView() {
   return __webpack_require__.e(/*! import() */ "resources_js_views_LoginView_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./views/LoginView.vue */ "./resources/js/views/LoginView.vue"));
 };
 
-var history = (0,vue_router__WEBPACK_IMPORTED_MODULE_2__.createWebHistory)();
-var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_2__.createRouter)({
+var history = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.createWebHistory)();
+var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.createRouter)({
   history: history,
   routes: [{
     path: '/employees',
@@ -31122,23 +31135,103 @@ var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_2__.createRouter)({
   linkActiveClass: "active",
   linkExactActiveClass: "active"
 });
-router.beforeEach(function (to, from, next) {
-  document.title = to.meta.title;
-  var tokenIsOk = (axios__WEBPACK_IMPORTED_MODULE_1___default().defaults.headers.common.Authorization) === 'Bearer ' + localStorage.getItem('token');
-  if (tokenIsOk && to.name !== 'login') return next();
-  if (tokenIsOk && to.name === 'login') return next("/employees");
+router.beforeEach( /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(to, from, next) {
+    var tokenIsOk, profileIsUndefined, profile;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            document.title = to.meta.title;
 
-  if (localStorage.getItem('token')) {
-    (axios__WEBPACK_IMPORTED_MODULE_1___default().defaults.headers.common.Authorization) = 'Bearer ' + localStorage.getItem('token');
-    var profileIsUndefined = Object.keys(_store__WEBPACK_IMPORTED_MODULE_0__.default.getters.getProfile).length === 0;
-    if (profileIsUndefined) _store__WEBPACK_IMPORTED_MODULE_0__.default.dispatch('user/setProfileToStore');
-    if (to.name === 'login') return next("/employees");
-    next();
-  } else {
-    if (to.name === 'login') return next();
-    next("/login");
-  }
-});
+            if (to.matched.length) {
+              _context.next = 3;
+              break;
+            }
+
+            return _context.abrupt("return", next('/employees'));
+
+          case 3:
+            tokenIsOk = (axios__WEBPACK_IMPORTED_MODULE_2___default().defaults.headers.common.Authorization) === 'Bearer ' + localStorage.getItem('token');
+
+            if (!(tokenIsOk && to.name !== 'login')) {
+              _context.next = 6;
+              break;
+            }
+
+            return _context.abrupt("return", next());
+
+          case 6:
+            if (!(tokenIsOk && to.name === 'login')) {
+              _context.next = 8;
+              break;
+            }
+
+            return _context.abrupt("return", next("/employees"));
+
+          case 8:
+            if (!localStorage.getItem('token')) {
+              _context.next = 22;
+              break;
+            }
+
+            (axios__WEBPACK_IMPORTED_MODULE_2___default().defaults.headers.common.Authorization) = 'Bearer ' + localStorage.getItem('token');
+            profileIsUndefined = Object.keys(_store__WEBPACK_IMPORTED_MODULE_1__.default.getters.getProfile).length === 0;
+
+            if (!profileIsUndefined) {
+              _context.next = 14;
+              break;
+            }
+
+            _context.next = 14;
+            return _store__WEBPACK_IMPORTED_MODULE_1__.default.dispatch('user/setProfileToStore');
+
+          case 14:
+            profile = _store__WEBPACK_IMPORTED_MODULE_1__.default.getters.getProfile;
+
+            if (!(to.name !== 'managers' && (profile.role === 'hr' || profile.role === 'top hr'))) {
+              _context.next = 17;
+              break;
+            }
+
+            return _context.abrupt("return", next("/employees"));
+
+          case 17:
+            if (!(to.name === 'login')) {
+              _context.next = 19;
+              break;
+            }
+
+            return _context.abrupt("return", next("/employees"));
+
+          case 19:
+            next();
+            _context.next = 25;
+            break;
+
+          case 22:
+            if (!(to.name === 'login')) {
+              _context.next = 24;
+              break;
+            }
+
+            return _context.abrupt("return", next());
+
+          case 24:
+            next("/login");
+
+          case 25:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function (_x, _x2, _x3) {
+    return _ref.apply(this, arguments);
+  };
+}());
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
 
 /***/ }),
@@ -31807,7 +31900,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _company_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./company.service */ "./resources/js/services/company.service.js");
 /* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./auth.service */ "./resources/js/services/auth.service.js");
 /* harmony import */ var _user_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./user.service */ "./resources/js/services/user.service.js");
- //import { useStore } from 'vuex'
 
 
 
@@ -32761,18 +32853,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     sort: function sort(_ref5, data) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        var commit, users;
+        var commit, state, users;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                commit = _ref5.commit;
+                commit = _ref5.commit, state = _ref5.state;
                 users = _services_index__WEBPACK_IMPORTED_MODULE_1__.container.UserService.sort(data);
+                if (state.profile.role === 'top hr') delete users.users[state.profile.id];
                 commit('setUsers', users.users);
                 commit('setHrs', users.hrs);
                 commit('setPersonnels', users.personnels);
 
-              case 5:
+              case 6:
               case "end":
                 return _context4.stop();
             }
@@ -42302,12 +42395,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _ManagerFormFields_vue_vue_type_template_id_2284ccec_bindings_schema_setup_errors_setup_validate_setup_passwordRequired_setup_login_setup_role_setup_password_setup_generatePass_setup_passwordField_setup_roles_setup_user_props_showRoleField_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ManagerFormFields.vue?vue&type=template&id=2284ccec&bindings={"schema":"setup","errors":"setup","validate":"setup","passwordRequired":"setup","login":"setup","role":"setup","password":"setup","generatePass":"setup","passwordField":"setup","roles":"setup","user":"props","showRoleField":"props"} */ "./resources/js/components/modals/manager/ManagerFormFields.vue?vue&type=template&id=2284ccec&bindings={\"schema\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"passwordRequired\":\"setup\",\"login\":\"setup\",\"role\":\"setup\",\"password\":\"setup\",\"generatePass\":\"setup\",\"passwordField\":\"setup\",\"roles\":\"setup\",\"user\":\"props\",\"showRoleField\":\"props\"}");
+/* harmony import */ var _ManagerFormFields_vue_vue_type_template_id_2284ccec_bindings_schema_setup_errors_setup_validate_setup_passwordRequired_setup_login_setup_role_setup_password_setup_generatePass_setup_passwordField_setup_roles_setup_profile_setup_user_props_showRoleField_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ManagerFormFields.vue?vue&type=template&id=2284ccec&bindings={"schema":"setup","errors":"setup","validate":"setup","passwordRequired":"setup","login":"setup","role":"setup","password":"setup","generatePass":"setup","passwordField":"setup","roles":"setup","profile":"setup","user":"props","showRoleField":"props"} */ "./resources/js/components/modals/manager/ManagerFormFields.vue?vue&type=template&id=2284ccec&bindings={\"schema\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"passwordRequired\":\"setup\",\"login\":\"setup\",\"role\":\"setup\",\"password\":\"setup\",\"generatePass\":\"setup\",\"passwordField\":\"setup\",\"roles\":\"setup\",\"profile\":\"setup\",\"user\":\"props\",\"showRoleField\":\"props\"}");
 /* harmony import */ var _ManagerFormFields_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ManagerFormFields.vue?vue&type=script&lang=js */ "./resources/js/components/modals/manager/ManagerFormFields.vue?vue&type=script&lang=js");
 
 
 
-_ManagerFormFields_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _ManagerFormFields_vue_vue_type_template_id_2284ccec_bindings_schema_setup_errors_setup_validate_setup_passwordRequired_setup_login_setup_role_setup_password_setup_generatePass_setup_passwordField_setup_roles_setup_user_props_showRoleField_props___WEBPACK_IMPORTED_MODULE_0__.render
+_ManagerFormFields_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _ManagerFormFields_vue_vue_type_template_id_2284ccec_bindings_schema_setup_errors_setup_validate_setup_passwordRequired_setup_login_setup_role_setup_password_setup_generatePass_setup_passwordField_setup_roles_setup_profile_setup_user_props_showRoleField_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -42779,12 +42872,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/modals/manager/ManagerFormFields.vue?vue&type=template&id=2284ccec&bindings={\"schema\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"passwordRequired\":\"setup\",\"login\":\"setup\",\"role\":\"setup\",\"password\":\"setup\",\"generatePass\":\"setup\",\"passwordField\":\"setup\",\"roles\":\"setup\",\"user\":\"props\",\"showRoleField\":\"props\"}":
-/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/modals/manager/ManagerFormFields.vue?vue&type=template&id=2284ccec&bindings={"schema":"setup","errors":"setup","validate":"setup","passwordRequired":"setup","login":"setup","role":"setup","password":"setup","generatePass":"setup","passwordField":"setup","roles":"setup","user":"props","showRoleField":"props"} ***!
-  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./resources/js/components/modals/manager/ManagerFormFields.vue?vue&type=template&id=2284ccec&bindings={\"schema\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"passwordRequired\":\"setup\",\"login\":\"setup\",\"role\":\"setup\",\"password\":\"setup\",\"generatePass\":\"setup\",\"passwordField\":\"setup\",\"roles\":\"setup\",\"profile\":\"setup\",\"user\":\"props\",\"showRoleField\":\"props\"}":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/modals/manager/ManagerFormFields.vue?vue&type=template&id=2284ccec&bindings={"schema":"setup","errors":"setup","validate":"setup","passwordRequired":"setup","login":"setup","role":"setup","password":"setup","generatePass":"setup","passwordField":"setup","roles":"setup","profile":"setup","user":"props","showRoleField":"props"} ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/ManagerFormFields.vue?vue&type=template&id=2284ccec&bindings={"schema":"setup","errors":"setup","validate":"setup","passwordRequired":"setup","login":"setup","role":"setup","password":"setup","generatePass":"setup","passwordField":"setup","roles":"setup","user":"props","showRoleField":"props"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/ManagerFormFields.vue?vue&type=template&id=2284ccec&bindings={"schema":"setup","errors":"setup","validate":"setup","passwordRequired":"setup","login":"setup","role":"setup","password":"setup","generatePass":"setup","passwordField":"setup","roles":"setup","profile":"setup","user":"props","showRoleField":"props"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -42792,9 +42885,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ManagerFormFields_vue_vue_type_template_id_2284ccec_bindings_schema_setup_errors_setup_validate_setup_passwordRequired_setup_login_setup_role_setup_password_setup_generatePass_setup_passwordField_setup_roles_setup_user_props_showRoleField_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ManagerFormFields_vue_vue_type_template_id_2284ccec_bindings_schema_setup_errors_setup_validate_setup_passwordRequired_setup_login_setup_role_setup_password_setup_generatePass_setup_passwordField_setup_roles_setup_profile_setup_user_props_showRoleField_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ManagerFormFields_vue_vue_type_template_id_2284ccec_bindings_schema_setup_errors_setup_validate_setup_passwordRequired_setup_login_setup_role_setup_password_setup_generatePass_setup_passwordField_setup_roles_setup_user_props_showRoleField_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ManagerFormFields.vue?vue&type=template&id=2284ccec&bindings={"schema":"setup","errors":"setup","validate":"setup","passwordRequired":"setup","login":"setup","role":"setup","password":"setup","generatePass":"setup","passwordField":"setup","roles":"setup","user":"props","showRoleField":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/ManagerFormFields.vue?vue&type=template&id=2284ccec&bindings={\"schema\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"passwordRequired\":\"setup\",\"login\":\"setup\",\"role\":\"setup\",\"password\":\"setup\",\"generatePass\":\"setup\",\"passwordField\":\"setup\",\"roles\":\"setup\",\"user\":\"props\",\"showRoleField\":\"props\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ManagerFormFields_vue_vue_type_template_id_2284ccec_bindings_schema_setup_errors_setup_validate_setup_passwordRequired_setup_login_setup_role_setup_password_setup_generatePass_setup_passwordField_setup_roles_setup_profile_setup_user_props_showRoleField_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ManagerFormFields.vue?vue&type=template&id=2284ccec&bindings={"schema":"setup","errors":"setup","validate":"setup","passwordRequired":"setup","login":"setup","role":"setup","password":"setup","generatePass":"setup","passwordField":"setup","roles":"setup","profile":"setup","user":"props","showRoleField":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/ManagerFormFields.vue?vue&type=template&id=2284ccec&bindings={\"schema\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"passwordRequired\":\"setup\",\"login\":\"setup\",\"role\":\"setup\",\"password\":\"setup\",\"generatePass\":\"setup\",\"passwordField\":\"setup\",\"roles\":\"setup\",\"profile\":\"setup\",\"user\":\"props\",\"showRoleField\":\"props\"}");
 
 
 /***/ }),
@@ -43256,10 +43349,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/ManagerFormFields.vue?vue&type=template&id=2284ccec&bindings={\"schema\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"passwordRequired\":\"setup\",\"login\":\"setup\",\"role\":\"setup\",\"password\":\"setup\",\"generatePass\":\"setup\",\"passwordField\":\"setup\",\"roles\":\"setup\",\"user\":\"props\",\"showRoleField\":\"props\"}":
-/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/ManagerFormFields.vue?vue&type=template&id=2284ccec&bindings={"schema":"setup","errors":"setup","validate":"setup","passwordRequired":"setup","login":"setup","role":"setup","password":"setup","generatePass":"setup","passwordField":"setup","roles":"setup","user":"props","showRoleField":"props"} ***!
-  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/ManagerFormFields.vue?vue&type=template&id=2284ccec&bindings={\"schema\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"passwordRequired\":\"setup\",\"login\":\"setup\",\"role\":\"setup\",\"password\":\"setup\",\"generatePass\":\"setup\",\"passwordField\":\"setup\",\"roles\":\"setup\",\"profile\":\"setup\",\"user\":\"props\",\"showRoleField\":\"props\"}":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/manager/ManagerFormFields.vue?vue&type=template&id=2284ccec&bindings={"schema":"setup","errors":"setup","validate":"setup","passwordRequired":"setup","login":"setup","role":"setup","password":"setup","generatePass":"setup","passwordField":"setup","roles":"setup","profile":"setup","user":"props","showRoleField":"props"} ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */

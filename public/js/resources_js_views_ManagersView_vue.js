@@ -71,15 +71,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 document.getElementById('storeUserFormClose').click();
                 emitter.emit('notification-success', 'manager was added');
                 clearForm();
-                _context.next = 15;
+                _context.next = 16;
                 break;
 
               case 12:
                 _context.prev = 12;
                 _context.t0 = _context["catch"](0);
+                console.log(_context.t0);
                 emitter.emit('notification-error', _context.t0.response.data);
 
-              case 15:
+              case 16:
               case "end":
                 return _context.stop();
             }
@@ -89,11 +90,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return _storeManager.apply(this, arguments);
     }
 
-    var clearForm = function clearForm() {
-      return Object.keys(emptyManager).forEach(function (key) {
+    function clearForm() {
+      Object.keys(emptyManager).forEach(function (key) {
         return manager[key] = emptyManager[key];
       });
-    };
+    }
 
     emitter.on('create-manager-form', clearForm);
     (0,vue__WEBPACK_IMPORTED_MODULE_2__.onBeforeUnmount)(function () {
@@ -177,7 +178,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return managerFields.value.validate();
 
               case 3:
-                if (manager.password === null || manager.password.length === 0) delete manager.password;
+                if (manager.password === null || manager.password === undefined) delete manager.password;
                 delete manager.dataIsValid;
                 delete manager.avatar;
                 _context.next = 8;
@@ -187,15 +188,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 store.commit('user/setUserById', manager);
                 emitter.emit('notification-success', 'manager was updated');
                 document.getElementById('editUserFormClose').click();
-                _context.next = 16;
+                _context.next = 17;
                 break;
 
               case 13:
                 _context.prev = 13;
                 _context.t0 = _context["catch"](0);
+                console.log(_context.t0);
                 emitter.emit('notification-error', _context.t0.response.data);
 
-              case 16:
+              case 17:
               case "end":
                 return _context.stop();
             }
@@ -209,6 +211,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       Object.keys(userData).forEach(function (key) {
         return manager[key] = userData[key];
       });
+      manager.password = null;
     }
 
     return {
@@ -447,7 +450,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 warning = {
                   message: generateWarningMessage(),
-                  event_id: deleteEventId
+                  event_id: deleteEventId,
+                  action: 'deleted'
                 };
                 emitter.emit('notification-warning', warning);
 
@@ -654,14 +658,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_tables_managers_ManagersTableBundle_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/tables/managers/ManagersTableBundle.vue */ "./resources/js/components/tables/managers/ManagersTableBundle.vue");
 /* harmony import */ var _components_modals_manager_CreateManagerForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/modals/manager/CreateManagerForm.vue */ "./resources/js/components/modals/manager/CreateManagerForm.vue");
 /* harmony import */ var _components_modals_manager_EditManagerForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/modals/manager/EditManagerForm.vue */ "./resources/js/components/modals/manager/EditManagerForm.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
 
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
-    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_4__.useStore)();
     var usersAreUndefined = Object.keys(store.getters.getUsers).length === 0;
     var companiesAreUndefined = Object.keys(store.getters.getCompanies).length === 0;
     var rolesAreUndefined = Object.keys(store.getters.getRoles).length === 0;

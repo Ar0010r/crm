@@ -4,6 +4,7 @@ namespace App\Http\Requests\Company;
 
 use App\Http\Requests\OnlyAdminAllowedRequest;
 use App\Rules\User\UserIdBelongsToPersonnel;
+use App\Shared\Value\Role;
 
 class CompanyStoreRequest extends OnlyAdminAllowedRequest
 {
@@ -12,10 +13,10 @@ class CompanyStoreRequest extends OnlyAdminAllowedRequest
      *
      * @return bool
      */
-   /* public function authorize()
+    public function authorize()
     {
-        return auth()->user()->tokenCan(Permission::COMPANY_CREATE);
-    }*/
+        return parent::authorize() || auth()->user()->role === Role::PERSONNEL;
+    }
 
     /**
      * Get the validation rules that apply to the request.

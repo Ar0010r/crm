@@ -19,7 +19,8 @@
             async function deleteWarning() {
                 const warning = {
                     message: generateWarningMessage(),
-                    event_id: deleteEventId
+                    event_id: deleteEventId,
+                    action: 'deleted'
                 }
                 emitter.emit('notification-warning', warning);
             }

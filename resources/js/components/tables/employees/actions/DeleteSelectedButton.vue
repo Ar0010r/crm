@@ -36,6 +36,7 @@
                     store.dispatch('employee/bulkDelete', selectedEmployees)
                     emitter.emit('notification-success', selectedEmployees.length + ' applicants were deleted');
                     emitter.emit('reset-checkbox');
+                    store.dispatch('user/setProfileToStore')
                     selectedEmployees = [];
                 } catch (e) {
                     emitter.emit('notification-error', e.response.data)

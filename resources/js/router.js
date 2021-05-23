@@ -45,8 +45,10 @@ const router = createRouter({
     linkExactActiveClass: "active"
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     document.title = to.meta.title;
+
+    if (!to.matched.length) return next('/employees');
     const tokenIsOk = axios.defaults.headers.common['Authorization'] === 'Bearer ' + localStorage.getItem('token');
 
     if (tokenIsOk && to.name !== 'login') return next();
@@ -55,7 +57,10 @@ router.beforeEach((to, from, next) => {
     if (localStorage.getItem('token')) {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
         let profileIsUndefined = Object.keys(store.getters.getProfile).length === 0;
-        if (profileIsUndefined) store.dispatch('user/setProfileToStore');
+        if (profileIsUndefined) await store.dispatch('user/setProfileToStore');
+        const profile = store.getters.getProfile;
+
+        if(to.name !== 'managers' && (profile.role === 'hr' || profile.role === 'top hr')) return next("/employees")
 
         if (to.name === 'login') return next("/employees");
         next();

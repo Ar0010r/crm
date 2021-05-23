@@ -19,14 +19,14 @@
             async function deleteWarning() {
                 const warning = {
                     message: generateWarningMessage(),
-                    event_id: deleteEventId
+                    event_id: deleteEventId,
+                    action: 'deleted'
                 };
                 emitter.emit('notification-warning', warning);
             }
 
             async function deleteCompany() {
                 try {
-                    console.log('delete company', props.company)
                     await container.CompanyService.deleteCompany(props.company);
                     emitter.emit('notification-success', ' company ' + props.company.name +' was deleted');
                     store.dispatch('company/deleteCompany', props.company);
@@ -36,11 +36,7 @@
             }
 
             function generateWarningMessage() {
-                let message;
-                if (props.company.email) message = props.company.email;
-                else message = props.company.name;
-
-                return message
+                return props.company.name
             }
 
             return {

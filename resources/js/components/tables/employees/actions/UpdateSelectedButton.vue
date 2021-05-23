@@ -47,6 +47,7 @@
                     store.dispatch('employee/bulkUpdate', selectedEmployees)
                     emitter.emit('notification-success', selectedEmployees.length + ' applicants were updated');
                     emitter.emit('reset-checkbox');
+                    store.dispatch('user/setProfileToStore')
                     selectedEmployees = [];
                 } catch (e) {
                     console.log(e)

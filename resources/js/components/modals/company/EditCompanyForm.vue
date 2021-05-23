@@ -10,7 +10,8 @@
                     <CompanyFormFields ref="companyFields" :company="company"/>
                 </div>
                 <div class="modal-footer">
-                    <button id="editCompanyFormClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="editCompanyFormClose" type="button" class="btn btn-default" data-dismiss="modal">Close
+                    </button>
                     <button @click.prevent="updateCompany" type="button" class="btn btn-primary">Update</button>
                 </div>
             </form>
@@ -30,6 +31,7 @@
             const container = inject('container');
             const companyFields = ref(null);
             let users = computed(() => store.getters.getUsers);
+            let profile = computed(() => store.getters.getProfile);
             const emptyCompany = {...store.getters.getEmptyCompany};
 
             let company = reactive({...emptyCompany});
@@ -38,11 +40,14 @@
             onBeforeUnmount(() => emitter.off('edit-company-form', setCompany));
 
             async function updateCompany() {
-                try{
+                try {
                     await companyFields.value.validate();
                     await container.CompanyService.updateCompany(company);
 
-                    company.personnel = users.value[company.personnel_id];
+                    if (profile.value.role !== 'personnel') {
+                        company.personnel = users.value[company.personnel_id];
+                    }
+
                     store.commit('company/setCompanyById', company);
                     emitter.emit('notification-success', 'company was updated');
                     document.getElementById('editCompanyFormClose').click()
@@ -56,9 +61,9 @@
                 Object.keys(companyData).forEach(key => company[key] = companyData[key])
             }
 
-            return {company,companyFields, updateCompany}
+            return {company, companyFields, updateCompany}
         },
-        components : {
+        components: {
             CompanyFormFields
         }
     };

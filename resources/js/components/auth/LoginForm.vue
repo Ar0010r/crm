@@ -23,10 +23,13 @@
     import router from '../../router.js'
 
     import {inject, ref, reactive} from 'vue';
+    import {useStore} from 'vuex';
 
     export default {
         setup() {
             const container = inject('container');
+            const store = useStore();
+
             let user = reactive({login: "", password: ""});
             let isInvalid = ref(false);
             let dBlock = ref(false);
@@ -34,6 +37,7 @@
             async function login() {
                 try {
                     await container.AuthService.login(user);
+                    await store.dispatch('user/setProfileToStore');
                     router.push("/employees");
                 } catch (e) {
                     isInvalid.value = true;

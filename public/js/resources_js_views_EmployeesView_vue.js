@@ -541,7 +541,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       zip: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().matches('^$|\\d{5}(-\\d{4})?$', 'enter valid zip code'),
       phone_1: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().matches('^$|\\d{3}-\\d{3}-\\d{4}$', 'enter valid phone'),
       phone_2: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().matches("^$|\\d{3}-\\d{3}-\\d{4}$", 'enter valid phone'),
-      name: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().trim().matches('^$|[a-zA-Z ]+$', 'name can contain only letters').required(),
+      name: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().trim().matches('^[a-zA-Z ]+$', 'name can contain only letters').required(),
       city: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().trim().matches('^$|[a-zA-Z ]+$', 'city can contain only letters'),
       birthday: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().matches("^$|((?:19|20)[0-9][0-9])-(0[1-9]|1[012])-([12][0-9]|3[01]|0[1-9])$", 'valid date format is yyyy-mm-dd'),
       state: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().test("test-name", "please enter correct state abbreviation", function (value) {
@@ -1079,21 +1079,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 store.dispatch('employee/bulkDelete', selectedEmployees);
                 emitter.emit('notification-success', selectedEmployees.length + ' applicants were deleted');
                 emitter.emit('reset-checkbox');
+                store.dispatch('user/setProfileToStore');
                 selectedEmployees = [];
-                _context.next = 12;
+                _context.next = 13;
                 break;
 
-              case 9:
-                _context.prev = 9;
+              case 10:
+                _context.prev = 10;
                 _context.t0 = _context["catch"](0);
                 emitter.emit('notification-error', _context.t0.response.data);
 
-              case 12:
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 9]]);
+        }, _callee, null, [[0, 10]]);
       }));
       return _deleteSelected.apply(this, arguments);
     }
@@ -1322,22 +1323,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 store.dispatch('employee/bulkUpdate', selectedEmployees);
                 emitter.emit('notification-success', selectedEmployees.length + ' applicants were updated');
                 emitter.emit('reset-checkbox');
+                store.dispatch('user/setProfileToStore');
                 selectedEmployees = [];
-                _context.next = 14;
+                _context.next = 15;
                 break;
 
-              case 10:
-                _context.prev = 10;
+              case 11:
+                _context.prev = 11;
                 _context.t0 = _context["catch"](0);
                 console.log(_context.t0);
                 emitter.emit('notification-error', _context.t0.response.data);
 
-              case 14:
+              case 15:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 10]]);
+        }, _callee, null, [[0, 11]]);
       }));
       return _updateSelected.apply(this, arguments);
     }
@@ -5002,58 +5004,94 @@ const _hoisted_1 = {
   style: {"justify-self":"end"},
   class: "ml-3"
 }
-const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
-const _hoisted_3 = {
+const _hoisted_2 = { key: 0 }
+const _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
+const _hoisted_4 = { key: 1 }
+const _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
+const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 0%")
+const _hoisted_7 = {
   key: 1,
   style: {"justify-self":"end"},
   class: "ml-3"
 }
-const _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
-const _hoisted_5 = {
+const _hoisted_8 = { key: 0 }
+const _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
+const _hoisted_10 = { key: 1 }
+const _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
+const _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 0%")
+const _hoisted_13 = {
   key: 2,
   style: {"justify-self":"end"},
   class: "ml-3"
 }
-const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
-const _hoisted_7 = {
+const _hoisted_14 = { key: 0 }
+const _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
+const _hoisted_16 = { key: 1 }
+const _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
+const _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 0%")
+const _hoisted_19 = {
   key: 3,
   style: {"justify-self":"end"},
   class: "ml-3"
 }
-const _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
+const _hoisted_20 = { key: 0 }
+const _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
+const _hoisted_22 = { key: 1 }
+const _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
+const _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 0%")
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [
     ($setup.profile.role === 'admin')
       ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, [
-            _hoisted_2,
-            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round($setup.profile.exported_admin_employees_count/$setup.profile.admin_employees_count * 100)) + "%", 1 /* TEXT */)
-          ])
+          ($setup.profile.admin_employees_count > 0)
+            ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_2, [
+                _hoisted_3,
+                (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round($setup.profile.exported_admin_employees_count/$setup.profile.admin_employees_count * 100)) + "%", 1 /* TEXT */)
+              ]))
+            : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_4, [
+                _hoisted_5,
+                _hoisted_6
+              ]))
         ]))
       : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
     ($setup.profile.role === 'hr')
-      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_3, [
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, [
-            _hoisted_4,
-            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round($setup.profile.good_hr_employees_count/$setup.profile.hr_employees_count * 100)) + "%", 1 /* TEXT */)
-          ])
+      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_7, [
+          ($setup.profile.hr_employees_count > 0)
+            ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_8, [
+                _hoisted_9,
+                (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round($setup.profile.good_hr_employees_count/$setup.profile.hr_employees_count * 100)) + "%", 1 /* TEXT */)
+              ]))
+            : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_10, [
+                _hoisted_11,
+                _hoisted_12
+              ]))
         ]))
       : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
     ($setup.profile.role === 'top hr')
-      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_5, [
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, [
-            _hoisted_6,
-            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round($setup.profile.good_top_hr_employees_count/$setup.profile.top_hr_employees_count * 100)) + "%", 1 /* TEXT */)
-          ])
+      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_13, [
+          ($setup.profile.top_hr_employees_count > 0)
+            ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_14, [
+                _hoisted_15,
+                (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round($setup.profile.good_top_hr_employees_count/$setup.profile.top_hr_employees_count * 100)) + "%", 1 /* TEXT */)
+              ]))
+            : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_16, [
+                _hoisted_17,
+                _hoisted_18
+              ]))
         ]))
       : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
     ($setup.profile.role === 'personnel')
-      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_7, [
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, [
-            _hoisted_8,
-            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round($setup.profile.exported_personnel_employees_count/$setup.profile.personnel_employees_count * 100)) + "%", 1 /* TEXT */)
-          ])
+      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_19, [
+          ($setup.profile.personnel_employees_count > 0)
+            ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_20, [
+                _hoisted_21,
+                (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round($setup.profile.exported_personnel_employees_count/$setup.profile.personnel_employees_count * 100)) + "%", 1 /* TEXT */)
+              ]))
+            : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_22, [
+                _hoisted_23,
+                _hoisted_24
+              ]))
         ]))
       : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
   ], 64 /* STABLE_FRAGMENT */))

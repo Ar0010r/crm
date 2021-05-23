@@ -9,6 +9,7 @@
     import StoreManagerForm from '../components/modals/manager/CreateManagerForm.vue';
     import EditManagerForm from '../components/modals/manager/EditManagerForm.vue';
     import {useStore} from 'vuex';
+    import {computed} from 'vue';
 
     export default {
         setup() {

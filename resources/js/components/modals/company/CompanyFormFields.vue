@@ -1,6 +1,6 @@
 <template>
     <div class="form-row mb-2">
-        <div class="form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap">
+        <div v-if="profile.role === 'admin'" class="form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap">
             <label class="form-label col-md-2">Personnel</label>
             <select class="custom-select form-control form-control-sm col-md-10"
                     name="personnel"
@@ -162,6 +162,7 @@
             return {
                 name, email, domain, personnel, manager, errors, validate,
                 personnels: computed(() => store.getters.getPersonnels),
+                profile: computed(() => store.getters.getProfile),
             }
         },
         props: {company: Object},

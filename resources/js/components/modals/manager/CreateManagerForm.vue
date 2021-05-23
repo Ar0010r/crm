@@ -47,11 +47,15 @@
                     emitter.emit('notification-success', 'manager was added');
                     clearForm();
                 } catch (e) {
+                    console.log(e);
                     emitter.emit('notification-error', e.response.data)
                 }
             }
 
-            const clearForm = () => Object.keys(emptyManager).forEach(key => manager[key] = emptyManager[key]);
+            function clearForm() {
+                Object.keys(emptyManager).forEach(key => manager[key] = emptyManager[key])
+            }
+
             emitter.on('create-manager-form', clearForm);
             onBeforeUnmount(() => emitter.off('create-manager-form', clearForm));
 
