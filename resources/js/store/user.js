@@ -104,7 +104,7 @@ export default {
 
         async sort({commit, state}, data) {
             let users = container.UserService.sort(data);
-            if(state.profile.role === 'top hr') delete users.users[state.profile.id]
+            if(state.profile.role === 'top hr' || state.profile.role === 'admin' ) delete users.users[state.profile.id]
 
             commit('setUsers', users.users);
             commit('setHrs', users.hrs);

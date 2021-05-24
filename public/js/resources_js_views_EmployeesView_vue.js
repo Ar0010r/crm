@@ -538,12 +538,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       company: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable(),
       email: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().trim().email().required(),
       paypal: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().trim().email(),
-      zip: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().matches('^$|\\d{5}(-\\d{4})?$', 'enter valid zip code'),
-      phone_1: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().matches('^$|\\d{3}-\\d{3}-\\d{4}$', 'enter valid phone'),
-      phone_2: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().matches("^$|\\d{3}-\\d{3}-\\d{4}$", 'enter valid phone'),
+      zip: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().matches('^\\d{5}(-\\d{4})?$', 'enter valid zip code'),
+      phone_1: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().matches('^\\d{3}-\\d{3}-\\d{4}$', 'enter valid phone'),
+      phone_2: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().matches("^\\d{3}-\\d{3}-\\d{4}$", 'enter valid phone'),
       name: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().trim().matches('^[a-zA-Z ]+$', 'name can contain only letters').required(),
       city: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().trim().matches('^$|[a-zA-Z ]+$', 'city can contain only letters'),
-      birthday: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().matches("^$|((?:19|20)[0-9][0-9])-(0[1-9]|1[012])-([12][0-9]|3[01]|0[1-9])$", 'valid date format is yyyy-mm-dd'),
+      birthday: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().matches("^((?:19|20)[0-9][0-9])-(0[1-9]|1[012])-([12][0-9]|3[01]|0[1-9])$", 'valid date format is yyyy-mm-dd'),
       state: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().test("test-name", "please enter correct state abbreviation", function (value) {
         return !!states.includes(value) || value === undefined;
       })

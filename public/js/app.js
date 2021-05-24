@@ -31189,7 +31189,7 @@ router.beforeEach( /*#__PURE__*/function () {
           case 14:
             profile = _store__WEBPACK_IMPORTED_MODULE_1__.default.getters.getProfile;
 
-            if (!(to.name !== 'managers' && (profile.role === 'hr' || profile.role === 'top hr'))) {
+            if (!(to.name !== 'managers' && (profile.role === 'hr' || profile.role === 'personnel'))) {
               _context.next = 17;
               break;
             }
@@ -32860,7 +32860,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 0:
                 commit = _ref5.commit, state = _ref5.state;
                 users = _services_index__WEBPACK_IMPORTED_MODULE_1__.container.UserService.sort(data);
-                if (state.profile.role === 'top hr') delete users.users[state.profile.id];
+                if (state.profile.role === 'top hr' || state.profile.role === 'admin') delete users.users[state.profile.id];
                 commit('setUsers', users.users);
                 commit('setHrs', users.hrs);
                 commit('setPersonnels', users.personnels);

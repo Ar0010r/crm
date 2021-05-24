@@ -60,7 +60,8 @@ router.beforeEach(async (to, from, next) => {
         if (profileIsUndefined) await store.dispatch('user/setProfileToStore');
         const profile = store.getters.getProfile;
 
-        if(to.name !== 'managers' && (profile.role === 'hr' || profile.role === 'top hr')) return next("/employees")
+
+        if(to.name !== 'managers' && (profile.role === 'hr' || profile.role === 'personnel')) return next("/employees")
 
         if (to.name === 'login') return next("/employees");
         next();
