@@ -52,8 +52,9 @@
                     emitter.emit('notification-success', 'company was updated');
                     document.getElementById('editCompanyFormClose').click()
                 } catch (e) {
-                    console.log(e)
-                    emitter.emit('notification-error', e.response.data)
+                    if(e.response.data) {
+                        emitter.emit('notification-error', e.response.data)
+                    }
                 }
             }
 

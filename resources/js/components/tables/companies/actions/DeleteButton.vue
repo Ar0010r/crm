@@ -1,5 +1,5 @@
 <template>
-    <a @click="deleteWarning" type="button" class="ion ion-md-trash danger"></a>
+    <a  data-toggle="modal" data-target="#deleteForm" @click="deleteWarning" type="button" class="ion ion-md-trash danger"></a>
 </template>
 
 <script>
@@ -22,7 +22,7 @@
                     event_id: deleteEventId,
                     action: 'deleted'
                 };
-                emitter.emit('notification-warning', warning);
+                emitter.emit('show-delete-modal', warning);
             }
 
             async function deleteCompany() {
@@ -36,7 +36,7 @@
             }
 
             function generateWarningMessage() {
-                return props.company.name
+                return 'You want to delete company: ' + '<strong>' + props.company.name + '</strong>';
             }
 
             return {

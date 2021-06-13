@@ -217,7 +217,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 11:
                 _context.prev = 11;
                 _context.t0 = _context["catch"](0);
-                emitter.emit('notification-error', _context.t0.response.data);
+
+                if (_context.t0.response.data) {
+                  emitter.emit('notification-error', _context.t0.response.data);
+                }
 
               case 14:
               case "end":
@@ -461,7 +464,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 14:
                 _context.prev = 14;
                 _context.t0 = _context["catch"](0);
-                emitter.emit('notification-error', _context.t0.response.data);
+
+                if (_context.t0.response.data) {
+                  emitter.emit('notification-error', _context.t0.response.data);
+                }
 
               case 17:
               case "end":
@@ -535,7 +541,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var states = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'];
     var schema = yup__WEBPACK_IMPORTED_MODULE_2__.object({
       race: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable(),
-      company: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable(),
+      company: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().required(),
       email: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().trim().email().required(),
       paypal: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().trim().email(),
       zip: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().matches('^\\d{5}(-\\d{4})?$', 'enter valid zip code'),
@@ -631,10 +637,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                [name, email].forEach(function (field) {
+                [name, email, company].forEach(function (field) {
                   field.meta.dirty = true;
                   field.meta.touched = true;
-                  field.value.value = props.employee[field.name];
+
+                  if (field === company) {
+                    field.value.value = props.employee.company_id;
+                  } else {
+                    field.value.value = props.employee[field.name];
+                  }
                 });
                 _context.next = 3;
                 return validateForm();
@@ -648,14 +659,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 throw {
-                  response: {
-                    data: {
-                      message: 'Please fix form errors:',
-                      errors: Object.keys(result.errors).map(function (key) {
-                        return [result.errors[key]];
-                      })
-                    }
-                  }
+                  message: 'Please fix form errors:',
+                  errors: Object.keys(result.errors).map(function (key) {
+                    return [result.errors[key]];
+                  })
                 };
 
               case 6:
@@ -868,39 +875,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/Statistics.vue?vue&type=script&lang=js":
-/*!*********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/Statistics.vue?vue&type=script&lang=js ***!
-  \*********************************************************************************************************************************************************************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "Statistics",
-  setup: function setup() {
-    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_1__.useStore)();
-    return {
-      profile: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
-        return store.getters.getProfile;
-      })
-    };
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/DeleteButton.vue?vue&type=script&lang=js":
 /*!*******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/DeleteButton.vue?vue&type=script&lang=js ***!
@@ -955,7 +929,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   event_id: deleteEventId,
                   action: 'deleted'
                 };
-                emitter.emit('notification-warning', warning);
+                emitter.emit('show-delete-modal', warning);
 
               case 2:
               case "end":
@@ -1003,8 +977,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
 
     function generateWarningMessage() {
-      var message;
-      if (props.employee.email) message = props.employee.email;else message = props.employee.name;
+      var message = 'You want to delete applicant: ';
+      if (props.employee.name) message = message + '<strong>' + props.employee.name + '</strong>';else message = props.employee.email;
       return message;
     }
 
@@ -1135,11 +1109,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         event_id: deleteEventId,
         action: 'deleted'
       };
-      emitter.emit('notification-warning', warning);
+      emitter.emit('show-delete-modal', warning);
     }
 
     function generateWarningMessage() {
-      return selectedEmployees.length + ' applicants';
+      return 'You want to delete ' + '<strong>' + selectedEmployees.length + '</strong>' + ' applicants';
     }
 
     return {
@@ -1478,9 +1452,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _Statistics__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Statistics */ "./resources/js/components/tables/employees/Statistics.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -1489,10 +1462,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
-    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_2__.useStore)();
     var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)("emitter");
     var activeFilters = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
       return store.getters.getEmployeeQueryParams;
@@ -1599,9 +1571,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         store.dispatch('user/setProfileToStore');
       }
     };
-  },
-  components: {
-    Statistics: _Statistics__WEBPACK_IMPORTED_MODULE_2__.default
   }
 });
 
@@ -1818,34 +1787,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=style&index=0&id=4bc06423&scoped=true&lang=css":
-/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=style&index=0&id=4bc06423&scoped=true&lang=css ***!
-  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, module.id, __webpack_require__.d, __webpack_require__.*, module */
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
-// Imports
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n", ""]);
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/control/EmployeesTableSecondaryControl.vue?vue&type=style&index=0&id=e1ad0506&scoped=true&lang=css":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/control/EmployeesTableSecondaryControl.vue?vue&type=style&index=0&id=e1ad0506&scoped=true&lang=css ***!
@@ -1927,40 +1868,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n.custom-control-label[data-v-2eaf9cf
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
-
-/***/ }),
-
-/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=style&index=0&id=4bc06423&scoped=true&lang=css":
-/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=style&index=0&id=4bc06423&scoped=true&lang=css ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteSelectedButton_vue_vue_type_style_index_0_id_4bc06423_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./DeleteSelectedButton.vue?vue&type=style&index=0&id=4bc06423&scoped=true&lang=css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=style&index=0&id=4bc06423&scoped=true&lang=css");
-
-            
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteSelectedButton_vue_vue_type_style_index_0_id_4bc06423_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteSelectedButton_vue_vue_type_style_index_0_id_4bc06423_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
 
 /***/ }),
 
@@ -2422,36 +2329,6 @@ _EmployeesTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.defa
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/employees/Statistics.vue":
-/*!*****************************************************************!*\
-  !*** ./resources/js/components/tables/employees/Statistics.vue ***!
-  \*****************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _Statistics_vue_vue_type_template_id_e7953608_bindings_profile_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Statistics.vue?vue&type=template&id=e7953608&bindings={"profile":"setup"} */ "./resources/js/components/tables/employees/Statistics.vue?vue&type=template&id=e7953608&bindings={\"profile\":\"setup\"}");
-/* harmony import */ var _Statistics_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Statistics.vue?vue&type=script&lang=js */ "./resources/js/components/tables/employees/Statistics.vue?vue&type=script&lang=js");
-
-
-
-_Statistics_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _Statistics_vue_vue_type_template_id_e7953608_bindings_profile_setup___WEBPACK_IMPORTED_MODULE_0__.render
-/* hot reload */
-if (false) {}
-
-_Statistics_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/employees/Statistics.vue"
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_Statistics_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
-
-/***/ }),
-
 /***/ "./resources/js/components/tables/employees/actions/DeleteButton.vue":
 /*!***************************************************************************!*\
   !*** ./resources/js/components/tables/employees/actions/DeleteButton.vue ***!
@@ -2497,16 +2374,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _DeleteSelectedButton_vue_vue_type_template_id_4bc06423_scoped_true_bindings_deleteWarning_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DeleteSelectedButton.vue?vue&type=template&id=4bc06423&scoped=true&bindings={"deleteWarning":"setup"} */ "./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=template&id=4bc06423&scoped=true&bindings={\"deleteWarning\":\"setup\"}");
+/* harmony import */ var _DeleteSelectedButton_vue_vue_type_template_id_4bc06423_bindings_deleteWarning_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DeleteSelectedButton.vue?vue&type=template&id=4bc06423&bindings={"deleteWarning":"setup"} */ "./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=template&id=4bc06423&bindings={\"deleteWarning\":\"setup\"}");
 /* harmony import */ var _DeleteSelectedButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DeleteSelectedButton.vue?vue&type=script&lang=js */ "./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=script&lang=js");
-/* harmony import */ var _DeleteSelectedButton_vue_vue_type_style_index_0_id_4bc06423_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DeleteSelectedButton.vue?vue&type=style&index=0&id=4bc06423&scoped=true&lang=css */ "./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=style&index=0&id=4bc06423&scoped=true&lang=css");
 
 
 
-
-
-_DeleteSelectedButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _DeleteSelectedButton_vue_vue_type_template_id_4bc06423_scoped_true_bindings_deleteWarning_setup___WEBPACK_IMPORTED_MODULE_0__.render
-_DeleteSelectedButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__scopeId = "data-v-4bc06423"
+_DeleteSelectedButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _DeleteSelectedButton_vue_vue_type_template_id_4bc06423_bindings_deleteWarning_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -3028,26 +2901,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/employees/Statistics.vue?vue&type=script&lang=js":
-/*!*****************************************************************************************!*\
-  !*** ./resources/js/components/tables/employees/Statistics.vue?vue&type=script&lang=js ***!
-  \*****************************************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/Statistics.vue?vue&type=script&lang=js .default */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Statistics_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Statistics_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Statistics.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/Statistics.vue?vue&type=script&lang=js");
- 
-
-/***/ }),
-
 /***/ "./resources/js/components/tables/employees/actions/DeleteButton.vue?vue&type=script&lang=js":
 /*!***************************************************************************************************!*\
   !*** ./resources/js/components/tables/employees/actions/DeleteButton.vue?vue&type=script&lang=js ***!
@@ -3285,22 +3138,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EmployeesView_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./EmployeesView.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/views/EmployeesView.vue?vue&type=script&lang=js");
  
-
-/***/ }),
-
-/***/ "./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=style&index=0&id=4bc06423&scoped=true&lang=css":
-/*!*******************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=style&index=0&id=4bc06423&scoped=true&lang=css ***!
-  \*******************************************************************************************************************************************/
-/*! namespace exports */
-/*! exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteSelectedButton_vue_vue_type_style_index_0_id_4bc06423_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader/dist/cjs.js!../../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./DeleteSelectedButton.vue?vue&type=style&index=0&id=4bc06423&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=style&index=0&id=4bc06423&scoped=true&lang=css");
-
 
 /***/ }),
 
@@ -3592,26 +3429,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/employees/Statistics.vue?vue&type=template&id=e7953608&bindings={\"profile\":\"setup\"}":
-/*!****************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/employees/Statistics.vue?vue&type=template&id=e7953608&bindings={"profile":"setup"} ***!
-  \****************************************************************************************************************************/
-/*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/Statistics.vue?vue&type=template&id=e7953608&bindings={"profile":"setup"} .render */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Statistics_vue_vue_type_template_id_e7953608_bindings_profile_setup___WEBPACK_IMPORTED_MODULE_0__.render
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Statistics_vue_vue_type_template_id_e7953608_bindings_profile_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Statistics.vue?vue&type=template&id=e7953608&bindings={"profile":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/Statistics.vue?vue&type=template&id=e7953608&bindings={\"profile\":\"setup\"}");
-
-
-/***/ }),
-
 /***/ "./resources/js/components/tables/employees/actions/DeleteButton.vue?vue&type=template&id=463e1928&bindings={\"deleteWarning\":\"setup\",\"employee\":\"props\"}":
 /*!***************************************************************************************************************************************************************!*\
   !*** ./resources/js/components/tables/employees/actions/DeleteButton.vue?vue&type=template&id=463e1928&bindings={"deleteWarning":"setup","employee":"props"} ***!
@@ -3632,12 +3449,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=template&id=4bc06423&scoped=true&bindings={\"deleteWarning\":\"setup\"}":
-/*!****************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=template&id=4bc06423&scoped=true&bindings={"deleteWarning":"setup"} ***!
-  \****************************************************************************************************************************************************************/
+/***/ "./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=template&id=4bc06423&bindings={\"deleteWarning\":\"setup\"}":
+/*!****************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=template&id=4bc06423&bindings={"deleteWarning":"setup"} ***!
+  \****************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=template&id=4bc06423&scoped=true&bindings={"deleteWarning":"setup"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=template&id=4bc06423&bindings={"deleteWarning":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3645,9 +3462,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteSelectedButton_vue_vue_type_template_id_4bc06423_scoped_true_bindings_deleteWarning_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteSelectedButton_vue_vue_type_template_id_4bc06423_bindings_deleteWarning_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteSelectedButton_vue_vue_type_template_id_4bc06423_scoped_true_bindings_deleteWarning_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./DeleteSelectedButton.vue?vue&type=template&id=4bc06423&scoped=true&bindings={"deleteWarning":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=template&id=4bc06423&scoped=true&bindings={\"deleteWarning\":\"setup\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteSelectedButton_vue_vue_type_template_id_4bc06423_bindings_deleteWarning_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./DeleteSelectedButton.vue?vue&type=template&id=4bc06423&bindings={"deleteWarning":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=template&id=4bc06423&bindings={\"deleteWarning\":\"setup\"}");
 
 
 /***/ }),
@@ -3877,7 +3694,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
       type: "button",
-      class: [" pl-0 pr-0 btn btn dropdown-toggle", $setup.availableStatuses[$props.status] ?? $setup.statuses[$props.status]],
+      class: [" pl-1 pr-1 btn btn dropdown-toggle", $setup.availableStatuses[$props.status] ?? $setup.statuses[$props.status]],
       "data-toggle": "dropdown"
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.status), 3 /* TEXT, CLASS */),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [
@@ -4479,12 +4296,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [
         _hoisted_12,
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-          class: ["custom-select form-control form-control-sm col-md-10", {'is-invalid': !!$setup.errors.company   && $setup.company.meta.touched}],
+          class: ["custom-select form-control form-control-sm col-md-10", {'is-invalid': !!$setup.errors.company  && $setup.company.meta.touched}],
           name: "company",
           "onUpdate:modelValue": _cache[13] || (_cache[13] = $event => ($props.employee.company_id = $event)),
-          onFocus: _cache[14] || (_cache[14] = $event => ($setup.race.meta.touched = false)),
-          onChange: _cache[15] || (_cache[15] = (...args) => ($setup.race.handleChange(...args))),
-          onBlur: _cache[16] || (_cache[16] = (...args) => ($setup.race.handleBlur(...args)))
+          onFocus: _cache[14] || (_cache[14] = $event => ($setup.company.meta.touched = false)),
+          onChange: _cache[15] || (_cache[15] = (...args) => ($setup.company.handleChange(...args))),
+          onBlur: _cache[16] || (_cache[16] = (...args) => ($setup.company.handleBlur(...args)))
         }, [
           _hoisted_13,
           ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.companies, (company) => {
@@ -4941,8 +4758,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.phone_1), 1 /* TEXT */),
             (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.phone_2), 1 /* TEXT */)
           ]))
-        : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"d-flex align-items-center\" v-if=\"employee.phone_2\" >\n                <i class=\"fas fa-phone-volume d-block\"></i>\n                <p class=\"m-0 p-0 ml-1\">{{employee.phone_2}}</p>\n            </div>")
+        : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
     ]),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.employee.address), 1 /* TEXT */),
@@ -4968,7 +4784,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           }, null, 8 /* PROPS */, ["status", "id"]))
         : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
     ]),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<td class=\"d-flex justify-content-between align-items-center\">"),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_31, [
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_32, [
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_EditButton, { employee: $props.employee }, null, 8 /* PROPS */, ["employee"]),
@@ -4977,124 +4792,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       ])
     ])
   ]))
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/Statistics.vue?vue&type=template&id=e7953608&bindings={\"profile\":\"setup\"}":
-/*!*************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/Statistics.vue?vue&type=template&id=e7953608&bindings={"profile":"setup"} ***!
-  \*************************************************************************************************************************************************************************************************************************************************************/
-/*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* binding */ render
-/* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-
-
-const _hoisted_1 = {
-  key: 0,
-  style: {"justify-self":"end"},
-  class: "ml-3"
-}
-const _hoisted_2 = { key: 0 }
-const _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
-const _hoisted_4 = { key: 1 }
-const _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
-const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 0%")
-const _hoisted_7 = {
-  key: 1,
-  style: {"justify-self":"end"},
-  class: "ml-3"
-}
-const _hoisted_8 = { key: 0 }
-const _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
-const _hoisted_10 = { key: 1 }
-const _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
-const _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 0%")
-const _hoisted_13 = {
-  key: 2,
-  style: {"justify-self":"end"},
-  class: "ml-3"
-}
-const _hoisted_14 = { key: 0 }
-const _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
-const _hoisted_16 = { key: 1 }
-const _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
-const _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 0%")
-const _hoisted_19 = {
-  key: 3,
-  style: {"justify-self":"end"},
-  class: "ml-3"
-}
-const _hoisted_20 = { key: 0 }
-const _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
-const _hoisted_22 = { key: 1 }
-const _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "conversion :", -1 /* HOISTED */)
-const _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 0%")
-
-function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [
-    ($setup.profile.role === 'admin')
-      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
-          ($setup.profile.admin_employees_count > 0)
-            ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_2, [
-                _hoisted_3,
-                (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round($setup.profile.exported_admin_employees_count/$setup.profile.admin_employees_count * 100)) + "%", 1 /* TEXT */)
-              ]))
-            : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_4, [
-                _hoisted_5,
-                _hoisted_6
-              ]))
-        ]))
-      : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
-    ($setup.profile.role === 'hr')
-      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_7, [
-          ($setup.profile.hr_employees_count > 0)
-            ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_8, [
-                _hoisted_9,
-                (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round($setup.profile.good_hr_employees_count/$setup.profile.hr_employees_count * 100)) + "%", 1 /* TEXT */)
-              ]))
-            : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_10, [
-                _hoisted_11,
-                _hoisted_12
-              ]))
-        ]))
-      : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
-    ($setup.profile.role === 'top hr')
-      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_13, [
-          ($setup.profile.top_hr_employees_count > 0)
-            ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_14, [
-                _hoisted_15,
-                (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round($setup.profile.good_top_hr_employees_count/$setup.profile.top_hr_employees_count * 100)) + "%", 1 /* TEXT */)
-              ]))
-            : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_16, [
-                _hoisted_17,
-                _hoisted_18
-              ]))
-        ]))
-      : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
-    ($setup.profile.role === 'personnel')
-      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_19, [
-          ($setup.profile.personnel_employees_count > 0)
-            ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_20, [
-                _hoisted_21,
-                (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round($setup.profile.exported_personnel_employees_count/$setup.profile.personnel_employees_count * 100)) + "%", 1 /* TEXT */)
-              ]))
-            : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_22, [
-                _hoisted_23,
-                _hoisted_24
-              ]))
-        ]))
-      : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
-  ], 64 /* STABLE_FRAGMENT */))
 }
 
 /***/ }),
@@ -5120,6 +4817,8 @@ __webpack_require__.r(__webpack_exports__);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
     onClick: _cache[1] || (_cache[1] = (...args) => ($setup.deleteWarning(...args))),
+    "data-toggle": "modal",
+    "data-target": "#deleteForm",
     type: "button",
     class: "fas fa-trash-alt danger"
   }))
@@ -5127,10 +4826,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=template&id=4bc06423&scoped=true&bindings={\"deleteWarning\":\"setup\"}":
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=template&id=4bc06423&scoped=true&bindings={"deleteWarning":"setup"} ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=template&id=4bc06423&bindings={\"deleteWarning\":\"setup\"}":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/actions/DeleteSelectedButton.vue?vue&type=template&id=4bc06423&bindings={"deleteWarning":"setup"} ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -5144,25 +4843,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-const _withId = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.withScopeId)("data-v-4bc06423")
 
-;(0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-4bc06423")
 const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", { class: "bs-bars float-left" }, [
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", { class: "btn btn-danger" }, [
     /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "ion ion-md-close" }),
     /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Delete ")
   ])
 ], -1 /* HOISTED */)
-;(0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)()
 
-const render = /*#__PURE__*/_withId(function render(_ctx, _cache, $props, $setup, $data, $options) {
+function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+    "data-toggle": "modal",
+    "data-target": "#deleteForm",
     onClick: _cache[1] || (_cache[1] = (...args) => ($setup.deleteWarning(...args))),
     class: "text-danger d-flex align-items-center cursor-pointer"
   }, [
     _hoisted_1
   ]))
-})
+}
 
 /***/ }),
 
@@ -5406,8 +5104,6 @@ const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
 }, "100", -1 /* HOISTED */)
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  const _component_Statistics = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Statistics")
-
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
@@ -5489,8 +5185,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       ], 512 /* NEED_PATCH */), [
         [vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.activeFilters.recordsPerPage]
       ])
-    ]),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Statistics)
+    ])
   ]))
 }
 

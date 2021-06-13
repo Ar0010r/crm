@@ -11,6 +11,7 @@
         </div>
         <ProfileForm/>
         <Notification/>
+        <DeleteForm/>
         <div class="layout-overlay layout-sidenav-toggle"></div>
     </div>
 </template>
@@ -20,9 +21,7 @@
     import NavBar from './components/layout/NavBar.vue';
     import ProfileForm from './components/modals/profile/ProfileForm';
     import Notification from './components/modals/notification/Notification';
-    import {useRoute} from 'vue-router';
-    import {useStore} from 'vuex';
-    import {inject} from 'vue';
+    import DeleteForm from './components/modals/notification/DeleteForm';
 
     export default {
         components: {
@@ -30,6 +29,7 @@
             NavBar,
             ProfileForm,
             Notification,
+            DeleteForm
         }
     };
 </script>

@@ -58,7 +58,9 @@
                     emitter.emit('notification-success', 'company was created');
                     resetForm()
                 } catch (e) {
-                    emitter.emit('notification-error', e.response.data)
+                    if(e.response.data) {
+                        emitter.emit('notification-error', e.response.data)
+                    }
                 }
 
             }

@@ -13,22 +13,15 @@ use Illuminate\Http\JsonResponse;
 
 class UsersController extends Controller
 {
-    private UserSubordinateService $userSubordinateService;
     private UserService $userService;
 
-    public function __construct(
-        UserService $userService,
-        UserSubordinateService $userSubordinateService
-    ) {
-        $this->userSubordinateService = $userSubordinateService;
+    public function __construct(UserService $userService) {
         $this->userService = $userService;
     }
 
     public function index()
     {
-        $data = $this
-            ->userSubordinateService
-            ->getUserSubordinates(auth()->user());
+        $data = $this->userService->getUserSubordinates();
 
         return response($data, JsonResponse::HTTP_OK);
     }
@@ -68,12 +61,12 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
         try {
-            $user->delete();
+            $this->userService->destroy($user);
             return response("deleted", JsonResponse::HTTP_NO_CONTENT);
-        } catch (QueryException $e) {
+        } catch (\ErrorException $e) {
             return response([
                 'message' => 'can`t delete manager ' . $user->login,
-                'errors' => [['he might control some companies']]
+                'errors' => [[$e->getMessage()]]
             ], JsonResponse::HTTP_NOT_ACCEPTABLE);
         } catch (\Exception $e) {
             return response(['message' => $e->getMessage()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);

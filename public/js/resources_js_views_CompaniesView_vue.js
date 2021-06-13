@@ -122,14 +122,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 throw {
-                  response: {
-                    data: {
-                      message: 'Please fix form errors:',
-                      errors: Object.keys(result.errors).map(function (key) {
-                        return [result.errors[key]];
-                      })
-                    }
-                  }
+                  message: 'Please fix form errors:',
+                  errors: Object.keys(result.errors).map(function (key) {
+                    return [result.errors[key]];
+                  })
                 };
 
               case 6:
@@ -264,7 +260,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 13:
                 _context.prev = 13;
                 _context.t0 = _context["catch"](0);
-                emitter.emit('notification-error', _context.t0.response.data);
+
+                if (_context.t0.response.data) {
+                  emitter.emit('notification-error', _context.t0.response.data);
+                }
 
               case 16:
               case "end":
@@ -387,16 +386,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 store.commit('company/setCompanyById', company);
                 emitter.emit('notification-success', 'company was updated');
                 document.getElementById('editCompanyFormClose').click();
-                _context.next = 15;
+                _context.next = 14;
                 break;
 
               case 11:
                 _context.prev = 11;
                 _context.t0 = _context["catch"](0);
-                console.log(_context.t0);
-                emitter.emit('notification-error', _context.t0.response.data);
 
-              case 15:
+                if (_context.t0.response.data) {
+                  emitter.emit('notification-error', _context.t0.response.data);
+                }
+
+              case 14:
               case "end":
                 return _context.stop();
             }
@@ -636,7 +637,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   event_id: deleteEventId,
                   action: 'deleted'
                 };
-                emitter.emit('notification-warning', warning);
+                emitter.emit('show-delete-modal', warning);
 
               case 2:
               case "end":
@@ -684,7 +685,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
 
     function generateWarningMessage() {
-      return props.company.name;
+      return 'You want to delete company: ' + '<strong>' + props.company.name + '</strong>';
     }
 
     return {
@@ -2247,6 +2248,8 @@ __webpack_require__.r(__webpack_exports__);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
+    "data-toggle": "modal",
+    "data-target": "#deleteForm",
     onClick: _cache[1] || (_cache[1] = (...args) => ($setup.deleteWarning(...args))),
     type: "button",
     class: "ion ion-md-trash danger"

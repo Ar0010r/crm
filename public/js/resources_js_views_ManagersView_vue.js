@@ -71,16 +71,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 document.getElementById('storeUserFormClose').click();
                 emitter.emit('notification-success', 'manager was added');
                 clearForm();
-                _context.next = 16;
+                _context.next = 15;
                 break;
 
               case 12:
                 _context.prev = 12;
                 _context.t0 = _context["catch"](0);
-                console.log(_context.t0);
-                emitter.emit('notification-error', _context.t0.response.data);
 
-              case 16:
+                if (_context.t0.response.data) {
+                  emitter.emit('notification-error', _context.t0.response.data);
+                }
+
+              case 15:
               case "end":
                 return _context.stop();
             }
@@ -195,7 +197,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _context.prev = 13;
                 _context.t0 = _context["catch"](0);
                 console.log(_context.t0);
-                emitter.emit('notification-error', _context.t0.response.data);
+
+                if (_context.t0.response.data) {
+                  emitter.emit('notification-error', _context.t0.response.data);
+                }
 
               case 17:
               case "end":
@@ -453,7 +458,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   event_id: deleteEventId,
                   action: 'deleted'
                 };
-                emitter.emit('notification-warning', warning);
+                emitter.emit('show-delete-modal', warning);
 
               case 2:
               case "end":
@@ -502,8 +507,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
 
     function generateWarningMessage() {
-      var message;
-      if (props.user.login) message = props.user.login;else message = props.user.role;
+      var message = 'You want to delete manager: ';
+      if (props.user.login) message = message + '<strong>' + props.user.login + '</strong>';else message = message + '<strong>' + props.user.role + '</strong>';
       return message;
     }
 
@@ -2053,6 +2058,8 @@ __webpack_require__.r(__webpack_exports__);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
+    "data-toggle": "modal",
+    "data-target": "#deleteForm",
     onClick: _cache[1] || (_cache[1] = (...args) => ($setup.deleteWarning(...args))),
     type: "button",
     class: "fas fa-trash-alt danger"

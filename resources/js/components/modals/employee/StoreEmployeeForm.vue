@@ -61,7 +61,9 @@
                     emitter.emit('notification-success', ' applicant was added');
                     document.getElementById('storeEmployeeFormClose').click();
                 } catch (e) {
-                    emitter.emit('notification-error', e.response.data)
+                    if(e.response.data) {
+                        emitter.emit('notification-error', e.response.data)
+                    }
                 }
             }
 

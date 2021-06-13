@@ -47,7 +47,6 @@
             async function updateEmployee() {
                 try {
                     await employeeFields.value.validate()
-                   // await axios.put('api/employees/' + employee.id, employee);
                     await container.EmployeeService.update(employee);
 
                     if(employee.company) employee.company = companies.value[employee.company_id];
@@ -57,7 +56,9 @@
                     emitter.emit('notification-success', ' applicant was updated');
                     document.getElementById('editEmployeeFormClose').click()
                 } catch (e) {
-                    emitter.emit('notification-error', e.response.data)
+                    if(e.response.data) {
+                        emitter.emit('notification-error', e.response.data)
+                    }
                 }
             }
 

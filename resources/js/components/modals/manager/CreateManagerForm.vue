@@ -47,8 +47,9 @@
                     emitter.emit('notification-success', 'manager was added');
                     clearForm();
                 } catch (e) {
-                    console.log(e);
-                    emitter.emit('notification-error', e.response.data)
+                    if(e.response.data) {
+                        emitter.emit('notification-error', e.response.data)
+                    }
                 }
             }
 

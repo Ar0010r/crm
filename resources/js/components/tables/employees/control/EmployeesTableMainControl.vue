@@ -38,13 +38,11 @@
                 </option>
             </select>
         </div>
-        <Statistics/>
     </div>
 </template>
 <script>
     import {useStore} from 'vuex';
-    import {computed, reactive, watch, inject} from 'vue';
-    import Statistics from '../Statistics';
+    import {computed, watch, inject} from 'vue';
 
     export default {
         setup() {
@@ -87,9 +85,6 @@
                     store.dispatch('user/setProfileToStore')
                 }
             }
-        },
-        components: {
-            Statistics
         }
     };
 </script>

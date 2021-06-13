@@ -31,6 +31,7 @@ class EmployeeService
     public function store(Employee $employee): Employee
     {
         $employee->status = Status::NEW;
+        $employee->hr_id = $employee->hr_id ?? auth()->user()->getAuthIdentifier();
         $employee->save();
         $employee->hr;
         $employee->company;

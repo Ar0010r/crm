@@ -1,5 +1,5 @@
 <template>
-    <a @click="deleteWarning" type="button" class="fas fa-trash-alt danger"></a>
+    <a  data-toggle="modal" data-target="#deleteForm" @click="deleteWarning" type="button" class="fas fa-trash-alt danger"></a>
 </template>
 
 <script>
@@ -22,7 +22,7 @@
                     event_id: deleteEventId,
                     action: 'deleted'
                 }
-                emitter.emit('notification-warning', warning);
+                emitter.emit('show-delete-modal', warning);
             }
 
             async function deleteUser() {
@@ -37,9 +37,9 @@
             }
 
             function generateWarningMessage() {
-                let message;
-                if (props.user.login) message = props.user.login;
-                else message = props.user.role;
+                let message = 'You want to delete manager: ';
+                if (props.user.login) message = message + '<strong>' + props.user.login + '</strong>';
+                else message = message + '<strong>' + props.user.role + '</strong>';
 
                 return message
             }

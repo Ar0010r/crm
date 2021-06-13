@@ -1,5 +1,5 @@
 <template>
-    <div @click="deleteWarning" class="text-danger d-flex align-items-center cursor-pointer">
+    <div data-toggle="modal" data-target="#deleteForm" @click="deleteWarning" class="text-danger d-flex align-items-center cursor-pointer">
         <div class="bs-bars float-left">
             <button class="btn btn-danger">
                 <i class="ion ion-md-close"></i> Delete
@@ -60,11 +60,11 @@
                     action: 'deleted'
                 }
 
-                emitter.emit('notification-warning', warning);
+                emitter.emit('show-delete-modal', warning);
             }
 
             function generateWarningMessage() {
-                return selectedEmployees.length + ' applicants'
+                return 'You want to delete ' + '<strong>' +selectedEmployees.length  + '</strong>' + ' applicants'
             }
 
             return {
@@ -73,7 +73,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

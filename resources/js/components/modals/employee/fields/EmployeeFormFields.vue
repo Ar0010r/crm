@@ -53,10 +53,10 @@
             <select class="custom-select form-control form-control-sm col-md-10"
                     name="company"
                     v-model=employee.company_id
-                    @focus="race.meta.touched = false"
-                    @change=race.handleChange
-                    @blur="race.handleBlur"
-                    :class="{'is-invalid': !!errors.company   && company.meta.touched}"
+                    @focus="company.meta.touched = false"
+                    @change=company.handleChange
+                    @blur="company.handleBlur"
+                    :class="{'is-invalid': !!errors.company  && company.meta.touched}"
             >
                 <option disabled selected :value=null> -- select company --</option>
                 <option v-for="company in companies"
@@ -227,7 +227,7 @@
 
             const schema = yup.object({
                 race: yup.string().nullable(),
-                company: yup.string().nullable(),
+                company: yup.string().nullable().required(),
                 email: yup.string().nullable().trim().email().required(),
                 paypal: yup.string().nullable().trim().email(),
                 zip: yup.string().nullable().matches('^\\d{5}(-\\d{4})?$', 'enter valid zip code'),
@@ -265,20 +265,20 @@
             emitter.on('create-employee-form', resetForm);
 
             async function validate() {
-                [name, email].forEach(field => {
+                [name, email, company].forEach(field => {
                     field.meta.dirty = true;
                     field.meta.touched = true;
-                    field.value.value = props.employee[field.name];
+                    if(field === company){
+                        field.value.value = props.employee.company_id;
+                    } else {
+                        field.value.value = props.employee[field.name];
+                    }
                 })
                 const result = await validateForm();
                 if (!result.valid) {
                     throw ({
-                        response: {
-                            data: {
-                                message: 'Please fix form errors:',
-                                errors: Object.keys(result.errors).map(key => [result.errors[key]])
-                            }
-                        }
+                        message: 'Please fix form errors:',
+                        errors: Object.keys(result.errors).map(key => [result.errors[key]])
                     })
                 }
             }

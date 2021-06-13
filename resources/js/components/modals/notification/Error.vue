@@ -1,7 +1,7 @@
 <template>
     <div v-for="error in errors" class="growl growl-incoming growl-error growl-medium" :id="error.id">
         <div class="growl-close" @click="close(error.id)">×</div>
-        <div class="growl-title">{{error.message.message}}</div>
+        <div class="growl-title" v-html="error.message.message"></div>
         <div class="growl-message" v-for="errorMessage in error.message.errors">{{errorMessage[0]}}</div>
     </div>
 </template>

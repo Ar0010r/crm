@@ -1,6 +1,6 @@
 <template>
     <div class="btn-group  w-100">
-        <button type="button" class=" pl-0 pr-0 btn btn dropdown-toggle"
+        <button type="button" class=" pl-1 pr-1 btn btn dropdown-toggle"
                 :class="availableStatuses[status] ?? statuses[status]"
                 data-toggle="dropdown">{{status}}
         </button>

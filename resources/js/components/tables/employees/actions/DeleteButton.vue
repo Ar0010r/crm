@@ -1,7 +1,6 @@
 <template>
-    <a @click="deleteWarning" type="button" class="fas fa-trash-alt danger"></a>
+    <a @click="deleteWarning"  data-toggle="modal" data-target="#deleteForm" type="button" class="fas fa-trash-alt danger"></a>
 </template>
-
 <script>
     import {useStore} from 'vuex'
     import {inject, onBeforeUnmount} from 'vue';
@@ -24,7 +23,7 @@
                     action: 'deleted'
                 }
 
-                emitter.emit('notification-warning', warning);
+                emitter.emit('show-delete-modal', warning);
             }
 
             async function deleteEmployee() {
@@ -38,9 +37,9 @@
             }
 
             function generateWarningMessage() {
-                let message;
-                if (props.employee.email) message = props.employee.email;
-                else message = props.employee.name;
+                let message = 'You want to delete applicant: ';
+                if (props.employee.name) message = message + '<strong>' + props.employee.name + '</strong>';
+                else message = props.employee.email;
 
                 return message
             }

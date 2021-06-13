@@ -30199,9 +30199,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_layout_NavBar_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/layout/NavBar.vue */ "./resources/js/components/layout/NavBar.vue");
 /* harmony import */ var _components_modals_profile_ProfileForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/modals/profile/ProfileForm */ "./resources/js/components/modals/profile/ProfileForm.vue");
 /* harmony import */ var _components_modals_notification_Notification__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/modals/notification/Notification */ "./resources/js/components/modals/notification/Notification.vue");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-
-
+/* harmony import */ var _components_modals_notification_DeleteForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/modals/notification/DeleteForm */ "./resources/js/components/modals/notification/DeleteForm.vue");
 
 
 
@@ -30212,7 +30210,8 @@ __webpack_require__.r(__webpack_exports__);
     SideBar: _components_layout_SideBar_vue__WEBPACK_IMPORTED_MODULE_0__.default,
     NavBar: _components_layout_NavBar_vue__WEBPACK_IMPORTED_MODULE_1__.default,
     ProfileForm: _components_modals_profile_ProfileForm__WEBPACK_IMPORTED_MODULE_2__.default,
-    Notification: _components_modals_notification_Notification__WEBPACK_IMPORTED_MODULE_3__.default
+    Notification: _components_modals_notification_Notification__WEBPACK_IMPORTED_MODULE_3__.default,
+    DeleteForm: _components_modals_notification_DeleteForm__WEBPACK_IMPORTED_MODULE_4__.default
   }
 });
 
@@ -30518,14 +30517,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (passwordRequired.value && !password.value.value) result.errors.password = 'password is required';
                 throw {
-                  response: {
-                    data: {
-                      message: 'Please fix form errors:',
-                      errors: Object.keys(result.errors).map(function (key) {
-                        return [result.errors[key]];
-                      })
-                    }
-                  }
+                  message: 'Please fix form errors:',
+                  errors: Object.keys(result.errors).map(function (key) {
+                    return [result.errors[key]];
+                  })
                 };
 
               case 7:
@@ -30569,6 +30564,53 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   props: {
     user: Object,
     showRoleField: Boolean
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/notification/DeleteForm.vue?vue&type=script&lang=js":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/notification/DeleteForm.vue?vue&type=script&lang=js ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  setup: function setup() {
+    var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)("emitter");
+    var message = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('');
+    var id = null;
+    emitter.on('show-delete-modal', showWarning);
+
+    function showWarning(msg) {
+      message.value = msg.message;
+      id = msg.event_id;
+    }
+
+    function clearForm() {
+      message.value = '';
+      id = null;
+    }
+
+    return {
+      message: message,
+      clearForm: clearForm,
+      confirmDelete: function confirmDelete() {
+        emitter.emit(id);
+        document.getElementById('deleteFormClose').click();
+      }
+    };
   }
 });
 
@@ -42410,6 +42452,36 @@ _ManagerFormFields_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.defa
 
 /***/ }),
 
+/***/ "./resources/js/components/modals/notification/DeleteForm.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/modals/notification/DeleteForm.vue ***!
+  \********************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _DeleteForm_vue_vue_type_template_id_23663535_bindings_message_setup_clearForm_setup_confirmDelete_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DeleteForm.vue?vue&type=template&id=23663535&bindings={"message":"setup","clearForm":"setup","confirmDelete":"setup"} */ "./resources/js/components/modals/notification/DeleteForm.vue?vue&type=template&id=23663535&bindings={\"message\":\"setup\",\"clearForm\":\"setup\",\"confirmDelete\":\"setup\"}");
+/* harmony import */ var _DeleteForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DeleteForm.vue?vue&type=script&lang=js */ "./resources/js/components/modals/notification/DeleteForm.vue?vue&type=script&lang=js");
+
+
+
+_DeleteForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _DeleteForm_vue_vue_type_template_id_23663535_bindings_message_setup_clearForm_setup_confirmDelete_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_DeleteForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/modals/notification/DeleteForm.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_DeleteForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
 /***/ "./resources/js/components/modals/notification/Error.vue":
 /*!***************************************************************!*\
   !*** ./resources/js/components/modals/notification/Error.vue ***!
@@ -42660,6 +42732,26 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/modals/notification/DeleteForm.vue?vue&type=script&lang=js":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/modals/notification/DeleteForm.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/notification/DeleteForm.vue?vue&type=script&lang=js .default */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./DeleteForm.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/notification/DeleteForm.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/components/modals/notification/Error.vue?vue&type=script&lang=js":
 /*!***************************************************************************************!*\
   !*** ./resources/js/components/modals/notification/Error.vue?vue&type=script&lang=js ***!
@@ -42892,6 +42984,26 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/modals/notification/DeleteForm.vue?vue&type=template&id=23663535&bindings={\"message\":\"setup\",\"clearForm\":\"setup\",\"confirmDelete\":\"setup\"}":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/modals/notification/DeleteForm.vue?vue&type=template&id=23663535&bindings={"message":"setup","clearForm":"setup","confirmDelete":"setup"} ***!
+  \***************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/notification/DeleteForm.vue?vue&type=template&id=23663535&bindings={"message":"setup","clearForm":"setup","confirmDelete":"setup"} .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteForm_vue_vue_type_template_id_23663535_bindings_message_setup_clearForm_setup_confirmDelete_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteForm_vue_vue_type_template_id_23663535_bindings_message_setup_clearForm_setup_confirmDelete_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./DeleteForm.vue?vue&type=template&id=23663535&bindings={"message":"setup","clearForm":"setup","confirmDelete":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/notification/DeleteForm.vue?vue&type=template&id=23663535&bindings={\"message\":\"setup\",\"clearForm\":\"setup\",\"confirmDelete\":\"setup\"}");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/modals/notification/Error.vue?vue&type=template&id=ec78325c&bindings={\"errors\":\"setup\",\"close\":\"setup\"}":
 /*!*****************************************************************************************************************************************!*\
   !*** ./resources/js/components/modals/notification/Error.vue?vue&type=template&id=ec78325c&bindings={"errors":"setup","close":"setup"} ***!
@@ -43025,6 +43137,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   const _component_router_view = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-view")
   const _component_ProfileForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ProfileForm")
   const _component_Notification = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Notification")
+  const _component_DeleteForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DeleteForm")
 
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [
@@ -43038,6 +43151,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     ]),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ProfileForm),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Notification),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DeleteForm),
     _hoisted_5
   ]))
 }
@@ -43467,6 +43581,73 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/notification/DeleteForm.vue?vue&type=template&id=23663535&bindings={\"message\":\"setup\",\"clearForm\":\"setup\",\"confirmDelete\":\"setup\"}":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/notification/DeleteForm.vue?vue&type=template&id=23663535&bindings={"message":"setup","clearForm":"setup","confirmDelete":"setup"} ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+const _hoisted_1 = {
+  class: "modal fade",
+  id: "deleteForm"
+}
+const _hoisted_2 = { class: "modal-dialog" }
+const _hoisted_3 = { class: "modal-content" }
+const _hoisted_4 = { class: "modal-header" }
+const _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", { class: "modal-title" }, " Please confirm action ", -1 /* HOISTED */)
+const _hoisted_6 = { class: "modal-body text-center" }
+const _hoisted_7 = { class: "modal-footer" }
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", _hoisted_3, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [
+          _hoisted_5,
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+            onClick: _cache[1] || (_cache[1] = (...args) => ($setup.clearForm(...args))),
+            type: "button",
+            class: "close",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }, "×")
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h4", { innerHTML: $setup.message }, null, 8 /* PROPS */, ["innerHTML"])
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+            onClick: _cache[2] || (_cache[2] = (...args) => ($setup.clearForm(...args))),
+            id: "deleteFormClose",
+            type: "button",
+            class: "btn btn-default",
+            "data-dismiss": "modal"
+          }, "Cancel "),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+            type: "button",
+            onClick: _cache[3] || (_cache[3] = (...args) => ($setup.confirmDelete(...args))),
+            class: "btn btn-danger"
+          }, "Delete ")
+        ])
+      ])
+    ])
+  ]))
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/notification/Error.vue?vue&type=template&id=ec78325c&bindings={\"errors\":\"setup\",\"close\":\"setup\"}":
 /*!**************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/notification/Error.vue?vue&type=template&id=ec78325c&bindings={"errors":"setup","close":"setup"} ***!
@@ -43485,8 +43666,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-const _hoisted_1 = { class: "growl-title" }
-const _hoisted_2 = { class: "growl-message" }
+const _hoisted_1 = { class: "growl-message" }
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.errors, (error) => {
@@ -43498,9 +43678,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         class: "growl-close",
         onClick: $event => ($setup.close(error.id))
       }, "×", 8 /* PROPS */, ["onClick"]),
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(error.message.message), 1 /* TEXT */),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+        class: "growl-title",
+        innerHTML: error.message.message
+      }, null, 8 /* PROPS */, ["innerHTML"]),
       ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(error.message.errors, (errorMessage) => {
-        return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(errorMessage[0]), 1 /* TEXT */))
+        return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(errorMessage[0]), 1 /* TEXT */))
       }), 256 /* UNKEYED_FRAGMENT */))
     ], 8 /* PROPS */, ["id"]))
   }), 256 /* UNKEYED_FRAGMENT */))

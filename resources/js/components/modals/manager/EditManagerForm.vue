@@ -54,7 +54,9 @@
                     document.getElementById('editUserFormClose').click();
                 } catch (e) {
                     console.log(e)
-                    emitter.emit('notification-error', e.response.data)
+                    if(e.response.data) {
+                        emitter.emit('notification-error', e.response.data)
+                    }
                 }
             }
 

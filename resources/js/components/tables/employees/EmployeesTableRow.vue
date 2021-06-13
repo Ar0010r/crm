@@ -30,10 +30,6 @@
                 <span class="m-0 p-0 ml-1">{{employee.phone_1}}</span>
                 <span class="m-0 p-0 ml-1 pl-1" style="border-left: 1px solid gray" >{{employee.phone_2}}</span>
             </div>
-           <!-- <div class="d-flex align-items-center" v-if="employee.phone_2" >
-                <i class="fas fa-phone-volume d-block"></i>
-                <p class="m-0 p-0 ml-1">{{employee.phone_2}}</p>
-            </div>-->
         </td>
         <td>
             <span>{{employee.address}}</span> <br>
@@ -48,7 +44,6 @@
                           :update-on-select='true'
             />
         </td>
-        <!--<td class="d-flex justify-content-between align-items-center">-->
         <td style="text-align: center; vertical-align: middle;">
            <div class="d-flex justify-content-between align-items-center">
                <EditButton :employee="employee"></EditButton>

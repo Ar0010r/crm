@@ -35,7 +35,6 @@ class EmployeesController extends Controller
 
     public function store(EmployeeStoreRequest $r)
     {
-        $r->merge(["hr_id" => auth()->user()->getAuthIdentifier()]);
         $employee = Employee::make($r->all());
 
         return response(['employee' => $this->employeeService->store($employee)], JsonResponse::HTTP_OK);

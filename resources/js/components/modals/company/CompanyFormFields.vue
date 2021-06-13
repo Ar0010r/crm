@@ -140,12 +140,8 @@
                 const result = await validateForm();
                 if (!result.valid) {
                     throw ({
-                        response: {
-                            data: {
-                                message: 'Please fix form errors:',
-                                errors: Object.keys(result.errors).map(key => [result.errors[key]])
-                            }
-                        }
+                        message: 'Please fix form errors:',
+                        errors: Object.keys(result.errors).map(key => [result.errors[key]])
                     })
                 }
             }
