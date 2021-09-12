@@ -3,34 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6dd06283-79a3-451e-93c8-b1b73cd686ac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EmployeesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EmployeesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Employee/EmployeeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Employee/EmployeeService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/User/UserService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/User/UserService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_20_092420_create_top_hr_hrs_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_03_20_092420_create_top_hr_hrs_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_CompaniesView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_CompaniesView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_EmployeesView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_EmployeesView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_ManagersView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_ManagersView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/layout/EmployeesStatusSelect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/layout/EmployeesStatusSelect.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/company/CompanyFormFields.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/company/CompanyFormFields.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/company/CreateCompanyForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/company/CreateCompanyForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/company/EditCompanyForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/company/EditCompanyForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/employee/EditEmployeeForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/employee/EditEmployeeForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/employee/StoreEmployeeForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/employee/StoreEmployeeForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/employee/fields/EmployeeFormFields.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/employee/fields/EmployeeFormFields.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/manager/CreateManagerForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/manager/CreateManagerForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/manager/EditManagerForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/manager/EditManagerForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/manager/ManagerFormFields.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/manager/ManagerFormFields.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/notification/Error.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/notification/Error.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/companies/actions/DeleteButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/companies/actions/DeleteButton.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTableRow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTableRow.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/employees/actions/DeleteButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/employees/actions/DeleteButton.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/employees/actions/DeleteSelectedButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/employees/actions/DeleteSelectedButton.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/employees/control/EmployeesTableMainControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/employees/control/EmployeesTableMainControl.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/managers/actions/DeleteButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/managers/actions/DeleteButton.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -76,8 +48,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Services/User/UserService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="69" column="41" selection-start-line="69" selection-start-column="41" selection-end-line="69" selection-end-column="41" />
+            <state relative-caret-position="127">
+              <caret line="50" column="58" selection-start-line="50" selection-start-column="56" selection-end-line="50" selection-end-column="58" />
               <folding>
                 <element signature="e#39#68#0#PHP" expanded="true" />
               </folding>
@@ -118,7 +90,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>datata</find>
       <find>datatables</find>
       <find>card</find>
       <find>$companyService</find>
@@ -148,6 +119,7 @@
       <find>warnings</find>
       <find>emitter.emit('notification-error</find>
       <find>notification-warning</find>
+      <find>gi</find>
     </findStrings>
     <replaceStrings>
       <replace>:value</replace>
@@ -392,13 +364,20 @@
             <path>
               <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
               <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="storage" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
               <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
+              <item name="storage" type="462c0819:PsiDirectoryNode" />
+              <item name="framework" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
+              <item name="storage" type="462c0819:PsiDirectoryNode" />
+              <item name="framework" type="462c0819:PsiDirectoryNode" />
+              <item name="laravel-excel" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -535,12 +514,12 @@
       <workItem from="1621779390721" duration="11070000" />
       <workItem from="1621849434830" duration="1287000" />
       <workItem from="1621979085205" duration="1743000" />
-      <workItem from="1623505416477" duration="11555000" />
+      <workItem from="1623505416477" duration="12457000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="787371000" />
+    <option name="totallyTimeSpent" value="788273000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -554,7 +533,7 @@
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3311874" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3311874" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -569,7 +548,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32891566" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.44819278" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.44819278" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -1024,8 +1003,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Services/User/UserService.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="69" column="41" selection-start-line="69" selection-start-column="41" selection-end-line="69" selection-end-column="41" />
+        <state relative-caret-position="127">
+          <caret line="50" column="58" selection-start-line="50" selection-start-column="56" selection-end-line="50" selection-end-column="58" />
           <folding>
             <element signature="e#39#68#0#PHP" expanded="true" />
           </folding>
