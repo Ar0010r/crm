@@ -14,7 +14,7 @@ class Status
     public const BAD = 'Bad';
     public const DIED = 'Died';
 
-    public const GREETED = 'Greeted';
+    public const INVITED = 'Invited';
     public const EXPORTED = 'Exported';
 
     private const WHITE_COLOR_STYLE = 'btn-white';
@@ -27,46 +27,37 @@ class Status
     private const BLACK_COLOR_STYLE = 'btn-dark';
 
     public const STATUSES = [
-        self::NEW,
-        self::WAITING_AGREEMENT,
         self::NEED_DATA,
-        self::INFO,
-        self::BAD,
-        self::DIED,
         self::READY,
-
-        self::GREETED,
+        self::INVITED,
         self::EXPORTED,
+        self::BAD,
     ];
 
     public const All_STATUSES = [
-        self::NEW => self::WHITE_COLOR_STYLE,
-        self::WAITING_AGREEMENT => self::GREY_COLOR_STYLE,
-        self::NEED_DATA => self::YELLOW_COLOR_STYLE,
-        self::INFO => self::OCEAN_COLOR_STYLE,
-        self::BAD => self::RED_COLOR_STYLE,
-        self::DIED => self::BLACK_COLOR_STYLE,
-        self::READY => self::GREEN_COLOR_STYLE,
+        self::NEED_DATA => self::WHITE_COLOR_STYLE,
+        self::READY => self::OCEAN_COLOR_STYLE,
+        self::INVITED => self::BLUE_COLOR_STYLE,
 
-        self::GREETED => self::OCEAN_COLOR_STYLE,
+        self::BAD => self::RED_COLOR_STYLE,
+
         self::EXPORTED => self::GREEN_COLOR_STYLE,
     ];
 
     public const HR_STATUSES = [
-        self::NEW => self::WHITE_COLOR_STYLE,
-        self::WAITING_AGREEMENT => self::GREY_COLOR_STYLE,
-        self::NEED_DATA => self::YELLOW_COLOR_STYLE,
-        self::INFO => self::OCEAN_COLOR_STYLE,
+        self::NEED_DATA => self::WHITE_COLOR_STYLE,
+        self::READY => self::OCEAN_COLOR_STYLE,
+        self::INVITED => self::BLUE_COLOR_STYLE,
+
         self::BAD => self::RED_COLOR_STYLE,
-        self::DIED => self::BLACK_COLOR_STYLE,
-        self::READY => self::GREEN_COLOR_STYLE,
+
     ];
 
     public const PERSONNEL_STATUSES = [
-        self::READY => self::BLUE_COLOR_STYLE,
-        self::GREETED => self::OCEAN_COLOR_STYLE,
+        self::READY => self::OCEAN_COLOR_STYLE,
+        self::INVITED => self::BLUE_COLOR_STYLE,
+        self::BAD => self::RED_COLOR_STYLE,
         self::EXPORTED => self::GREEN_COLOR_STYLE,
-        self::DIED => self::BLACK_COLOR_STYLE,
     ];
 
     public static function getAvailableRoles(User $user = null): array
