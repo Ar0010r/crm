@@ -5,6 +5,7 @@ import { EmployeeService } from "./employee.service";
 import { CompanyService } from "./company.service";
 import { AuthService } from "./auth.service";
 import { UserService } from "./user.service";
+import { LetterService } from "./letter.service";
 
 //axios.defaults.baseURL = '/api/';
 const serviceProviders = {
@@ -12,6 +13,7 @@ const serviceProviders = {
     EmployeeService: () => new EmployeeService(axios),
     CompanyService: () => new CompanyService(axios),
     UserService: () => new UserService(axios),
+    LetterService: () => new LetterService(axios),
 };
 
 export const container = (new Proxy(serviceProviders, {

@@ -69,7 +69,7 @@ class User extends Authenticatable
         return $this->employees()
             ->whereIn('status', [
                     Status::READY,
-                    Status::GREETED,
+                    Status::INVITED,
                     Status::EXPORTED
                 ]
             );
@@ -101,7 +101,7 @@ class User extends Authenticatable
             'id'
         )->whereIn('employees.status', [
             Status::READY,
-            Status::GREETED,
+            Status::INVITED,
             Status::EXPORTED
         ]);
     }

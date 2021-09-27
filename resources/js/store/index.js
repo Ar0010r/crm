@@ -1,6 +1,7 @@
 import user from './user'
 import employee from './employee'
 import company from "./company";
+import letter from "./letter";
 import {createStore} from 'vuex'
 
 export default createStore({
@@ -28,10 +29,14 @@ export default createStore({
 
         getCompanies: state => state.company.companies,
         getEmptyCompany: state => state.company.emptyCompany,
+
+        getLetters: state => state.letter.letters,
+        getEmptyLetter: state => state.letter.emptyLetter,
     },
     modules: {
         user: user,
         employee: employee,
         company: company,
+        letter: letter
     }
 })

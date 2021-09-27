@@ -11,10 +11,10 @@ export class EmployeeService {
 
     async getEmployees(params) {
         let response = await this.client.get('/api/employees', {params});
+        let employees = this.setIdKeys(response.data.list);
+        console.log('response.data', response.data)
 
-        let employees = this.setIdKeys(response.data.data);
-
-        return {employees: employees, pagination: response.data.pagination}
+        return {employees: employees, pagination: response.data.meta}
     }
 
     async search(keyword) {
@@ -24,9 +24,9 @@ export class EmployeeService {
             }
         });
 
-        let employees = this.setIdKeys(response.data.data);
+        let employees = this.setIdKeys(response.data.list);
 
-        return {employees: employees, pagination: response.data.pagination}
+        return {employees: employees, pagination: response.data.meta}
     }
 
     async getRaces() {

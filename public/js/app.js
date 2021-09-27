@@ -30267,10 +30267,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 employees = _context.sent;
+                console.log('employees', employees);
                 store.commit('employee/setEmployees', employees.employees);
                 store.commit('employee/setPagination', employees.pagination);
 
-              case 5:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -31139,6 +31140,10 @@ var LoginView = function LoginView() {
   return __webpack_require__.e(/*! import() */ "resources_js_views_LoginView_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./views/LoginView.vue */ "./resources/js/views/LoginView.vue"));
 };
 
+var StatisticsView = function StatisticsView() {
+  return __webpack_require__.e(/*! import() */ "resources_js_views_StatisticsView_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./views/StatisticsView.vue */ "./resources/js/views/StatisticsView.vue"));
+};
+
 var history = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.createWebHistory)();
 var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.createRouter)({
   history: history,
@@ -31162,6 +31167,13 @@ var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.createRouter)({
     name: 'companies-table',
     meta: {
       title: 'companies'
+    }
+  }, {
+    path: '/statistics',
+    component: StatisticsView,
+    name: 'statistics-table',
+    meta: {
+      title: 'statistics'
     }
   }, {
     path: '/login',
@@ -31333,14 +31345,14 @@ var AuthService = /*#__PURE__*/function () {
               case 2:
                 response = _context.sent;
 
-                if (!response.data.token.plainTextToken) {
+                if (!response.data.model.token.plainTextToken) {
                   _context.next = 8;
                   break;
                 }
 
-                localStorage.setItem('token', response.data.token.plainTextToken);
-                this.client.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token.plainTextToken;
-                this.store.commit('user/setProfile', response.data.user);
+                localStorage.setItem('token', response.data.model.token.plainTextToken);
+                this.client.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.model.token.plainTextToken;
+                this.store.commit('user/setProfile', response.data.model.user);
                 return _context.abrupt("return", true);
 
               case 8:
@@ -31640,13 +31652,14 @@ var EmployeeService = /*#__PURE__*/function () {
 
               case 2:
                 response = _context2.sent;
-                employees = this.setIdKeys(response.data.data);
+                employees = this.setIdKeys(response.data.list);
+                console.log('response.data', response.data);
                 return _context2.abrupt("return", {
                   employees: employees,
-                  pagination: response.data.pagination
+                  pagination: response.data.meta
                 });
 
-              case 5:
+              case 6:
               case "end":
                 return _context2.stop();
             }
@@ -31678,10 +31691,10 @@ var EmployeeService = /*#__PURE__*/function () {
 
               case 2:
                 response = _context3.sent;
-                employees = this.setIdKeys(response.data.data);
+                employees = this.setIdKeys(response.data.list);
                 return _context3.abrupt("return", {
                   employees: employees,
-                  pagination: response.data.pagination
+                  pagination: response.data.meta
                 });
 
               case 5:
@@ -31942,6 +31955,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _company_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./company.service */ "./resources/js/services/company.service.js");
 /* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./auth.service */ "./resources/js/services/auth.service.js");
 /* harmony import */ var _user_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./user.service */ "./resources/js/services/user.service.js");
+/* harmony import */ var _letter_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./letter.service */ "./resources/js/services/letter.service.js");
+
 
 
 
@@ -31961,6 +31976,9 @@ var serviceProviders = {
   },
   UserService: function UserService() {
     return new _user_service__WEBPACK_IMPORTED_MODULE_5__.UserService((axios__WEBPACK_IMPORTED_MODULE_0___default()));
+  },
+  LetterService: function LetterService() {
+    return new _letter_service__WEBPACK_IMPORTED_MODULE_6__.LetterService((axios__WEBPACK_IMPORTED_MODULE_0___default()));
   }
 };
 var container = new Proxy(serviceProviders, {
@@ -31975,6 +31993,161 @@ var container = new Proxy(serviceProviders, {
     return undefined;
   }
 });
+
+/***/ }),
+
+/***/ "./resources/js/services/letter.service.js":
+/*!*************************************************!*\
+  !*** ./resources/js/services/letter.service.js ***!
+  \*************************************************/
+/*! namespace exports */
+/*! export LetterService [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "LetterService": () => /* binding */ LetterService
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var LetterService = /*#__PURE__*/function () {
+  function LetterService(client) {
+    _classCallCheck(this, LetterService);
+
+    this.client = client;
+  }
+
+  _createClass(LetterService, [{
+    key: "get",
+    value: function () {
+      var _get = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.client.get('/api/letter');
+
+              case 2:
+                return _context.abrupt("return", _context.sent);
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function get() {
+        return _get.apply(this, arguments);
+      }
+
+      return get;
+    }()
+  }, {
+    key: "store",
+    value: function () {
+      var _store = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(letter) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return this.client.post('/api/letter', letter);
+
+              case 2:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function store(_x) {
+        return _store.apply(this, arguments);
+      }
+
+      return store;
+    }()
+  }, {
+    key: "update",
+    value: function () {
+      var _update = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(letter) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return this.client.put('/api/letter/' + letter.id, letter);
+
+              case 2:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function update(_x2) {
+        return _update.apply(this, arguments);
+      }
+
+      return update;
+    }()
+  }, {
+    key: "delete",
+    value: function () {
+      var _delete2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(letter) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return this.client["delete"]('/api/letter/' + letter.id);
+
+              case 2:
+                return _context4.abrupt("return", _context4.sent);
+
+              case 3:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function _delete(_x3) {
+        return _delete2.apply(this, arguments);
+      }
+
+      return _delete;
+    }()
+  }]);
+
+  return LetterService;
+}();
 
 /***/ }),
 
@@ -32322,23 +32495,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
                 companiesList = _context2.sent;
-                companiesList = companiesList.data;
+                companiesList = companiesList.data.list;
                 companies = {};
                 Object.keys(companiesList).map(function (key) {
                   var index = companiesList[key].id;
                   companies[index] = companiesList[key];
                 });
                 commit('setCompanies', companies);
-                _context2.next = 15;
+                _context2.next = 16;
                 break;
 
               case 11:
                 _context2.prev = 11;
                 _context2.t0 = _context2["catch"](1);
+                console.log('error', _context2.t0);
                 _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context2.t0.response.data);
                 if (_context2.t0.response.status === 401) _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
 
-              case 15:
+              case 16:
               case "end":
                 return _context2.stop();
             }
@@ -32488,23 +32662,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 4:
                 employees = _context.sent;
+                console.log('employees', employees);
                 commit('setEmployees', employees.employees);
                 commit('setPagination', employees.pagination);
-                _context.next = 13;
+                _context.next = 14;
                 break;
 
-              case 9:
-                _context.prev = 9;
+              case 10:
+                _context.prev = 10;
                 _context.t0 = _context["catch"](1);
                 _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context.t0.response.data);
                 if (_context.t0.response.status === 401) _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
 
-              case 13:
+              case 14:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 9]]);
+        }, _callee, null, [[1, 10]]);
       }))();
     },
     setStatusesToStore: function setStatusesToStore(_ref3) {
@@ -32521,7 +32696,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 4:
                 statuses = _context2.sent;
-                commit('setStatuses', statuses.data);
+                commit('setStatuses', statuses.data.model);
                 _context2.next = 12;
                 break;
 
@@ -32556,7 +32731,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 4:
                 races = _context3.sent;
-                commit('setRaces', races.data);
+                commit('setRaces', races.data.list);
                 _context3.next = 11;
                 break;
 
@@ -32620,12 +32795,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./user */ "./resources/js/store/user.js");
 /* harmony import */ var _employee__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./employee */ "./resources/js/store/employee.js");
 /* harmony import */ var _company__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./company */ "./resources/js/store/company.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var _letter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./letter */ "./resources/js/store/letter.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
 
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vuex__WEBPACK_IMPORTED_MODULE_3__.createStore)({
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vuex__WEBPACK_IMPORTED_MODULE_4__.createStore)({
   getters: {
     getProfile: function getProfile(state) {
       return state.user.profile;
@@ -32680,14 +32857,159 @@ __webpack_require__.r(__webpack_exports__);
     },
     getEmptyCompany: function getEmptyCompany(state) {
       return state.company.emptyCompany;
+    },
+    getLetters: function getLetters(state) {
+      return state.letter.letters;
+    },
+    getEmptyLetter: function getEmptyLetter(state) {
+      return state.letter.emptyLetter;
     }
   },
   modules: {
     user: _user__WEBPACK_IMPORTED_MODULE_0__.default,
     employee: _employee__WEBPACK_IMPORTED_MODULE_1__.default,
-    company: _company__WEBPACK_IMPORTED_MODULE_2__.default
+    company: _company__WEBPACK_IMPORTED_MODULE_2__.default,
+    letter: _letter__WEBPACK_IMPORTED_MODULE_3__.default
   }
 }));
+
+/***/ }),
+
+/***/ "./resources/js/store/letter.js":
+/*!**************************************!*\
+  !*** ./resources/js/store/letter.js ***!
+  \**************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/index */ "./resources/js/services/index.js");
+/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../app */ "./resources/js/app.js");
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  state: {
+    letters: {},
+    emptyLetter: {
+      hr_id: null,
+      hr: {
+        login: null
+      },
+      google: null,
+      yahoo: null,
+      outlook: null,
+      other: null,
+      received_at: null
+    }
+  },
+  mutations: {
+    setLetters: function setLetters(state, letters) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                state.letters = letters;
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    setLetterById: function setLetterById(state, letter) {
+      var key = letter.id;
+
+      if (state.letters[key]) {
+        state.letters[key] = _objectSpread(_objectSpread({}, state.letters[key]), letter);
+      } else {
+        var newLetterObj = {};
+        newLetterObj[key] = letter;
+        state.letters = _objectSpread(_objectSpread({}, newLetterObj), state.letters);
+      }
+    },
+    deleteLetterById: function deleteLetterById(state, id) {
+      delete state.letters[id];
+    }
+  },
+  actions: {
+    setLettersToStore: function setLettersToStore(_ref) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var commit, dispatch, lettersList, letters;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                commit = _ref.commit, dispatch = _ref.dispatch;
+                _context2.prev = 1;
+                _context2.next = 4;
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.LetterService.get();
+
+              case 4:
+                lettersList = _context2.sent;
+                lettersList = lettersList.data.list;
+                letters = {};
+                Object.keys(lettersList).map(function (key) {
+                  var index = lettersList[key].id;
+                  letters[index] = lettersList[key];
+                });
+                commit('setLetters', letters);
+                _context2.next = 16;
+                break;
+
+              case 11:
+                _context2.prev = 11;
+                _context2.t0 = _context2["catch"](1);
+                console.log('error', _context2.t0);
+                _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context2.t0.response.data);
+                if (_context2.t0.response.status === 401) _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
+
+              case 16:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[1, 11]]);
+      }))();
+    },
+    deleteLetter: function deleteLetter(_ref2, letter) {
+      var commit = _ref2.commit,
+          dispatch = _ref2.dispatch,
+          state = _ref2.state;
+      var key = letter.id;
+
+      if (state.letters[key]) {
+        commit('deleteLetterById', key);
+      } else {
+        _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', e.response.data);
+      }
+    }
+  }
+});
 
 /***/ }),
 
@@ -32792,7 +33114,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 4:
                 response = _context.sent;
-                commit('setProfile', response.data);
+                commit('setProfile', response.data.model);
                 _context.next = 11;
                 break;
 
@@ -32825,12 +33147,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 response = _context2.sent;
 
                 if (state.profile.role !== 'top hr') {
-                  users = response.data.filter(function (user) {
+                  users = response.data.list.filter(function (user) {
                     return user.id !== state.profile.id;
                   });
                 }
 
-                users = response.data;
+                users = response.data.list;
                 dispatch('sort', users);
                 _context2.next = 14;
                 break;
@@ -32863,7 +33185,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 4:
                 response = _context3.sent;
-                commit('setRoles', response.data);
+                commit('setRoles', response.data.list);
                 _context3.next = 11;
                 break;
 
@@ -43414,6 +43736,10 @@ const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Companies")
 ], -1 /* HOISTED */)
 const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", { class: "sidenav-link" }, [
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "sidenav-icon ion ion-md-analytics" }),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Statistics")
+], -1 /* HOISTED */)
+const _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", { class: "sidenav-link" }, [
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "sidenav-icon ion ion-md-contacts" }),
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Managers")
 ], -1 /* HOISTED */)
@@ -43444,15 +43770,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         ]),
         _: 1
       }),
-      ($setup.profile.role === 'admin' || $setup.profile.role === 'top hr')
+      ($setup.profile.role !== 'personnel')
         ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
             key: 0,
-            to: { name : 'managers-table'},
+            to: { name : 'statistics-table'},
             tag: "li",
             class: "sidenav-item"
           }, {
             default: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(() => [
               _hoisted_7
+            ]),
+            _: 1
+          }))
+        : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
+      ($setup.profile.role === 'admin' || $setup.profile.role === 'top hr')
+        ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
+            key: 1,
+            to: { name : 'managers-table'},
+            tag: "li",
+            class: "sidenav-item"
+          }, {
+            default: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(() => [
+              _hoisted_8
             ]),
             _: 1
           }))
@@ -51824,7 +52163,7 @@ function toArray(value) {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_views_EmployeesView_vue":1,"resources_js_views_CompaniesView_vue":1,"resources_js_views_ManagersView_vue":1,"resources_js_views_LoginView_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_views_EmployeesView_vue":1,"resources_js_views_CompaniesView_vue":1,"resources_js_views_ManagersView_vue":1,"resources_js_views_LoginView_vue":1,"resources_js_views_StatisticsView_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

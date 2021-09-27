@@ -67,7 +67,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 5:
                 storedManager = _context.sent;
-                store.commit('user/setUserById', storedManager.data.user);
+                store.commit('user/setUserById', storedManager.data.model);
                 document.getElementById('storeUserFormClose').click();
                 emitter.emit('notification-success', 'manager was added');
                 clearForm();

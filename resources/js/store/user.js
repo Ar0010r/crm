@@ -60,7 +60,7 @@ export default {
         async setProfileToStore({commit}) {
             try {
                 let response = await container.UserService.getProfile();
-                commit('setProfile', response.data);
+                commit('setProfile', response.data.model);
             } catch (e) {
                 emitter.emit('notification-error', e.response.data)
             }
@@ -71,9 +71,9 @@ export default {
                 let response = await container.UserService.getUsers(params);
                 let users;
                 if(state.profile.role !== 'top hr') {
-                    users = response.data.filter(user => user.id !== state.profile.id)
+                    users = response.data.list.filter(user => user.id !== state.profile.id)
                 }
-                users = response.data;
+                users = response.data.list;
 
                 dispatch('sort', users);
             } catch (e) {
@@ -86,7 +86,7 @@ export default {
         async setRolesToStore({commit}) {
             try {
                 let response = await container.UserService.getRoles();
-                commit('setRoles', response.data);
+                commit('setRoles', response.data.list);
             } catch (e) {
                 emitter.emit('notification-error', e.response.data)
             }

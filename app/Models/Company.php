@@ -37,7 +37,7 @@ class Company extends Model
         return $this->employees()
             ->whereIn('status', [
                     Status::READY,
-                    Status::GREETED,
+                    Status::INVITED,
                     Status::EXPORTED
                 ]
             );

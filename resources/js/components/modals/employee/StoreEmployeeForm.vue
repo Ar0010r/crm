@@ -51,7 +51,7 @@
                     await employeeFields.value.validate();
                     let result = await container.EmployeeService.store(employee);
 
-                    let savedEmployee = result.data.employee;
+                    let savedEmployee = result.data.model;
 
                     if(savedEmployee.company_id) savedEmployee.company = companies.value[savedEmployee.company_id];
                     else savedEmployee.company = emptyEmployee.company;

@@ -34,13 +34,11 @@ class Status
         self::BAD,
     ];
 
-    public const All_STATUSES = [
+    public const ALL_STATUSES = [
         self::NEED_DATA => self::WHITE_COLOR_STYLE,
         self::READY => self::OCEAN_COLOR_STYLE,
         self::INVITED => self::BLUE_COLOR_STYLE,
-
         self::BAD => self::RED_COLOR_STYLE,
-
         self::EXPORTED => self::GREEN_COLOR_STYLE,
     ];
 
@@ -48,9 +46,7 @@ class Status
         self::NEED_DATA => self::WHITE_COLOR_STYLE,
         self::READY => self::OCEAN_COLOR_STYLE,
         self::INVITED => self::BLUE_COLOR_STYLE,
-
         self::BAD => self::RED_COLOR_STYLE,
-
     ];
 
     public const PERSONNEL_STATUSES = [
@@ -68,7 +64,7 @@ class Status
             case Role::PERSONNEL:
                 return self::PERSONNEL_STATUSES;
             case Role::ADMIN:
-                return self::All_STATUSES;
+                return self::ALL_STATUSES;
             default:
                 return self::HR_STATUSES;
         }

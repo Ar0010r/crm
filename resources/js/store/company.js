@@ -39,7 +39,7 @@ export default {
         async setCompaniesToStore({commit, dispatch}) {
             try {
                 let companiesList = await container.CompanyService.getCompanies();
-                companiesList = companiesList.data;
+                companiesList = companiesList.data.list;
 
                 let companies = {};
                 Object.keys(companiesList).map(function (key) {
@@ -49,6 +49,7 @@ export default {
 
                 commit('setCompanies', companies);
             } catch (e) {
+                console.log('error', e)
                 emitter.emit('notification-error', e.response.data)
                 if(e.response.status === 401) container.AuthService.logout()
             }

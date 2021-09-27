@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Http\Requests\Employee\EmployeeRequestRulesTrait;
+use App\Http\Requests\Rules\EmployeeRequestRules;
 use App\Models\Company;
 use App\Models\Employee;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -11,7 +11,7 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 
 class EmployeeImport implements ToModel, WithHeadingRow, WithValidation
 {
-    use EmployeeRequestRulesTrait;
+    use EmployeeRequestRules;
 
     private const REQUIRED_KEYS = [
         'company',

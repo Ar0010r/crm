@@ -249,7 +249,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 5:
                 response = _context.sent;
-                storedCompany = response.data.company;
+                storedCompany = response.data.model;
                 store.commit('company/setCompanyById', storedCompany);
                 document.getElementById('storeCompanyFormClose').click();
                 emitter.emit('notification-success', 'company was created');

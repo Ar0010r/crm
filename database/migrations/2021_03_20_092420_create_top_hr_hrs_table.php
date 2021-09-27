@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateTopHrHrsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('top_hr_hrs', function (Blueprint $table) {
@@ -25,11 +20,6 @@ class CreateTopHrHrsTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('top_hr_hrs');

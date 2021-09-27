@@ -42,7 +42,7 @@
                 try {
                     await managerFields.value.validate();
                     let storedManager = await container.UserService.storeUser(manager);
-                    store.commit('user/setUserById', storedManager.data.user);
+                    store.commit('user/setUserById', storedManager.data.model);
                     document.getElementById('storeUserFormClose').click()
                     emitter.emit('notification-success', 'manager was added');
                     clearForm();

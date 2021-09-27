@@ -11,5 +11,5 @@ class Role
 
     public const ADMIN_AVAILABLE_ROLES = [self::HR, self::PERSONNEL, self::TOP_HR];
 
-    public const TOP_HR__AVAILABLE_ROLES = [self::HR];
+    public const TOP_HR_AVAILABLE_ROLES = [self::HR];
 }

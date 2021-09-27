@@ -75,6 +75,7 @@
 
             async function search(keyword) {
                 let employees = await container.EmployeeService.search(keyword);
+                console.log('employees', employees)
                 store.commit('employee/setEmployees', employees.employees);
                 store.commit('employee/setPagination', employees.pagination);
             }

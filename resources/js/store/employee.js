@@ -83,21 +83,23 @@ export default {
             try {
                 let employees = await container.EmployeeService.getEmployees(params);
 
+                console.log('employees', employees)
+
                 commit('setEmployees', employees.employees);
                 commit('setPagination', employees.pagination);
             } catch (e) {
                 emitter.emit('notification-error', e.response.data)
-                if(e.response.status === 401) container.AuthService.logout()
+                if (e.response.status === 401) container.AuthService.logout()
             }
         },
 
         async setStatusesToStore({commit}) {
             try {
                 let statuses = await container.EmployeeService.getStatuses();
-                commit('setStatuses', statuses.data);
+                commit('setStatuses', statuses.data.model);
             } catch (e) {
                 emitter.emit('notification-error', e.response.data)
-                if(e.response.status === 401) {
+                if (e.response.status === 401) {
                     container.AuthService.logout()
                 }
             }
@@ -107,7 +109,7 @@ export default {
         async setRacesToStore({commit}) {
             try {
                 let races = await container.EmployeeService.getRaces();
-                commit('setRaces', races.data);
+                commit('setRaces', races.data.list);
             } catch (e) {
                 emitter.emit('notification-error', e.response.data)
             }
@@ -122,11 +124,11 @@ export default {
             }
         },
 
-        bulkDelete({dispatch}, employees){
+        bulkDelete({dispatch}, employees) {
             employees.forEach(employee => dispatch('deleteEmployee', employee))
         },
 
-        bulkUpdate({commit}, employees){
+        bulkUpdate({commit}, employees) {
             employees.forEach(employee => commit('setEmployeeById', employee))
         }
     }

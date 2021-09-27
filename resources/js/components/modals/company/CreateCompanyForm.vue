@@ -39,8 +39,6 @@
             let emptyCompany = {...store.getters.getEmptyCompany};
 
             if(profile.role === 'personnel'){
-
-
                 emptyCompany.personnel_id = profile.id
             }
 
@@ -51,7 +49,7 @@
                     await companyFields.value.validate();
                     let response = await container.CompanyService.storeCompany(company);
 
-                    let storedCompany = response.data.company;
+                    let storedCompany = response.data.model;
 
                     store.commit('company/setCompanyById', storedCompany);
                     document.getElementById('storeCompanyFormClose').click()

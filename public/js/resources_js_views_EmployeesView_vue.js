@@ -452,7 +452,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 5:
                 result = _context.sent;
-                savedEmployee = result.data.employee;
+                savedEmployee = result.data.model;
                 if (savedEmployee.company_id) savedEmployee.company = companies.value[savedEmployee.company_id];else savedEmployee.company = emptyEmployee.company;
                 store.commit('employee/setEmployeeById', savedEmployee);
                 clearForm();
