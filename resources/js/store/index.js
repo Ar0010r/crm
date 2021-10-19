@@ -21,6 +21,7 @@ export default createStore({
         getAvailableStatuses: state => state.employee.availableStatuses,
         getEmptyEmployee: state => state.employee.emptyEmployee,
         getEmployees: state => state.employee.employees,
+        getMonthlyStatistics: state => state.employee.statistics,
         getEmployeesPagination: state => state.employee.pagination,
         getEmployeeQueryParams: state => state.employee.queryParams,
         getEmployeeById: (id, state) => {
@@ -28,6 +29,7 @@ export default createStore({
         },
 
         getCompanies: state => state.company.companies,
+        getStatistics: state => state.company.statistics,
         getEmptyCompany: state => state.company.emptyCompany,
 
         getLetters: state => state.letter.letters,

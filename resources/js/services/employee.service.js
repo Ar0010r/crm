@@ -12,7 +12,6 @@ export class EmployeeService {
     async getEmployees(params) {
         let response = await this.client.get('/api/employees', {params});
         let employees = this.setIdKeys(response.data.list);
-        console.log('response.data', response.data)
 
         return {employees: employees, pagination: response.data.meta}
     }
@@ -65,6 +64,10 @@ export class EmployeeService {
 
     async updateSelected(employees, status) {
         return await this.client.put('api/employees', {employees: employees, status: status});
+    }
+
+    async getMonthlyStatistics() {
+        return await this.client.get('api/employees/statistics');
     }
 
 }

@@ -17,7 +17,7 @@
         </td>
         <td class="col-1">
             <div v-if="company.good_employees_count !== 0">
-                <span>rate:</span> <span>{{Math.round(company.good_employees_count/company.employees_count * 100)}}%</span>
+                <span>rate:</span> <span>{{(company.good_employees_count/company.employees_count * 100).toFixed(2)}}%</span>
             </div>
             <div v-else>rate: 0%</div>
         </td>

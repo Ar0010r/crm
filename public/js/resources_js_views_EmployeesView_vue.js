@@ -3809,10 +3809,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-const _hoisted_1 = {
-  key: 0,
-  class: "d-flex justify-content-between"
-}
+const _hoisted_1 = { class: "d-flex justify-content-between" }
 const _hoisted_2 = { class: "pagination" }
 const _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
   class: "page-link",
@@ -3828,41 +3825,42 @@ const _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
 }, "»", -1 /* HOISTED */)
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return ($props.data.from !== $props.data.last_page && $props.data.last_page !== 1)
-    ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("nav", null, [
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("ul", _hoisted_2, [
-            ($props.data.prev_page_url)
-              ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("li", {
-                  key: 0,
-                  class: "page-item",
-                  onClick: _cache[1] || (_cache[1] = $event => ($setup.goToPage($props.data.current_page -1)))
-                }, [
-                  _hoisted_3
-                ]))
-              : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
-            ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.data.last_page, (i=1) => {
-              return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("li", {
-                class: ["page-item", { active: i === $props.data.current_page}],
-                onClick: $event => ($setup.goToPage(i))
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("    <div class=\"d-flex justify-content-between\" v-if=\"data.from !== data.last_page && data.last_page !== 1\">"),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("nav", null, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("ul", _hoisted_2, [
+          ($props.data.prev_page_url)
+            ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("li", {
+                key: 0,
+                class: "page-item",
+                onClick: _cache[1] || (_cache[1] = $event => ($setup.goToPage($props.data.current_page -1)))
               }, [
-                (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(i), 1 /* TEXT */)
-              ], 10 /* CLASS, PROPS */, ["onClick"]))
-            }), 256 /* UNKEYED_FRAGMENT */)),
-            ($props.data.next_page_url)
-              ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("li", {
-                  key: 1,
-                  class: "page-item",
-                  onClick: _cache[2] || (_cache[2] = $event => ($setup.goToPage($props.data.current_page + 1)))
-                }, [
-                  _hoisted_5
-                ]))
-              : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
-          ])
-        ]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "showing " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.data.from) + " to " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.data.to) + " of " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.data.total) + " records", 1 /* TEXT */)
-      ]))
-    : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
+                _hoisted_3
+              ]))
+            : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
+          ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.data.last_page, (i=1) => {
+            return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("li", {
+              class: ["page-item", { active: i === $props.data.current_page}],
+              onClick: $event => ($setup.goToPage(i))
+            }, [
+              (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(i), 1 /* TEXT */)
+            ], 10 /* CLASS, PROPS */, ["onClick"]))
+          }), 256 /* UNKEYED_FRAGMENT */)),
+          ($props.data.next_page_url)
+            ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("li", {
+                key: 1,
+                class: "page-item",
+                onClick: _cache[2] || (_cache[2] = $event => ($setup.goToPage($props.data.current_page + 1)))
+              }, [
+                _hoisted_5
+              ]))
+            : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
+        ])
+      ]),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "showing " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.data.from) + " to " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.data.to) + " of " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.data.total) + " records", 1 /* TEXT */)
+    ])
+  ], 64 /* STABLE_FRAGMENT */))
 }
 
 /***/ }),

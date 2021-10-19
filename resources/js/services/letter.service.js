@@ -4,8 +4,8 @@ export class LetterService {
         this.client = client;
     }
 
-    async get() {
-        return await this.client.get('/api/letter');
+    async get(params) {
+        return await this.client.get('/api/letter', {params});
     }
 
     async store(letter) {

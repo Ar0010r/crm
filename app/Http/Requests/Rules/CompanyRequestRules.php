@@ -11,9 +11,9 @@ trait CompanyRequestRules
     public function baseRules(): array
     {
         return [
-            'name' => ['string', 'unique:companies'],
-            'domain' => ['string', 'unique:companies'],
-            'email' => ['string', 'unique:companies'],
+            'name' => ['string'],
+            'domain' => ['string'],
+            'email' => ['string'],
             'personnel_id' => ['exists:users,id', new UserIdBelongsToPersonnel()]
         ];
     }

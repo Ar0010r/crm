@@ -37,9 +37,12 @@
             const profile = computed(() => store.getters.getProfile)
             const emptyLetter = {...store.getters.getEmptyLetter};
 
+            emptyLetter.hr_id = null;
             if(profile.value.role === 'hr' || profile.value.role === 'top hr'){
                 emptyLetter.hr_id = profile.value.id
             }
+
+            emptyLetter.company_id = null;
 
             console.log('emptyLetter', emptyLetter)
 
@@ -50,7 +53,6 @@
                     await letterFields.value.validate();
                     let storedLetter = await container.LetterService.store(letter);
 
-                    console.log('wgdgds',  storedLetter.data.model)
                     store.commit('letter/setLetterById', storedLetter.data.model);
                     document.getElementById('storeLetterFormClose').click()
                     emitter.emit('notification-success', 'letter was added');

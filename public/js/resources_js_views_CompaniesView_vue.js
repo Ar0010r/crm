@@ -2398,7 +2398,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_12, [
             _hoisted_13,
             _hoisted_14,
-            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round($props.company.exported_employees_count/$props.company.employees_count * 100)) + "%", 1 /* TEXT */)
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(($props.company.exported_employees_count/$props.company.employees_count * 100).toFixed(2)) + "%", 1 /* TEXT */)
           ]))
         : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_15, "rate: 0%"))
     ]),
@@ -2508,7 +2508,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_12, [
             _hoisted_13,
             _hoisted_14,
-            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round($props.company.good_employees_count/$props.company.employees_count * 100)) + "%", 1 /* TEXT */)
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(($props.company.good_employees_count/$props.company.employees_count * 100).toFixed(2)) + "%", 1 /* TEXT */)
           ]))
         : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_15, "rate: 0%"))
     ])

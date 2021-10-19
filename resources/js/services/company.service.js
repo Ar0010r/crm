@@ -19,4 +19,8 @@ export class CompanyService {
     async deleteCompany(company) {
         return await this.client.delete('/api/companies/' + company.id);
     }
+
+    async getStatistics() {
+        return await this.client.get('api/companies/statistics');
+    }
 }

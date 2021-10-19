@@ -5,12 +5,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Concrete\Letter\LetterStoreRequest;
 use App\Http\Requests\Concrete\Letter\LetterUpdateRequest;
 use App\Http\Resources\Base\ListResource;
+use App\Http\Resources\Base\ModelResource;
 use App\Http\Resources\LetterResource;
 use App\Models\Letter;
 use App\Services\Concrete\Letter\LetterService;
 use App\Services\Concrete\Letter\UserLetterService;
 use App\Services\Contracts\ResourceServiceInterface;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 
 class LetterController extends Controller
@@ -60,5 +62,15 @@ class LetterController extends Controller
         } catch (\Exception $e) {
             return response($e->getMessage(), JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         }
+    }
+
+    public function total()
+    {
+        $q = DB::table('letters');
+        foreach (['google', 'yahoo', 'outlook', 'other'] as $client) {
+            $q->selectRaw("SUM($client) as {$client}_total");
+        }
+
+        return new ModelResource($q->get());
     }
 }

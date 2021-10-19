@@ -31140,6 +31140,10 @@ var LoginView = function LoginView() {
   return __webpack_require__.e(/*! import() */ "resources_js_views_LoginView_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./views/LoginView.vue */ "./resources/js/views/LoginView.vue"));
 };
 
+var LettersView = function LettersView() {
+  return __webpack_require__.e(/*! import() */ "resources_js_views_LettersView_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./views/LettersView.vue */ "./resources/js/views/LettersView.vue"));
+};
+
 var StatisticsView = function StatisticsView() {
   return __webpack_require__.e(/*! import() */ "resources_js_views_StatisticsView_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./views/StatisticsView.vue */ "./resources/js/views/StatisticsView.vue"));
 };
@@ -31169,11 +31173,11 @@ var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.createRouter)({
       title: 'companies'
     }
   }, {
-    path: '/statistics',
-    component: StatisticsView,
-    name: 'statistics-table',
+    path: '/mails',
+    component: LettersView,
+    name: 'mails-table',
     meta: {
-      title: 'statistics'
+      title: 'mails'
     }
   }, {
     path: '/login',
@@ -31181,6 +31185,13 @@ var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.createRouter)({
     name: 'login',
     meta: {
       title: 'login'
+    }
+  }, {
+    path: '/statistics',
+    component: StatisticsView,
+    name: 'statistics',
+    meta: {
+      title: 'statistics'
     }
   }, {
     path: '/',
@@ -31565,6 +31576,34 @@ var CompanyService = /*#__PURE__*/function () {
 
       return deleteCompany;
     }()
+  }, {
+    key: "getStatistics",
+    value: function () {
+      var _getStatistics = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return this.client.get('api/companies/statistics');
+
+              case 2:
+                return _context5.abrupt("return", _context5.sent);
+
+              case 3:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this);
+      }));
+
+      function getStatistics() {
+        return _getStatistics.apply(this, arguments);
+      }
+
+      return getStatistics;
+    }()
   }]);
 
   return CompanyService;
@@ -31653,13 +31692,12 @@ var EmployeeService = /*#__PURE__*/function () {
               case 2:
                 response = _context2.sent;
                 employees = this.setIdKeys(response.data.list);
-                console.log('response.data', response.data);
                 return _context2.abrupt("return", {
                   employees: employees,
                   pagination: response.data.meta
                 });
 
-              case 6:
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -31926,6 +31964,34 @@ var EmployeeService = /*#__PURE__*/function () {
 
       return updateSelected;
     }()
+  }, {
+    key: "getMonthlyStatistics",
+    value: function () {
+      var _getMonthlyStatistics = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee11() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee11$(_context11) {
+          while (1) {
+            switch (_context11.prev = _context11.next) {
+              case 0:
+                _context11.next = 2;
+                return this.client.get('api/employees/statistics');
+
+              case 2:
+                return _context11.abrupt("return", _context11.sent);
+
+              case 3:
+              case "end":
+                return _context11.stop();
+            }
+          }
+        }, _callee11, this);
+      }));
+
+      function getMonthlyStatistics() {
+        return _getMonthlyStatistics.apply(this, arguments);
+      }
+
+      return getMonthlyStatistics;
+    }()
   }]);
 
   return EmployeeService;
@@ -32035,13 +32101,15 @@ var LetterService = /*#__PURE__*/function () {
   _createClass(LetterService, [{
     key: "get",
     value: function () {
-      var _get = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var _get = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(params) {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return this.client.get('/api/letter');
+                return this.client.get('/api/letter', {
+                  params: params
+                });
 
               case 2:
                 return _context.abrupt("return", _context.sent);
@@ -32054,7 +32122,7 @@ var LetterService = /*#__PURE__*/function () {
         }, _callee, this);
       }));
 
-      function get() {
+      function get(_x) {
         return _get.apply(this, arguments);
       }
 
@@ -32082,7 +32150,7 @@ var LetterService = /*#__PURE__*/function () {
         }, _callee2, this);
       }));
 
-      function store(_x) {
+      function store(_x2) {
         return _store.apply(this, arguments);
       }
 
@@ -32110,7 +32178,7 @@ var LetterService = /*#__PURE__*/function () {
         }, _callee3, this);
       }));
 
-      function update(_x2) {
+      function update(_x3) {
         return _update.apply(this, arguments);
       }
 
@@ -32138,7 +32206,7 @@ var LetterService = /*#__PURE__*/function () {
         }, _callee4, this);
       }));
 
-      function _delete(_x3) {
+      function _delete(_x4) {
         return _delete2.apply(this, arguments);
       }
 
@@ -32435,6 +32503,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   namespaced: true,
   state: {
     companies: {},
+    statistics: {},
     emptyCompany: {
       name: null,
       personnel_id: null,
@@ -32464,6 +32533,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    setStatistics: function setStatistics(state, statistics) {
+      state.statistics = statistics;
     },
     setCompanyById: function setCompanyById(state, company) {
       var key = company.id;
@@ -32531,6 +32603,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } else {
         _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', e.response.data);
       }
+    },
+    setStatisticsToStore: function setStatisticsToStore(_ref3, params) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var commit, employees;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                commit = _ref3.commit;
+                _context3.prev = 1;
+                _context3.next = 4;
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.CompanyService.getStatistics();
+
+              case 4:
+                employees = _context3.sent;
+                commit('setStatistics', employees.data.list);
+                _context3.next = 12;
+                break;
+
+              case 8:
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](1);
+                _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context3.t0.response.data);
+                if (_context3.t0.response.status === 401) _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
+
+              case 12:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[1, 8]]);
+      }))();
     }
   }
 });
@@ -32574,6 +32678,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   namespaced: true,
   state: {
     employees: {},
+    statistics: {},
     races: {},
     companies: {},
     statuses: {},
@@ -32628,6 +32733,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     setEmployees: function setEmployees(state, employees) {
       state.employees = employees;
     },
+    setStatistics: function setStatistics(state, statistics) {
+      state.statistics = statistics;
+    },
     setPagination: function setPagination(state, pagination) {
       state.pagination = pagination;
     },
@@ -32662,29 +32770,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 4:
                 employees = _context.sent;
-                console.log('employees', employees);
                 commit('setEmployees', employees.employees);
                 commit('setPagination', employees.pagination);
-                _context.next = 14;
+                _context.next = 13;
                 break;
 
-              case 10:
-                _context.prev = 10;
+              case 9:
+                _context.prev = 9;
                 _context.t0 = _context["catch"](1);
                 _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context.t0.response.data);
                 if (_context.t0.response.status === 401) _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
 
-              case 14:
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 10]]);
+        }, _callee, null, [[1, 9]]);
       }))();
     },
-    setStatusesToStore: function setStatusesToStore(_ref3) {
+    setStatisticsToStore: function setStatisticsToStore(_ref3, params) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var commit, statuses;
+        var commit, employees;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -32692,11 +32799,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 commit = _ref3.commit;
                 _context2.prev = 1;
                 _context2.next = 4;
-                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.EmployeeService.getStatuses();
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.EmployeeService.getMonthlyStatistics();
 
               case 4:
-                statuses = _context2.sent;
-                commit('setStatuses', statuses.data.model);
+                employees = _context2.sent;
+                commit('setStatistics', employees.data.list);
                 _context2.next = 12;
                 break;
 
@@ -32704,10 +32811,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _context2.prev = 8;
                 _context2.t0 = _context2["catch"](1);
                 _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context2.t0.response.data);
-
-                if (_context2.t0.response.status === 401) {
-                  _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
-                }
+                if (_context2.t0.response.status === 401) _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
 
               case 12:
               case "end":
@@ -32717,9 +32821,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee2, null, [[1, 8]]);
       }))();
     },
-    setRacesToStore: function setRacesToStore(_ref4) {
+    setStatusesToStore: function setStatusesToStore(_ref4) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var commit, races;
+        var commit, statuses;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -32727,12 +32831,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 commit = _ref4.commit;
                 _context3.prev = 1;
                 _context3.next = 4;
-                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.EmployeeService.getRaces();
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.EmployeeService.getStatuses();
 
               case 4:
-                races = _context3.sent;
-                commit('setRaces', races.data.list);
-                _context3.next = 11;
+                statuses = _context3.sent;
+                commit('setStatuses', statuses.data.model);
+                _context3.next = 12;
                 break;
 
               case 8:
@@ -32740,7 +32844,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _context3.t0 = _context3["catch"](1);
                 _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context3.t0.response.data);
 
-              case 11:
+                if (_context3.t0.response.status === 401) {
+                  _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
+                }
+
+              case 12:
               case "end":
                 return _context3.stop();
             }
@@ -32748,10 +32856,41 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee3, null, [[1, 8]]);
       }))();
     },
-    deleteEmployee: function deleteEmployee(_ref5, employee) {
-      var commit = _ref5.commit,
-          dispatch = _ref5.dispatch,
-          state = _ref5.state;
+    setRacesToStore: function setRacesToStore(_ref5) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var commit, races;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                commit = _ref5.commit;
+                _context4.prev = 1;
+                _context4.next = 4;
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.EmployeeService.getRaces();
+
+              case 4:
+                races = _context4.sent;
+                commit('setRaces', races.data.list);
+                _context4.next = 11;
+                break;
+
+              case 8:
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](1);
+                _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context4.t0.response.data);
+
+              case 11:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[1, 8]]);
+      }))();
+    },
+    deleteEmployee: function deleteEmployee(_ref6, employee) {
+      var commit = _ref6.commit,
+          dispatch = _ref6.dispatch,
+          state = _ref6.state;
       var key = employee.id;
 
       if (state.employees[key]) {
@@ -32760,14 +32899,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', e.response.data);
       }
     },
-    bulkDelete: function bulkDelete(_ref6, employees) {
-      var dispatch = _ref6.dispatch;
+    bulkDelete: function bulkDelete(_ref7, employees) {
+      var dispatch = _ref7.dispatch;
       employees.forEach(function (employee) {
         return dispatch('deleteEmployee', employee);
       });
     },
-    bulkUpdate: function bulkUpdate(_ref7, employees) {
-      var commit = _ref7.commit;
+    bulkUpdate: function bulkUpdate(_ref8, employees) {
+      var commit = _ref8.commit;
       employees.forEach(function (employee) {
         return commit('setEmployeeById', employee);
       });
@@ -32843,6 +32982,9 @@ __webpack_require__.r(__webpack_exports__);
     getEmployees: function getEmployees(state) {
       return state.employee.employees;
     },
+    getMonthlyStatistics: function getMonthlyStatistics(state) {
+      return state.employee.statistics;
+    },
     getEmployeesPagination: function getEmployeesPagination(state) {
       return state.employee.pagination;
     },
@@ -32854,6 +32996,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     getCompanies: function getCompanies(state) {
       return state.company.companies;
+    },
+    getStatistics: function getStatistics(state) {
+      return state.company.statistics;
     },
     getEmptyCompany: function getEmptyCompany(state) {
       return state.company.emptyCompany;
@@ -32912,10 +33057,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   namespaced: true,
   state: {
     letters: {},
+    queryParams: {
+      page: "",
+      hr_id: "",
+      take: ""
+    },
     emptyLetter: {
       hr_id: null,
       hr: {
         login: null
+      },
+      company_id: null,
+      company: {
+        name: null
       },
       google: null,
       yahoo: null,
@@ -32925,6 +33079,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mutations: {
+    setQueryParam: function setQueryParam(state, _ref) {
+      var key = _ref.key,
+          value = _ref.value;
+      state.queryParams[key] = value;
+    },
     setLetters: function setLetters(state, letters) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -32942,6 +33101,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     setLetterById: function setLetterById(state, letter) {
+      console.log('letter', letter); // console.log('state', state)
+
       var key = letter.id;
 
       if (state.letters[key]) {
@@ -32957,17 +33118,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   actions: {
-    setLettersToStore: function setLettersToStore(_ref) {
+    setLettersToStore: function setLettersToStore(_ref2, params) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         var commit, dispatch, lettersList, letters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                commit = _ref.commit, dispatch = _ref.dispatch;
+                commit = _ref2.commit, dispatch = _ref2.dispatch;
                 _context2.prev = 1;
                 _context2.next = 4;
-                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.LetterService.get();
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.LetterService.get(params);
 
               case 4:
                 lettersList = _context2.sent;
@@ -32996,10 +33157,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2, null, [[1, 11]]);
       }))();
     },
-    deleteLetter: function deleteLetter(_ref2, letter) {
-      var commit = _ref2.commit,
-          dispatch = _ref2.dispatch,
-          state = _ref2.state;
+    deleteLetter: function deleteLetter(_ref3, letter) {
+      var commit = _ref3.commit,
+          dispatch = _ref3.dispatch,
+          state = _ref3.state;
       var key = letter.id;
 
       if (state.letters[key]) {
@@ -33263,7 +33424,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody,\n#app {\n  width: 100%;\n  height: 100%;\n  font-family: Arial, Helvetica, sans-serif;\n  background: #e3e4e5;\n}\n.flex {\n  display: flex;\n  height: 100%;\n  width: 100%;\n}\n.flex--column {\n  flex-direction: column;\n}\n.flex--align-center {\n  align-items: center;\n}\n.flex--justify-center {\n  justify-content: center;\n}\n.logos {\n  padding-top: 16px;\n  display: grid;\n  grid-template-columns: auto auto;\n  grid-gap: 32px;\n}\n.title {\n  display: grid;\n  grid-template-columns: auto auto auto;\n  grid-gap: 16px;\n  padding: 32px;\n}\n.title .laravel {\n  color: #ff291a;\n}\n.title .vue {\n  color: #41b883;\n}\n.title .plus {\n  color: #35495e;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "html,\nbody,\n#app {\n  width: 100%;\n  height: 100%;\n  font-family: Arial, Helvetica, sans-serif;\n  background: #e3e4e5;\n}\n.flex {\n  display: flex;\n  height: 100%;\n  width: 100%;\n}\n.flex--column {\n  flex-direction: column;\n}\n.flex--align-center {\n  align-items: center;\n}\n.flex--justify-center {\n  justify-content: center;\n}\n.logos {\n  padding-top: 16px;\n  display: grid;\n  grid-template-columns: auto auto;\n  grid-gap: 32px;\n}\n.title {\n  display: grid;\n  grid-template-columns: auto auto auto;\n  grid-gap: 16px;\n  padding: 32px;\n}\n.title .laravel {\n  color: #ff291a;\n}\n.title .vue {\n  color: #41b883;\n}\n.title .plus {\n  color: #35495e;\n}\n\n/*td, th {\n    padding-left: .25rem !important;\n    padding-right: .25rem !important;\n}*/", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -43725,7 +43886,7 @@ const _hoisted_1 = {
   id: "layout-sidenav",
   class: "layout-sidenav sidenav sidenav-vertical bg-dark"
 }
-const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"app-brand demo\"><span class=\"app-brand-logo demo bg-primary\"><img src=\"idea.png\" class=\"w-100 h-100\"></span><div class=\"app-brand-text demo sidenav-text font-weight-normal ml-2\">HiringTools</div><a href=\"javascript:void(0)\" style=\"color:#fff;\" class=\"layout-sidenav-toggle sidenav-link text-large ml-auto\"><i class=\"ion ion-md-menu align-middle\"></i></a></div><div class=\"sidenav-divider mt-0\"></div>", 2)
+const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"app-brand demo\"><span class=\"app-brand-logo demo bg-primary\"><img src=\"idea.png\" class=\"w-100 h-100\"></span><div class=\"app-brand-text demo sidenav-text font-weight-normal ml-2\">HiringHelper</div><a href=\"javascript:void(0)\" style=\"color:#fff;\" class=\"layout-sidenav-toggle sidenav-link text-large ml-auto\"><i class=\"ion ion-md-menu align-middle\"></i></a></div><div class=\"sidenav-divider mt-0\"></div>", 2)
 const _hoisted_4 = { class: "sidenav-inner py-1" }
 const _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", { class: "sidenav-link" }, [
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "sidenav-icon ion ion-ios-people" }),
@@ -43736,12 +43897,16 @@ const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Companies")
 ], -1 /* HOISTED */)
 const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", { class: "sidenav-link" }, [
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "sidenav-icon ion ion-md-analytics" }),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Statistics")
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "sidenav-icon ion ion-md-mail" }),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Mails")
 ], -1 /* HOISTED */)
 const _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", { class: "sidenav-link" }, [
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "sidenav-icon ion ion-md-contacts" }),
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Managers")
+], -1 /* HOISTED */)
+const _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", { class: "sidenav-link" }, [
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "sidenav-icon ion ion-md-analytics" }),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Statistics")
 ], -1 /* HOISTED */)
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -43773,7 +43938,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       ($setup.profile.role !== 'personnel')
         ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
             key: 0,
-            to: { name : 'statistics-table'},
+            to: { name : 'mails-table'},
             tag: "li",
             class: "sidenav-item"
           }, {
@@ -43792,6 +43957,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           }, {
             default: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(() => [
               _hoisted_8
+            ]),
+            _: 1
+          }))
+        : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
+      ($setup.profile.role === 'admin')
+        ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
+            key: 2,
+            to: { name : 'statistics'},
+            tag: "li",
+            class: "sidenav-item"
+          }, {
+            default: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(() => [
+              _hoisted_9
             ]),
             _: 1
           }))
@@ -52163,7 +52341,7 @@ function toArray(value) {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_views_EmployeesView_vue":1,"resources_js_views_CompaniesView_vue":1,"resources_js_views_ManagersView_vue":1,"resources_js_views_LoginView_vue":1,"resources_js_views_StatisticsView_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_views_EmployeesView_vue":1,"resources_js_views_CompaniesView_vue":1,"resources_js_views_ManagersView_vue":1,"resources_js_views_LoginView_vue":1,"resources_js_views_LettersView_vue":1,"resources_js_views_StatisticsView_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

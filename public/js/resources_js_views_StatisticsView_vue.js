@@ -47,10 +47,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     var emptyLetter = _objectSpread({}, store.getters.getEmptyLetter);
 
+    emptyLetter.hr_id = null;
+
     if (profile.value.role === 'hr' || profile.value.role === 'top hr') {
       emptyLetter.hr_id = profile.value.id;
     }
 
+    emptyLetter.company_id = null;
     console.log('emptyLetter', emptyLetter);
     var letter = (0,vue__WEBPACK_IMPORTED_MODULE_2__.reactive)(_objectSpread({}, emptyLetter));
 
@@ -75,28 +78,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 5:
                 storedLetter = _context.sent;
-                console.log('wgdgds', storedLetter.data.model);
                 store.commit('letter/setLetterById', storedLetter.data.model);
                 document.getElementById('storeLetterFormClose').click();
                 emitter.emit('notification-success', 'letter was added');
                 clearForm();
-                _context.next = 16;
+                _context.next = 15;
                 break;
 
-              case 13:
-                _context.prev = 13;
+              case 12:
+                _context.prev = 12;
                 _context.t0 = _context["catch"](0);
 
                 if (_context.t0.response.data) {
                   emitter.emit('notification-error', _context.t0.response.data);
                 }
 
-              case 16:
+              case 15:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 13]]);
+        }, _callee, null, [[0, 12]]);
       }));
       return _storeLetter.apply(this, arguments);
     }
@@ -168,6 +170,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     var emptyLetter = _objectSpread({}, store.getters.getEmptyLetter);
 
+    var companies = (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+      return store.getters.getCompanies;
+    });
+    var hrs = (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+      return store.getters.getHrs;
+    });
     var letter = (0,vue__WEBPACK_IMPORTED_MODULE_2__.reactive)(_objectSpread({}, emptyLetter));
     emitter.on('edit-letter-form', setLetter);
     (0,vue__WEBPACK_IMPORTED_MODULE_2__.onBeforeUnmount)(function () {
@@ -193,14 +201,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return container.LetterService.update(letter);
 
               case 5:
+                if (letter.company_id) {
+                  letter.company = companies.value[letter.company_id];
+                }
+
+                if (letter.hr_id) {
+                  letter.hr = hrs.value[letter.hr_id];
+                }
+
                 store.commit('letter/setLetterById', letter);
                 emitter.emit('notification-success', 'letter was updated');
                 document.getElementById('editLetterFormClose').click();
-                _context.next = 14;
+                _context.next = 16;
                 break;
 
-              case 10:
-                _context.prev = 10;
+              case 12:
+                _context.prev = 12;
                 _context.t0 = _context["catch"](0);
                 console.log(_context.t0);
 
@@ -208,12 +224,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   emitter.emit('notification-error', _context.t0.response.data);
                 }
 
-              case 14:
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 10]]);
+        }, _callee, null, [[0, 12]]);
       }));
       return _updateLetter.apply(this, arguments);
     }
@@ -275,6 +291,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)("emitter");
     var schema = yup__WEBPACK_IMPORTED_MODULE_2__.object({
       hr: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().required(),
+      company: yup__WEBPACK_IMPORTED_MODULE_2__.string().nullable().required(),
       google: yup__WEBPACK_IMPORTED_MODULE_2__.string().required().trim().matches('^[0-9]*$', 'please enter numeric amount of letters you received'),
       yahoo: yup__WEBPACK_IMPORTED_MODULE_2__.string().required().trim().matches('^[0-9]*$', 'please enter numeric amount of letters you received'),
       outlook: yup__WEBPACK_IMPORTED_MODULE_2__.string().required().trim().matches('^[0-9]*$', 'please enter numeric amount of letters you received'),
@@ -313,9 +330,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return props.letter.received_at;
       })
     });
-    var hr = (0,vee_validate__WEBPACK_IMPORTED_MODULE_4__.useField)('hr_id', {
+    var hr = (0,vee_validate__WEBPACK_IMPORTED_MODULE_4__.useField)('hr', {
       value: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
         return props.letter.hr_id;
+      })
+    });
+    var company = (0,vee_validate__WEBPACK_IMPORTED_MODULE_4__.useField)('company', {
+      value: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+        return props.letter.company_id;
       })
     });
     var config = [{
@@ -336,9 +358,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }, {
       field: hr,
       name: 'hr_id'
-    }]; //const resetForm = useResetForm();
+    }, {
+      field: company,
+      name: 'company_id'
+    }];
+    var resetFormMeta = (0,vee_validate__WEBPACK_IMPORTED_MODULE_4__.useResetForm)();
 
     function resetForm() {
+      resetFormMeta();
       [google, yahoo, outlook, other].forEach(function (field) {
         field.value.value = 0;
       });
@@ -348,8 +375,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var yyyy = today.getFullYear();
       if (dd < 10) dd = '0' + dd;
       if (mm < 10) mm = '0' + mm;
-      received.value.value = yyyy + '-' + mm + '-' + dd; //hr.value.value = null;
-
+      received.value.value = yyyy + '-' + mm + '-' + dd;
+      hr.value.value = null;
+      company.value.value = null;
       config.forEach(function (item) {
         props.letter[item.name] = item.field.value.value;
       });
@@ -403,6 +431,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
 
     function setValues() {
+      resetFormMeta();
       config.forEach(function (item) {
         return item.field.value.value = props.letter[item.name];
       });
@@ -422,8 +451,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       other: other,
       received: received,
       hr: hr,
+      company: company,
       hrs: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
         return store.getters.getHrs;
+      }),
+      companies: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+        return store.getters.getCompanies;
       }),
       profile: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
         return store.getters.getProfile;
@@ -437,10 +470,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTable.vue?vue&type=script&lang=js":
-/*!*********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTable.vue?vue&type=script&lang=js ***!
-  \*********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTable.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTable.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -452,14 +485,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _LettersTableHead_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LettersTableHead.vue */ "./resources/js/components/tables/letters/LettersTableHead.vue");
-/* harmony import */ var _LettersTableRow_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LettersTableRow.vue */ "./resources/js/components/tables/letters/LettersTableRow.vue");
+/* harmony import */ var _HrStatisticsTableHead_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HrStatisticsTableHead.vue */ "./resources/js/components/tables/statistics/HrStatisticsTableHead.vue");
+/* harmony import */ var _HrStatisticsTableRow_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HrStatisticsTableRow.vue */ "./resources/js/components/tables/statistics/HrStatisticsTableRow.vue");
 /* harmony import */ var _modals_letter_CreateLetterForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../modals/letter/CreateLetterForm */ "./resources/js/components/modals/letter/CreateLetterForm.vue");
 /* harmony import */ var _modals_letter_EditLetterForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../modals/letter/EditLetterForm */ "./resources/js/components/modals/letter/EditLetterForm.vue");
-/* harmony import */ var _layout_NoRecords__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../layout/NoRecords */ "./resources/js/components/layout/NoRecords.vue");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
-
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
 
 
 
@@ -468,38 +499,27 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
-    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_6__.useStore)();
-    var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_5__.inject)("emitter");
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_5__.useStore)();
     return {
-      profile: (0,vue__WEBPACK_IMPORTED_MODULE_5__.computed)(function () {
-        return store.getters.getProfile;
-      }),
-      letters: (0,vue__WEBPACK_IMPORTED_MODULE_5__.computed)(function () {
-        return store.getters.getLetters;
-      }),
-      initializeLetterStoreForm: function initializeLetterStoreForm() {
-        return emitter.emit('create-letter-form');
-      },
-      refresh: function refresh() {
-        return store.dispatch('letter/setLettersToStore');
-      }
+      hrs: (0,vue__WEBPACK_IMPORTED_MODULE_4__.computed)(function () {
+        return store.getters.getHrs;
+      })
     };
   },
   components: {
-    LettersTableHead: _LettersTableHead_vue__WEBPACK_IMPORTED_MODULE_0__.default,
-    LettersTableRow: _LettersTableRow_vue__WEBPACK_IMPORTED_MODULE_1__.default,
+    HrStatisticsTableHead: _HrStatisticsTableHead_vue__WEBPACK_IMPORTED_MODULE_0__.default,
+    HrStatisticsTableRow: _HrStatisticsTableRow_vue__WEBPACK_IMPORTED_MODULE_1__.default,
     CreateLetterForm: _modals_letter_CreateLetterForm__WEBPACK_IMPORTED_MODULE_2__.default,
-    EditLetterForm: _modals_letter_EditLetterForm__WEBPACK_IMPORTED_MODULE_3__.default,
-    NoRecords: _layout_NoRecords__WEBPACK_IMPORTED_MODULE_4__.default
+    EditLetterForm: _modals_letter_EditLetterForm__WEBPACK_IMPORTED_MODULE_3__.default
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTableHead.vue?vue&type=script&lang=js":
-/*!*************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTableHead.vue?vue&type=script&lang=js ***!
-  \*************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTableHead.vue?vue&type=script&lang=js":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTableHead.vue?vue&type=script&lang=js ***!
+  \*********************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -511,8 +531,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _layouts_AdminLettersTableHead__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./layouts/AdminLettersTableHead */ "./resources/js/components/tables/letters/layouts/AdminLettersTableHead.vue");
-/* harmony import */ var _layouts_HrLettersTableHead__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./layouts/HrLettersTableHead */ "./resources/js/components/tables/letters/layouts/HrLettersTableHead.vue");
+/* harmony import */ var _layouts_AdminHrStatisticsTableHead__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./layouts/AdminHrStatisticsTableHead */ "./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableHead.vue");
+/* harmony import */ var _layouts_HrStatisticsTableHead__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./layouts/HrStatisticsTableHead */ "./resources/js/components/tables/statistics/layouts/HrStatisticsTableHead.vue");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
 
@@ -535,17 +555,17 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   components: {
-    AdminHead: _layouts_AdminLettersTableHead__WEBPACK_IMPORTED_MODULE_0__.default,
-    HrHead: _layouts_HrLettersTableHead__WEBPACK_IMPORTED_MODULE_1__.default
+    AdminHead: _layouts_AdminHrStatisticsTableHead__WEBPACK_IMPORTED_MODULE_0__.default,
+    HrHead: _layouts_HrStatisticsTableHead__WEBPACK_IMPORTED_MODULE_1__.default
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTableRow.vue?vue&type=script&lang=js":
-/*!************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTableRow.vue?vue&type=script&lang=js ***!
-  \************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTableRow.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTableRow.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -557,8 +577,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _layouts_AdminLettersTableRow__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./layouts/AdminLettersTableRow */ "./resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue");
-/* harmony import */ var _layouts_HrLettersTableRow__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./layouts/HrLettersTableRow */ "./resources/js/components/tables/letters/layouts/HrLettersTableRow.vue");
+/* harmony import */ var _layouts_AdminHrStatisticsTableRow__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./layouts/AdminHrStatisticsTableRow */ "./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue");
+/* harmony import */ var _layouts_HrStatisticsTableRow__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./layouts/HrStatisticsTableRow */ "./resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
@@ -571,6 +591,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       profile: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
         return store.getters.getProfile;
+      }),
+      hrs: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return store.getters.getHrs;
       }),
       profileIsAdmin: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
         return store.getters.getProfile.role === 'admin';
@@ -587,17 +610,325 @@ __webpack_require__.r(__webpack_exports__);
     letter: Object
   },
   components: {
-    AdminRow: _layouts_AdminLettersTableRow__WEBPACK_IMPORTED_MODULE_0__.default,
-    HrRow: _layouts_HrLettersTableRow__WEBPACK_IMPORTED_MODULE_1__.default
+    AdminRow: _layouts_AdminHrStatisticsTableRow__WEBPACK_IMPORTED_MODULE_0__.default,
+    HrRow: _layouts_HrStatisticsTableRow__WEBPACK_IMPORTED_MODULE_1__.default
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/actions/DeleteButton.vue?vue&type=script&lang=js":
-/*!*****************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/actions/DeleteButton.vue?vue&type=script&lang=js ***!
-  \*****************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=script&lang=js":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=script&lang=js ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _StatisticsRecord_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StatisticsRecord.vue */ "./resources/js/components/tables/statistics/StatisticsRecord.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  setup: function setup() {
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_2__.useStore)();
+    return {
+      records: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+        return store.getters.getMonthlyStatistics;
+      })
+    };
+  },
+  components: {
+    StatisticsRecord: _StatisticsRecord_vue__WEBPACK_IMPORTED_MODULE_0__.default
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTable.vue?vue&type=script&lang=js":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTable.vue?vue&type=script&lang=js ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _PersonnelStatisticsTableHead_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PersonnelStatisticsTableHead.vue */ "./resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue");
+/* harmony import */ var _PersonnelStatisticsTableRow_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PersonnelStatisticsTableRow.vue */ "./resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  setup: function setup() {
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
+    return {
+      profile: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return store.getters.getProfile;
+      }),
+      records: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return store.getters.getMonthlyStatistics;
+      })
+    };
+  },
+  components: {
+    PersonnelStatisticsTableHead: _PersonnelStatisticsTableHead_vue__WEBPACK_IMPORTED_MODULE_0__.default,
+    PersonnelStatisticsTableRow: _PersonnelStatisticsTableRow_vue__WEBPACK_IMPORTED_MODULE_1__.default
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue?vue&type=script&lang=js":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue?vue&type=script&lang=js ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _layouts_AdminPersonnelStatisticsTableHead__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./layouts/AdminPersonnelStatisticsTableHead */ "./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableHead.vue");
+/* harmony import */ var _layouts_PersonnelStatisticsTableHead__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./layouts/PersonnelStatisticsTableHead */ "./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableHead.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  setup: function setup() {
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
+    return {
+      profileIsAdmin: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return store.getters.getProfile.role === 'admin';
+      }),
+      profileIsPersonnel: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return store.getters.getProfile.role === 'personnel';
+      }),
+      profileIsHr: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return store.getters.getProfile.role === 'hr' || store.getters.getProfile.role === 'top hr';
+      })
+    };
+  },
+  components: {
+    AdminHead: _layouts_AdminPersonnelStatisticsTableHead__WEBPACK_IMPORTED_MODULE_0__.default,
+    PersonnelHead: _layouts_PersonnelStatisticsTableHead__WEBPACK_IMPORTED_MODULE_1__.default
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue?vue&type=script&lang=js":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _layouts_AdminPersonnelStatisticsTableRow__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./layouts/AdminPersonnelStatisticsTableRow */ "./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue");
+/* harmony import */ var _layouts_PersonnelStatisticsTableRow__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./layouts/PersonnelStatisticsTableRow */ "./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    record: Object
+  },
+  setup: function setup() {
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
+    return {
+      profile: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return store.getters.getProfile;
+      }),
+      hrs: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return store.getters.getHrs;
+      }),
+      profileIsAdmin: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return store.getters.getProfile.role === 'admin';
+      }),
+      profileIsTopHr: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return store.getters.getProfile.role === 'top hr';
+      }),
+      profileIsHr: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return store.getters.getProfile.role === 'hr';
+      })
+    };
+  },
+  components: {
+    AdminRow: _layouts_AdminPersonnelStatisticsTableRow__WEBPACK_IMPORTED_MODULE_0__.default,
+    PersonnelRow: _layouts_PersonnelStatisticsTableRow__WEBPACK_IMPORTED_MODULE_1__.default
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsRecord.vue?vue&type=script&lang=js":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsRecord.vue?vue&type=script&lang=js ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    record: Object
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=script&lang=js":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _StatisticsRecord_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StatisticsRecord.vue */ "./resources/js/components/tables/statistics/StatisticsRecord.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  setup: function setup() {
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_2__.useStore)();
+    return {
+      records: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+        return store.getters.getStatistics;
+      })
+    };
+  },
+  components: {
+    StatisticsRecord: _StatisticsRecord_vue__WEBPACK_IMPORTED_MODULE_0__.default
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=script&lang=js":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=script&lang=js ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _HrStatisticsTable_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HrStatisticsTable.vue */ "./resources/js/components/tables/statistics/HrStatisticsTable.vue");
+/* harmony import */ var _MonthlyStatisticsTable_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MonthlyStatisticsTable.vue */ "./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue");
+/* harmony import */ var _StatisticsTable_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./StatisticsTable.vue */ "./resources/js/components/tables/statistics/StatisticsTable.vue");
+/* harmony import */ var _control_StatisticsTableControl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./control/StatisticsTableControl */ "./resources/js/components/tables/statistics/control/StatisticsTableControl.vue");
+/* harmony import */ var _PersonnelStatisticsTable_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./PersonnelStatisticsTable.vue */ "./resources/js/components/tables/statistics/PersonnelStatisticsTable.vue");
+/* harmony import */ var _layout_NoRecords__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../layout/NoRecords */ "./resources/js/components/layout/NoRecords.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+
+
+
+
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  setup: function setup() {
+    var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_6__.inject)("emitter");
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_7__.useStore)();
+    var layout = (0,vue__WEBPACK_IMPORTED_MODULE_6__.ref)(0);
+
+    var setTable = function setTable(value) {
+      return layout.value = value;
+    };
+
+    emitter.on('set-statistics-view', setTable);
+    (0,vue__WEBPACK_IMPORTED_MODULE_6__.onBeforeUnmount)(function () {
+      return emitter.off('set-statistics-view', setTable);
+    });
+    return {
+      layout: layout,
+      records: (0,vue__WEBPACK_IMPORTED_MODULE_6__.computed)(function () {
+        return store.getters.getMonthlyStatistics;
+      }),
+      profileIsAdmin: (0,vue__WEBPACK_IMPORTED_MODULE_6__.computed)(function () {
+        return store.getters.getProfile.role === 'admin';
+      })
+    };
+  },
+  components: {
+    HrStatisticsTable: _HrStatisticsTable_vue__WEBPACK_IMPORTED_MODULE_0__.default,
+    PersonnelStatisticsTable: _PersonnelStatisticsTable_vue__WEBPACK_IMPORTED_MODULE_4__.default,
+    StatisticsTableControl: _control_StatisticsTableControl__WEBPACK_IMPORTED_MODULE_3__.default,
+    MonthlyStatisticsTable: _MonthlyStatisticsTable_vue__WEBPACK_IMPORTED_MODULE_1__.default,
+    StatisticsTable: _StatisticsTable_vue__WEBPACK_IMPORTED_MODULE_2__.default,
+    NoRecords: _layout_NoRecords__WEBPACK_IMPORTED_MODULE_5__.default
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/control/StatisticsTableControl.vue?vue&type=script&lang=js":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/control/StatisticsTableControl.vue?vue&type=script&lang=js ***!
+  \******************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -622,33 +953,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  setup: function setup(props) {
+  setup: function setup() {
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_2__.useStore)();
     var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)("emitter");
-    var container = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)('container');
-    var deleteEventId = 'delete-letter-' + props.letter.id;
-    emitter.on(deleteEventId, deleteLetter);
-    (0,vue__WEBPACK_IMPORTED_MODULE_1__.onBeforeUnmount)(function () {
-      return emitter.off(deleteEventId, deleteLetter);
+    var activeFilters = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+      return store.getters.getEmployeeQueryParams;
     });
 
-    function deleteWarning() {
-      return _deleteWarning.apply(this, arguments);
+    function getMonthlyStatistics() {
+      return _getMonthlyStatistics.apply(this, arguments);
     }
 
-    function _deleteWarning() {
-      _deleteWarning = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var warning;
+    function _getMonthlyStatistics() {
+      _getMonthlyStatistics = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                warning = {
-                  message: generateWarningMessage(),
-                  event_id: deleteEventId,
-                  action: 'deleted'
-                };
-                emitter.emit('show-delete-modal', warning);
+                _context.next = 2;
+                return store.dispatch('statistics/setStatisticsToStore', {
+                  'page': 1,
+                  'filter[personnel_id]': activeFilters.value.personnel_id,
+                  'take': activeFilters.value.take
+                });
 
               case 2:
               case "end":
@@ -657,64 +984,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }));
-      return _deleteWarning.apply(this, arguments);
-    }
-
-    function deleteLetter() {
-      return _deleteLetter.apply(this, arguments);
-    }
-
-    function _deleteLetter() {
-      _deleteLetter = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
-                return container.LetterService["delete"](props.letter);
-
-              case 3:
-                emitter.emit('notification-success', ' letter received on ' + props.letter.received_at + ' was deleted');
-                store.dispatch('letter/deleteLetter', props.letter);
-                _context2.next = 10;
-                break;
-
-              case 7:
-                _context2.prev = 7;
-                _context2.t0 = _context2["catch"](0);
-                emitter.emit('notification-error', _context2.t0.response.data);
-
-              case 10:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, null, [[0, 7]]);
-      }));
-      return _deleteLetter.apply(this, arguments);
-    }
-
-    function generateWarningMessage() {
-      return 'You want to delete letter received on: ' + '<strong>' + props.letter.received_at + '</strong>';
+      return _getMonthlyStatistics.apply(this, arguments);
     }
 
     return {
-      deleteWarning: deleteWarning,
-      deleteEventId: deleteEventId
+      total: function total() {
+        return emitter.emit('set-statistics-view', 0);
+      },
+      monthly: function monthly() {
+        return emitter.emit('set-statistics-view', 1);
+      },
+      refresh: function refresh() {
+        getMonthlyStatistics();
+        store.dispatch('user/setProfileToStore');
+      }
     };
-  },
-  props: {
-    letter: Object
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/actions/EditButton.vue?vue&type=script&lang=js":
-/*!***************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/actions/EditButton.vue?vue&type=script&lang=js ***!
-  \***************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue?vue&type=script&lang=js":
+/*!*********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue?vue&type=script&lang=js ***!
+  \*********************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -728,26 +1021,51 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    hr: Object
+  },
   setup: function setup(props) {
-    var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)("emitter");
     return {
-      showEditLetterForm: function showEditLetterForm() {
-        return emitter.emit('edit-letter-form', props.letter);
-      }
+      total: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+        var _props$hr$google_tota, _props$hr$outlook_tot, _props$hr$yahoo_total, _props$hr$other_total;
+
+        return parseInt((_props$hr$google_tota = props.hr.google_total) !== null && _props$hr$google_tota !== void 0 ? _props$hr$google_tota : 0) + parseInt((_props$hr$outlook_tot = props.hr.outlook_total) !== null && _props$hr$outlook_tot !== void 0 ? _props$hr$outlook_tot : 0) + parseInt((_props$hr$yahoo_total = props.hr.yahoo_total) !== null && _props$hr$yahoo_total !== void 0 ? _props$hr$yahoo_total : 0) + parseInt((_props$hr$other_total = props.hr.other_total) !== null && _props$hr$other_total !== void 0 ? _props$hr$other_total : 0);
+      })
     };
-  },
-  props: {
-    letter: Object
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue?vue&type=script&lang=js":
-/*!*************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue?vue&type=script&lang=js ***!
-  \*************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue?vue&type=script&lang=js":
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue?vue&type=script&lang=js ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    record: Object
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue?vue&type=script&lang=js":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue?vue&type=script&lang=js ***!
+  \****************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -759,29 +1077,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _actions_DeleteButton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/DeleteButton */ "./resources/js/components/tables/letters/actions/DeleteButton.vue");
-/* harmony import */ var _actions_EditButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/EditButton */ "./resources/js/components/tables/letters/actions/EditButton.vue");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-
-
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     letter: Object
   },
-  components: {
-    DeleteButton: _actions_DeleteButton__WEBPACK_IMPORTED_MODULE_0__.default,
-    EditButton: _actions_EditButton__WEBPACK_IMPORTED_MODULE_1__.default
+  setup: function setup(props) {
+    return {
+      total: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+        return parseInt(props.letter.google) + parseInt(props.letter.outlook) + parseInt(props.letter.yahoo) + parseInt(props.letter.other);
+      })
+    };
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/HrLettersTableRow.vue?vue&type=script&lang=js":
-/*!**********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/HrLettersTableRow.vue?vue&type=script&lang=js ***!
-  \**********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue?vue&type=script&lang=js":
+/*!***********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -793,20 +1110,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _actions_DeleteButton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/DeleteButton */ "./resources/js/components/tables/letters/actions/DeleteButton.vue");
-/* harmony import */ var _actions_EditButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/EditButton */ "./resources/js/components/tables/letters/actions/EditButton.vue");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-
-
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     letter: Object
   },
-  components: {
-    DeleteButton: _actions_DeleteButton__WEBPACK_IMPORTED_MODULE_0__.default,
-    EditButton: _actions_EditButton__WEBPACK_IMPORTED_MODULE_1__.default
+  setup: function setup(props) {
+    return {
+      total: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+        return parseInt(props.letter.google) + parseInt(props.letter.outlook) + parseInt(props.letter.yahoo) + parseInt(props.letter.other);
+      })
+    };
   }
 });
 
@@ -827,31 +1143,214 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _components_tables_letters_LettersTable_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/tables/letters/LettersTable.vue */ "./resources/js/components/tables/letters/LettersTable.vue");
-/* harmony import */ var _components_modals_letter_CreateLetterForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/modals/letter/CreateLetterForm.vue */ "./resources/js/components/modals/letter/CreateLetterForm.vue");
-/* harmony import */ var _components_modals_letter_EditLetterForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/modals/letter/EditLetterForm.vue */ "./resources/js/components/modals/letter/EditLetterForm.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
-
-
+/* harmony import */ var _components_tables_statistics_StatisticsTableBundle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/tables/statistics/StatisticsTableBundle */ "./resources/js/components/tables/statistics/StatisticsTableBundle.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
-    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_1__.useStore)();
     var usersAreUndefined = Object.keys(store.getters.getUsers).length === 0;
     var rolesAreUndefined = Object.keys(store.getters.getRoles).length === 0;
     var lettersAreUndefined = Object.keys(store.getters.getLetters).length === 0;
-    console.log('store', store);
+    var monthlyStatisticsUndefined = Object.keys(store.getters.getMonthlyStatistics).length === 0;
+    var statisticsUndefined = Object.keys(store.getters.getStatistics).length === 0;
+    if (lettersAreUndefined) store.dispatch('letter/setLettersToStore');
     if (usersAreUndefined) store.dispatch('user/setUsersToStore');
     if (rolesAreUndefined) store.dispatch('user/setRolesToStore');
-    if (lettersAreUndefined) store.dispatch('letter/setLettersToStore');
+    if (monthlyStatisticsUndefined) store.dispatch('employee/setStatisticsToStore');
+    if (statisticsUndefined) store.dispatch('company/setStatisticsToStore');
   },
   components: {
-    LettersTable: _components_tables_letters_LettersTable_vue__WEBPACK_IMPORTED_MODULE_0__.default,
-    StoreLetterForm: _components_modals_letter_CreateLetterForm_vue__WEBPACK_IMPORTED_MODULE_1__.default,
-    EditLetterForm: _components_modals_letter_EditLetterForm_vue__WEBPACK_IMPORTED_MODULE_2__.default
+    StatisticsTableBundle: _components_tables_statistics_StatisticsTableBundle__WEBPACK_IMPORTED_MODULE_0__.default
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=style&index=0&lang=css":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=style&index=0&lang=css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, module.id, __webpack_require__.d, __webpack_require__.*, module */
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\np {\n    margin: 0;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=style&index=0&lang=css":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=style&index=0&lang=css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, module.id, __webpack_require__.d, __webpack_require__.*, module */
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\np {\n    margin: 0;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=style&index=0&lang=css":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=style&index=0&lang=css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, module.id, __webpack_require__.d, __webpack_require__.*, module */
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\np {\n    margin: 0;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=style&index=0&lang=css":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=style&index=0&lang=css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_MonthlyStatisticsTable_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./MonthlyStatisticsTable.vue?vue&type=style&index=0&lang=css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=style&index=0&lang=css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_MonthlyStatisticsTable_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_MonthlyStatisticsTable_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=style&index=0&lang=css":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=style&index=0&lang=css ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTable_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./StatisticsTable.vue?vue&type=style&index=0&lang=css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=style&index=0&lang=css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTable_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTable_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=style&index=0&lang=css":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=style&index=0&lang=css ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.n, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTableBundle_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./StatisticsTableBundle.vue?vue&type=style&index=0&lang=css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=style&index=0&lang=css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTableBundle_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTableBundle_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
 
 /***/ }),
 
@@ -958,12 +1457,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _LetterFormFields_vue_vue_type_template_id_1672f42e_bindings_schema_setup_errors_setup_validate_setup_google_setup_yahoo_setup_outlook_setup_other_setup_received_setup_hr_setup_hrs_setup_profile_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LetterFormFields.vue?vue&type=template&id=1672f42e&bindings={"schema":"setup","errors":"setup","validate":"setup","google":"setup","yahoo":"setup","outlook":"setup","other":"setup","received":"setup","hr":"setup","hrs":"setup","profile":"setup","letter":"props"} */ "./resources/js/components/modals/letter/LetterFormFields.vue?vue&type=template&id=1672f42e&bindings={\"schema\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"google\":\"setup\",\"yahoo\":\"setup\",\"outlook\":\"setup\",\"other\":\"setup\",\"received\":\"setup\",\"hr\":\"setup\",\"hrs\":\"setup\",\"profile\":\"setup\",\"letter\":\"props\"}");
+/* harmony import */ var _LetterFormFields_vue_vue_type_template_id_1672f42e_bindings_schema_setup_errors_setup_validate_setup_google_setup_yahoo_setup_outlook_setup_other_setup_received_setup_hr_setup_company_setup_hrs_setup_companies_setup_profile_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LetterFormFields.vue?vue&type=template&id=1672f42e&bindings={"schema":"setup","errors":"setup","validate":"setup","google":"setup","yahoo":"setup","outlook":"setup","other":"setup","received":"setup","hr":"setup","company":"setup","hrs":"setup","companies":"setup","profile":"setup","letter":"props"} */ "./resources/js/components/modals/letter/LetterFormFields.vue?vue&type=template&id=1672f42e&bindings={\"schema\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"google\":\"setup\",\"yahoo\":\"setup\",\"outlook\":\"setup\",\"other\":\"setup\",\"received\":\"setup\",\"hr\":\"setup\",\"company\":\"setup\",\"hrs\":\"setup\",\"companies\":\"setup\",\"profile\":\"setup\",\"letter\":\"props\"}");
 /* harmony import */ var _LetterFormFields_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LetterFormFields.vue?vue&type=script&lang=js */ "./resources/js/components/modals/letter/LetterFormFields.vue?vue&type=script&lang=js");
 
 
 
-_LetterFormFields_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _LetterFormFields_vue_vue_type_template_id_1672f42e_bindings_schema_setup_errors_setup_validate_setup_google_setup_yahoo_setup_outlook_setup_other_setup_received_setup_hr_setup_hrs_setup_profile_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__.render
+_LetterFormFields_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _LetterFormFields_vue_vue_type_template_id_1672f42e_bindings_schema_setup_errors_setup_validate_setup_google_setup_yahoo_setup_outlook_setup_other_setup_received_setup_hr_setup_company_setup_hrs_setup_companies_setup_profile_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -973,99 +1472,9 @@ _LetterFormFields_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.defau
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/letters/LettersTable.vue":
-/*!*****************************************************************!*\
-  !*** ./resources/js/components/tables/letters/LettersTable.vue ***!
-  \*****************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _LettersTable_vue_vue_type_template_id_56ec86dc_bindings_profile_setup_letters_setup_initializeLetterStoreForm_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LettersTable.vue?vue&type=template&id=56ec86dc&bindings={"profile":"setup","letters":"setup","initializeLetterStoreForm":"setup","refresh":"setup"} */ "./resources/js/components/tables/letters/LettersTable.vue?vue&type=template&id=56ec86dc&bindings={\"profile\":\"setup\",\"letters\":\"setup\",\"initializeLetterStoreForm\":\"setup\",\"refresh\":\"setup\"}");
-/* harmony import */ var _LettersTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LettersTable.vue?vue&type=script&lang=js */ "./resources/js/components/tables/letters/LettersTable.vue?vue&type=script&lang=js");
-
-
-
-_LettersTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _LettersTable_vue_vue_type_template_id_56ec86dc_bindings_profile_setup_letters_setup_initializeLetterStoreForm_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__.render
-/* hot reload */
-if (false) {}
-
-_LettersTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/letters/LettersTable.vue"
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_LettersTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
-
-/***/ }),
-
-/***/ "./resources/js/components/tables/letters/LettersTableHead.vue":
-/*!*********************************************************************!*\
-  !*** ./resources/js/components/tables/letters/LettersTableHead.vue ***!
-  \*********************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _LettersTableHead_vue_vue_type_template_id_9e5d1cdc_bindings_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LettersTableHead.vue?vue&type=template&id=9e5d1cdc&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} */ "./resources/js/components/tables/letters/LettersTableHead.vue?vue&type=template&id=9e5d1cdc&bindings={\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\"}");
-/* harmony import */ var _LettersTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LettersTableHead.vue?vue&type=script&lang=js */ "./resources/js/components/tables/letters/LettersTableHead.vue?vue&type=script&lang=js");
-
-
-
-_LettersTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _LettersTableHead_vue_vue_type_template_id_9e5d1cdc_bindings_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__.render
-/* hot reload */
-if (false) {}
-
-_LettersTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/letters/LettersTableHead.vue"
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_LettersTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
-
-/***/ }),
-
-/***/ "./resources/js/components/tables/letters/LettersTableRow.vue":
-/*!********************************************************************!*\
-  !*** ./resources/js/components/tables/letters/LettersTableRow.vue ***!
-  \********************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _LettersTableRow_vue_vue_type_template_id_a5faf9d0_bindings_profile_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LettersTableRow.vue?vue&type=template&id=a5faf9d0&bindings={"profile":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup","letter":"props"} */ "./resources/js/components/tables/letters/LettersTableRow.vue?vue&type=template&id=a5faf9d0&bindings={\"profile\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\",\"letter\":\"props\"}");
-/* harmony import */ var _LettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LettersTableRow.vue?vue&type=script&lang=js */ "./resources/js/components/tables/letters/LettersTableRow.vue?vue&type=script&lang=js");
-
-
-
-_LettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _LettersTableRow_vue_vue_type_template_id_a5faf9d0_bindings_profile_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__.render
-/* hot reload */
-if (false) {}
-
-_LettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/letters/LettersTableRow.vue"
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_LettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
-
-/***/ }),
-
-/***/ "./resources/js/components/tables/letters/actions/DeleteButton.vue":
+/***/ "./resources/js/components/tables/statistics/HrStatisticsTable.vue":
 /*!*************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/actions/DeleteButton.vue ***!
+  !*** ./resources/js/components/tables/statistics/HrStatisticsTable.vue ***!
   \*************************************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
@@ -1078,25 +1487,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _DeleteButton_vue_vue_type_template_id_354aeb40_bindings_deleteWarning_setup_deleteEventId_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DeleteButton.vue?vue&type=template&id=354aeb40&bindings={"deleteWarning":"setup","deleteEventId":"setup","letter":"props"} */ "./resources/js/components/tables/letters/actions/DeleteButton.vue?vue&type=template&id=354aeb40&bindings={\"deleteWarning\":\"setup\",\"deleteEventId\":\"setup\",\"letter\":\"props\"}");
-/* harmony import */ var _DeleteButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DeleteButton.vue?vue&type=script&lang=js */ "./resources/js/components/tables/letters/actions/DeleteButton.vue?vue&type=script&lang=js");
+/* harmony import */ var _HrStatisticsTable_vue_vue_type_template_id_e290e038_bindings_hrs_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HrStatisticsTable.vue?vue&type=template&id=e290e038&bindings={"hrs":"setup"} */ "./resources/js/components/tables/statistics/HrStatisticsTable.vue?vue&type=template&id=e290e038&bindings={\"hrs\":\"setup\"}");
+/* harmony import */ var _HrStatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HrStatisticsTable.vue?vue&type=script&lang=js */ "./resources/js/components/tables/statistics/HrStatisticsTable.vue?vue&type=script&lang=js");
 
 
 
-_DeleteButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _DeleteButton_vue_vue_type_template_id_354aeb40_bindings_deleteWarning_setup_deleteEventId_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__.render
+_HrStatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _HrStatisticsTable_vue_vue_type_template_id_e290e038_bindings_hrs_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
-_DeleteButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/letters/actions/DeleteButton.vue"
+_HrStatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/statistics/HrStatisticsTable.vue"
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_DeleteButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_HrStatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/letters/actions/EditButton.vue":
-/*!***********************************************************************!*\
-  !*** ./resources/js/components/tables/letters/actions/EditButton.vue ***!
-  \***********************************************************************/
+/***/ "./resources/js/components/tables/statistics/HrStatisticsTableHead.vue":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/HrStatisticsTableHead.vue ***!
+  \*****************************************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -1108,25 +1517,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _EditButton_vue_vue_type_template_id_121caebf_bindings_showEditLetterForm_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditButton.vue?vue&type=template&id=121caebf&bindings={"showEditLetterForm":"setup","letter":"props"} */ "./resources/js/components/tables/letters/actions/EditButton.vue?vue&type=template&id=121caebf&bindings={\"showEditLetterForm\":\"setup\",\"letter\":\"props\"}");
-/* harmony import */ var _EditButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditButton.vue?vue&type=script&lang=js */ "./resources/js/components/tables/letters/actions/EditButton.vue?vue&type=script&lang=js");
+/* harmony import */ var _HrStatisticsTableHead_vue_vue_type_template_id_2e614be4_bindings_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HrStatisticsTableHead.vue?vue&type=template&id=2e614be4&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} */ "./resources/js/components/tables/statistics/HrStatisticsTableHead.vue?vue&type=template&id=2e614be4&bindings={\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\"}");
+/* harmony import */ var _HrStatisticsTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HrStatisticsTableHead.vue?vue&type=script&lang=js */ "./resources/js/components/tables/statistics/HrStatisticsTableHead.vue?vue&type=script&lang=js");
 
 
 
-_EditButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _EditButton_vue_vue_type_template_id_121caebf_bindings_showEditLetterForm_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__.render
+_HrStatisticsTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _HrStatisticsTableHead_vue_vue_type_template_id_2e614be4_bindings_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
-_EditButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/letters/actions/EditButton.vue"
+_HrStatisticsTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/statistics/HrStatisticsTableHead.vue"
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_EditButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_HrStatisticsTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/letters/layouts/AdminLettersTableHead.vue":
-/*!**********************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/layouts/AdminLettersTableHead.vue ***!
-  \**********************************************************************************/
+/***/ "./resources/js/components/tables/statistics/HrStatisticsTableRow.vue":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/HrStatisticsTableRow.vue ***!
+  \****************************************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -1138,80 +1547,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _AdminLettersTableHead_vue_vue_type_template_id_45452da9__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminLettersTableHead.vue?vue&type=template&id=45452da9 */ "./resources/js/components/tables/letters/layouts/AdminLettersTableHead.vue?vue&type=template&id=45452da9");
+/* harmony import */ var _HrStatisticsTableRow_vue_vue_type_template_id_f075d2f4_bindings_profile_setup_hrs_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HrStatisticsTableRow.vue?vue&type=template&id=f075d2f4&bindings={"profile":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup","letter":"props"} */ "./resources/js/components/tables/statistics/HrStatisticsTableRow.vue?vue&type=template&id=f075d2f4&bindings={\"profile\":\"setup\",\"hrs\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\",\"letter\":\"props\"}");
+/* harmony import */ var _HrStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HrStatisticsTableRow.vue?vue&type=script&lang=js */ "./resources/js/components/tables/statistics/HrStatisticsTableRow.vue?vue&type=script&lang=js");
 
-const script = {}
-script.render = _AdminLettersTableHead_vue_vue_type_template_id_45452da9__WEBPACK_IMPORTED_MODULE_0__.render
+
+
+_HrStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _HrStatisticsTableRow_vue_vue_type_template_id_f075d2f4_bindings_profile_setup_hrs_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
-script.__file = "resources/js/components/tables/letters/layouts/AdminLettersTableHead.vue"
+_HrStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/statistics/HrStatisticsTableRow.vue"
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (script);
-
-/***/ }),
-
-/***/ "./resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue":
-/*!*********************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue ***!
-  \*********************************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _AdminLettersTableRow_vue_vue_type_template_id_2dab6821_bindings_letter_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminLettersTableRow.vue?vue&type=template&id=2dab6821&bindings={"letter":"props"} */ "./resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue?vue&type=template&id=2dab6821&bindings={\"letter\":\"props\"}");
-/* harmony import */ var _AdminLettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminLettersTableRow.vue?vue&type=script&lang=js */ "./resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue?vue&type=script&lang=js");
-
-
-
-_AdminLettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _AdminLettersTableRow_vue_vue_type_template_id_2dab6821_bindings_letter_props___WEBPACK_IMPORTED_MODULE_0__.render
-/* hot reload */
-if (false) {}
-
-_AdminLettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue"
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_AdminLettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_HrStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/letters/layouts/HrLettersTableHead.vue":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/layouts/HrLettersTableHead.vue ***!
-  \*******************************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _HrLettersTableHead_vue_vue_type_template_id_81a2367c__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HrLettersTableHead.vue?vue&type=template&id=81a2367c */ "./resources/js/components/tables/letters/layouts/HrLettersTableHead.vue?vue&type=template&id=81a2367c");
-
-const script = {}
-script.render = _HrLettersTableHead_vue_vue_type_template_id_81a2367c__WEBPACK_IMPORTED_MODULE_0__.render
-/* hot reload */
-if (false) {}
-
-script.__file = "resources/js/components/tables/letters/layouts/HrLettersTableHead.vue"
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (script);
-
-/***/ }),
-
-/***/ "./resources/js/components/tables/letters/layouts/HrLettersTableRow.vue":
+/***/ "./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue":
 /*!******************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/layouts/HrLettersTableRow.vue ***!
+  !*** ./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue ***!
   \******************************************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
@@ -1224,18 +1577,469 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _HrLettersTableRow_vue_vue_type_template_id_1091e9e8_bindings_letter_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HrLettersTableRow.vue?vue&type=template&id=1091e9e8&bindings={"letter":"props"} */ "./resources/js/components/tables/letters/layouts/HrLettersTableRow.vue?vue&type=template&id=1091e9e8&bindings={\"letter\":\"props\"}");
-/* harmony import */ var _HrLettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HrLettersTableRow.vue?vue&type=script&lang=js */ "./resources/js/components/tables/letters/layouts/HrLettersTableRow.vue?vue&type=script&lang=js");
+/* harmony import */ var _MonthlyStatisticsTable_vue_vue_type_template_id_a8a3316a_bindings_records_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MonthlyStatisticsTable.vue?vue&type=template&id=a8a3316a&bindings={"records":"setup"} */ "./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=template&id=a8a3316a&bindings={\"records\":\"setup\"}");
+/* harmony import */ var _MonthlyStatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MonthlyStatisticsTable.vue?vue&type=script&lang=js */ "./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=script&lang=js");
+/* harmony import */ var _MonthlyStatisticsTable_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MonthlyStatisticsTable.vue?vue&type=style&index=0&lang=css */ "./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=style&index=0&lang=css");
 
 
 
-_HrLettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _HrLettersTableRow_vue_vue_type_template_id_1091e9e8_bindings_letter_props___WEBPACK_IMPORTED_MODULE_0__.render
+
+
+_MonthlyStatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _MonthlyStatisticsTable_vue_vue_type_template_id_a8a3316a_bindings_records_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
-_HrLettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/letters/layouts/HrLettersTableRow.vue"
+_MonthlyStatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/statistics/MonthlyStatisticsTable.vue"
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_HrLettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_MonthlyStatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/PersonnelStatisticsTable.vue":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/PersonnelStatisticsTable.vue ***!
+  \********************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _PersonnelStatisticsTable_vue_vue_type_template_id_b89d45d0_bindings_profile_setup_records_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PersonnelStatisticsTable.vue?vue&type=template&id=b89d45d0&bindings={"profile":"setup","records":"setup"} */ "./resources/js/components/tables/statistics/PersonnelStatisticsTable.vue?vue&type=template&id=b89d45d0&bindings={\"profile\":\"setup\",\"records\":\"setup\"}");
+/* harmony import */ var _PersonnelStatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PersonnelStatisticsTable.vue?vue&type=script&lang=js */ "./resources/js/components/tables/statistics/PersonnelStatisticsTable.vue?vue&type=script&lang=js");
+
+
+
+_PersonnelStatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _PersonnelStatisticsTable_vue_vue_type_template_id_b89d45d0_bindings_profile_setup_records_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_PersonnelStatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/statistics/PersonnelStatisticsTable.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_PersonnelStatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue ***!
+  \************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _PersonnelStatisticsTableHead_vue_vue_type_template_id_6a895f18_bindings_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PersonnelStatisticsTableHead.vue?vue&type=template&id=6a895f18&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} */ "./resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue?vue&type=template&id=6a895f18&bindings={\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\"}");
+/* harmony import */ var _PersonnelStatisticsTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PersonnelStatisticsTableHead.vue?vue&type=script&lang=js */ "./resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue?vue&type=script&lang=js");
+
+
+
+_PersonnelStatisticsTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _PersonnelStatisticsTableHead_vue_vue_type_template_id_6a895f18_bindings_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_PersonnelStatisticsTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_PersonnelStatisticsTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue ***!
+  \***********************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _PersonnelStatisticsTableRow_vue_vue_type_template_id_fd18665c_bindings_record_props_profile_setup_hrs_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PersonnelStatisticsTableRow.vue?vue&type=template&id=fd18665c&bindings={"record":"props","profile":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup"} */ "./resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue?vue&type=template&id=fd18665c&bindings={\"record\":\"props\",\"profile\":\"setup\",\"hrs\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\"}");
+/* harmony import */ var _PersonnelStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PersonnelStatisticsTableRow.vue?vue&type=script&lang=js */ "./resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue?vue&type=script&lang=js");
+
+
+
+_PersonnelStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _PersonnelStatisticsTableRow_vue_vue_type_template_id_fd18665c_bindings_record_props_profile_setup_hrs_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_PersonnelStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_PersonnelStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/StatisticsRecord.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/StatisticsRecord.vue ***!
+  \************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _StatisticsRecord_vue_vue_type_template_id_9a49227e_bindings_record_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StatisticsRecord.vue?vue&type=template&id=9a49227e&bindings={"record":"props"} */ "./resources/js/components/tables/statistics/StatisticsRecord.vue?vue&type=template&id=9a49227e&bindings={\"record\":\"props\"}");
+/* harmony import */ var _StatisticsRecord_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StatisticsRecord.vue?vue&type=script&lang=js */ "./resources/js/components/tables/statistics/StatisticsRecord.vue?vue&type=script&lang=js");
+
+
+
+_StatisticsRecord_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _StatisticsRecord_vue_vue_type_template_id_9a49227e_bindings_record_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_StatisticsRecord_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/statistics/StatisticsRecord.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_StatisticsRecord_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/StatisticsTable.vue":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/StatisticsTable.vue ***!
+  \***********************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _StatisticsTable_vue_vue_type_template_id_7d400c0e_bindings_records_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StatisticsTable.vue?vue&type=template&id=7d400c0e&bindings={"records":"setup"} */ "./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=template&id=7d400c0e&bindings={\"records\":\"setup\"}");
+/* harmony import */ var _StatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StatisticsTable.vue?vue&type=script&lang=js */ "./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=script&lang=js");
+/* harmony import */ var _StatisticsTable_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./StatisticsTable.vue?vue&type=style&index=0&lang=css */ "./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=style&index=0&lang=css");
+
+
+
+
+
+_StatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _StatisticsTable_vue_vue_type_template_id_7d400c0e_bindings_records_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_StatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/statistics/StatisticsTable.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_StatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/StatisticsTableBundle.vue":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/StatisticsTableBundle.vue ***!
+  \*****************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _StatisticsTableBundle_vue_vue_type_template_id_6ff99730_bindings_layout_setup_records_setup_profileIsAdmin_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StatisticsTableBundle.vue?vue&type=template&id=6ff99730&bindings={"layout":"setup","records":"setup","profileIsAdmin":"setup"} */ "./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=template&id=6ff99730&bindings={\"layout\":\"setup\",\"records\":\"setup\",\"profileIsAdmin\":\"setup\"}");
+/* harmony import */ var _StatisticsTableBundle_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StatisticsTableBundle.vue?vue&type=script&lang=js */ "./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=script&lang=js");
+/* harmony import */ var _StatisticsTableBundle_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./StatisticsTableBundle.vue?vue&type=style&index=0&lang=css */ "./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=style&index=0&lang=css");
+
+
+
+
+
+_StatisticsTableBundle_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _StatisticsTableBundle_vue_vue_type_template_id_6ff99730_bindings_layout_setup_records_setup_profileIsAdmin_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_StatisticsTableBundle_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/statistics/StatisticsTableBundle.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_StatisticsTableBundle_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/control/StatisticsTableControl.vue":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/control/StatisticsTableControl.vue ***!
+  \**************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _StatisticsTableControl_vue_vue_type_template_id_54e67611_bindings_total_setup_monthly_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StatisticsTableControl.vue?vue&type=template&id=54e67611&bindings={"total":"setup","monthly":"setup","refresh":"setup"} */ "./resources/js/components/tables/statistics/control/StatisticsTableControl.vue?vue&type=template&id=54e67611&bindings={\"total\":\"setup\",\"monthly\":\"setup\",\"refresh\":\"setup\"}");
+/* harmony import */ var _StatisticsTableControl_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StatisticsTableControl.vue?vue&type=script&lang=js */ "./resources/js/components/tables/statistics/control/StatisticsTableControl.vue?vue&type=script&lang=js");
+
+
+
+_StatisticsTableControl_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _StatisticsTableControl_vue_vue_type_template_id_54e67611_bindings_total_setup_monthly_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_StatisticsTableControl_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/statistics/control/StatisticsTableControl.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_StatisticsTableControl_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableHead.vue":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableHead.vue ***!
+  \******************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _AdminHrStatisticsTableHead_vue_vue_type_template_id_08a2b4e5__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminHrStatisticsTableHead.vue?vue&type=template&id=08a2b4e5 */ "./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableHead.vue?vue&type=template&id=08a2b4e5");
+
+const script = {}
+script.render = _AdminHrStatisticsTableHead_vue_vue_type_template_id_08a2b4e5__WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+script.__file = "resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableHead.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (script);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue ***!
+  \*****************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _AdminHrStatisticsTableRow_vue_vue_type_template_id_4dbbed36_bindings_hr_props_total_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminHrStatisticsTableRow.vue?vue&type=template&id=4dbbed36&bindings={"hr":"props","total":"setup"} */ "./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue?vue&type=template&id=4dbbed36&bindings={\"hr\":\"props\",\"total\":\"setup\"}");
+/* harmony import */ var _AdminHrStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminHrStatisticsTableRow.vue?vue&type=script&lang=js */ "./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue?vue&type=script&lang=js");
+
+
+
+_AdminHrStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _AdminHrStatisticsTableRow_vue_vue_type_template_id_4dbbed36_bindings_hr_props_total_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_AdminHrStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_AdminHrStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableHead.vue":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableHead.vue ***!
+  \*************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _AdminPersonnelStatisticsTableHead_vue_vue_type_template_id_787102f7__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminPersonnelStatisticsTableHead.vue?vue&type=template&id=787102f7 */ "./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableHead.vue?vue&type=template&id=787102f7");
+
+const script = {}
+script.render = _AdminPersonnelStatisticsTableHead_vue_vue_type_template_id_787102f7__WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+script.__file = "resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableHead.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (script);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue ***!
+  \************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _AdminPersonnelStatisticsTableRow_vue_vue_type_template_id_ebae9dda_bindings_record_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminPersonnelStatisticsTableRow.vue?vue&type=template&id=ebae9dda&bindings={"record":"props"} */ "./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue?vue&type=template&id=ebae9dda&bindings={\"record\":\"props\"}");
+/* harmony import */ var _AdminPersonnelStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminPersonnelStatisticsTableRow.vue?vue&type=script&lang=js */ "./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue?vue&type=script&lang=js");
+
+
+
+_AdminPersonnelStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _AdminPersonnelStatisticsTableRow_vue_vue_type_template_id_ebae9dda_bindings_record_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_AdminPersonnelStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_AdminPersonnelStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/layouts/HrStatisticsTableHead.vue":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/HrStatisticsTableHead.vue ***!
+  \*************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _HrStatisticsTableHead_vue_vue_type_template_id_0f1dd4de__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HrStatisticsTableHead.vue?vue&type=template&id=0f1dd4de */ "./resources/js/components/tables/statistics/layouts/HrStatisticsTableHead.vue?vue&type=template&id=0f1dd4de");
+
+const script = {}
+script.render = _HrStatisticsTableHead_vue_vue_type_template_id_0f1dd4de__WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+script.__file = "resources/js/components/tables/statistics/layouts/HrStatisticsTableHead.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (script);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue ***!
+  \************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _HrStatisticsTableRow_vue_vue_type_template_id_5536864c_bindings_letter_props_total_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HrStatisticsTableRow.vue?vue&type=template&id=5536864c&bindings={"letter":"props","total":"setup"} */ "./resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue?vue&type=template&id=5536864c&bindings={\"letter\":\"props\",\"total\":\"setup\"}");
+/* harmony import */ var _HrStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HrStatisticsTableRow.vue?vue&type=script&lang=js */ "./resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue?vue&type=script&lang=js");
+
+
+
+_HrStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _HrStatisticsTableRow_vue_vue_type_template_id_5536864c_bindings_letter_props_total_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_HrStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_HrStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableHead.vue":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableHead.vue ***!
+  \********************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _PersonnelStatisticsTableHead_vue_vue_type_template_id_dfecae44__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PersonnelStatisticsTableHead.vue?vue&type=template&id=dfecae44 */ "./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableHead.vue?vue&type=template&id=dfecae44");
+
+const script = {}
+script.render = _PersonnelStatisticsTableHead_vue_vue_type_template_id_dfecae44__WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+script.__file = "resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableHead.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (script);
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue ***!
+  \*******************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var _PersonnelStatisticsTableRow_vue_vue_type_template_id_44ff9b68_bindings_letter_props_total_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PersonnelStatisticsTableRow.vue?vue&type=template&id=44ff9b68&bindings={"letter":"props","total":"setup"} */ "./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue?vue&type=template&id=44ff9b68&bindings={\"letter\":\"props\",\"total\":\"setup\"}");
+/* harmony import */ var _PersonnelStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PersonnelStatisticsTableRow.vue?vue&type=script&lang=js */ "./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue?vue&type=script&lang=js");
+
+
+
+_PersonnelStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _PersonnelStatisticsTableRow_vue_vue_type_template_id_44ff9b68_bindings_letter_props_total_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_PersonnelStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_PersonnelStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
 
 /***/ }),
 
@@ -1329,72 +2133,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/letters/LettersTable.vue?vue&type=script&lang=js":
-/*!*****************************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/LettersTable.vue?vue&type=script&lang=js ***!
-  \*****************************************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTable.vue?vue&type=script&lang=js .default */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LettersTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LettersTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LettersTable.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTable.vue?vue&type=script&lang=js");
- 
-
-/***/ }),
-
-/***/ "./resources/js/components/tables/letters/LettersTableHead.vue?vue&type=script&lang=js":
-/*!*********************************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/LettersTableHead.vue?vue&type=script&lang=js ***!
-  \*********************************************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTableHead.vue?vue&type=script&lang=js .default */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LettersTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LettersTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LettersTableHead.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTableHead.vue?vue&type=script&lang=js");
- 
-
-/***/ }),
-
-/***/ "./resources/js/components/tables/letters/LettersTableRow.vue?vue&type=script&lang=js":
-/*!********************************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/LettersTableRow.vue?vue&type=script&lang=js ***!
-  \********************************************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTableRow.vue?vue&type=script&lang=js .default */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LettersTableRow.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTableRow.vue?vue&type=script&lang=js");
- 
-
-/***/ }),
-
-/***/ "./resources/js/components/tables/letters/actions/DeleteButton.vue?vue&type=script&lang=js":
+/***/ "./resources/js/components/tables/statistics/HrStatisticsTable.vue?vue&type=script&lang=js":
 /*!*************************************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/actions/DeleteButton.vue?vue&type=script&lang=js ***!
+  !*** ./resources/js/components/tables/statistics/HrStatisticsTable.vue?vue&type=script&lang=js ***!
   \*************************************************************************************************/
 /*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/actions/DeleteButton.vue?vue&type=script&lang=js .default */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTable.vue?vue&type=script&lang=js .default */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1402,19 +2146,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrStatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./DeleteButton.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/actions/DeleteButton.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrStatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HrStatisticsTable.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTable.vue?vue&type=script&lang=js");
  
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/letters/actions/EditButton.vue?vue&type=script&lang=js":
-/*!***********************************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/actions/EditButton.vue?vue&type=script&lang=js ***!
-  \***********************************************************************************************/
+/***/ "./resources/js/components/tables/statistics/HrStatisticsTableHead.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/HrStatisticsTableHead.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************************/
 /*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/actions/EditButton.vue?vue&type=script&lang=js .default */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTableHead.vue?vue&type=script&lang=js .default */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1422,19 +2166,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EditButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrStatisticsTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EditButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./EditButton.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/actions/EditButton.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrStatisticsTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HrStatisticsTableHead.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTableHead.vue?vue&type=script&lang=js");
  
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue?vue&type=script&lang=js":
-/*!*********************************************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue?vue&type=script&lang=js ***!
-  \*********************************************************************************************************/
+/***/ "./resources/js/components/tables/statistics/HrStatisticsTableRow.vue?vue&type=script&lang=js":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/HrStatisticsTableRow.vue?vue&type=script&lang=js ***!
+  \****************************************************************************************************/
 /*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue?vue&type=script&lang=js .default */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTableRow.vue?vue&type=script&lang=js .default */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1442,19 +2186,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminLettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminLettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AdminLettersTableRow.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HrStatisticsTableRow.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTableRow.vue?vue&type=script&lang=js");
  
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/letters/layouts/HrLettersTableRow.vue?vue&type=script&lang=js":
+/***/ "./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=script&lang=js":
 /*!******************************************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/layouts/HrLettersTableRow.vue?vue&type=script&lang=js ***!
+  !*** ./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=script&lang=js ***!
   \******************************************************************************************************/
 /*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/HrLettersTableRow.vue?vue&type=script&lang=js .default */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=script&lang=js .default */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1462,9 +2206,229 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrLettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_MonthlyStatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrLettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HrLettersTableRow.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/HrLettersTableRow.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_MonthlyStatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./MonthlyStatisticsTable.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/PersonnelStatisticsTable.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/PersonnelStatisticsTable.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTable.vue?vue&type=script&lang=js .default */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PersonnelStatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PersonnelStatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./PersonnelStatisticsTable.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTable.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue?vue&type=script&lang=js":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue?vue&type=script&lang=js ***!
+  \************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue?vue&type=script&lang=js .default */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PersonnelStatisticsTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PersonnelStatisticsTableHead_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./PersonnelStatisticsTableHead.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue?vue&type=script&lang=js":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue?vue&type=script&lang=js .default */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PersonnelStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PersonnelStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./PersonnelStatisticsTableRow.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/StatisticsRecord.vue?vue&type=script&lang=js":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/StatisticsRecord.vue?vue&type=script&lang=js ***!
+  \************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsRecord.vue?vue&type=script&lang=js .default */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsRecord_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsRecord_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./StatisticsRecord.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsRecord.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=script&lang=js":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=script&lang=js .default */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTable_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./StatisticsTable.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=script&lang=js .default */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTableBundle_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTableBundle_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./StatisticsTableBundle.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/control/StatisticsTableControl.vue?vue&type=script&lang=js":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/control/StatisticsTableControl.vue?vue&type=script&lang=js ***!
+  \**************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/control/StatisticsTableControl.vue?vue&type=script&lang=js .default */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTableControl_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTableControl_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./StatisticsTableControl.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/control/StatisticsTableControl.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue?vue&type=script&lang=js .default */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminHrStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminHrStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AdminHrStatisticsTableRow.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue?vue&type=script&lang=js":
+/*!************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue?vue&type=script&lang=js ***!
+  \************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue?vue&type=script&lang=js .default */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminPersonnelStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminPersonnelStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AdminPersonnelStatisticsTableRow.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue?vue&type=script&lang=js":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue?vue&type=script&lang=js ***!
+  \************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue?vue&type=script&lang=js .default */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HrStatisticsTableRow.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue?vue&type=script&lang=js":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue?vue&type=script&lang=js .default */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PersonnelStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PersonnelStatisticsTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./PersonnelStatisticsTableRow.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue?vue&type=script&lang=js");
  
 
 /***/ }),
@@ -1486,6 +2450,54 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsView_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./StatisticsView.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/views/StatisticsView.vue?vue&type=script&lang=js");
  
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=style&index=0&lang=css":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=style&index=0&lang=css ***!
+  \**************************************************************************************************************/
+/*! namespace exports */
+/*! exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_MonthlyStatisticsTable_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./MonthlyStatisticsTable.vue?vue&type=style&index=0&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=style&index=0&lang=css");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=style&index=0&lang=css":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=style&index=0&lang=css ***!
+  \*******************************************************************************************************/
+/*! namespace exports */
+/*! exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTable_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./StatisticsTable.vue?vue&type=style&index=0&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=style&index=0&lang=css");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=style&index=0&lang=css":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=style&index=0&lang=css ***!
+  \*************************************************************************************************************/
+/*! namespace exports */
+/*! exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTableBundle_vue_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./StatisticsTableBundle.vue?vue&type=style&index=0&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=style&index=0&lang=css");
+
 
 /***/ }),
 
@@ -1549,12 +2561,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/modals/letter/LetterFormFields.vue?vue&type=template&id=1672f42e&bindings={\"schema\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"google\":\"setup\",\"yahoo\":\"setup\",\"outlook\":\"setup\",\"other\":\"setup\",\"received\":\"setup\",\"hr\":\"setup\",\"hrs\":\"setup\",\"profile\":\"setup\",\"letter\":\"props\"}":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/modals/letter/LetterFormFields.vue?vue&type=template&id=1672f42e&bindings={"schema":"setup","errors":"setup","validate":"setup","google":"setup","yahoo":"setup","outlook":"setup","other":"setup","received":"setup","hr":"setup","hrs":"setup","profile":"setup","letter":"props"} ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./resources/js/components/modals/letter/LetterFormFields.vue?vue&type=template&id=1672f42e&bindings={\"schema\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"google\":\"setup\",\"yahoo\":\"setup\",\"outlook\":\"setup\",\"other\":\"setup\",\"received\":\"setup\",\"hr\":\"setup\",\"company\":\"setup\",\"hrs\":\"setup\",\"companies\":\"setup\",\"profile\":\"setup\",\"letter\":\"props\"}":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/modals/letter/LetterFormFields.vue?vue&type=template&id=1672f42e&bindings={"schema":"setup","errors":"setup","validate":"setup","google":"setup","yahoo":"setup","outlook":"setup","other":"setup","received":"setup","hr":"setup","company":"setup","hrs":"setup","companies":"setup","profile":"setup","letter":"props"} ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/letter/LetterFormFields.vue?vue&type=template&id=1672f42e&bindings={"schema":"setup","errors":"setup","validate":"setup","google":"setup","yahoo":"setup","outlook":"setup","other":"setup","received":"setup","hr":"setup","hrs":"setup","profile":"setup","letter":"props"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/letter/LetterFormFields.vue?vue&type=template&id=1672f42e&bindings={"schema":"setup","errors":"setup","validate":"setup","google":"setup","yahoo":"setup","outlook":"setup","other":"setup","received":"setup","hr":"setup","company":"setup","hrs":"setup","companies":"setup","profile":"setup","letter":"props"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1562,19 +2574,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LetterFormFields_vue_vue_type_template_id_1672f42e_bindings_schema_setup_errors_setup_validate_setup_google_setup_yahoo_setup_outlook_setup_other_setup_received_setup_hr_setup_hrs_setup_profile_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LetterFormFields_vue_vue_type_template_id_1672f42e_bindings_schema_setup_errors_setup_validate_setup_google_setup_yahoo_setup_outlook_setup_other_setup_received_setup_hr_setup_company_setup_hrs_setup_companies_setup_profile_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LetterFormFields_vue_vue_type_template_id_1672f42e_bindings_schema_setup_errors_setup_validate_setup_google_setup_yahoo_setup_outlook_setup_other_setup_received_setup_hr_setup_hrs_setup_profile_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LetterFormFields.vue?vue&type=template&id=1672f42e&bindings={"schema":"setup","errors":"setup","validate":"setup","google":"setup","yahoo":"setup","outlook":"setup","other":"setup","received":"setup","hr":"setup","hrs":"setup","profile":"setup","letter":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/letter/LetterFormFields.vue?vue&type=template&id=1672f42e&bindings={\"schema\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"google\":\"setup\",\"yahoo\":\"setup\",\"outlook\":\"setup\",\"other\":\"setup\",\"received\":\"setup\",\"hr\":\"setup\",\"hrs\":\"setup\",\"profile\":\"setup\",\"letter\":\"props\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LetterFormFields_vue_vue_type_template_id_1672f42e_bindings_schema_setup_errors_setup_validate_setup_google_setup_yahoo_setup_outlook_setup_other_setup_received_setup_hr_setup_company_setup_hrs_setup_companies_setup_profile_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LetterFormFields.vue?vue&type=template&id=1672f42e&bindings={"schema":"setup","errors":"setup","validate":"setup","google":"setup","yahoo":"setup","outlook":"setup","other":"setup","received":"setup","hr":"setup","company":"setup","hrs":"setup","companies":"setup","profile":"setup","letter":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/letter/LetterFormFields.vue?vue&type=template&id=1672f42e&bindings={\"schema\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"google\":\"setup\",\"yahoo\":\"setup\",\"outlook\":\"setup\",\"other\":\"setup\",\"received\":\"setup\",\"hr\":\"setup\",\"company\":\"setup\",\"hrs\":\"setup\",\"companies\":\"setup\",\"profile\":\"setup\",\"letter\":\"props\"}");
 
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/letters/LettersTable.vue?vue&type=template&id=56ec86dc&bindings={\"profile\":\"setup\",\"letters\":\"setup\",\"initializeLetterStoreForm\":\"setup\",\"refresh\":\"setup\"}":
-/*!****************************************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/LettersTable.vue?vue&type=template&id=56ec86dc&bindings={"profile":"setup","letters":"setup","initializeLetterStoreForm":"setup","refresh":"setup"} ***!
-  \****************************************************************************************************************************************************************************************************/
+/***/ "./resources/js/components/tables/statistics/HrStatisticsTable.vue?vue&type=template&id=e290e038&bindings={\"hrs\":\"setup\"}":
+/*!********************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/HrStatisticsTable.vue?vue&type=template&id=e290e038&bindings={"hrs":"setup"} ***!
+  \********************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTable.vue?vue&type=template&id=56ec86dc&bindings={"profile":"setup","letters":"setup","initializeLetterStoreForm":"setup","refresh":"setup"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTable.vue?vue&type=template&id=e290e038&bindings={"hrs":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1582,19 +2594,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LettersTable_vue_vue_type_template_id_56ec86dc_bindings_profile_setup_letters_setup_initializeLetterStoreForm_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrStatisticsTable_vue_vue_type_template_id_e290e038_bindings_hrs_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LettersTable_vue_vue_type_template_id_56ec86dc_bindings_profile_setup_letters_setup_initializeLetterStoreForm_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LettersTable.vue?vue&type=template&id=56ec86dc&bindings={"profile":"setup","letters":"setup","initializeLetterStoreForm":"setup","refresh":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTable.vue?vue&type=template&id=56ec86dc&bindings={\"profile\":\"setup\",\"letters\":\"setup\",\"initializeLetterStoreForm\":\"setup\",\"refresh\":\"setup\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrStatisticsTable_vue_vue_type_template_id_e290e038_bindings_hrs_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HrStatisticsTable.vue?vue&type=template&id=e290e038&bindings={"hrs":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTable.vue?vue&type=template&id=e290e038&bindings={\"hrs\":\"setup\"}");
 
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/letters/LettersTableHead.vue?vue&type=template&id=9e5d1cdc&bindings={\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\"}":
-/*!******************************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/LettersTableHead.vue?vue&type=template&id=9e5d1cdc&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} ***!
-  \******************************************************************************************************************************************************************************************/
+/***/ "./resources/js/components/tables/statistics/HrStatisticsTableHead.vue?vue&type=template&id=2e614be4&bindings={\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\"}":
+/*!**************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/HrStatisticsTableHead.vue?vue&type=template&id=2e614be4&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} ***!
+  \**************************************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTableHead.vue?vue&type=template&id=9e5d1cdc&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTableHead.vue?vue&type=template&id=2e614be4&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1602,19 +2614,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LettersTableHead_vue_vue_type_template_id_9e5d1cdc_bindings_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrStatisticsTableHead_vue_vue_type_template_id_2e614be4_bindings_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LettersTableHead_vue_vue_type_template_id_9e5d1cdc_bindings_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LettersTableHead.vue?vue&type=template&id=9e5d1cdc&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTableHead.vue?vue&type=template&id=9e5d1cdc&bindings={\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrStatisticsTableHead_vue_vue_type_template_id_2e614be4_bindings_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HrStatisticsTableHead.vue?vue&type=template&id=2e614be4&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTableHead.vue?vue&type=template&id=2e614be4&bindings={\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\"}");
 
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/letters/LettersTableRow.vue?vue&type=template&id=a5faf9d0&bindings={\"profile\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\",\"letter\":\"props\"}":
-/*!************************************************************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/LettersTableRow.vue?vue&type=template&id=a5faf9d0&bindings={"profile":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup","letter":"props"} ***!
-  \************************************************************************************************************************************************************************************************************************/
+/***/ "./resources/js/components/tables/statistics/HrStatisticsTableRow.vue?vue&type=template&id=f075d2f4&bindings={\"profile\":\"setup\",\"hrs\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\",\"letter\":\"props\"}":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/HrStatisticsTableRow.vue?vue&type=template&id=f075d2f4&bindings={"profile":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup","letter":"props"} ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTableRow.vue?vue&type=template&id=a5faf9d0&bindings={"profile":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup","letter":"props"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTableRow.vue?vue&type=template&id=f075d2f4&bindings={"profile":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup","letter":"props"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1622,19 +2634,159 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LettersTableRow_vue_vue_type_template_id_a5faf9d0_bindings_profile_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrStatisticsTableRow_vue_vue_type_template_id_f075d2f4_bindings_profile_setup_hrs_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LettersTableRow_vue_vue_type_template_id_a5faf9d0_bindings_profile_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LettersTableRow.vue?vue&type=template&id=a5faf9d0&bindings={"profile":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup","letter":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTableRow.vue?vue&type=template&id=a5faf9d0&bindings={\"profile\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\",\"letter\":\"props\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrStatisticsTableRow_vue_vue_type_template_id_f075d2f4_bindings_profile_setup_hrs_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HrStatisticsTableRow.vue?vue&type=template&id=f075d2f4&bindings={"profile":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup","letter":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTableRow.vue?vue&type=template&id=f075d2f4&bindings={\"profile\":\"setup\",\"hrs\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\",\"letter\":\"props\"}");
 
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/letters/actions/DeleteButton.vue?vue&type=template&id=354aeb40&bindings={\"deleteWarning\":\"setup\",\"deleteEventId\":\"setup\",\"letter\":\"props\"}":
+/***/ "./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=template&id=a8a3316a&bindings={\"records\":\"setup\"}":
+/*!*****************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=template&id=a8a3316a&bindings={"records":"setup"} ***!
+  \*****************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=template&id=a8a3316a&bindings={"records":"setup"} .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_MonthlyStatisticsTable_vue_vue_type_template_id_a8a3316a_bindings_records_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_MonthlyStatisticsTable_vue_vue_type_template_id_a8a3316a_bindings_records_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./MonthlyStatisticsTable.vue?vue&type=template&id=a8a3316a&bindings={"records":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=template&id=a8a3316a&bindings={\"records\":\"setup\"}");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/PersonnelStatisticsTable.vue?vue&type=template&id=b89d45d0&bindings={\"profile\":\"setup\",\"records\":\"setup\"}":
+/*!*************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/PersonnelStatisticsTable.vue?vue&type=template&id=b89d45d0&bindings={"profile":"setup","records":"setup"} ***!
+  \*************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTable.vue?vue&type=template&id=b89d45d0&bindings={"profile":"setup","records":"setup"} .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PersonnelStatisticsTable_vue_vue_type_template_id_b89d45d0_bindings_profile_setup_records_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PersonnelStatisticsTable_vue_vue_type_template_id_b89d45d0_bindings_profile_setup_records_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./PersonnelStatisticsTable.vue?vue&type=template&id=b89d45d0&bindings={"profile":"setup","records":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTable.vue?vue&type=template&id=b89d45d0&bindings={\"profile\":\"setup\",\"records\":\"setup\"}");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue?vue&type=template&id=6a895f18&bindings={\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\"}":
+/*!*********************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue?vue&type=template&id=6a895f18&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} ***!
+  \*********************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue?vue&type=template&id=6a895f18&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PersonnelStatisticsTableHead_vue_vue_type_template_id_6a895f18_bindings_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PersonnelStatisticsTableHead_vue_vue_type_template_id_6a895f18_bindings_profileIsAdmin_setup_profileIsPersonnel_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./PersonnelStatisticsTableHead.vue?vue&type=template&id=6a895f18&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue?vue&type=template&id=6a895f18&bindings={\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\"}");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue?vue&type=template&id=fd18665c&bindings={\"record\":\"props\",\"profile\":\"setup\",\"hrs\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\"}":
+/*!*****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue?vue&type=template&id=fd18665c&bindings={"record":"props","profile":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup"} ***!
+  \*****************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue?vue&type=template&id=fd18665c&bindings={"record":"props","profile":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup"} .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PersonnelStatisticsTableRow_vue_vue_type_template_id_fd18665c_bindings_record_props_profile_setup_hrs_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PersonnelStatisticsTableRow_vue_vue_type_template_id_fd18665c_bindings_record_props_profile_setup_hrs_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./PersonnelStatisticsTableRow.vue?vue&type=template&id=fd18665c&bindings={"record":"props","profile":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue?vue&type=template&id=fd18665c&bindings={\"record\":\"props\",\"profile\":\"setup\",\"hrs\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\"}");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/StatisticsRecord.vue?vue&type=template&id=9a49227e&bindings={\"record\":\"props\"}":
+/*!**********************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/StatisticsRecord.vue?vue&type=template&id=9a49227e&bindings={"record":"props"} ***!
+  \**********************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsRecord.vue?vue&type=template&id=9a49227e&bindings={"record":"props"} .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsRecord_vue_vue_type_template_id_9a49227e_bindings_record_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsRecord_vue_vue_type_template_id_9a49227e_bindings_record_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./StatisticsRecord.vue?vue&type=template&id=9a49227e&bindings={"record":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsRecord.vue?vue&type=template&id=9a49227e&bindings={\"record\":\"props\"}");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=template&id=7d400c0e&bindings={\"records\":\"setup\"}":
+/*!**********************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=template&id=7d400c0e&bindings={"records":"setup"} ***!
+  \**********************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=template&id=7d400c0e&bindings={"records":"setup"} .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTable_vue_vue_type_template_id_7d400c0e_bindings_records_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTable_vue_vue_type_template_id_7d400c0e_bindings_records_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./StatisticsTable.vue?vue&type=template&id=7d400c0e&bindings={"records":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=template&id=7d400c0e&bindings={\"records\":\"setup\"}");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=template&id=6ff99730&bindings={\"layout\":\"setup\",\"records\":\"setup\",\"profileIsAdmin\":\"setup\"}":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=template&id=6ff99730&bindings={"layout":"setup","records":"setup","profileIsAdmin":"setup"} ***!
+  \**********************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=template&id=6ff99730&bindings={"layout":"setup","records":"setup","profileIsAdmin":"setup"} .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTableBundle_vue_vue_type_template_id_6ff99730_bindings_layout_setup_records_setup_profileIsAdmin_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTableBundle_vue_vue_type_template_id_6ff99730_bindings_layout_setup_records_setup_profileIsAdmin_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./StatisticsTableBundle.vue?vue&type=template&id=6ff99730&bindings={"layout":"setup","records":"setup","profileIsAdmin":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=template&id=6ff99730&bindings={\"layout\":\"setup\",\"records\":\"setup\",\"profileIsAdmin\":\"setup\"}");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/control/StatisticsTableControl.vue?vue&type=template&id=54e67611&bindings={\"total\":\"setup\",\"monthly\":\"setup\",\"refresh\":\"setup\"}":
 /*!***********************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/actions/DeleteButton.vue?vue&type=template&id=354aeb40&bindings={"deleteWarning":"setup","deleteEventId":"setup","letter":"props"} ***!
+  !*** ./resources/js/components/tables/statistics/control/StatisticsTableControl.vue?vue&type=template&id=54e67611&bindings={"total":"setup","monthly":"setup","refresh":"setup"} ***!
   \***********************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/actions/DeleteButton.vue?vue&type=template&id=354aeb40&bindings={"deleteWarning":"setup","deleteEventId":"setup","letter":"props"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/control/StatisticsTableControl.vue?vue&type=template&id=54e67611&bindings={"total":"setup","monthly":"setup","refresh":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1642,19 +2794,119 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteButton_vue_vue_type_template_id_354aeb40_bindings_deleteWarning_setup_deleteEventId_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTableControl_vue_vue_type_template_id_54e67611_bindings_total_setup_monthly_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteButton_vue_vue_type_template_id_354aeb40_bindings_deleteWarning_setup_deleteEventId_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./DeleteButton.vue?vue&type=template&id=354aeb40&bindings={"deleteWarning":"setup","deleteEventId":"setup","letter":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/actions/DeleteButton.vue?vue&type=template&id=354aeb40&bindings={\"deleteWarning\":\"setup\",\"deleteEventId\":\"setup\",\"letter\":\"props\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_StatisticsTableControl_vue_vue_type_template_id_54e67611_bindings_total_setup_monthly_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./StatisticsTableControl.vue?vue&type=template&id=54e67611&bindings={"total":"setup","monthly":"setup","refresh":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/control/StatisticsTableControl.vue?vue&type=template&id=54e67611&bindings={\"total\":\"setup\",\"monthly\":\"setup\",\"refresh\":\"setup\"}");
 
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/letters/actions/EditButton.vue?vue&type=template&id=121caebf&bindings={\"showEditLetterForm\":\"setup\",\"letter\":\"props\"}":
+/***/ "./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableHead.vue?vue&type=template&id=08a2b4e5":
+/*!************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableHead.vue?vue&type=template&id=08a2b4e5 ***!
+  \************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableHead.vue?vue&type=template&id=08a2b4e5 .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminHrStatisticsTableHead_vue_vue_type_template_id_08a2b4e5__WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminHrStatisticsTableHead_vue_vue_type_template_id_08a2b4e5__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AdminHrStatisticsTableHead.vue?vue&type=template&id=08a2b4e5 */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableHead.vue?vue&type=template&id=08a2b4e5");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue?vue&type=template&id=4dbbed36&bindings={\"hr\":\"props\",\"total\":\"setup\"}":
+/*!***************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue?vue&type=template&id=4dbbed36&bindings={"hr":"props","total":"setup"} ***!
+  \***************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue?vue&type=template&id=4dbbed36&bindings={"hr":"props","total":"setup"} .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminHrStatisticsTableRow_vue_vue_type_template_id_4dbbed36_bindings_hr_props_total_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminHrStatisticsTableRow_vue_vue_type_template_id_4dbbed36_bindings_hr_props_total_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AdminHrStatisticsTableRow.vue?vue&type=template&id=4dbbed36&bindings={"hr":"props","total":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue?vue&type=template&id=4dbbed36&bindings={\"hr\":\"props\",\"total\":\"setup\"}");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableHead.vue?vue&type=template&id=787102f7":
+/*!*******************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableHead.vue?vue&type=template&id=787102f7 ***!
+  \*******************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableHead.vue?vue&type=template&id=787102f7 .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminPersonnelStatisticsTableHead_vue_vue_type_template_id_787102f7__WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminPersonnelStatisticsTableHead_vue_vue_type_template_id_787102f7__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AdminPersonnelStatisticsTableHead.vue?vue&type=template&id=787102f7 */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableHead.vue?vue&type=template&id=787102f7");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue?vue&type=template&id=ebae9dda&bindings={\"record\":\"props\"}":
+/*!**********************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue?vue&type=template&id=ebae9dda&bindings={"record":"props"} ***!
+  \**********************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue?vue&type=template&id=ebae9dda&bindings={"record":"props"} .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminPersonnelStatisticsTableRow_vue_vue_type_template_id_ebae9dda_bindings_record_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminPersonnelStatisticsTableRow_vue_vue_type_template_id_ebae9dda_bindings_record_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AdminPersonnelStatisticsTableRow.vue?vue&type=template&id=ebae9dda&bindings={"record":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue?vue&type=template&id=ebae9dda&bindings={\"record\":\"props\"}");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/layouts/HrStatisticsTableHead.vue?vue&type=template&id=0f1dd4de":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/HrStatisticsTableHead.vue?vue&type=template&id=0f1dd4de ***!
+  \*******************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/HrStatisticsTableHead.vue?vue&type=template&id=0f1dd4de .render */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrStatisticsTableHead_vue_vue_type_template_id_0f1dd4de__WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrStatisticsTableHead_vue_vue_type_template_id_0f1dd4de__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HrStatisticsTableHead.vue?vue&type=template&id=0f1dd4de */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/HrStatisticsTableHead.vue?vue&type=template&id=0f1dd4de");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue?vue&type=template&id=5536864c&bindings={\"letter\":\"props\",\"total\":\"setup\"}":
 /*!**************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/actions/EditButton.vue?vue&type=template&id=121caebf&bindings={"showEditLetterForm":"setup","letter":"props"} ***!
+  !*** ./resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue?vue&type=template&id=5536864c&bindings={"letter":"props","total":"setup"} ***!
   \**************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/actions/EditButton.vue?vue&type=template&id=121caebf&bindings={"showEditLetterForm":"setup","letter":"props"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue?vue&type=template&id=5536864c&bindings={"letter":"props","total":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1662,19 +2914,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EditButton_vue_vue_type_template_id_121caebf_bindings_showEditLetterForm_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrStatisticsTableRow_vue_vue_type_template_id_5536864c_bindings_letter_props_total_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EditButton_vue_vue_type_template_id_121caebf_bindings_showEditLetterForm_setup_letter_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./EditButton.vue?vue&type=template&id=121caebf&bindings={"showEditLetterForm":"setup","letter":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/actions/EditButton.vue?vue&type=template&id=121caebf&bindings={\"showEditLetterForm\":\"setup\",\"letter\":\"props\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrStatisticsTableRow_vue_vue_type_template_id_5536864c_bindings_letter_props_total_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HrStatisticsTableRow.vue?vue&type=template&id=5536864c&bindings={"letter":"props","total":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue?vue&type=template&id=5536864c&bindings={\"letter\":\"props\",\"total\":\"setup\"}");
 
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/letters/layouts/AdminLettersTableHead.vue?vue&type=template&id=45452da9":
-/*!****************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/layouts/AdminLettersTableHead.vue?vue&type=template&id=45452da9 ***!
-  \****************************************************************************************************************/
+/***/ "./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableHead.vue?vue&type=template&id=dfecae44":
+/*!**************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableHead.vue?vue&type=template&id=dfecae44 ***!
+  \**************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/AdminLettersTableHead.vue?vue&type=template&id=45452da9 .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableHead.vue?vue&type=template&id=dfecae44 .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1682,19 +2934,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminLettersTableHead_vue_vue_type_template_id_45452da9__WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PersonnelStatisticsTableHead_vue_vue_type_template_id_dfecae44__WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminLettersTableHead_vue_vue_type_template_id_45452da9__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AdminLettersTableHead.vue?vue&type=template&id=45452da9 */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/AdminLettersTableHead.vue?vue&type=template&id=45452da9");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PersonnelStatisticsTableHead_vue_vue_type_template_id_dfecae44__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./PersonnelStatisticsTableHead.vue?vue&type=template&id=dfecae44 */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableHead.vue?vue&type=template&id=dfecae44");
 
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue?vue&type=template&id=2dab6821&bindings={\"letter\":\"props\"}":
-/*!*******************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue?vue&type=template&id=2dab6821&bindings={"letter":"props"} ***!
-  \*******************************************************************************************************************************************/
+/***/ "./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue?vue&type=template&id=44ff9b68&bindings={\"letter\":\"props\",\"total\":\"setup\"}":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue?vue&type=template&id=44ff9b68&bindings={"letter":"props","total":"setup"} ***!
+  \*********************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue?vue&type=template&id=2dab6821&bindings={"letter":"props"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue?vue&type=template&id=44ff9b68&bindings={"letter":"props","total":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1702,49 +2954,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminLettersTableRow_vue_vue_type_template_id_2dab6821_bindings_letter_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PersonnelStatisticsTableRow_vue_vue_type_template_id_44ff9b68_bindings_letter_props_total_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminLettersTableRow_vue_vue_type_template_id_2dab6821_bindings_letter_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AdminLettersTableRow.vue?vue&type=template&id=2dab6821&bindings={"letter":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue?vue&type=template&id=2dab6821&bindings={\"letter\":\"props\"}");
-
-
-/***/ }),
-
-/***/ "./resources/js/components/tables/letters/layouts/HrLettersTableHead.vue?vue&type=template&id=81a2367c":
-/*!*************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/layouts/HrLettersTableHead.vue?vue&type=template&id=81a2367c ***!
-  \*************************************************************************************************************/
-/*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/HrLettersTableHead.vue?vue&type=template&id=81a2367c .render */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrLettersTableHead_vue_vue_type_template_id_81a2367c__WEBPACK_IMPORTED_MODULE_0__.render
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrLettersTableHead_vue_vue_type_template_id_81a2367c__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HrLettersTableHead.vue?vue&type=template&id=81a2367c */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/HrLettersTableHead.vue?vue&type=template&id=81a2367c");
-
-
-/***/ }),
-
-/***/ "./resources/js/components/tables/letters/layouts/HrLettersTableRow.vue?vue&type=template&id=1091e9e8&bindings={\"letter\":\"props\"}":
-/*!****************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/layouts/HrLettersTableRow.vue?vue&type=template&id=1091e9e8&bindings={"letter":"props"} ***!
-  \****************************************************************************************************************************************/
-/*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/HrLettersTableRow.vue?vue&type=template&id=1091e9e8&bindings={"letter":"props"} .render */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrLettersTableRow_vue_vue_type_template_id_1091e9e8_bindings_letter_props___WEBPACK_IMPORTED_MODULE_0__.render
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HrLettersTableRow_vue_vue_type_template_id_1091e9e8_bindings_letter_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HrLettersTableRow.vue?vue&type=template&id=1091e9e8&bindings={"letter":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/HrLettersTableRow.vue?vue&type=template&id=1091e9e8&bindings={\"letter\":\"props\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PersonnelStatisticsTableRow_vue_vue_type_template_id_44ff9b68_bindings_letter_props_total_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./PersonnelStatisticsTableRow.vue?vue&type=template&id=44ff9b68&bindings={"letter":"props","total":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue?vue&type=template&id=44ff9b68&bindings={\"letter\":\"props\",\"total\":\"setup\"}");
 
 
 /***/ }),
@@ -1939,10 +3151,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/letter/LetterFormFields.vue?vue&type=template&id=1672f42e&bindings={\"schema\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"google\":\"setup\",\"yahoo\":\"setup\",\"outlook\":\"setup\",\"other\":\"setup\",\"received\":\"setup\",\"hr\":\"setup\",\"hrs\":\"setup\",\"profile\":\"setup\",\"letter\":\"props\"}":
-/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/letter/LetterFormFields.vue?vue&type=template&id=1672f42e&bindings={"schema":"setup","errors":"setup","validate":"setup","google":"setup","yahoo":"setup","outlook":"setup","other":"setup","received":"setup","hr":"setup","hrs":"setup","profile":"setup","letter":"props"} ***!
-  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/letter/LetterFormFields.vue?vue&type=template&id=1672f42e&bindings={\"schema\":\"setup\",\"errors\":\"setup\",\"validate\":\"setup\",\"google\":\"setup\",\"yahoo\":\"setup\",\"outlook\":\"setup\",\"other\":\"setup\",\"received\":\"setup\",\"hr\":\"setup\",\"company\":\"setup\",\"hrs\":\"setup\",\"companies\":\"setup\",\"profile\":\"setup\",\"letter\":\"props\"}":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/modals/letter/LetterFormFields.vue?vue&type=template&id=1672f42e&bindings={"schema":"setup","errors":"setup","validate":"setup","google":"setup","yahoo":"setup","outlook":"setup","other":"setup","received":"setup","hr":"setup","company":"setup","hrs":"setup","companies":"setup","profile":"setup","letter":"props"} ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -1973,24 +3185,33 @@ const _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
 const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("small", { class: "col-md-12 invalid-feedback text-right p-0" }, "please select hr", -1 /* HOISTED */)
 const _hoisted_7 = { class: "form-row mb-2 d-flex flex-column" }
 const _hoisted_8 = { class: "form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap" }
-const _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Google", -1 /* HOISTED */)
-const _hoisted_10 = { class: " col-md-12 invalid-feedback text-right p-0" }
-const _hoisted_11 = { class: "form-row mb-2 d-flex flex-column" }
-const _hoisted_12 = { class: "form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap" }
-const _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Yahoo", -1 /* HOISTED */)
-const _hoisted_14 = { class: " col-md-12 invalid-feedback text-right p-0" }
-const _hoisted_15 = { class: "form-row mb-2 d-flex flex-column" }
-const _hoisted_16 = { class: "form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap" }
-const _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Outlook", -1 /* HOISTED */)
-const _hoisted_18 = { class: " col-md-12 invalid-feedback text-right p-0" }
-const _hoisted_19 = { class: "form-row mb-2 d-flex flex-column" }
-const _hoisted_20 = { class: "form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap" }
-const _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Other", -1 /* HOISTED */)
-const _hoisted_22 = { class: " col-md-12 invalid-feedback text-right p-0" }
-const _hoisted_23 = { class: "form-row mb-2 d-flex flex-column" }
-const _hoisted_24 = { class: "form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap" }
-const _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Received", -1 /* HOISTED */)
-const _hoisted_26 = { class: " col-md-12 invalid-feedback text-right p-0" }
+const _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Company", -1 /* HOISTED */)
+const _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+  disabled: "",
+  selected: "",
+  value: null
+}, " -- select company --", -1 /* HOISTED */)
+const _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("small", { class: "col-md-12 invalid-feedback text-right p-0" }, "please select company", -1 /* HOISTED */)
+const _hoisted_12 = { class: "form-row mb-2 d-flex flex-column" }
+const _hoisted_13 = { class: "form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap" }
+const _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Google", -1 /* HOISTED */)
+const _hoisted_15 = { class: " col-md-12 invalid-feedback text-right p-0" }
+const _hoisted_16 = { class: "form-row mb-2 d-flex flex-column" }
+const _hoisted_17 = { class: "form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap" }
+const _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Yahoo", -1 /* HOISTED */)
+const _hoisted_19 = { class: " col-md-12 invalid-feedback text-right p-0" }
+const _hoisted_20 = { class: "form-row mb-2 d-flex flex-column" }
+const _hoisted_21 = { class: "form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap" }
+const _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Outlook", -1 /* HOISTED */)
+const _hoisted_23 = { class: " col-md-12 invalid-feedback text-right p-0" }
+const _hoisted_24 = { class: "form-row mb-2 d-flex flex-column" }
+const _hoisted_25 = { class: "form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap" }
+const _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Other", -1 /* HOISTED */)
+const _hoisted_27 = { class: " col-md-12 invalid-feedback text-right p-0" }
+const _hoisted_28 = { class: "form-row mb-2 d-flex flex-column" }
+const _hoisted_29 = { class: "form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap" }
+const _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", { class: "form-label col-md-2" }, "Received", -1 /* HOISTED */)
+const _hoisted_31 = { class: " col-md-12 invalid-feedback text-right p-0" }
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
@@ -1999,7 +3220,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [
             _hoisted_4,
             (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-              class: ["custom-select form-control form-control-sm col-md-10", {'is-invalid': !$setup.hr.meta.valid && $setup.hr.meta.touched}],
+              class: ["custom-select form-control form-control-sm col-md-10", {'is-invalid': !!$setup.errors.hr && $setup.hr.meta.touched}],
               name: "hr",
               "onUpdate:modelValue": _cache[1] || (_cache[1] = $event => ($props.letter.hr_id = $event)),
               onFocus: _cache[2] || (_cache[2] = $event => ($setup.hr.meta.touched = false)),
@@ -2023,91 +3244,115 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [
         _hoisted_9,
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+          class: ["custom-select form-control form-control-sm col-md-10", {'is-invalid': !!$setup.errors.company  && $setup.company.meta.touched}],
+          name: "company",
+          "onUpdate:modelValue": _cache[5] || (_cache[5] = $event => ($props.letter.company_id = $event)),
+          onFocus: _cache[6] || (_cache[6] = $event => ($setup.company.meta.touched = false)),
+          onChange: _cache[7] || (_cache[7] = (...args) => ($setup.company.handleChange(...args))),
+          onBlur: _cache[8] || (_cache[8] = (...args) => ($setup.company.handleBlur(...args)))
+        }, [
+          _hoisted_10,
+          ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.companies, (company) => {
+            return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
+              value: company.id,
+              selected: company.id === $props.letter.company_id
+            }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(company.name), 9 /* TEXT, PROPS */, ["value", "selected"]))
+          }), 256 /* UNKEYED_FRAGMENT */))
+        ], 34 /* CLASS, HYDRATE_EVENTS */), [
+          [vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.letter.company_id]
+        ]),
+        _hoisted_11
+      ])
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [
+        _hoisted_14,
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
           class: ["form-control col-md-10", { 'is-invalid': !$setup.google.meta.valid && $setup.google.meta.touched}],
           type: "text",
           placeholder: "Google",
           name: "google",
-          "onUpdate:modelValue": _cache[5] || (_cache[5] = $event => ($props.letter.google = $event)),
-          onFocus: _cache[6] || (_cache[6] = $event => ($setup.google.meta.touched = false)),
-          onInput: _cache[7] || (_cache[7] = (...args) => ($setup.google.handleChange(...args))),
-          onBlur: _cache[8] || (_cache[8] = (...args) => ($setup.google.handleBlur(...args)))
+          "onUpdate:modelValue": _cache[9] || (_cache[9] = $event => ($props.letter.google = $event)),
+          onFocus: _cache[10] || (_cache[10] = $event => ($setup.google.meta.touched = false)),
+          onInput: _cache[11] || (_cache[11] = (...args) => ($setup.google.handleChange(...args))),
+          onBlur: _cache[12] || (_cache[12] = (...args) => ($setup.google.handleBlur(...args)))
         }, null, 34 /* CLASS, HYDRATE_EVENTS */), [
           [vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.letter.google]
         ]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("small", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.google || 'google is required'), 1 /* TEXT */)
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("small", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.google || 'google is required'), 1 /* TEXT */)
       ])
     ]),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [
-        _hoisted_13,
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_17, [
+        _hoisted_18,
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
           class: ["form-control col-md-10", { 'is-invalid': !$setup.yahoo.meta.valid && $setup.yahoo.meta.touched}],
           type: "text",
           placeholder: "Yahoo",
           name: "yahoo",
-          "onUpdate:modelValue": _cache[9] || (_cache[9] = $event => ($props.letter.yahoo = $event)),
-          onFocus: _cache[10] || (_cache[10] = $event => ($setup.yahoo.meta.touched = false)),
-          onInput: _cache[11] || (_cache[11] = (...args) => ($setup.yahoo.handleChange(...args))),
-          onBlur: _cache[12] || (_cache[12] = (...args) => ($setup.yahoo.handleBlur(...args)))
+          "onUpdate:modelValue": _cache[13] || (_cache[13] = $event => ($props.letter.yahoo = $event)),
+          onFocus: _cache[14] || (_cache[14] = $event => ($setup.yahoo.meta.touched = false)),
+          onInput: _cache[15] || (_cache[15] = (...args) => ($setup.yahoo.handleChange(...args))),
+          onBlur: _cache[16] || (_cache[16] = (...args) => ($setup.yahoo.handleBlur(...args)))
         }, null, 34 /* CLASS, HYDRATE_EVENTS */), [
           [vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.letter.yahoo]
         ]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("small", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.yahoo || 'yahoo is required'), 1 /* TEXT */)
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("small", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.yahoo || 'yahoo is required'), 1 /* TEXT */)
       ])
     ]),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_15, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, [
-        _hoisted_17,
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_20, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [
+        _hoisted_22,
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
           class: ["form-control col-md-10", { 'is-invalid': !$setup.outlook.meta.valid && $setup.outlook.meta.touched}],
           type: "text",
           placeholder: "Outlook",
           name: "outlook",
-          "onUpdate:modelValue": _cache[13] || (_cache[13] = $event => ($props.letter.outlook = $event)),
-          onFocus: _cache[14] || (_cache[14] = $event => ($setup.outlook.meta.touched = false)),
-          onInput: _cache[15] || (_cache[15] = (...args) => ($setup.outlook.handleChange(...args))),
-          onBlur: _cache[16] || (_cache[16] = (...args) => ($setup.outlook.handleBlur(...args)))
+          "onUpdate:modelValue": _cache[17] || (_cache[17] = $event => ($props.letter.outlook = $event)),
+          onFocus: _cache[18] || (_cache[18] = $event => ($setup.outlook.meta.touched = false)),
+          onInput: _cache[19] || (_cache[19] = (...args) => ($setup.outlook.handleChange(...args))),
+          onBlur: _cache[20] || (_cache[20] = (...args) => ($setup.outlook.handleBlur(...args)))
         }, null, 34 /* CLASS, HYDRATE_EVENTS */), [
           [vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.letter.outlook]
         ]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("small", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.outlook || 'outlook is required'), 1 /* TEXT */)
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("small", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.outlook || 'outlook is required'), 1 /* TEXT */)
       ])
     ]),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_19, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_20, [
-        _hoisted_21,
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_24, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_25, [
+        _hoisted_26,
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
           class: ["form-control col-md-10", { 'is-invalid': !$setup.other.meta.valid && $setup.other.meta.touched}],
           type: "text",
           placeholder: "Other",
           name: "other",
-          "onUpdate:modelValue": _cache[17] || (_cache[17] = $event => ($props.letter.other = $event)),
-          onFocus: _cache[18] || (_cache[18] = $event => ($setup.other.meta.touched = false)),
-          onInput: _cache[19] || (_cache[19] = (...args) => ($setup.other.handleChange(...args))),
-          onBlur: _cache[20] || (_cache[20] = (...args) => ($setup.other.handleBlur(...args)))
+          "onUpdate:modelValue": _cache[21] || (_cache[21] = $event => ($props.letter.other = $event)),
+          onFocus: _cache[22] || (_cache[22] = $event => ($setup.other.meta.touched = false)),
+          onInput: _cache[23] || (_cache[23] = (...args) => ($setup.other.handleChange(...args))),
+          onBlur: _cache[24] || (_cache[24] = (...args) => ($setup.other.handleBlur(...args)))
         }, null, 34 /* CLASS, HYDRATE_EVENTS */), [
           [vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.letter.other]
         ]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("small", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.other || 'other is required'), 1 /* TEXT */)
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("small", _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.other || 'other is required'), 1 /* TEXT */)
       ])
     ]),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_24, [
-        _hoisted_25,
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_28, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_29, [
+        _hoisted_30,
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
           class: ["form-control col-md-10", { 'is-invalid': !$setup.received.meta.valid && $setup.received.meta.touched}],
           type: "text",
           placeholder: "Received",
           name: "received_at",
-          "onUpdate:modelValue": _cache[21] || (_cache[21] = $event => ($props.letter.received_at = $event)),
-          onFocus: _cache[22] || (_cache[22] = $event => ($setup.received.meta.touched = false)),
-          onInput: _cache[23] || (_cache[23] = (...args) => ($setup.received.handleChange(...args))),
-          onBlur: _cache[24] || (_cache[24] = (...args) => ($setup.received.handleBlur(...args)))
+          "onUpdate:modelValue": _cache[25] || (_cache[25] = $event => ($props.letter.received_at = $event)),
+          onFocus: _cache[26] || (_cache[26] = $event => ($setup.received.meta.touched = false)),
+          onInput: _cache[27] || (_cache[27] = (...args) => ($setup.received.handleChange(...args))),
+          onBlur: _cache[28] || (_cache[28] = (...args) => ($setup.received.handleBlur(...args)))
         }, null, 34 /* CLASS, HYDRATE_EVENTS */), [
           [vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.letter.received_at]
         ]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("small", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.received_at || 'received_at is required'), 1 /* TEXT */)
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("small", _hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.errors.received_at || 'received_at is required'), 1 /* TEXT */)
       ])
     ])
   ]))
@@ -2115,10 +3360,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTable.vue?vue&type=template&id=56ec86dc&bindings={\"profile\":\"setup\",\"letters\":\"setup\",\"initializeLetterStoreForm\":\"setup\",\"refresh\":\"setup\"}":
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTable.vue?vue&type=template&id=56ec86dc&bindings={"profile":"setup","letters":"setup","initializeLetterStoreForm":"setup","refresh":"setup"} ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTable.vue?vue&type=template&id=e290e038&bindings={\"hrs\":\"setup\"}":
+/*!*****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTable.vue?vue&type=template&id=e290e038&bindings={"hrs":"setup"} ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -2133,63 +3378,58 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-const _hoisted_1 = { class: "container-fluid flex-grow-1 container-p-y" }
-const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h4", { class: "font-weight-bold py-3 mb-4" }, " Statistics ", -1 /* HOISTED */)
-const _hoisted_3 = { class: "d-flex mb-3 mt-2" }
-const _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "opacity-75 ion ion-md-refresh icon-refresh" }, null, -1 /* HOISTED */)
-const _hoisted_5 = {
-  key: 0,
-  class: " table-responsive"
-}
-const _hoisted_6 = { class: "datatables-demo table table-striped table-bordered col-8" }
+const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", { class: "" }, "AAABc", -1 /* HOISTED */)
+const _hoisted_2 = { class: "datatables-demo table table-striped table-bordered" }
+const _hoisted_3 = { class: "text-left font-weight-bold" }
+const _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Mails", -1 /* HOISTED */)
+const _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Hired", -1 /* HOISTED */)
+const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "%", -1 /* HOISTED */)
+const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", { class: "odd gradeX" }, [
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "company"),
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "mails"),
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "hired"),
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "rate")
+  ]),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", { class: "odd gradeX" }, [
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "company"),
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "mails"),
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "hired"),
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "rate")
+  ]),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", { class: "odd gradeX" }, [
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "company"),
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "mails"),
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "hired"),
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "rate")
+  ])
+], -1 /* HOISTED */)
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  const _component_LettersTableHead = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("LettersTableHead")
-  const _component_LettersTableRow = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("LettersTableRow")
-  const _component_NoRecords = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("NoRecords")
-
-  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
-    _hoisted_2,
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-        onClick: _cache[1] || (_cache[1] = (...args) => ($setup.refresh(...args))),
-        class: "btn btn-secondary",
-        type: "button",
-        title: "Refresh"
-      }, [
-        _hoisted_4
-      ]),
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-        onClick: _cache[2] || (_cache[2] = (...args) => ($setup.initializeLetterStoreForm(...args))),
-        class: "btn btn-primary btn ml-2",
-        "data-toggle": "modal",
-        "data-target": "#addLetterForm"
-      }, " Add record ")
-    ]),
-    (Object.keys($setup.letters).length > 0)
-      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_5, [
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_6, [
-            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_LettersTableHead),
-            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [
-              ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.letters, (letter) => {
-                return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_LettersTableRow, {
-                  letter: letter,
-                  key: letter.id + letter.name
-                }, null, 8 /* PROPS */, ["letter"]))
-              }), 128 /* KEYED_FRAGMENT */))
-            ])
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [
+    _hoisted_1,
+    ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.hrs, (hr) => {
+      return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("table", _hoisted_2, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", null, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", _hoisted_3, "Company " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(hr.login), 1 /* TEXT */),
+            _hoisted_4,
+            _hoisted_5,
+            _hoisted_6
           ])
-        ]))
-      : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_NoRecords, { key: 1 }))
-  ]))
+        ]),
+        _hoisted_7
+      ]))
+    }), 256 /* UNKEYED_FRAGMENT */))
+  ], 64 /* STABLE_FRAGMENT */))
 }
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTableHead.vue?vue&type=template&id=9e5d1cdc&bindings={\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\"}":
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTableHead.vue?vue&type=template&id=9e5d1cdc&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTableHead.vue?vue&type=template&id=2e614be4&bindings={\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\"}":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTableHead.vue?vue&type=template&id=2e614be4&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -2220,80 +3460,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTableRow.vue?vue&type=template&id=a5faf9d0&bindings={\"profile\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\",\"letter\":\"props\"}":
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/LettersTableRow.vue?vue&type=template&id=a5faf9d0&bindings={"profile":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup","letter":"props"} ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* binding */ render
-/* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-
-
-function render(_ctx, _cache, $props, $setup, $data, $options) {
-  const _component_HrRow = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("HrRow")
-  const _component_AdminRow = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("AdminRow")
-
-  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [
-    ($setup.profileIsHr)
-      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_HrRow, {
-          key: 0,
-          letter: $props.letter
-        }, null, 8 /* PROPS */, ["letter"]))
-      : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
-    ($setup.profileIsTopHr || $setup.profileIsAdmin)
-      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_AdminRow, {
-          key: 1,
-          letter: $props.letter
-        }, null, 8 /* PROPS */, ["letter"]))
-      : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
-  ], 64 /* STABLE_FRAGMENT */))
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/actions/DeleteButton.vue?vue&type=template&id=354aeb40&bindings={\"deleteWarning\":\"setup\",\"deleteEventId\":\"setup\",\"letter\":\"props\"}":
-/*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/actions/DeleteButton.vue?vue&type=template&id=354aeb40&bindings={"deleteWarning":"setup","deleteEventId":"setup","letter":"props"} ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* binding */ render
-/* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-
-
-function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
-    "data-toggle": "modal",
-    "data-target": "#deleteForm",
-    onClick: _cache[1] || (_cache[1] = (...args) => ($setup.deleteWarning(...args))),
-    type: "button",
-    class: "ion ion-md-trash danger"
-  }))
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/actions/EditButton.vue?vue&type=template&id=121caebf&bindings={\"showEditLetterForm\":\"setup\",\"letter\":\"props\"}":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/actions/EditButton.vue?vue&type=template&id=121caebf&bindings={"showEditLetterForm":"setup","letter":"props"} ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTableRow.vue?vue&type=template&id=f075d2f4&bindings={\"profile\":\"setup\",\"hrs\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\",\"letter\":\"props\"}":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/HrStatisticsTableRow.vue?vue&type=template&id=f075d2f4&bindings={"profile":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup","letter":"props"} ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -2309,30 +3479,442 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const _hoisted_1 = {
-  "data-toggle": "modal",
-  "data-target": "#editLetterForm"
+  key: 2,
+  class: "odd gradeX",
+  style: {"border":"black solid 1px"}
 }
+const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("strong", null, "Total")
+], -1 /* HOISTED */)
+const _hoisted_3 = { key: 0 }
+const _hoisted_4 = { key: 1 }
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", _hoisted_1, [
+  const _component_HrRow = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("HrRow")
+  const _component_AdminRow = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("AdminRow")
+
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [
+    ($setup.profileIsHr)
+      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_HrRow, { key: 0 }))
+      : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
+    ($setup.profileIsTopHr || $setup.profileIsAdmin)
+      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, { key: 1 }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.hrs, (hr) => {
+          return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_AdminRow, { hr: hr }, null, 8 /* PROPS */, ["hr"]))
+        }), 256 /* UNKEYED_FRAGMENT */))
+      : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
+    ($setup.profileIsAdmin)
+      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_1, [
+          _hoisted_2,
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.profile.admin_good_employees_count), 1 /* TEXT */),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.profile.admin_letters_count), 1 /* TEXT */),
+          ($setup.profile.admin_good_employees_count>0)
+            ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(($setup.profile.admin_good_employees_count/$setup.profile.admin_letters_count * 100).toFixed(2)) + "% ", 1 /* TEXT */))
+            : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_4, " 0%"))
+        ]))
+      : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
+  ], 64 /* STABLE_FRAGMENT */))
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=template&id=a8a3316a&bindings={\"records\":\"setup\"}":
+/*!**************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/MonthlyStatisticsTable.vue?vue&type=template&id=a8a3316a&bindings={"records":"setup"} ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_StatisticsRecord = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("StatisticsRecord")
+
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.records, (record) => {
+    return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_StatisticsRecord, {
+      key: record.head.period,
+      record: record
+    }, null, 8 /* PROPS */, ["record"]))
+  }), 128 /* KEYED_FRAGMENT */))
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTable.vue?vue&type=template&id=b89d45d0&bindings={\"profile\":\"setup\",\"records\":\"setup\"}":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTable.vue?vue&type=template&id=b89d45d0&bindings={"profile":"setup","records":"setup"} ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+const _hoisted_1 = { class: "datatables-demo table table-striped table-bordered col-5" }
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_PersonnelStatisticsTableHead = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("PersonnelStatisticsTableHead")
+  const _component_PersonnelStatisticsTableRow = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("PersonnelStatisticsTableRow")
+
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("table", _hoisted_1, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_PersonnelStatisticsTableHead),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [
+      ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.records, (record) => {
+        return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PersonnelStatisticsTableRow, { record: record }, null, 8 /* PROPS */, ["record"]))
+      }), 256 /* UNKEYED_FRAGMENT */))
+    ])
+  ]))
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue?vue&type=template&id=6a895f18&bindings={\"profileIsAdmin\":\"setup\",\"profileIsPersonnel\":\"setup\",\"profileIsHr\":\"setup\"}":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue?vue&type=template&id=6a895f18&bindings={"profileIsAdmin":"setup","profileIsPersonnel":"setup","profileIsHr":"setup"} ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_PersonnelHead = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("PersonnelHead")
+  const _component_AdminHead = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("AdminHead")
+
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [
+    ($setup.profileIsPersonnel)
+      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PersonnelHead, { key: 0 }))
+      : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
+    ($setup.profileIsPersonnel || $setup.profileIsAdmin)
+      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_AdminHead, { key: 1 }))
+      : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
+  ], 64 /* STABLE_FRAGMENT */))
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue?vue&type=template&id=fd18665c&bindings={\"record\":\"props\",\"profile\":\"setup\",\"hrs\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\"}":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue?vue&type=template&id=fd18665c&bindings={"record":"props","profile":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup"} ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_AdminRow = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("AdminRow")
+
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("    <PersonnelRow v-if=\"profileIsHr\" />"),
+    ($setup.profileIsAdmin)
+      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_AdminRow, {
+          key: 0,
+          record: $props.record
+        }, null, 8 /* PROPS */, ["record"]))
+      : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
+  ], 64 /* STABLE_FRAGMENT */))
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsRecord.vue?vue&type=template&id=9a49227e&bindings={\"record\":\"props\"}":
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsRecord.vue?vue&type=template&id=9a49227e&bindings={"record":"props"} ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+const _hoisted_1 = { class: "d-flex justify-content-between" }
+const _hoisted_2 = { class: "datatables-demo table table-striped table-bordered col-6" }
+const _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", null, [
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Hr"),
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Mails"),
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Ready"),
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Rate")
+  ])
+], -1 /* HOISTED */)
+const _hoisted_4 = { class: "odd gradeX" }
+const _hoisted_5 = { class: "datatables-demo table table-striped table-bordered col-2" }
+const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", null, [
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Applicants"),
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Count")
+  ])
+], -1 /* HOISTED */)
+const _hoisted_7 = { class: "odd gradeX" }
+const _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "Bad", -1 /* HOISTED */)
+const _hoisted_9 = { class: "odd gradeX" }
+const _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "Need data", -1 /* HOISTED */)
+const _hoisted_11 = { class: "odd gradeX" }
+const _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "Ready", -1 /* HOISTED */)
+const _hoisted_13 = { class: "odd gradeX" }
+const _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "Invited", -1 /* HOISTED */)
+const _hoisted_15 = { class: "odd gradeX" }
+const _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "Exported", -1 /* HOISTED */)
+const _hoisted_17 = { class: "odd gradeX" }
+const _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "Total", -1 /* HOISTED */)
+const _hoisted_19 = { class: "datatables-demo table table-striped table-bordered col-2" }
+const _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", null, [
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Rate"),
+    /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Value")
+  ])
+], -1 /* HOISTED */)
+const _hoisted_21 = { class: "odd gradeX" }
+const _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "mails/ready", -1 /* HOISTED */)
+const _hoisted_23 = { class: "odd gradeX" }
+const _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "mails/exported", -1 /* HOISTED */)
+const _hoisted_25 = { class: "odd gradeX" }
+const _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "total/ready", -1 /* HOISTED */)
+const _hoisted_27 = { class: "odd gradeX" }
+const _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "ready/exported", -1 /* HOISTED */)
+const _hoisted_29 = { class: "odd gradeX" }
+const _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, "total/exported", -1 /* HOISTED */)
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h3", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.record.head.title), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, "Personnel: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.record.head.personnel) + " | Mails: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.record.head.letters), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_2, [
+        _hoisted_3,
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [
+          ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.record.hrs, (hr) => {
+            return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_4, [
+              (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(hr.login), 1 /* TEXT */),
+              (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(hr.letters), 1 /* TEXT */),
+              (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(hr.hired), 1 /* TEXT */),
+              (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((hr.hired/hr.letters * 100).toFixed(2)) + "%", 1 /* TEXT */)
+            ]))
+          }), 256 /* UNKEYED_FRAGMENT */))
+        ])
+      ]),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_5, [
+        _hoisted_6,
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", _hoisted_7, [
+            _hoisted_8,
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.record.applicants.bad), 1 /* TEXT */)
+          ]),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", _hoisted_9, [
+            _hoisted_10,
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.record.applicants.need_data), 1 /* TEXT */)
+          ]),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", _hoisted_11, [
+            _hoisted_12,
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.record.applicants.ready), 1 /* TEXT */)
+          ]),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", _hoisted_13, [
+            _hoisted_14,
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.record.applicants.invited), 1 /* TEXT */)
+          ]),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", _hoisted_15, [
+            _hoisted_16,
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.record.applicants.exported), 1 /* TEXT */)
+          ]),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", _hoisted_17, [
+            _hoisted_18,
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.record.applicants.total), 1 /* TEXT */)
+          ])
+        ])
+      ]),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_19, [
+        _hoisted_20,
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", _hoisted_21, [
+            _hoisted_22,
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(($props.record.applicants.good/$props.record.head.letters * 100).toFixed(2)) + "%", 1 /* TEXT */)
+          ]),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", _hoisted_23, [
+            _hoisted_24,
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(($props.record.applicants.exported/$props.record.head.letters * 100).toFixed(2)) + "%", 1 /* TEXT */)
+          ]),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", _hoisted_25, [
+            _hoisted_26,
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(($props.record.applicants.good/$props.record.applicants.total * 100).toFixed(2)) + "%", 1 /* TEXT */)
+          ]),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", _hoisted_27, [
+            _hoisted_28,
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(($props.record.applicants.exported/$props.record.applicants.good * 100).toFixed(2)) + "%", 1 /* TEXT */)
+          ]),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", _hoisted_29, [
+            _hoisted_30,
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(($props.record.applicants.exported/$props.record.applicants.total * 100).toFixed(2)) + "%", 1 /* TEXT */)
+          ])
+        ])
+      ])
+    ])
+  ], 64 /* STABLE_FRAGMENT */))
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=template&id=7d400c0e&bindings={\"records\":\"setup\"}":
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTable.vue?vue&type=template&id=7d400c0e&bindings={"records":"setup"} ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_StatisticsRecord = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("StatisticsRecord")
+
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.records, (record) => {
+    return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_StatisticsRecord, {
+      key: record.head.period,
+      record: record
+    }, null, 8 /* PROPS */, ["record"]))
+  }), 128 /* KEYED_FRAGMENT */))
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=template&id=6ff99730&bindings={\"layout\":\"setup\",\"records\":\"setup\",\"profileIsAdmin\":\"setup\"}":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/StatisticsTableBundle.vue?vue&type=template&id=6ff99730&bindings={"layout":"setup","records":"setup","profileIsAdmin":"setup"} ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+const _hoisted_1 = { class: "container-fluid flex-grow-1 container-p-y" }
+const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h4", { class: "font-weight-bold py-3 mb-4" }, " Statistics ", -1 /* HOISTED */)
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_StatisticsTableControl = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("StatisticsTableControl")
+  const _component_StatisticsTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("StatisticsTable")
+  const _component_MonthlyStatisticsTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("MonthlyStatisticsTable")
+
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
+    _hoisted_2,
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_StatisticsTableControl),
+    ($setup.layout === 0)
+      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_StatisticsTable, { key: 0 }))
+      : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_MonthlyStatisticsTable, { key: 1 })),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("        <NoRecords v-else />")
+  ]))
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/control/StatisticsTableControl.vue?vue&type=template&id=54e67611&bindings={\"total\":\"setup\",\"monthly\":\"setup\",\"refresh\":\"setup\"}":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/control/StatisticsTableControl.vue?vue&type=template&id=54e67611&bindings={"total":"setup","monthly":"setup","refresh":"setup"} ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+const _hoisted_1 = { class: "d-flex mb-3 mt-2" }
+const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", { class: "opacity-75 ion ion-md-refresh icon-refresh" }, null, -1 /* HOISTED */)
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+      onClick: _cache[1] || (_cache[1] = (...args) => ($setup.refresh(...args))),
+      class: "btn btn-secondary",
       type: "button",
-      class: "ion ion-md-cog p-0 bg-transparent border-0",
-      "data-toggle": "tooltip",
-      "data-target": "#editLetterForm",
-      "data-placement": "right",
-      title: "Edit",
-      onClick: _cache[1] || (_cache[1] = (...args) => ($setup.showEditLetterForm(...args)))
-    })
+      title: "Refresh"
+    }, [
+      _hoisted_2
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+      class: "btn btn-primary ml-2",
+      type: "button",
+      onClick: _cache[2] || (_cache[2] = (...args) => ($setup.total(...args)))
+    }, " Total "),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+      class: "btn btn-primary ml-2",
+      type: "button",
+      onClick: _cache[3] || (_cache[3] = (...args) => ($setup.monthly(...args)))
+    }, " Monthly ")
   ]))
 }
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/AdminLettersTableHead.vue?vue&type=template&id=45452da9":
-/*!*************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/AdminLettersTableHead.vue?vue&type=template&id=45452da9 ***!
-  \*************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableHead.vue?vue&type=template&id=08a2b4e5":
+/*!*********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableHead.vue?vue&type=template&id=08a2b4e5 ***!
+  \*********************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -2347,15 +3929,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", { class: "" }, [
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Received"),
+const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", null, [
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Hr"),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Google"),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Outlook"),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Yahoo"),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Other"),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Total"),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Actions")
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Hired"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Mails"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Rate")
 ], -1 /* HOISTED */)
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -2366,10 +3944,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue?vue&type=template&id=2dab6821&bindings={\"letter\":\"props\"}":
-/*!****************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue?vue&type=template&id=2dab6821&bindings={"letter":"props"} ***!
-  \****************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue?vue&type=template&id=4dbbed36&bindings={\"hr\":\"props\",\"total\":\"setup\"}":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue?vue&type=template&id=4dbbed36&bindings={"hr":"props","total":"setup"} ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -2385,40 +3963,33 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const _hoisted_1 = { class: "odd gradeX" }
-const _hoisted_2 = { class: " pr-0" }
-const _hoisted_3 = { class: "" }
-const _hoisted_4 = { class: "" }
-const _hoisted_5 = { class: "" }
-const _hoisted_6 = { class: "" }
-const _hoisted_7 = { class: "" }
-const _hoisted_8 = { class: "" }
-const _hoisted_9 = { class: "d-flex  justify-content-between align-items-center " }
+const _hoisted_2 = { class: "mails" }
+const _hoisted_3 = {
+  key: 0,
+  class: "col-3"
+}
+const _hoisted_4 = {
+  key: 1,
+  class: "col-3"
+}
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  const _component_EditButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("EditButton")
-  const _component_DeleteButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DeleteButton")
-
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_1, [
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.letter.received_at), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.letter.hr.login), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.letter.google), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.letter.outlook), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.letter.yahoo), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.letter.other), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.letter.total), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_9, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_EditButton, { letter: $props.letter }, null, 8 /* PROPS */, ["letter"]),
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DeleteButton, { letter: $props.letter }, null, 8 /* PROPS */, ["letter"])
-    ])
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.hr.login), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.hr.good_hr_employees_count), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.total), 1 /* TEXT */),
+    ($props.hr.good_hr_employees_count>0)
+      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(($props.hr.good_hr_employees_count/$setup.total * 100).toFixed(2)) + "% ", 1 /* TEXT */))
+      : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_4, " 0%"))
   ]))
 }
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/HrLettersTableHead.vue?vue&type=template&id=81a2367c":
-/*!**********************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/HrLettersTableHead.vue?vue&type=template&id=81a2367c ***!
-  \**********************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableHead.vue?vue&type=template&id=787102f7":
+/*!****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableHead.vue?vue&type=template&id=787102f7 ***!
+  \****************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -2434,12 +4005,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", { class: "" }, [
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Received"),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Google"),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Outlook"),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Yahoo"),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Other"),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Actions")
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold col-2" }, "Period"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold col-1" }, "Personnel"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold col-2" }, "Company"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold col-1" }, "Total"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold col-2" }, "Need data"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold col-1" }, "Ready"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold col-1" }, "Invited"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold col-1" }, "Bad"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold col-1" }, "Exported")
 ], -1 /* HOISTED */)
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -2450,10 +4024,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/HrLettersTableRow.vue?vue&type=template&id=1091e9e8&bindings={\"letter\":\"props\"}":
-/*!*************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/layouts/HrLettersTableRow.vue?vue&type=template&id=1091e9e8&bindings={"letter":"props"} ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue?vue&type=template&id=ebae9dda&bindings={\"record\":\"props\"}":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue?vue&type=template&id=ebae9dda&bindings={"record":"props"} ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -2469,27 +4043,172 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const _hoisted_1 = { class: "odd gradeX" }
-const _hoisted_2 = { class: "pr-0" }
-const _hoisted_3 = { class: "" }
-const _hoisted_4 = { class: "" }
-const _hoisted_5 = { class: "" }
-const _hoisted_6 = { class: "" }
-const _hoisted_7 = { class: "d-flex  justify-content-between align-items-center " }
+const _hoisted_2 = { class: "col-2" }
+const _hoisted_3 = { class: "col-1" }
+const _hoisted_4 = { class: "col-2" }
+const _hoisted_5 = { class: "col-1" }
+const _hoisted_6 = { class: "col-2" }
+const _hoisted_7 = { class: "col-1" }
+const _hoisted_8 = { class: "col-1" }
+const _hoisted_9 = { class: "col-1" }
+const _hoisted_10 = { class: "col-1" }
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  const _component_EditButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("EditButton")
-  const _component_DeleteButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DeleteButton")
-
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_1, [
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.letter.received_at), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.letter.google), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.letter.outlook), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.letter.yahoo), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.letter.other), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_7, [
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_EditButton, { letter: $props.letter }, null, 8 /* PROPS */, ["letter"]),
-      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DeleteButton, { letter: $props.letter }, null, 8 /* PROPS */, ["letter"])
-    ])
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.record.period), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.record.personnel), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.record.company), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.record.total), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.record.need_data), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.record.ready), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.record.invited), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.record.bad), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.record.exported), 1 /* TEXT */)
+  ]))
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/HrStatisticsTableHead.vue?vue&type=template&id=0f1dd4de":
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/HrStatisticsTableHead.vue?vue&type=template&id=0f1dd4de ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", null, [
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Hired"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Total"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Rate")
+], -1 /* HOISTED */)
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("thead", null, [
+    _hoisted_1
+  ]))
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue?vue&type=template&id=5536864c&bindings={\"letter\":\"props\",\"total\":\"setup\"}":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue?vue&type=template&id=5536864c&bindings={"letter":"props","total":"setup"} ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+const _hoisted_1 = { class: "odd gradeX" }
+const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", { class: "" }, "hired", -1 /* HOISTED */)
+const _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", { class: "" }, "total", -1 /* HOISTED */)
+const _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", { class: "" }, "rate", -1 /* HOISTED */)
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_1, [
+    _hoisted_2,
+    _hoisted_3,
+    _hoisted_4
+  ]))
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableHead.vue?vue&type=template&id=dfecae44":
+/*!***********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableHead.vue?vue&type=template&id=dfecae44 ***!
+  \***********************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", { class: "" }, [
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Period"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Company"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Total"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Need data"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Ready"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Invited"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Bad"),
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Exported")
+], -1 /* HOISTED */)
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("thead", null, [
+    _hoisted_1
+  ]))
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue?vue&type=template&id=44ff9b68&bindings={\"letter\":\"props\",\"total\":\"setup\"}":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue?vue&type=template&id=44ff9b68&bindings={"letter":"props","total":"setup"} ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => /* binding */ render
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+const _hoisted_1 = { class: "odd gradeX" }
+const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", { class: " pr-0" }, "Month", -1 /* HOISTED */)
+const _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", { class: "" }, "Company", -1 /* HOISTED */)
+const _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", { class: "" }, "Total", -1 /* HOISTED */)
+const _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", { class: "" }, "Need data", -1 /* HOISTED */)
+const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", { class: "" }, "Ready", -1 /* HOISTED */)
+const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", { class: "" }, "Invited", -1 /* HOISTED */)
+const _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", { class: "" }, "Bad", -1 /* HOISTED */)
+const _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", { class: "" }, "Exported", -1 /* HOISTED */)
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_1, [
+    _hoisted_2,
+    _hoisted_3,
+    _hoisted_4,
+    _hoisted_5,
+    _hoisted_6,
+    _hoisted_7,
+    _hoisted_8,
+    _hoisted_9
   ]))
 }
 
@@ -2514,15 +4233,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  const _component_LettersTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("LettersTable")
-  const _component_StoreLetterForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("StoreLetterForm")
-  const _component_EditLetterForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("EditLetterForm")
+  const _component_StatisticsTableBundle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("StatisticsTableBundle")
 
-  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_LettersTable),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_StoreLetterForm),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_EditLetterForm)
-  ], 64 /* STABLE_FRAGMENT */))
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_StatisticsTableBundle))
 }
 
 /***/ })

@@ -64,6 +64,11 @@ class User extends Authenticatable
         }
     }*/
 
+    public function letters()
+    {
+        return $this->hasMany(Letter::class, 'hr_id', 'id');
+    }
+
     public function goodEmployees()
     {
         return $this->employees()

@@ -88,4 +88,9 @@
         }
 
     }
+
+    /*td, th {
+        padding-left: .25rem !important;
+        padding-right: .25rem !important;
+    }*/
 </style>

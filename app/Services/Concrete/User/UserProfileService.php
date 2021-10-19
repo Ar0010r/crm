@@ -5,12 +5,14 @@ namespace App\Services\Concrete\User;
 
 
 use App\Models\Employee;
+use App\Models\Letter;
 use App\Models\User;
 use App\Services\AbstractUserResourceService;
 use App\Shared\Value\Role;
 use App\Shared\Value\Status;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class UserProfileService
 {
@@ -44,9 +46,15 @@ class UserProfileService
 
     private function getAdminProfile(User $user): User
     {
+        $letters = Letter::all();
         $user['admin_employees_count'] = Employee::all()->count();
+        $user['admin_letters_count'] = (int)$letters->sum('google') + (int)$letters->sum('yahoo')
+            + (int)$letters->sum('outlook') + (int)$letters->sum('other');
         $user['exported_admin_employees_count'] = Employee::where('employees.status',
             Status::EXPORTED)->count();
+        $user['admin_good_employees_count'] = Employee::whereIn('employees.status',[
+           Status::EXPORTED, Status::READY, Status::INVITED
+        ])->count();
         return $user;
     }
 
@@ -66,7 +74,7 @@ class UserProfileService
 
     private function getHrProfile(User $user): User
     {
-        return User::where('id', $user->id)
+        $query = User::where('id', $user->id)
             ->withCount('hrEmployees')
             ->withCount([
                 'hrEmployees as good_hr_employees_count' => function ($query) {
@@ -76,8 +84,17 @@ class UserProfileService
                         Status::EXPORTED
                     ]);
                 }
-            ])
-            ->first();
+            ]);
+
+        foreach (['google', 'yahoo', 'outlook', 'other'] as $client) {
+            $query->withCount([
+                "letters AS {$client}_total" => function ($query) use($client)  {
+                    $query->select(DB::raw("SUM($client) as {$client}total"));
+                }
+            ]);
+        }
+
+        return $query->first();
     }
 
 }

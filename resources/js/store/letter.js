@@ -5,9 +5,16 @@ export default {
     namespaced: true,
     state: {
         letters: {},
+        queryParams: {
+            page: "",
+            hr_id: "",
+            take: ""
+        },
         emptyLetter: {
             hr_id: null,
             hr: {login: null},
+            company_id: null,
+            company: {name: null},
             google: null,
             yahoo: null,
             outlook: null,
@@ -16,10 +23,15 @@ export default {
         }
     },
     mutations: {
+        setQueryParam(state, {key, value}) {
+            state.queryParams[key] = value
+        },
         async setLetters(state, letters) {
             state.letters = letters;
         },
         setLetterById(state, letter) {
+            console.log('letter', letter)
+           // console.log('state', state)
             let key = letter.id;
             if (state.letters[key]) {
                 state.letters[key] = {...state.letters[key], ...letter};
@@ -35,9 +47,9 @@ export default {
         }
     },
     actions: {
-        async setLettersToStore({commit, dispatch}) {
+        async setLettersToStore({commit, dispatch}, params) {
             try {
-                let lettersList = await container.LetterService.get();
+                let lettersList = await container.LetterService.get(params);
                 lettersList = lettersList.data.list;
 
                 let letters = {};

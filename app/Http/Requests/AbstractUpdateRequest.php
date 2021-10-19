@@ -23,6 +23,8 @@ abstract class AbstractUpdateRequest extends AbstractRequest
             $rules[$key] = $this->addUniqueToRule($key, $rule);
         }
 
+        dd($rules);
+
         return $rules;
     }
 
@@ -45,9 +47,9 @@ abstract class AbstractUpdateRequest extends AbstractRequest
 
         if (in_array($key, array_keys($unique))) {
             if (is_array($unique[$key])) {
-                $rule[] = Rule::unique($unique[$key]['table'])->ignore($this->updatedId);
+                $rule[] = Rule::unique($unique[$key]['table'], $key)->ignore($this->updatedId);
             } else {
-                $rule[] = Rule::unique($unique[$key])->ignore($this->updatedId);
+                $rule[] = Rule::unique($unique[$key], $key)->ignore($this->updatedId);
             }
         }
 

@@ -40,29 +40,29 @@ abstract class AbstractUserResourceService implements UserResourceServiceInterfa
         }
     }
 
-    protected function adminResources(): QueryBuilder | Builder
+    protected function adminResources()
     {
         return $this->basicQuery;
     }
 
-    protected function personnelResources(): QueryBuilder | Builder
+    protected function personnelResources()
     {
         return $this->basicQuery->where('personnel_id', $this->user->id);
     }
 
-    protected function topHrResources(): QueryBuilder | Builder
+    protected function topHrResources()
     {
         $hrIds = UserService::getTopHrTeamIds($this->user);
 
         return $this->basicQuery->whereIn('hr_id', $hrIds);
     }
 
-    protected function hrResources(): QueryBuilder | Builder
+    protected function hrResources()
     {
         return $this->basicQuery->where('hr_id', $this->user->id);
     }
 
-    public function getBaseQuery(): QueryBuilder | Builder
+    public function getBaseQuery()
     {
         return QueryBuilder::for(get_class($this->resource));
     }

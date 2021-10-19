@@ -5,6 +5,7 @@ export default {
     namespaced: true,
     state: {
         companies: {},
+        statistics: {},
         emptyCompany: {
             name: null,
             personnel_id: null,
@@ -19,6 +20,9 @@ export default {
     mutations: {
         async setCompanies(state, companies) {
             state.companies = companies;
+        },
+        setStatistics(state, statistics) {
+            state.statistics = statistics;
         },
         setCompanyById(state, company) {
             let key = company.id;
@@ -61,6 +65,16 @@ export default {
                 commit('deleteCompanyById', key);
             } else {
                 emitter.emit('notification-error', e.response.data)
+            }
+        },
+        async setStatisticsToStore({commit}, params) {
+            try {
+                let employees = await container.CompanyService.getStatistics();
+
+                commit('setStatistics', employees.data.list);
+            } catch (e) {
+                emitter.emit('notification-error', e.response.data)
+                if (e.response.status === 401) container.AuthService.logout()
             }
         },
     },

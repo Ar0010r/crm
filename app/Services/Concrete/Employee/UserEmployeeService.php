@@ -15,7 +15,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class UserEmployeeService extends AbstractUserResourceService
 {
-    public function getBaseQuery(): QueryBuilder | Builder
+    public function getBaseQuery()
     {
         return QueryBuilder::for(Employee::class)
             ->orderByDesc('employees.created_at')
@@ -24,23 +24,23 @@ class UserEmployeeService extends AbstractUserResourceService
             ->with('company');
     }
 
-    protected function hrResources(): QueryBuilder | Builder
+    protected function hrResources()
     {
         return $this->basicQuery
             ->where('hr_id', $this->user->id)
-            ->whereIn('status', Status::HR_STATUSES);
+            ->whereIn('status', array_keys(Status::HR_STATUSES));
     }
 
-    protected function personnelResources(): QueryBuilder | Builder
+    protected function personnelResources()
     {
         $companyIds = CompanyService::getUserCompanyIds($this->user);
 
         return $this->basicQuery
             ->whereIn('company_id', $companyIds)
-            ->whereIn('status', Status::PERSONNEL_STATUSES);
+            ->whereIn('status', array_keys(Status::PERSONNEL_STATUSES));
     }
 
-    protected function topHrResources(): QueryBuilder | Builder
+    protected function topHrResources()
     {
         $hrIds = UserService::getTopHrTeamIds($this->user);
 

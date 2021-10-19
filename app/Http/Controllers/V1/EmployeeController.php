@@ -12,12 +12,19 @@ use App\Http\Resources\Base\ModelResource;
 use App\Http\Resources\EmployeeResource;
 use App\Imports\EmployeeImport;
 use App\Models\Employee;
+use App\Models\Letter;
+use App\Models\User;
 use App\Services\Contracts\ResourceSearchServiceInterface;
 use App\Shared\Value\Race;
+use App\Shared\Value\Role;
 use App\Shared\Value\Status;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 
 class EmployeeController extends Controller
@@ -31,12 +38,9 @@ class EmployeeController extends Controller
 
     public function index()
     {
-        //$records = request()->get('recordsPerPage') ?? 100;
         $data = $this->service->get();
 
         return new ListResource($data);
-
-        // return response(['data' => $data->items(), 'pagination' => $data], JsonResponse::HTTP_OK);
     }
 
     public function store(EmployeeStoreRequest $r)
@@ -116,5 +120,83 @@ class EmployeeController extends Controller
     public function races()
     {
         return new ListResource(Race::RACES);
+    }
+
+    public function statistics()
+    {
+        $first = Employee::query()->orderBy('created_at')->first();
+        $date = Carbon::make($first->created_at);
+
+        $data = [];
+        do {
+            $end = clone $date->endOfMonth();
+            $start = clone $date->startOfMonth();
+
+            $all = QueryBuilder::for(Employee::class)
+                ->with('company')
+                ->whereBetween('created_at', [$start, $end])
+                ->get();
+
+            $letters = Letter::query()->whereBetween('received_at', [$start, $end])
+                ->with('hr')
+                ->get();
+
+            $companies = $all->map(function ($emp) {
+                return [
+                    'id' => $emp->company->id,
+                    'name' => $emp->company->name,
+                    'personnel' => $emp->company->personnel->login,
+                ];
+            })->unique();
+
+            $hrs = $letters->map(function ($letter) {
+                return [
+                    'id' => $letter->hr->id,
+                    'login' => $letter->hr->login,
+                ];
+            })->unique();
+
+            foreach ($companies as $company) {
+                $related = $all->where('company_id', $company['id']);
+                $companyLetters = $letters->where('company_id', $company['id']);
+                $record = [
+                    'head' => [
+                        'title' => $date->monthName . ' ' . $date->year . ' - ' . $company['name'],
+                        'period' => $date->monthName . ' ' . $date->year,
+                        'company' => $company['name'],
+                        'personnel' => $company['personnel'],
+                        'letters' => $companyLetters->sum('google') + $companyLetters->sum('outlook') + $companyLetters->sum('yahoo') + $companyLetters->sum('other')
+                    ],
+                    'applicants' => [
+                        'total' => $related->count(),
+                        'good' => $related->whereIn('status', [Status::READY, Status::INVITED, Status::EXPORTED])->count(),
+                        'need_data' => $related->where('status', Status::NEED_DATA)->count(),
+                        'ready' => $related->where('status', Status::READY)->count(),
+                        'invited' => $related->where('status', Status::INVITED)->count(),
+                        'bad' => $related->where('status', Status::BAD)->count(),
+                        'exported' => $related->where('status', Status::EXPORTED)->count(),
+                    ]
+                ];
+
+                //$hrs = User::query()->whereIn('role', [Role::HR, Role::TOP_HR])->get();
+
+                foreach ($hrs as $hr) {
+                    $hrLetters = $companyLetters->where('hr_id', $hr['id']);
+                    $record['hrs'][] = [
+                        'login' => $hr['login'],
+                        'letters' => $hrLetters->sum('google') + $hrLetters->sum('outlook') + $hrLetters->sum('yahoo') + $hrLetters->sum('other'),
+                        'total' => $related->where('hr_id', $hr['id'])->count(),
+                        'hired' => $related->whereIn('status', [Status::READY, Status::INVITED, Status::EXPORTED])->where('hr_id', $hr['id'])->count()
+                    ];
+                }
+
+                $data[] = $record;
+            }
+
+            $date->addMonth();
+
+        } while (Carbon::now()->gte($date));
+
+        return new ListResource(collect($data)->reverse());
     }
 }

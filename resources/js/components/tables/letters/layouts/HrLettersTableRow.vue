@@ -1,6 +1,8 @@
 <template>
     <tr class="odd gradeX">
         <td class= "pr-0">{{letter.received_at}}</td>
+        <td v-if="letter.company">{{letter.company.name}}</td>
+        <td v-else>please add company</td>
         <td class="" >{{letter.google}}</td>
         <td class="" >{{letter.outlook}}</td>
         <td class="" >{{letter.yahoo}}</td>

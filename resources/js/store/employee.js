@@ -5,6 +5,7 @@ export default {
     namespaced: true,
     state: {
         employees: {},
+        statistics: {},
         races: {},
         companies: {},
         statuses: {},
@@ -56,6 +57,10 @@ export default {
             state.employees = employees;
         },
 
+        setStatistics(state, statistics) {
+            state.statistics = statistics;
+        },
+
         setPagination(state, pagination) {
             state.pagination = pagination;
         },
@@ -83,10 +88,19 @@ export default {
             try {
                 let employees = await container.EmployeeService.getEmployees(params);
 
-                console.log('employees', employees)
-
                 commit('setEmployees', employees.employees);
                 commit('setPagination', employees.pagination);
+            } catch (e) {
+                emitter.emit('notification-error', e.response.data)
+                if (e.response.status === 401) container.AuthService.logout()
+            }
+        },
+
+        async setStatisticsToStore({commit}, params) {
+            try {
+                let employees = await container.EmployeeService.getMonthlyStatistics();
+
+                commit('setStatistics', employees.data.list);
             } catch (e) {
                 emitter.emit('notification-error', e.response.data)
                 if (e.response.status === 401) container.AuthService.logout()

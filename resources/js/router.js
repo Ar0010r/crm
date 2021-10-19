@@ -6,6 +6,7 @@ const EmployeesView = () => import('./views/EmployeesView.vue');
 const CompaniesView = () => import('./views/CompaniesView.vue');
 const ManagersView = () => import('./views/ManagersView.vue');
 const LoginView = () => import('./views/LoginView.vue');
+const LettersView = () => import('./views/LettersView.vue');
 const StatisticsView = () => import('./views/StatisticsView.vue');
 
 const history = createWebHistory();
@@ -32,16 +33,22 @@ const router = createRouter({
             meta: {title: 'companies'}
         },
         {
-            path: '/statistics',
-            component: StatisticsView,
-            name: 'statistics-table',
-            meta: {title: 'statistics'}
+            path: '/mails',
+            component: LettersView,
+            name: 'mails-table',
+            meta: {title: 'mails'}
         },
         {
             path: '/login',
             component: LoginView,
             name: 'login',
             meta: {title: 'login'}
+        },
+        {
+            path: '/statistics',
+            component: StatisticsView,
+            name: 'statistics',
+            meta: {title: 'statistics'}
         },
         {
             path: '/',

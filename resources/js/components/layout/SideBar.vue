@@ -4,7 +4,7 @@
             <span class="app-brand-logo demo bg-primary">
                  <img src="idea.png" class="w-100 h-100">
           </span>
-            <div class="app-brand-text demo sidenav-text font-weight-normal ml-2">HiringTools</div>
+            <div class="app-brand-text demo sidenav-text font-weight-normal ml-2">HiringHelper</div>
             <a href="javascript:void(0)" style="color: #fff;" class="layout-sidenav-toggle sidenav-link text-large ml-auto">
                 <i class="ion ion-md-menu align-middle"></i>
             </a>
@@ -22,16 +22,21 @@
                     <div>Companies</div>
                 </a>
             </router-link>
-            <router-link v-if="profile.role !== 'personnel'" :to="{ name : 'statistics-table'}"
+            <router-link v-if="profile.role !== 'personnel'" :to="{ name : 'mails-table'}"
                          tag="li" class="sidenav-item">
-                <a class="sidenav-link"><i class="sidenav-icon ion ion-md-analytics"></i>
-                    <div>Statistics</div>
+                <a class="sidenav-link"><i class="sidenav-icon ion ion-md-mail"></i>
+                    <div>Mails</div>
                 </a>
             </router-link>
             <router-link v-if="profile.role === 'admin' || profile.role === 'top hr'"
                          :to="{ name : 'managers-table'}" tag="li" class="sidenav-item">
                 <a class="sidenav-link"><i class="sidenav-icon ion ion-md-contacts"></i>
                     <div>Managers</div>
+                </a>
+            </router-link>
+            <router-link v-if="profile.role === 'admin'" :to="{ name : 'statistics'}" tag="li" class="sidenav-item">
+                <a class="sidenav-link"><i class="sidenav-icon ion ion-md-analytics"></i>
+                    <div>Statistics</div>
                 </a>
             </router-link>
         </ul>

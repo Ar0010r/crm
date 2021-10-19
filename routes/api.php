@@ -17,11 +17,15 @@ use Illuminate\Http\JsonResponse;
 Route::group(['namespace' => 'App\Http\Controllers\V1'], function () {
     Route::post('/login', 'AuthController@login');
 
+    Route::get('companies/statistics', 'CompanyController@statistics');
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::apiResource('/users', 'UserController');
-        Route::apiResource('/letter', 'LetterController');
+
         Route::apiResource('/companies', 'CompanyController');
+        Route::get('employees/statistics', 'EmployeeController@statistics');
         Route::apiResource('/employees', 'EmployeeController');
+        Route::apiResource('/letter', 'LetterController');
+        Route::get('letter/total', 'LetterController@total');
         Route::post('employees/import', 'EmployeeController@import');
         Route::patch('employees', 'EmployeeController@bulkDestroy');
         Route::put('employees', 'EmployeeController@bulkUpdate');

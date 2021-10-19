@@ -27,7 +27,7 @@
 <script>
     import LetterFormFields from './LetterFormFields';
     import {useStore} from 'vuex';
-    import {inject, reactive, ref, onBeforeUnmount} from 'vue';
+    import {inject, reactive, ref, onBeforeUnmount, computed} from 'vue';
 
     export default {
         setup() {
@@ -36,6 +36,8 @@
             const emitter = inject("emitter");
             const letterFields = ref(null);
             const emptyLetter = { ...store.getters.getEmptyLetter};
+            let companies = computed(() => store.getters.getCompanies);
+            let hrs = computed(() => store.getters.getHrs);
 
             let letter = reactive({...emptyLetter});
 
@@ -46,6 +48,14 @@
                 try {
                     await letterFields.value.validate();
                     await container.LetterService.update(letter);
+                    if(letter.company_id){
+                        letter.company = companies.value[letter.company_id];
+                    }
+
+                    if(letter.hr_id){
+                        letter.hr = hrs.value[letter.hr_id];
+                    }
+
                     store.commit('letter/setLetterById', letter);
                     emitter.emit('notification-success', 'letter was updated');
                     document.getElementById('editLetterFormClose').click();

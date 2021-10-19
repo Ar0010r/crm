@@ -4,7 +4,7 @@
         <td class="col-3">{{user.personnel_employees_count}}</td>
         <td class="col-3">{{user.exported_personnel_employees_count}}</td>
         <td v-if="user.exported_personnel_employees_count>0" class="col-3">
-            {{Math.round(user.exported_personnel_employees_count/user.personnel_employees_count * 100)}}%
+            {{(user.exported_personnel_employees_count/user.personnel_employees_count * 100).toFixed(2)}}%
         </td>
         <td class="col-3" v-else> 0% </td>
     </tr>

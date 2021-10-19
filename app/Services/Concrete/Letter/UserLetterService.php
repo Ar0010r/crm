@@ -19,10 +19,15 @@ class UserLetterService extends AbstractUserResourceService
         return $this->basicQuery->whereIn('company_id', $ids);
     }
 
-    public function getBaseQuery(): QueryBuilder|Builder
+    public function getBaseQuery()
     {
-        return parent::getBaseQuery()->select(['*', DB::raw('sum(google+yahoo+outlook+other) as total')])
-            ->with('hr')->groupBy('letters.id');
+        return parent::getBaseQuery()
+            ->allowedFilters(['hr_id'])
+            //->select(['*', DB::raw('sum(google+yahoo+outlook+other) as total'),])
+            ->with('hr')
+            ->with('company')
+            ->groupBy('letters.id')
+            ->orderByDesc('received_at');
     }
 
     public function getResourceModel(): Model

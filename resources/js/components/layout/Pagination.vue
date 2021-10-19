@@ -1,5 +1,6 @@
 <template>
-    <div class="d-flex justify-content-between" v-if="data.from !== data.last_page && data.last_page !== 1">
+<!--    <div class="d-flex justify-content-between" v-if="data.from !== data.last_page && data.last_page !== 1">-->
+    <div class="d-flex justify-content-between">
         <nav>
             <ul class="pagination">
                 <li class="page-item"

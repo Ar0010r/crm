@@ -52,6 +52,11 @@ class Company extends Model
             );
     }
 
+    public function letters()
+    {
+        return $this->hasMany(Letter::class, 'company_id', 'id');
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d');

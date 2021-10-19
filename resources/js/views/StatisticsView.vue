@@ -1,13 +1,9 @@
 <template>
-    <LettersTable/>
-    <StoreLetterForm/>
-    <EditLetterForm/>
+    <StatisticsTableBundle/>
 </template>
 
 <script>
-    import LettersTable from '../components/tables/letters/LettersTable.vue';
-    import StoreLetterForm from '../components/modals/letter/CreateLetterForm.vue';
-    import EditLetterForm from '../components/modals/letter/EditLetterForm.vue';
+    import StatisticsTableBundle from '../components/tables/statistics/StatisticsTableBundle';
     import {useStore} from 'vuex';
 
     export default {
@@ -16,17 +12,18 @@
             let usersAreUndefined = Object.keys(store.getters.getUsers).length === 0;
             let rolesAreUndefined = Object.keys(store.getters.getRoles).length === 0;
             let lettersAreUndefined = Object.keys(store.getters.getLetters).length === 0;
+            let monthlyStatisticsUndefined = Object.keys(store.getters.getMonthlyStatistics).length === 0;
+            let statisticsUndefined = Object.keys(store.getters.getStatistics).length === 0;
 
-            console.log('store', store);
-
+            if (lettersAreUndefined) store.dispatch('letter/setLettersToStore');
             if (usersAreUndefined) store.dispatch('user/setUsersToStore');
             if (rolesAreUndefined) store.dispatch('user/setRolesToStore');
-            if (lettersAreUndefined) store.dispatch('letter/setLettersToStore');
+            if (monthlyStatisticsUndefined) store.dispatch('employee/setStatisticsToStore');
+            if (statisticsUndefined) store.dispatch('company/setStatisticsToStore');
+
         },
         components: {
-            LettersTable,
-            StoreLetterForm,
-            EditLetterForm,
+            StatisticsTableBundle,
         }
     };
 </script>

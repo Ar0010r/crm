@@ -13,7 +13,7 @@ class CreateEmployeesTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('company_id')->nullable();
             $table->uuid('hr_id')->nullable();
-            $table->string('status')->default(Status::NEW);
+            $table->string('status')->default(Status::NEED_DATA);
             $table->string('name')->nullable();
             $table->date('birthday')->nullable();
             $table->string('avatar')->default('default.jpg')->nullable();
