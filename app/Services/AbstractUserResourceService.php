@@ -47,7 +47,7 @@ abstract class AbstractUserResourceService implements UserResourceServiceInterfa
 
     protected function personnelResources()
     {
-        return $this->basicQuery->where('personnel_id', $this->user->id);
+        return $this->basicQuery->where('manager_id', $this->user->id);
     }
 
     protected function topHrResources()

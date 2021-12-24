@@ -9,17 +9,22 @@
         <td class="" >{{letter.yahoo}}</td>
         <td class="" >{{letter.other}}</td>
         <td class="" >{{total}}</td>
-        <td class="d-flex  justify-content-between align-items-center ">
-            <EditButton :letter="letter" />
-            <DeleteButton :letter="letter" />
+        <td class="d-flex flex-column justify-content-start" >
+            <ProgressBar :letter="letter"/>
         </td>
+       <td>
+           <div class="d-flex  justify-content-between align-items-center ">
+               <EditButton :letter="letter" />
+               <DeleteButton :letter="letter" />
+           </div>
+       </td>
     </tr>
 </template>
 
 <script>
+    import ProgressBar from '../layouts/ProgressBar';
     import DeleteButton from '../actions/DeleteButton';
     import EditButton from '../actions/EditButton';
-    import{useStore} from 'vuex';
     import {computed} from 'vue';
 
     export default {
@@ -36,7 +41,8 @@
         },
         components: {
             DeleteButton,
-            EditButton
+            EditButton,
+            ProgressBar
         }
     };
 </script>

@@ -7,6 +7,8 @@
         <th class="text-left font-weight-bold">Outlook</th>
         <th class="text-left font-weight-bold">Yahoo</th>
         <th class="text-left font-weight-bold">Other</th>
+        <th class="text-left font-weight-bold">Total</th>
+        <th class="text-left font-weight-bold">Progress</th>
         <th class="text-left font-weight-bold">Actions</th>
     </tr>
     </thead>

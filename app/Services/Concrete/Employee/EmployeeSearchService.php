@@ -92,6 +92,4 @@ class EmployeeSearchService implements ResourceSearchServiceInterface
                 ->whereIn('employees.hr_id', $hrIds);
         };
     }
-
-
 }

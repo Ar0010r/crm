@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Traits\HasUuid;
-use App\Services\UserService;
 use App\Shared\Value\Role;
 use App\Shared\Value\Status;
 use DateTimeInterface;
@@ -12,19 +11,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    use HasFactory, HasUuid;
+    use HasUuid;
+    use HasFactory;
 
     protected $fillable = [
         'name',
         'email',
         'domain',
         'pseudonym',
-        'personnel_id'
+        'manager_id'
     ];
 
     public function personnel()
     {
-        return $this->belongsTo(User::class, 'personnel_id', 'id');
+        return $this->belongsTo(User::class, 'manager_id', 'id');
     }
 
     public function employees()

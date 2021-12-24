@@ -9,7 +9,6 @@ use App\Services\AbstractUserResourceService;
 use App\Services\Concrete\User\UserService;
 use App\Shared\Value\Status;
 use Carbon\Carbon;
-use http\QueryString;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -128,7 +127,7 @@ class UserCompanyService extends AbstractUserResourceService
         return $query;
     }
 
-    public function getBaseQuery()
+   /* public function getBaseQuery()
     {
         $startDate = Carbon::now()->subDays(30);
         $endDate = Carbon::now();
@@ -139,7 +138,7 @@ class UserCompanyService extends AbstractUserResourceService
             }
         ]);
 
-    }
+    }*/
 
     public function getResourceModel(): Model
     {

@@ -83,6 +83,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   setup: function setup(props) {
     var container = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)('container');
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_2__.useStore)();
+    var activeFilters = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+      return store.getters.getEmployeeQueryParams;
+    });
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(function () {
       return props.data;
     }, function (first, second) {
@@ -104,7 +107,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.next = 2;
                 return container.EmployeeService.getEmployees({
-                  'page': page
+                  'page': page,
+                  'filter[hr_id]': activeFilters.value.hr_id,
+                  'filter[status]': activeFilters.value.status,
+                  'filter[company_id]': activeFilters.value.company_id,
+                  'recordsPerPage': activeFilters.value.recordsPerPage
                 });
 
               case 2:

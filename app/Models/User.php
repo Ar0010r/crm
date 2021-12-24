@@ -40,7 +40,7 @@ class User extends Authenticatable
     public function companies()
     {
         if($this->role === Role::PERSONNEL){
-            return $this->hasMany(Company::class, 'personnel_id', 'id');
+            return $this->hasMany(Company::class, 'manager_id', 'id');
         }
         return Company::query()->select('companies.*');
     }
@@ -56,7 +56,7 @@ class User extends Authenticatable
                 return $this->hasManyThrough(
                     Employee::class,
                     Company::class,
-                    'personnel_id',
+                    'manager_id',
                     'company_id',
                     'id',
                     'id'
@@ -100,7 +100,7 @@ class User extends Authenticatable
         return $this->hasManyThrough(
             Employee::class,
             Company::class,
-            'personnel_id',
+            'manager_id',
             'company_id',
             'id',
             'id'

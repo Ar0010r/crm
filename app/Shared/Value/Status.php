@@ -52,7 +52,7 @@ class Status
     public const PERSONNEL_STATUSES = [
         self::READY => self::OCEAN_COLOR_STYLE,
         self::INVITED => self::BLUE_COLOR_STYLE,
-        self::BAD => self::RED_COLOR_STYLE,
+       // self::BAD => self::RED_COLOR_STYLE,
         self::EXPORTED => self::GREEN_COLOR_STYLE,
     ];
 

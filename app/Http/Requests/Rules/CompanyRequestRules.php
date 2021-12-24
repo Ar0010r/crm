@@ -12,9 +12,10 @@ trait CompanyRequestRules
     {
         return [
             'name' => ['string'],
+            'type' => ['numeric'],
             'domain' => ['string'],
             'email' => ['string'],
-            'personnel_id' => ['exists:users,id', new UserIdBelongsToPersonnel()]
+            'manager_id' => ['exists:users,id', new UserIdBelongsToPersonnel()]
         ];
     }
 }

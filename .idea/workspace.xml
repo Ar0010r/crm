@@ -2,87 +2,513 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6dd06283-79a3-451e-93c8-b1b73cd686ac" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/js/228.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/229.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/245.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/483.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/554.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/756.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/app.js.LICENSE.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/resources_js_views_LettersView_vue.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/letters/LettersTableBundle.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/letters/TotalLettersTable.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/letters/TotalLettersTableHead.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/letters/TotalLettersTableRow.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/letters/control/LettersTableControl.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/letters/layouts/AdminTotalLettersTableHead.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/letters/layouts/AdminTotalLettersTableRow.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/letters/layouts/HrTotalLettersTableHead.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/letters/layouts/HrTotalLettersTableRow.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/statistics/HrStatisticsTable.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/statistics/HrStatisticsTableHead.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/statistics/HrStatisticsTableRow.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/statistics/OldStatisticsTableBundle.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/statistics/PersonnelStatisticsTable.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/statistics/PersonnelStatisticsTableHead.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/statistics/PersonnelStatisticsTableRow.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/statistics/control/StatisticsTableControl.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableHead.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/statistics/layouts/AdminHrStatisticsTableRow.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableHead.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/statistics/layouts/AdminPersonnelStatisticsTableRow.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/statistics/layouts/HrStatisticsTableHead.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/statistics/layouts/HrStatisticsTableRow.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableHead.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/tables/statistics/layouts/PersonnelStatisticsTableRow.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/views/LettersView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/laravel-vue-3-starter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/laravel-vue-3-starter.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/V1/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/V1/CompanyController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/V1/EmployeeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/V1/EmployeeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/V1/LetterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/V1/LetterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/V1/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/V1/AuthController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Requests/AbstractUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/AbstractUpdateRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/Company/CompanyStoreRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Concrete/Company/CompanyStoreRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/Company/CompanyUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Concrete/Company/CompanyUpdateRequest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Requests/Rules/CompanyRequestRules.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Rules/CompanyRequestRules.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Rules/LetterRequestRules.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Rules/LetterRequestRules.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Company.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Letter.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Letter.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Services/AbstractUserResourceService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/AbstractUserResourceService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/Company/UserCompanyService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Concrete/Company/UserCompanyService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/Employee/EmployeeSearchService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Concrete/Employee/EmployeeSearchService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Services/Concrete/Employee/UserEmployeeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Concrete/Employee/UserEmployeeService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/Letter/UserLetterService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Concrete/Letter/UserLetterService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/User/UserProfileService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Concrete/User/UserProfileService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/User/UserSubordinateService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Concrete/User/UserSubordinateService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_12_220008_create_employees_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_01_12_220008_create_employees_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Shared/Value/Status.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Shared/Value/Status.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/sanctum.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/sanctum.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/public/.htaccess" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/audio/Water_Lily.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/audio/Water_Lily.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/demo.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/demo.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/app-brand-image-small.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/app-brand-image-small.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/app-brand-image.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/app-brand-image.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/1-small.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/1-small.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/1.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/10-small.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/10-small.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/10.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/10.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/11-small.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/11-small.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/11.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/11.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/12-small.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/12-small.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/12.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/12.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/2-small.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/2-small.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/2.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/3-small.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/3-small.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/3.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/4-small.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/4-small.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/4.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/5-small.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/5-small.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/5.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/5.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/6-small.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/6-small.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/6.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/6.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/7-small.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/7-small.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/7.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/7.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/8-small.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/8-small.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/8.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/8.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/9-small.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/9-small.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/avatars/9.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/avatars/9.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/10.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/10.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/11.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/11.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/12.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/12.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/13.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/13.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/14.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/14.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/15.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/15.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/16.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/16.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/21.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/21.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/22.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/22.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/3.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/4.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/5.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/5.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/6.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/6.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/7.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/7.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/8.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/8.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/9.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/9.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/bg/blur.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/bg/blur.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/uikit/adidas.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/uikit/adidas.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/uikit/backpack.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/uikit/backpack.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/uikit/chair-1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/uikit/chair-1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/uikit/headphones.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/uikit/headphones.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/uikit/iwatch.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/uikit/iwatch.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/uikit/logo-5.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/uikit/logo-5.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/uikit/logo-6.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/uikit/logo-6.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/uikit/logo-7.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/uikit/logo-7.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/uikit/logo-8.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/uikit/logo-8.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/uikit/nike-1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/uikit/nike-1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/uikit/ps4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/uikit/ps4.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/uikit/s7edge-1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/uikit/s7edge-1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/uikit/s7edge-2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/uikit/s7edge-2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/uikit/s7edge-3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/uikit/s7edge-3.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/uikit/s7edge-4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/uikit/s7edge-4.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/uikit/sunglasses.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/uikit/sunglasses.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/charts_c3.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/charts_c3.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/charts_chartist.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/charts_chartist.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/charts_chartjs.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/charts_chartjs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/charts_flot.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/charts_flot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/charts_gmaps.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/charts_gmaps.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/charts_mapael.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/charts_mapael.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/charts_morrisjs.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/charts_morrisjs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/charts_sparkline.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/charts_sparkline.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/dashboards_dashboard-1.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/dashboards_dashboard-1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/dashboards_dashboard-2.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/dashboards_dashboard-2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/dashboards_dashboard-3.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/dashboards_dashboard-3.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/dashboards_dashboard-4.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/dashboards_dashboard-4.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/dashboards_dashboard-5.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/dashboards_dashboard-5.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/demo.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/demo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/forms_custom-controls.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/forms_custom-controls.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/forms_dual-listbox.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/forms_dual-listbox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/forms_editors.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/forms_editors.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/forms_extras.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/forms_extras.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/forms_file-upload.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/forms_file-upload.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/forms_input-groups.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/forms_input-groups.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/forms_pickers.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/forms_pickers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/forms_selects.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/forms_selects.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/forms_sliders.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/forms_sliders.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/forms_typeahead.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/forms_typeahead.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/forms_validation.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/forms_validation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/forms_wizard.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/forms_wizard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/layouts.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/layouts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/misc_blockui.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/misc_blockui.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/misc_clipboardjs.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/misc_clipboardjs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/misc_idle-timer.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/misc_idle-timer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/misc_ladda.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/misc_ladda.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/misc_masonry.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/misc_masonry.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/misc_numeraljs.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/misc_numeraljs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/misc_perfect-scrollbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/misc_perfect-scrollbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/misc_vegasjs.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/misc_vegasjs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_account-settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_account-settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_articles_edit.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_articles_edit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_articles_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_articles_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_chat.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_clients.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_clients.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_contacts.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_contacts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_e-commerce_order-list.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_e-commerce_order-list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_e-commerce_product-edit.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_e-commerce_product-edit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_e-commerce_product-item.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_e-commerce_product-item.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_e-commerce_product-list.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_e-commerce_product-list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_file-manager.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_file-manager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_gallery.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_gallery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_kanban-board.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_kanban-board.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_messages.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_messages.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_projects_item.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_projects_item.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_projects_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_projects_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_task-list.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_task-list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_teams.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_teams.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_tickets_edit.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_tickets_edit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_tickets_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_tickets_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_users_edit.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_users_edit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_users_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_users_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/pages_vacancies.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/pages_vacancies.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/tables_bootstrap-table.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/tables_bootstrap-table.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/tables_datatables.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/tables_datatables.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/ui_app-brand.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ui_app-brand.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/ui_button-groups.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ui_button-groups.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/ui_carousel.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ui_carousel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/ui_cropper.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ui_cropper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/ui_drag-and-drop.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ui_drag-and-drop.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/ui_dropdowns.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ui_dropdowns.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/ui_fullcalendar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ui_fullcalendar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/ui_lightbox.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ui_lightbox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/ui_media-player.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ui_media-player.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/ui_modals.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ui_modals.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/ui_navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ui_navbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/ui_navs.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ui_navs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/ui_notifications.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ui_notifications.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/ui_sidenav.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ui_sidenav.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/ui_tooltips.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ui_tooltips.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/ui_tour.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ui_tour.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/ui_treeview.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/ui_treeview.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/json/pages_articles_list.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/json/pages_articles_list.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/json/pages_e-commerce_order-list.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/json/pages_e-commerce_order-list.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/json/pages_e-commerce_product-list.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/json/pages_e-commerce_product-list.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/json/pages_tickets_list.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/json/pages_tickets_list.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/json/pages_users_list.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/json/pages_users_list.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/pages/account.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/pages/account.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/pages/authentication.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/pages/authentication.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/pages/chat.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/pages/chat.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/pages/clients.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/pages/clients.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/pages/contacts.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/pages/contacts.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/pages/file-manager.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/pages/file-manager.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/pages/messages.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/pages/messages.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/pages/products.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/pages/products.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/pages/projects.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/pages/projects.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/pages/search.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/pages/search.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/pages/tasks.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/pages/tasks.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/pages/tickets.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/pages/tickets.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/pages/users.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/pages/users.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-air-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-air-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-air-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-air-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-air.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-air.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-corporate-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-corporate-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-cotton-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-cotton-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-cotton-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-cotton-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-cotton.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-cotton.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-gradient-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-gradient-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-gradient-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-gradient-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-gradient.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-gradient.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-paper-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-paper-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-paper-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-paper-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-paper.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-paper.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-shadow-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-shadow-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-shadow-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-shadow-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-shadow.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-shadow.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-soft-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-soft-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-soft-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-soft-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-soft.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-soft.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-sunrise-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-sunrise-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-sunrise-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-sunrise-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-sunrise.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-sunrise.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-twitlight-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-twitlight-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-twitlight-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-twitlight-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-twitlight.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-twitlight.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-vibrant-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-vibrant-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-vibrant-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-vibrant-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-vibrant.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/theme-vibrant.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/rtl/uikit.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/rtl/uikit.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-air-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-air-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-air-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-air-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-air.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-air.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-corporate-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-corporate-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-cotton-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-cotton-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-cotton-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-cotton-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-cotton.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-cotton.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-gradient-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-gradient-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-gradient-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-gradient-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-gradient.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-gradient.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-paper-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-paper-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-paper-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-paper-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-paper.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-paper.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-shadow-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-shadow-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-shadow-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-shadow-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-shadow.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-shadow.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-soft-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-soft-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-soft-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-soft-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-soft.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-soft.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-sunrise-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-sunrise-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-sunrise-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-sunrise-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-sunrise.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-sunrise.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-twitlight-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-twitlight-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-twitlight-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-twitlight-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-twitlight.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-twitlight.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-vibrant-dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-vibrant-dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-vibrant-material.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-vibrant-material.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/theme-vibrant.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/theme-vibrant.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/css/uikit.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/css/uikit.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-brands-400.eot" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-brands-400.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-brands-400.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-brands-400.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-brands-400.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-brands-400.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-brands-400.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-brands-400.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-brands-400.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-brands-400.woff2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-regular-400.eot" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-regular-400.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-regular-400.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-regular-400.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-regular-400.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-regular-400.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-regular-400.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-regular-400.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-regular-400.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-regular-400.woff2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-solid-900.eot" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-solid-900.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-solid-900.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-solid-900.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-solid-900.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-solid-900.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-solid-900.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-solid-900.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-solid-900.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/fontawesome/fa-solid-900.woff2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/ionicons/ionicons.eot" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/ionicons/ionicons.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/ionicons/ionicons.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/ionicons/ionicons.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/ionicons/ionicons.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/ionicons/ionicons.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/ionicons/ionicons.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/ionicons/ionicons.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/ionicons/ionicons.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/ionicons/ionicons.woff2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/open-iconic/open-iconic.eot" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/open-iconic/open-iconic.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/open-iconic/open-iconic.otf" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/open-iconic/open-iconic.otf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/open-iconic/open-iconic.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/open-iconic/open-iconic.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/open-iconic/open-iconic.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/open-iconic/open-iconic.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/fonts/open-iconic/open-iconic.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/fonts/open-iconic/open-iconic.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/js/bootstrap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/js/dropdown-hover.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/js/dropdown-hover.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/js/layout-helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/js/layout-helpers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/js/material-ripple.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/js/material-ripple.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/js/mega-dropdown.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/js/mega-dropdown.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/js/pace.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/js/pace.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/js/polyfills.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/js/polyfills.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/js/sidenav.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/js/sidenav.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/js/theme-settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/js/theme-settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/animate-css/animate.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/animate-css/animate.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/autosize/autosize.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/autosize/autosize.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/block-ui/block-ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/block-ui/block-ui.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/gallery-fullscreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/gallery-fullscreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/gallery-indicator.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/gallery-indicator.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/gallery-indicator.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/gallery-indicator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/gallery-video.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/gallery-video.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/gallery-video.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/gallery-video.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/gallery-vimeo.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/gallery-vimeo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/gallery-youtube.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/gallery-youtube.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/gallery.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/gallery.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/gallery.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/gallery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/img/error.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/img/error.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/img/error.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/img/error.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/img/loading.gif" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/img/loading.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/img/play-pause.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/img/play-pause.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/img/play-pause.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/img/play-pause.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/img/video-play.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/img/video-play.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/img/video-play.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/img/video-play.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/jquery.gallery.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/blueimp-gallery/jquery.gallery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootbox/bootbox.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootbox/bootbox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-duallistbox/bootstrap-duallistbox.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-duallistbox/bootstrap-duallistbox.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-duallistbox/bootstrap-duallistbox.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-duallistbox/bootstrap-duallistbox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-markdown/bootstrap-markdown.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-markdown/bootstrap-markdown.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-markdown/bootstrap-markdown.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-markdown/bootstrap-markdown.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-material-datetimepicker/bootstrap-material-datetimepicker.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-material-datetimepicker/bootstrap-material-datetimepicker.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-material-datetimepicker/bootstrap-material-datetimepicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-material-datetimepicker/bootstrap-material-datetimepicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-menu/bootstrap-menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-menu/bootstrap-menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-select/bootstrap-select.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-select/bootstrap-select.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-select/bootstrap-select.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-select/bootstrap-select.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-slider/bootstrap-slider.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-slider/bootstrap-slider.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-slider/bootstrap-slider.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-slider/bootstrap-slider.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-sortable/bootstrap-sortable.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-sortable/bootstrap-sortable.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-sortable/bootstrap-sortable.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-sortable/bootstrap-sortable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/bootstrap-table.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/bootstrap-table.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/bootstrap-table.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/bootstrap-table.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/accent-neutralise/accent-neutralise.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/accent-neutralise/accent-neutralise.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/addrbar/addrbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/addrbar/addrbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/auto-refresh/auto-refresh.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/auto-refresh/auto-refresh.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/cell-input/cell-input.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/cell-input/cell-input.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/cell-input/cell-input.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/cell-input/cell-input.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/cookie/cookie.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/cookie/cookie.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/copy-rows/copy-rows.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/copy-rows/copy-rows.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/defer-url/defer-url.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/defer-url/defer-url.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/editable/editable.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/editable/editable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/export/export.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/export/export.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/filter-control/filter-control.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/filter-control/filter-control.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/filter-control/filter-control.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/filter-control/filter-control.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/fixed-columns/fixed-columns.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/fixed-columns/fixed-columns.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/fixed-columns/fixed-columns.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/fixed-columns/fixed-columns.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/group-by-v2/group-by-v2.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/group-by-v2/group-by-v2.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/group-by-v2/group-by-v2.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/group-by-v2/group-by-v2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/i18n-enhance/i18n-enhance.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/i18n-enhance/i18n-enhance.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/key-events/key-events.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/key-events/key-events.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/mobile/mobile.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/mobile/mobile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/multiple-sort/multiple-sort.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/multiple-sort/multiple-sort.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/page-jump-to/page-jump-to.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/page-jump-to/page-jump-to.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/page-jump-to/page-jump-to.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/page-jump-to/page-jump-to.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/pipeline/pipeline.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/pipeline/pipeline.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/print/print.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/print/print.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/reorder-columns/reorder-columns.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/reorder-columns/reorder-columns.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/reorder-rows/reorder-rows.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/reorder-rows/reorder-rows.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/reorder-rows/reorder-rows.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/reorder-rows/reorder-rows.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/resizable/resizable.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/resizable/resizable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/sticky-header/sticky-header.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/sticky-header/sticky-header.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/sticky-header/sticky-header.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/sticky-header/sticky-header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/toolbar/toolbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/toolbar/toolbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/treegrid/treegrid.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-table/extensions/treegrid/treegrid.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/c3/c3.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/c3/c3.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/c3/c3.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/c3/c3.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/chartist/chartist.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/chartist/chartist.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/chartist/chartist.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/chartist/chartist.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/chartjs/chartjs.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/chartjs/chartjs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/clipboard/clipboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/clipboard/clipboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/cropper/cropper.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/cropper/cropper.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/cropper/cropper.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/cropper/cropper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/d3/d3.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/d3/d3.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/datatables/datatables.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/datatables/datatables.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/datatables/datatables.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/datatables/datatables.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/dragula/dragula.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/dragula/dragula.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/dragula/dragula.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/dragula/dragula.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/dropzone/dropzone.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/dropzone/dropzone.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/dropzone/dropzone.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/dropzone/dropzone.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/eve/eve.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/eve/eve.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/flatpickr/flatpickr.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/flatpickr/flatpickr.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/flatpickr/flatpickr.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/flatpickr/flatpickr.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/flot/flot.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/flot/flot.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/flot/flot.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/flot/flot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/flot/tooltip.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/flot/tooltip.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/flow-js/flow.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/flow-js/flow.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/flow-js/flow.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/flow-js/flow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/fullcalendar/fullcalendar.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/fullcalendar/fullcalendar.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/fullcalendar/fullcalendar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/fullcalendar/fullcalendar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/fullcalendar/locale-all.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/fullcalendar/locale-all.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/gmaps/gmaps.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/gmaps/gmaps.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/growl/growl.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/growl/growl.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/growl/growl.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/growl/growl.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/idletimer/idletimer.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/idletimer/idletimer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/jstree/jstree.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/jstree/jstree.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/jstree/themes/default-dark/32px.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/jstree/themes/default-dark/32px.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/jstree/themes/default-dark/40px.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/jstree/themes/default-dark/40px.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/jstree/themes/default-dark/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/jstree/themes/default-dark/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/jstree/themes/default-dark/throbber.gif" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/jstree/themes/default-dark/throbber.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/jstree/themes/default/32px.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/jstree/themes/default/32px.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/jstree/themes/default/40px.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/jstree/themes/default/40px.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/jstree/themes/default/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/jstree/themes/default/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/jstree/themes/default/throbber.gif" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/jstree/themes/default/throbber.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/knob/knob.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/knob/knob.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/ladda/ladda.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/ladda/ladda.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/ladda/ladda.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/ladda/ladda.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/mapael/mapael.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/mapael/mapael.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/mapael/maps/france_departments.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/mapael/maps/france_departments.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/mapael/maps/usa_states.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/mapael/maps/usa_states.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/mapael/maps/world_countries.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/mapael/maps/world_countries.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/mapael/maps/world_countries_mercator.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/mapael/maps/world_countries_mercator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/mapael/maps/world_countries_miller.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/mapael/maps/world_countries_miller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/markdown/markdown.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/markdown/markdown.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/masonry/masonry.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/masonry/masonry.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/minicolors/jquery.minicolors.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/minicolors/jquery.minicolors.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/minicolors/minicolors.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/minicolors/minicolors.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/minicolors/minicolors.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/minicolors/minicolors.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/moment/moment.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/moment/moment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/morris/morris.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/morris/morris.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/morris/morris.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/morris/morris.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/nestable/nestable.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/nestable/nestable.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/nestable/nestable.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/nestable/nestable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/nouislider/nouislider.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/nouislider/nouislider.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/nouislider/nouislider.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/nouislider/nouislider.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/numeral/numeral.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/numeral/numeral.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/photoswipe/default-skin.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/photoswipe/default-skin.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/photoswipe/default-skin.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/photoswipe/default-skin.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/photoswipe/photoswipe.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/photoswipe/photoswipe.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/photoswipe/photoswipe.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/photoswipe/photoswipe.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/photoswipe/preloader.gif" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/photoswipe/preloader.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/plyr/plyr.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/plyr/plyr.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/plyr/plyr.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/plyr/plyr.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/popper/popper.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/popper/popper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/pwstrength-bootstrap/pwstrength-bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/pwstrength-bootstrap/pwstrength-bootstrap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/quill/editor.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/quill/editor.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/quill/quill.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/quill/quill.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/quill/typography.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/quill/typography.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/raphael/raphael.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/raphael/raphael.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/select2/select2.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/select2/select2.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/select2/select2.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/select2/select2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/shepherd/shepherd.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/shepherd/shepherd.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/shepherd/shepherd.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/shepherd/shepherd.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/smartwizard/smartwizard.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/smartwizard/smartwizard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/smartwizard/smartwizard.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/smartwizard/smartwizard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/sortablejs/sortable.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/sortablejs/sortable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/sparkline/sparkline.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/sparkline/sparkline.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/spin/spin.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/spin/spin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/spinkit/spinkit.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/spinkit/spinkit.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/sweetalert2/sweetalert2.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/sweetalert2/sweetalert2.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/sweetalert2/sweetalert2.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/sweetalert2/sweetalert2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/swiper/swiper.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/swiper/swiper.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/swiper/swiper.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/swiper/swiper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/tableexport/tableexport.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/tableexport/tableexport.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/timepicker/timepicker.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/timepicker/timepicker.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/timepicker/timepicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/timepicker/timepicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/toastr/toastr.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/toastr/toastr.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/toastr/toastr.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/toastr/toastr.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/typeahead-js/typeahead.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/typeahead-js/typeahead.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/typeahead-js/typeahead.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/typeahead-js/typeahead.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/validate/validate.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/validate/validate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/vanilla-text-mask/text-mask-addons.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/vanilla-text-mask/text-mask-addons.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/vanilla-text-mask/vanilla-text-mask.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/vanilla-text-mask/vanilla-text-mask.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/overlays/01.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/overlays/01.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/overlays/02.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/overlays/02.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/overlays/03.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/overlays/03.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/overlays/04.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/overlays/04.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/overlays/05.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/overlays/05.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/overlays/06.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/overlays/06.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/overlays/07.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/overlays/07.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/overlays/08.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/overlays/08.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/overlays/09.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/overlays/09.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/vegas.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/vegas.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/vegas.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/vendor/libs/vegas/vegas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/example.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/public/example.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/public/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/idea.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/idea.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/1594632971.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/1594632971.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/default.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/default.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/228.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/228.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/229.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/229.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/245.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/245.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/280.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/280.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/341.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/341.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/483.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/483.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/554.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/554.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/756.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/756.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js.LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js.LICENSE.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_components_auth_Login_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_components_auth_Login_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_components_layout_EmptyEmployeesTableRow_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_components_layout_EmptyEmployeesTableRow_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_components_layout_Pagination_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_components_layout_Pagination_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_components_tables_companies_CompaniesTable_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_components_tables_companies_CompaniesTable_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_components_tables_employees_EmployeesTableControl_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_components_tables_employees_EmployeesTableControl_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_components_tables_employees_EmployeesTableHead_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_components_tables_employees_EmployeesTableHead_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_components_tables_employees_EmployeesTableRow_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_components_tables_employees_EmployeesTableRow_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_components_tables_managers_ManagersTable_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_components_tables_managers_ManagersTable_vue.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_CompaniesView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_CompaniesView_vue.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_EmployeesView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_EmployeesView_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_LettersView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_LettersView_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_LoginView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_LoginView_vue.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_ManagersView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_ManagersView_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_ProfileView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_ProfileView_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_SearchView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_SearchView_vue.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_StatisticsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_StatisticsView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/robots.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/robots.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/web.config" beforeDir="false" afterPath="$PROJECT_DIR$/public/web.config" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/layout/Pagination.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/layout/Pagination.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/layout/SideBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/layout/SideBar.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/modals/letter/CreateLetterForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/letter/CreateLetterForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/modals/letter/EditLetterForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/letter/EditLetterForm.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/modals/letter/LetterFormFields.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/modals/letter/LetterFormFields.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/companies/layouts/AdminCompaniesTableRow.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/companies/layouts/HrCompaniesTableRow.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/employees/Statistics.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/employees/Statistics.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/letters/LettersTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/letters/LettersTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/letters/LettersTableBundle.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/letters/LettersTableBundle.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/tables/letters/layouts/AdminLettersTableHead.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/letters/layouts/AdminLettersTableHead.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/tables/letters/layouts/HrLettersTableHead.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/letters/layouts/HrLettersTableHead.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/tables/letters/layouts/HrLettersTableRow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/letters/layouts/HrLettersTableRow.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/managers/parts/HrStatisticsTableRow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/managers/parts/HrStatisticsTableRow.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/managers/parts/PersonnelStatisticsTableRow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/managers/parts/PersonnelStatisticsTableRow.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/services/company.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/company.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/services/employee.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/employee.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/services/letter.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/letter.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/store/company.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/company.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/store/employee.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/employee.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/tables/statistics/StatisticsRecord.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/tables/statistics/StatisticsRecord.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/services/auth.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/auth.service.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/store/letter.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/letter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/views/StatisticsView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/StatisticsView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,10 +529,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>datatables</find>
-      <find>card</find>
-      <find>$companyService</find>
-      <find>$userService</find>
       <find>updateOnSelect</find>
       <find>self</find>
       <find>deleteFile</find>
@@ -133,6 +555,10 @@
       <find>emitter.emit('notification-error</find>
       <find>notification-warning</find>
       <find>gi</find>
+      <find>With label</find>
+      <find>:style</find>
+      <find>letterFields</find>
+      <find>dd</find>
     </findStrings>
     <replaceStrings>
       <replace>:value</replace>
@@ -169,6 +595,8 @@
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
       <dir>$PROJECT_DIR$/resources</dir>
+      <dir>$PROJECT_DIR$/resources/js/components</dir>
+      <dir>$PROJECT_DIR$/app/Http</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -186,25 +614,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Http/Controllers/CompaniesController.php" />
-        <option value="$PROJECT_DIR$/app/Services/Company/UserCompanyService.php" />
-        <option value="$PROJECT_DIR$/app/Services/Employee/EmployeeSearchService.php" />
-        <option value="$PROJECT_DIR$/app/Services/Employee/UserEmployeeService.php" />
-        <option value="$PROJECT_DIR$/app/Services/User/UserProfileService.php" />
-        <option value="$PROJECT_DIR$/resources/js/components/tables/managers/HrStatisticsTable.vue" />
-        <option value="$PROJECT_DIR$/resources/js/services/user.service.js" />
-        <option value="$PROJECT_DIR$/app/Services/User/UserSubordinateService.php" />
-        <option value="$PROJECT_DIR$/resources/js/components/tables/companies/CompaniesTable.vue" />
-        <option value="$PROJECT_DIR$/app/Http/Requests/Company/CompanyStoreRequest.php" />
-        <option value="$PROJECT_DIR$/app/Http/Requests/Company/CompanyUpdateRequest.php" />
-        <option value="$PROJECT_DIR$/resources/js/components/tables/employees/Statistics.vue" />
-        <option value="$PROJECT_DIR$/resources/js/views/PageNotFound.vue" />
-        <option value="$PROJECT_DIR$/resources/js/services/index.js" />
-        <option value="$PROJECT_DIR$/resources/js/views/ManagersView.vue" />
-        <option value="$PROJECT_DIR$/app/Http/Requests/Company/CompanyOwnerAllowedRequest.php" />
-        <option value="$PROJECT_DIR$/resources/js/components/tables/employees/actions/UpdateSelectedButton.vue" />
-        <option value="$PROJECT_DIR$/resources/js/components/auth/LoginForm.vue" />
-        <option value="$PROJECT_DIR$/resources/js/store/company.js" />
         <option value="$PROJECT_DIR$/resources/js/store/employee.js" />
         <option value="$PROJECT_DIR$/resources/js/store/user.js" />
         <option value="$PROJECT_DIR$/resources/js/services/auth.service.js" />
@@ -237,6 +646,25 @@
         <option value="$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTableRow.vue" />
         <option value="$PROJECT_DIR$/database/migrations/2021_03_20_092420_create_top_hr_hrs_table.php" />
         <option value="$PROJECT_DIR$/app/Services/User/UserService.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/tables/statistics/StatisticsTable.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/tables/letters/layouts/AdminLettersTableHead.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/tables/letters/LettersTableBundle.vue" />
+        <option value="$PROJECT_DIR$/database/migrations/2021_10_27_113004_add_progress_to_letters.php" />
+        <option value="$PROJECT_DIR$/resources/js/store/letter.js" />
+        <option value="$PROJECT_DIR$/database/migrations/2021_10_27_113004_add_processed_to_letters.php" />
+        <option value="$PROJECT_DIR$/app/Http/Requests/Rules/LetterRequestRules.php" />
+        <option value="$PROJECT_DIR$/app/Models/Letter.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/V1/CompanyController.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/modals/letter/CreateLetterForm.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/tables/letters/layouts/HrLettersTableHead.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/tables/letters/layouts/HrLettersTableRow.vue" />
+        <option value="$PROJECT_DIR$/app/Services/Concrete/Employee/UserEmployeeService.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/layout/Pagination.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/tables/statistics/StatisticsRecord.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/modals/letter/LetterFormFields.vue" />
+        <option value="$PROJECT_DIR$/app/Http/Requests/AbstractUpdateRequest.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/tables/letters/layouts/ProgressBar.vue" />
       </list>
     </option>
   </component>
@@ -362,9 +790,14 @@
       <path value="$PROJECT_DIR$/vendor/maatwebsite/excel" />
       <path value="$PROJECT_DIR$/vendor/maennchen/zipstream-php" />
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-searchable" />
+      <path value="$PROJECT_DIR$/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/cache" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
     <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
@@ -375,7 +808,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -386,25 +818,34 @@
             <path>
               <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
               <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
-              <item name="storage" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
               <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
-              <item name="storage" type="462c0819:PsiDirectoryNode" />
-              <item name="framework" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
               <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
-              <item name="storage" type="462c0819:PsiDirectoryNode" />
-              <item name="framework" type="462c0819:PsiDirectoryNode" />
-              <item name="laravel-excel" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
+              <item name="V1" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="ProjectViewState">
@@ -416,7 +857,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/js/components/tables/statistics" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/database/migrations" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -426,11 +867,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/database/migrations" />
+      <recent name="$PROJECT_DIR$/resources/js/components/tables/letters/layouts" />
       <recent name="$PROJECT_DIR$/resources/js/components/tables/statistics" />
       <recent name="$PROJECT_DIR$/resources/js/components/tables/statistics/layouts" />
       <recent name="$PROJECT_DIR$/resources/js/components/tables/statistics/control" />
-      <recent name="$PROJECT_DIR$/resources/js/views" />
-      <recent name="$PROJECT_DIR$/resources/js/components/tables/letters" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/Http/Resources" />
@@ -541,12 +982,21 @@
       <workItem from="1633641536143" duration="9904000" />
       <workItem from="1633887868693" duration="31361000" />
       <workItem from="1634241096189" duration="5968000" />
-      <workItem from="1634394705853" duration="37185000" />
+      <workItem from="1634394705853" duration="37713000" />
+      <workItem from="1634666812949" duration="25000" />
+      <workItem from="1634669222000" duration="1380000" />
+      <workItem from="1635330360078" duration="15198000" />
+      <workItem from="1636487372752" duration="1712000" />
+      <workItem from="1637863991966" duration="91000" />
+      <workItem from="1639397139189" duration="1486000" />
+      <workItem from="1639425409054" duration="58000" />
+      <workItem from="1639425499699" duration="14000" />
+      <workItem from="1640362709475" duration="2862000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="788273000" />
+    <option name="totallyTimeSpent" value="803471000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -559,13 +1009,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3311874" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.33547926" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32891566" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -575,7 +1026,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32891566" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.44819278" />
+      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.38795182" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -642,285 +1093,6 @@
     <select />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Http/Requests/OwnerAllowedRequest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="16" column="58" lean-forward="true" selection-start-line="16" selection-start-column="58" selection-end-line="16" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Services/Company/CompanyService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="25" column="28" lean-forward="true" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Requests/Company/CompanyUpdateRequest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
-          <folding>
-            <element signature="e#45#89#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Requests/Company/CompanyOwnerAllowedRequest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/views/CompaniesView.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="23" column="29" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/views/ManagersView.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="16" column="85" lean-forward="true" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="85" />
-          <folding>
-            <element signature="e#111#199#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/services/user.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="37" selection-start-line="37" selection-end-line="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/employees/actions/UpdateSelectedButton.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="49" column="60" selection-start-line="49" selection-start-column="60" selection-end-line="49" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/employees/actions/ExportSelectedButton.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/auth/LoginForm.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="39" column="21" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
-          <folding>
-            <element signature="e#1048#1084#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/store/company.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="52" column="18" selection-start-line="52" selection-start-column="18" selection-end-line="52" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/store/employee.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-135">
-          <caret line="89" column="18" selection-start-line="89" selection-start-column="18" selection-end-line="89" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/store/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
-          <caret line="7" column="18" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="30342" column="23" selection-start-line="30342" selection-start-column="23" selection-end-line="30342" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/store/user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="80" column="78" selection-start-line="80" selection-start-column="48" selection-end-line="80" selection-end-column="78" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/layout/NavBarDropdown.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="40" column="22" selection-start-line="40" selection-start-column="22" selection-end-line="40" selection-end-column="22" />
-          <folding>
-            <element signature="n#style#0;n#img#0;n#div#0;n#span#0;n#a#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/services/auth.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="46" selection-start-line="24" selection-start-column="10" selection-end-line="26" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/router.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="72" selection-start-line="72" selection-end-line="72" />
-          <folding>
-            <element signature="e#0#58#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="14" column="2" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/employees/actions/EditButton.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="58" selection-start-line="1" selection-start-column="7" selection-end-line="1" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/App.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="21" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/notification/Warning.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/managers/actions/DeleteButton.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="40" column="68" selection-start-line="40" selection-start-column="58" selection-end-line="40" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/companies/actions/DeleteButton.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="53" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/employees/actions/DeleteSelectedButton.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1095">
-          <caret line="74" column="9" selection-start-line="74" selection-start-column="9" selection-end-line="74" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/employees/control/EmployeesTableSecondaryControl.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="14" lean-forward="true" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/notification/Success.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/notification/Error.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="64" selection-start-line="3" selection-start-column="64" selection-end-line="3" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/company/CreateCompanyForm.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="62" column="21" lean-forward="true" selection-start-line="60" selection-start-column="20" selection-end-line="62" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/company/CompanyFormFields.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="143" column="91" selection-start-line="143" selection-start-column="91" selection-end-line="143" selection-end-column="91" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/employee/StoreEmployeeForm.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="66" column="17" lean-forward="true" selection-start-line="66" selection-start-column="17" selection-end-line="66" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/employee/EditEmployeeForm.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="49" column="19" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/employee/fields/EmployeeFormFields.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="280" column="91" selection-start-line="280" selection-start-column="91" selection-end-line="280" selection-end-column="91" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/company/EditCompanyForm.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="56" column="21" selection-start-line="54" selection-start-column="20" selection-end-line="56" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/manager/ManagerFormFields.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-37">
-          <caret line="117" column="52" selection-start-line="117" selection-start-column="52" selection-end-line="117" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/manager/EditManagerForm.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="58" column="21" selection-start-line="58" selection-start-column="21" selection-end-line="58" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/employees/control/EmployeesTableMainControl.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="87" column="9" selection-start-line="87" selection-start-column="9" selection-end-line="87" selection-end-column="9" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#2327#2357#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/components/layout/EmployeesStatusSelect.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -935,37 +1107,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AuthController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="37" column="5" lean-forward="true" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CompaniesController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-285">
-          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/EmployeesController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-176">
-          <caret line="4" column="4" lean-forward="true" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
-          <folding>
-            <element signature="e#40#98#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UsersController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="47">
-          <caret line="19" column="5" lean-forward="true" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AuthController.php" />
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CompaniesController.php" />
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/EmployeesController.php" />
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UsersController.php" />
     <entry file="file://$PROJECT_DIR$/resources/js/components/modals/notification/DeleteForm.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="71">
@@ -994,16 +1139,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Services/User/UserSubordinateService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-534">
-          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
-          <folding>
-            <element signature="e#38#58#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Services/User/UserSubordinateService.php" />
     <entry file="file://$PROJECT_DIR$/database/migrations/2021_03_20_092420_create_top_hr_hrs_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -1011,20 +1147,272 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Services/Employee/EmployeeService.php">
+    <entry file="file://$PROJECT_DIR$/app/Services/Employee/EmployeeService.php" />
+    <entry file="file://$PROJECT_DIR$/app/Services/User/UserService.php" />
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/statistics/StatisticsTableBundle.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9">
-          <caret line="37" selection-start-line="37" selection-end-line="37" />
+        <state relative-caret-position="105">
+          <caret line="7" column="15" lean-forward="true" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Services/User/UserService.php">
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/statistics/StatisticsTable.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="50" column="58" selection-start-line="50" selection-start-column="56" selection-end-line="50" selection-end-column="58" />
+        <state relative-caret-position="15">
+          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/appwork-v1_5_2/html-demo/ui_progress.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="1237" column="22" selection-start-line="1235" selection-start-column="16" selection-end-line="1237" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/letters/LettersTableRow.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="51" selection-start-line="6" selection-start-column="51" selection-end-line="6" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/letters/layouts/HrTotalLettersTableRow.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2021_01_12_211130_create_companies_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2021_09_19_160228_create_letters_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/store/letter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="26" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
           <folding>
-            <element signature="e#39#68#0#PHP" expanded="true" />
+            <element signature="e#0#43#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/letters/LettersTableBundle.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="38" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/letters/LettersTable.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/letters/LettersTableHead.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="42" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Requests/Rules/LetterRequestRules.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/letter/EditLetterForm.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="22" column="14" lean-forward="true" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Models/Letter.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="21" column="18" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2021_10_27_113004_add_processed_to_letters.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="16" column="38" selection-start-line="16" selection-start-column="38" selection-end-line="16" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/letters/layouts/AdminLettersTableHead.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="60" lean-forward="true" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/letters/layouts/HrLettersTableHead.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="52" selection-start-line="9" selection-start-column="52" selection-end-line="9" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Shared/Value/Status.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="44" column="17" selection-start-line="44" selection-start-column="17" selection-end-line="44" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Services/Concrete/Employee/UserEmployeeService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="26" column="36" lean-forward="true" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/letters/layouts/HrLettersTableRow.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="11" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
+          <folding>
+            <element signature="e#591#642#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/letters/layouts/AdminLettersTableRow.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="17" lean-forward="true" selection-start-line="15" selection-start-column="11" selection-end-line="18" selection-end-column="17" />
+          <folding>
+            <element signature="e#835#884#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/letter/CreateLetterForm.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="22" lean-forward="true" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/V1/CompanyController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="97" column="20" selection-start-line="97" selection-start-column="20" selection-end-line="97" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/employees/control/EmployeesTableControl.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/employees/control/EmployeesTableMainControl.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="434">
+          <caret line="67" column="73" selection-start-line="64" selection-start-column="20" selection-end-line="67" selection-end-column="73" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#2327#2357#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/layout/Pagination.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="470">
+          <caret line="45" column="24" lean-forward="true" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
+          <folding>
+            <element signature="e#1201#1231#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/employees/EmployeesTable.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="33" column="17" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/views/EmployeesView.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Requests/Concrete/Letter/LetterUpdateRequest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Requests/AbstractUpdateRequest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="23" column="9" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Requests/AbstractRequest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-64">
+          <caret line="9" column="15" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Requests/AbstractStoreRequest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="15" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/modals/letter/LetterFormFields.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="10" selection-start-column="10" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/statistics/StatisticsRecord.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="75" column="26" selection-start-line="75" selection-start-column="26" selection-end-line="75" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/tables/letters/layouts/ProgressBar.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/V1/AuthController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2">
+          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
         </state>
       </provider>
     </entry>

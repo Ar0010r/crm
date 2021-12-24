@@ -118,6 +118,21 @@
                     class=" col-md-12 invalid-feedback text-right p-0">{{ errors.received_at || 'received_at is required' }}</small>
             </div>
         </div>
+        <div class="form-row mb-2 d-flex flex-column">
+            <div class="form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap">
+                <label class="form-label col-md-2">Processed</label>
+                <input class="form-control col-md-10" type="text" placeholder="Processed"
+                       name="processed"
+                       v-model="letter.processed"
+                       @focus="processed.meta.touched = false"
+                       @input="processed.handleChange"
+                       @blur="processed.handleBlur"
+                       :class="{ 'is-invalid': !processed.meta.valid && processed.meta.touched}"
+                >
+                <small
+                        class=" col-md-12 invalid-feedback text-right p-0">{{ errors.received_at || 'received_at is required' }}</small>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -139,6 +154,7 @@ export default {
             yahoo: yup.string().required().trim().matches('^[0-9]*$', 'please enter numeric amount of letters you received'),
             outlook: yup.string().required().trim().matches('^[0-9]*$', 'please enter numeric amount of letters you received'),
             other: yup.string().required().trim().matches('^[0-9]*$', 'please enter numeric amount of letters you received'),
+            processed: yup.string().required().trim().matches('^[0-9]*$', 'please enter numeric amount of letters you processed'),
             received: yup.string().nullable().matches("^((?:19|20)[0-9][0-9])-(0[1-9]|1[012])-([12][0-9]|3[01]|0[1-9])$", 'valid date format is yyyy-mm-dd'),
         });
 
@@ -153,6 +169,7 @@ export default {
         const received = useField('received_at', {value: computed(() => props.letter.received_at)});
         const hr = useField('hr', {value: computed(() => props.letter.hr_id)});
         const company = useField('company', {value: computed(() => props.letter.company_id)});
+        const processed = useField('processed', {value: computed(() => props.letter.processed)});
 
         const config = [
             {
@@ -182,6 +199,10 @@ export default {
             {
                 field: company,
                 name: 'company_id'
+            },
+            {
+                field: processed,
+                name: 'processed'
             }
         ];
 
@@ -190,7 +211,7 @@ export default {
         function resetForm() {
             resetFormMeta();
 
-            [google, yahoo, outlook, other].forEach(field => {
+            [google, yahoo, outlook, other, processed].forEach(field => {
                 field.value.value = 0;
             });
             let today = new Date();
@@ -201,7 +222,7 @@ export default {
             if (mm < 10) mm = '0' + mm;
 
             received.value.value = yyyy + '-' + mm + '-' + dd;
-            hr.value.value = null;
+            hr.value.value = props.letter.hr_id ?? null;
             company.value.value = null;
 
             config.forEach(item => {
@@ -241,7 +262,7 @@ export default {
 
         return {
             schema, errors, validate,
-            google, yahoo, outlook, other, received, hr, company,
+            google, yahoo, outlook, other, received, hr, company,processed,
             hrs: computed(() => store.getters.getHrs),
             companies: computed(() => store.getters.getCompanies),
             profile: computed(() => store.getters.getProfile),

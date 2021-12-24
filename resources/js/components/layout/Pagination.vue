@@ -32,13 +32,14 @@
 
 <script>
     import {useStore} from 'vuex';
-    import {inject, watch} from 'vue'
+    import {inject, watch, computed} from 'vue'
 
     export default {
 
         setup(props) {
             const container = inject('container');
             const store = useStore();
+            let activeFilters = computed(() => store.getters.getEmployeeQueryParams);
 
             watch(() => props.data, (first, second) => {
                 if(props.data.current_page > props.data.last_page) {
@@ -47,7 +48,13 @@
             });
 
             async function goToPage(page) {
-                let employees = await container.EmployeeService.getEmployees({'page': page});
+                let employees = await container.EmployeeService.getEmployees({
+                    'page': page,
+                    'filter[hr_id]': activeFilters.value.hr_id,
+                    'filter[status]': activeFilters.value.status,
+                    'filter[company_id]': activeFilters.value.company_id,
+                    'recordsPerPage': activeFilters.value.recordsPerPage,
+                });
 
                 store.commit('employee/setEmployees', employees.employees);
                 store.commit('employee/setPagination', employees.pagination);

@@ -19,6 +19,7 @@ export default {
             yahoo: null,
             outlook: null,
             other: null,
+            progress: null,
             received_at: null
         }
     },

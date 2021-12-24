@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         $user = auth()->user();
 
-        return new ModelResource(['user' => $user, 'token' =>$user->createToken('authToken')]);
+        return new ModelResource(['user' => $user, 'token' => $user->createToken($user->login)]);
     }
 
     public function profile()
@@ -37,7 +37,15 @@ class AuthController extends Controller
 
     public function logout()
     {
-        auth()->user()->tokens()->delete();
-        return new ModelResource(true);
+        try {
+            $bearer = \request()->header('Authorization');
+            $tokenWithId = str_replace('Bearer ', '', $bearer);
+            $id = (int)collect(explode('|', $tokenWithId))->shift();
+
+            auth()->user()->tokens()->where('id', $id)->delete();
+            return new ModelResource(['model' => true]);
+        } catch (\Exception $e) {
+            return new ModelResource(['model' => $e->getMessage()]);
+        }
     }
 }

@@ -1,11 +1,13 @@
 export class AuthService {
 
-    constructor(client, store) {
+    constructor(client, store)
+    {
         this.client = client;
         this.store = store;
     }
 
-    async login(user) {
+    async login(user)
+    {
         let response = await this.client.post("/api/login", {login: user.login, password: user.password});
 
         if (response.data.model.token.plainTextToken) {
@@ -20,8 +22,9 @@ export class AuthService {
         return false;
     }
 
-    async logout() {
-        try{
+    async logout()
+    {
+        try {
             await this.client.get("/api/logout");
             localStorage.removeItem('token');
             window.location.href = '/login';

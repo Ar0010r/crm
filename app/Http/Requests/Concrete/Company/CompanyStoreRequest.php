@@ -14,7 +14,7 @@ class CompanyStoreRequest extends AbstractStoreRequest
 
     public function required(): array
     {
-        return ['name', 'domain', 'email', 'personnel_id'];
+        return ['name', 'domain', 'email', 'manager_id', 'type'];
     }
 
     public function unique(): array
@@ -32,7 +32,7 @@ class CompanyStoreRequest extends AbstractStoreRequest
             'name' => 'required|string|max:100|unique:companies',
             'domain' => 'required|string|max:100|unique:companies',
             'email' => 'required|string|max:100|unique:companies',
-            'personnel_id' => ['exists:users,id', new UserIdBelongsToPersonnel()],
+            'manager_id' => ['exists:users,id', new UserIdBelongsToPersonnel()],
         ];
     }*/
 }

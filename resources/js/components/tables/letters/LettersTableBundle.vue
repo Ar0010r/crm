@@ -6,8 +6,8 @@
 
         <LettersTableControl/>
         <div v-if="Object.keys(letters).length > 0" class=" table-responsive d-flex align-items-start">
-            <LettersTable class="col-7"/>
-            <TotalLettersTable class="col-4 ml-4"/>
+            <LettersTable class="col-8"/>
+            <TotalLettersTable class="col-3 ml-4"/>
         </div>
         <NoRecords v-else />
     </div>

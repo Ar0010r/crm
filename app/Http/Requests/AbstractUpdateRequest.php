@@ -23,8 +23,6 @@ abstract class AbstractUpdateRequest extends AbstractRequest
             $rules[$key] = $this->addUniqueToRule($key, $rule);
         }
 
-        dd($rules);
-
         return $rules;
     }
 

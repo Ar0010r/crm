@@ -119,10 +119,6 @@ class CompanyController extends Controller
             return $record;
 
         });
-        foreach ($companies as $company) {
-
-
-        }
 
         return new ListResource($data);
     }

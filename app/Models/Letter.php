@@ -18,7 +18,8 @@ class Letter extends Model
         'outlook',
         'yahoo',
         'other',
-        'received_at'
+        'received_at',
+        'processed'
     ];
 
     public function hr()

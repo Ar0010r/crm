@@ -30,7 +30,7 @@ class CompanyUpdateRequest extends AbstractUpdateRequest
             'name' => Rule::unique('companies')->ignore($updatedId),
             'domain' => Rule::unique('companies')->ignore($updatedId),
             'email' => Rule::unique('companies')->ignore($updatedId),
-            'personnel_id' => ['exists:users,id',  new UserIdBelongsToPersonnel()],
+            'manager_id' => ['exists:users,id',  new UserIdBelongsToPersonnel()],
         ];
     }*/
 }

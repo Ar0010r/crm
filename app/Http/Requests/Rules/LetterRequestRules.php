@@ -12,6 +12,7 @@ trait LetterRequestRules
             'google' => ['numeric'],
             'outlook' => ['numeric'],
             'yahoo' => ['numeric'],
+            'processed' => ['numeric'],
             'received_at' => ['date']
         ];
     }

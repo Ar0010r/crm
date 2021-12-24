@@ -36,6 +36,8 @@
             const letterFields = ref(null);
             const profile = computed(() => store.getters.getProfile)
             const emptyLetter = {...store.getters.getEmptyLetter};
+            let companies = computed(() => store.getters.getCompanies);
+            let hrs = computed(() => store.getters.getHrs);
 
             emptyLetter.hr_id = null;
             if(profile.value.role === 'hr' || profile.value.role === 'top hr'){
@@ -44,20 +46,28 @@
 
             emptyLetter.company_id = null;
 
-            console.log('emptyLetter', emptyLetter)
-
             let letter = reactive({...emptyLetter});
 
             async function storeLetter() {
                 try {
                     await letterFields.value.validate();
                     let storedLetter = await container.LetterService.store(letter);
+                    let mails = storedLetter.data.model;
 
-                    store.commit('letter/setLetterById', storedLetter.data.model);
+                    if(mails.company_id){
+                        mails.company = companies.value[mails.company_id];
+                    }
+
+                    if(mails.hr_id){
+                        mails.hr = hrs.value[mails.hr_id];
+                    }
+
+                    store.commit('letter/setLetterById', mails);
                     document.getElementById('storeLetterFormClose').click()
                     emitter.emit('notification-success', 'letter was added');
                     clearForm();
                 } catch (e) {
+                    console.log(e);
                     if(e.response.data) {
                         emitter.emit('notification-error', e.response.data)
                     }

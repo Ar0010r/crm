@@ -7,6 +7,7 @@
             <tr>
                 <th class="text-left font-weight-bold">Hr</th>
                 <th class="text-left font-weight-bold">Mails</th>
+                <th class="text-left font-weight-bold">Total</th>
                 <th class="text-left font-weight-bold">Ready</th>
                 <th class="text-left font-weight-bold">Rate</th>
             </tr>
@@ -15,8 +16,9 @@
             <tr class="odd gradeX" v-for="hr in record.hrs">
                 <td>{{ hr.login }}</td>
                 <td>{{ hr.letters }}</td>
+                <td>{{ hr.total }}</td>
                 <td>{{ hr.hired }}</td>
-                <td> {{(hr.hired/hr.letters * 100).toFixed(2)}}%</td>
+                <td>{{(hr.hired/hr.letters * 100).toFixed(2)}}%</td>
             </tr>
             </tbody>
         </table>
@@ -63,7 +65,7 @@
             </thead>
             <tbody>
             <tr class="odd gradeX">
-                <td>mails/ready</td>
+                <td>mails/ready+exported+invited</td>
                 <td> {{(record.applicants.good/record.head.letters * 100).toFixed(2)}}%</td>
             </tr>
             <tr class="odd gradeX">
@@ -71,7 +73,7 @@
                 <td> {{(record.applicants.exported/record.head.letters * 100).toFixed(2)}}%</td>
             </tr>
             <tr class="odd gradeX">
-                <td>total/ready</td>
+                <td>total/ready+exported+invited</td>
                 <td> {{(record.applicants.good/record.applicants.total * 100).toFixed(2)}}%</td>
             </tr>
             <tr class="odd gradeX">

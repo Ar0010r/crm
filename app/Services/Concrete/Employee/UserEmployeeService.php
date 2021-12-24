@@ -8,7 +8,6 @@ use App\Services\AbstractUserResourceService;
 use App\Services\Concrete\Company\CompanyService;
 use App\Services\Concrete\User\UserService;
 use App\Shared\Value\Status;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -28,7 +27,7 @@ class UserEmployeeService extends AbstractUserResourceService
     {
         return $this->basicQuery
             ->where('hr_id', $this->user->id)
-            ->whereIn('status', array_keys(Status::HR_STATUSES));
+            ->whereIn('status', Status::STATUSES);
     }
 
     protected function personnelResources()
