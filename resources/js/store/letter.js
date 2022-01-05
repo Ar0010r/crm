@@ -5,10 +5,12 @@ export default {
     namespaced: true,
     state: {
         letters: {},
+        statistics: {},
         queryParams: {
             page: "",
             hr_id: "",
-            take: ""
+            company_id: "",
+            take: 200
         },
         emptyLetter: {
             hr_id: null,
@@ -30,9 +32,10 @@ export default {
         async setLetters(state, letters) {
             state.letters = letters;
         },
+        setStatistics(state, statistics) {
+            state.statistics = statistics;
+        },
         setLetterById(state, letter) {
-            console.log('letter', letter)
-           // console.log('state', state)
             let key = letter.id;
             if (state.letters[key]) {
                 state.letters[key] = {...state.letters[key], ...letter};
@@ -74,6 +77,17 @@ export default {
             } else {
                 emitter.emit('notification-error', e.response.data)
             }
-        }
+        },
+
+        async setStatisticsToStore({commit}, params) {
+            try {
+                let statisticts = await container.LetterService.getStatistics();
+
+                commit('setStatistics', statisticts.data.list);
+            } catch (e) {
+                emitter.emit('notification-error', e.response.data)
+                if (e.response.status === 401) container.AuthService.logout()
+            }
+        },
     },
 }

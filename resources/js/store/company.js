@@ -6,18 +6,28 @@ export default {
     state: {
         companies: {},
         statistics: {},
+        queryParams: {
+            page: "",
+            manager_id: "",
+            type: "",
+            take: 100
+        },
         emptyCompany: {
             name: null,
-            personnel_id: null,
-            personnel: {login: null},
+            manager_id: null,
+            manager: {login: null},
             domain: null,
             pseudonym: null,
             email: null,
+            type: null,
             created_at: null,
             dataIsValid: null,
         }
     },
     mutations: {
+        setQueryParam(state, {key, value}) {
+            state.queryParams[key] = value
+        },
         async setCompanies(state, companies) {
             state.companies = companies;
         },
@@ -40,9 +50,10 @@ export default {
         },
     },
     actions: {
-        async setCompaniesToStore({commit, dispatch}) {
+        async setCompaniesToStore({commit}, params) {
             try {
-                let companiesList = await container.CompanyService.getCompanies();
+                console.log(111111, params)
+                let companiesList = await container.CompanyService.getCompanies(params);
                 companiesList = companiesList.data.list;
 
                 let companies = {};
@@ -69,9 +80,9 @@ export default {
         },
         async setStatisticsToStore({commit}, params) {
             try {
-                let employees = await container.CompanyService.getStatistics();
+                let statistics = await container.CompanyService.getStatistics();
 
-                commit('setStatistics', employees.data.list);
+                commit('setStatistics', statistics.data.list);
             } catch (e) {
                 emitter.emit('notification-error', e.response.data)
                 if (e.response.status === 401) container.AuthService.logout()

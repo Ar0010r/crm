@@ -808,6 +808,9 @@ __webpack_require__.r(__webpack_exports__);
       profile: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
         return store.getters.getProfile;
       }),
+      statistics: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
+        return store.getters.getLetterStatistics;
+      }),
       hrs: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
         return store.getters.getHrs;
       }),
@@ -1012,7 +1015,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var store = (0,vuex__WEBPACK_IMPORTED_MODULE_2__.useStore)();
     var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)("emitter");
     var activeFilters = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
-      return store.getters.getEmployeeQueryParams;
+      return store.getters.getLetterQueryParams;
     });
 
     function filter() {
@@ -1048,18 +1051,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     function _getLetters() {
       _getLetters = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var filters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return store.dispatch('letter/setLettersToStore', {
-                  'page': 1,
-                  'filter[hr_id]': activeFilters.value.hr_id,
-                  'take': activeFilters.value.take
-                });
+                /* let filters = {
+                     'page': 1,
+                     'hr_id': activeFilters.value.hr_id,
+                     'company_id': activeFilters.value.company_id,
+                     'take': activeFilters.value.take,
+                 };*/
 
-              case 2:
+                /*  let filters = {};
+                   ["page", "hr_id", "company_id", "take"].map(function(item) {
+                      console.log(item)
+                  });*/
+                filters = {};
+                ["page", "hr_id", "company_id", "take"].map(function (item) {
+                  if (activeFilters.value[item]) {
+                    filters[item] = activeFilters.value[item];
+                  }
+                });
+                _context2.next = 4;
+                return store.dispatch('letter/setLettersToStore', filters);
+
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -1082,6 +1099,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }),
       letters: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
         return store.getters.getLetters;
+      }),
+      companies: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+        return store.getters.getCompanies;
       }),
       initializeLetterStoreForm: function initializeLetterStoreForm() {
         return emitter.emit('create-letter-form');
@@ -1359,10 +1379,12 @@ __webpack_require__.r(__webpack_exports__);
     var rolesAreUndefined = Object.keys(store.getters.getRoles).length === 0;
     var lettersAreUndefined = Object.keys(store.getters.getLetters).length === 0;
     var companiesAreUndefined = Object.keys(store.getters.getCompanies).length === 0;
+    var statisticsUndefined = Object.keys(store.getters.getLetterStatistics).length === 0;
     if (usersAreUndefined) store.dispatch('user/setUsersToStore');
     if (rolesAreUndefined) store.dispatch('user/setRolesToStore');
     if (lettersAreUndefined) store.dispatch('letter/setLettersToStore');
     if (companiesAreUndefined) store.dispatch('company/setCompaniesToStore');
+    if (statisticsUndefined) store.dispatch('letter/setStatisticsToStore');
   },
   components: {
     LettersBundleTable: _components_tables_letters_LettersTableBundle__WEBPACK_IMPORTED_MODULE_0__.default,
@@ -1748,12 +1770,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _TotalLettersTableRow_vue_vue_type_template_id_98eee374_bindings_profile_setup_hrs_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TotalLettersTableRow.vue?vue&type=template&id=98eee374&bindings={"profile":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup"} */ "./resources/js/components/tables/letters/TotalLettersTableRow.vue?vue&type=template&id=98eee374&bindings={\"profile\":\"setup\",\"hrs\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\"}");
+/* harmony import */ var _TotalLettersTableRow_vue_vue_type_template_id_98eee374_bindings_profile_setup_statistics_setup_hrs_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TotalLettersTableRow.vue?vue&type=template&id=98eee374&bindings={"profile":"setup","statistics":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup"} */ "./resources/js/components/tables/letters/TotalLettersTableRow.vue?vue&type=template&id=98eee374&bindings={\"profile\":\"setup\",\"statistics\":\"setup\",\"hrs\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\"}");
 /* harmony import */ var _TotalLettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TotalLettersTableRow.vue?vue&type=script&lang=js */ "./resources/js/components/tables/letters/TotalLettersTableRow.vue?vue&type=script&lang=js");
 
 
 
-_TotalLettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _TotalLettersTableRow_vue_vue_type_template_id_98eee374_bindings_profile_setup_hrs_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__.render
+_TotalLettersTableRow_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _TotalLettersTableRow_vue_vue_type_template_id_98eee374_bindings_profile_setup_statistics_setup_hrs_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -1838,12 +1860,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _LettersTableControl_vue_vue_type_template_id_14dcd469_bindings_profile_setup_letters_setup_initializeLetterStoreForm_setup_hrs_setup_activeFilters_setup_take_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LettersTableControl.vue?vue&type=template&id=14dcd469&bindings={"profile":"setup","letters":"setup","initializeLetterStoreForm":"setup","hrs":"setup","activeFilters":"setup","take":"setup","refresh":"setup"} */ "./resources/js/components/tables/letters/control/LettersTableControl.vue?vue&type=template&id=14dcd469&bindings={\"profile\":\"setup\",\"letters\":\"setup\",\"initializeLetterStoreForm\":\"setup\",\"hrs\":\"setup\",\"activeFilters\":\"setup\",\"take\":\"setup\",\"refresh\":\"setup\"}");
+/* harmony import */ var _LettersTableControl_vue_vue_type_template_id_14dcd469_bindings_profile_setup_letters_setup_companies_setup_initializeLetterStoreForm_setup_hrs_setup_activeFilters_setup_take_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LettersTableControl.vue?vue&type=template&id=14dcd469&bindings={"profile":"setup","letters":"setup","companies":"setup","initializeLetterStoreForm":"setup","hrs":"setup","activeFilters":"setup","take":"setup","refresh":"setup"} */ "./resources/js/components/tables/letters/control/LettersTableControl.vue?vue&type=template&id=14dcd469&bindings={\"profile\":\"setup\",\"letters\":\"setup\",\"companies\":\"setup\",\"initializeLetterStoreForm\":\"setup\",\"hrs\":\"setup\",\"activeFilters\":\"setup\",\"take\":\"setup\",\"refresh\":\"setup\"}");
 /* harmony import */ var _LettersTableControl_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LettersTableControl.vue?vue&type=script&lang=js */ "./resources/js/components/tables/letters/control/LettersTableControl.vue?vue&type=script&lang=js");
 
 
 
-_LettersTableControl_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _LettersTableControl_vue_vue_type_template_id_14dcd469_bindings_profile_setup_letters_setup_initializeLetterStoreForm_setup_hrs_setup_activeFilters_setup_take_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__.render
+_LettersTableControl_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _LettersTableControl_vue_vue_type_template_id_14dcd469_bindings_profile_setup_letters_setup_companies_setup_initializeLetterStoreForm_setup_hrs_setup_activeFilters_setup_take_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -2744,12 +2766,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/letters/TotalLettersTableRow.vue?vue&type=template&id=98eee374&bindings={\"profile\":\"setup\",\"hrs\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\"}":
-/*!**************************************************************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/TotalLettersTableRow.vue?vue&type=template&id=98eee374&bindings={"profile":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup"} ***!
-  \**************************************************************************************************************************************************************************************************************************/
+/***/ "./resources/js/components/tables/letters/TotalLettersTableRow.vue?vue&type=template&id=98eee374&bindings={\"profile\":\"setup\",\"statistics\":\"setup\",\"hrs\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\"}":
+/*!***********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/letters/TotalLettersTableRow.vue?vue&type=template&id=98eee374&bindings={"profile":"setup","statistics":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup"} ***!
+  \***********************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/TotalLettersTableRow.vue?vue&type=template&id=98eee374&bindings={"profile":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/TotalLettersTableRow.vue?vue&type=template&id=98eee374&bindings={"profile":"setup","statistics":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2757,9 +2779,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TotalLettersTableRow_vue_vue_type_template_id_98eee374_bindings_profile_setup_hrs_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TotalLettersTableRow_vue_vue_type_template_id_98eee374_bindings_profile_setup_statistics_setup_hrs_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TotalLettersTableRow_vue_vue_type_template_id_98eee374_bindings_profile_setup_hrs_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./TotalLettersTableRow.vue?vue&type=template&id=98eee374&bindings={"profile":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/TotalLettersTableRow.vue?vue&type=template&id=98eee374&bindings={\"profile\":\"setup\",\"hrs\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TotalLettersTableRow_vue_vue_type_template_id_98eee374_bindings_profile_setup_statistics_setup_hrs_setup_profileIsAdmin_setup_profileIsTopHr_setup_profileIsHr_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./TotalLettersTableRow.vue?vue&type=template&id=98eee374&bindings={"profile":"setup","statistics":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/TotalLettersTableRow.vue?vue&type=template&id=98eee374&bindings={\"profile\":\"setup\",\"statistics\":\"setup\",\"hrs\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\"}");
 
 
 /***/ }),
@@ -2804,12 +2826,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/letters/control/LettersTableControl.vue?vue&type=template&id=14dcd469&bindings={\"profile\":\"setup\",\"letters\":\"setup\",\"initializeLetterStoreForm\":\"setup\",\"hrs\":\"setup\",\"activeFilters\":\"setup\",\"take\":\"setup\",\"refresh\":\"setup\"}":
-/*!************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/letters/control/LettersTableControl.vue?vue&type=template&id=14dcd469&bindings={"profile":"setup","letters":"setup","initializeLetterStoreForm":"setup","hrs":"setup","activeFilters":"setup","take":"setup","refresh":"setup"} ***!
-  \************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./resources/js/components/tables/letters/control/LettersTableControl.vue?vue&type=template&id=14dcd469&bindings={\"profile\":\"setup\",\"letters\":\"setup\",\"companies\":\"setup\",\"initializeLetterStoreForm\":\"setup\",\"hrs\":\"setup\",\"activeFilters\":\"setup\",\"take\":\"setup\",\"refresh\":\"setup\"}":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/letters/control/LettersTableControl.vue?vue&type=template&id=14dcd469&bindings={"profile":"setup","letters":"setup","companies":"setup","initializeLetterStoreForm":"setup","hrs":"setup","activeFilters":"setup","take":"setup","refresh":"setup"} ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/control/LettersTableControl.vue?vue&type=template&id=14dcd469&bindings={"profile":"setup","letters":"setup","initializeLetterStoreForm":"setup","hrs":"setup","activeFilters":"setup","take":"setup","refresh":"setup"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/control/LettersTableControl.vue?vue&type=template&id=14dcd469&bindings={"profile":"setup","letters":"setup","companies":"setup","initializeLetterStoreForm":"setup","hrs":"setup","activeFilters":"setup","take":"setup","refresh":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -2817,9 +2839,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LettersTableControl_vue_vue_type_template_id_14dcd469_bindings_profile_setup_letters_setup_initializeLetterStoreForm_setup_hrs_setup_activeFilters_setup_take_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LettersTableControl_vue_vue_type_template_id_14dcd469_bindings_profile_setup_letters_setup_companies_setup_initializeLetterStoreForm_setup_hrs_setup_activeFilters_setup_take_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LettersTableControl_vue_vue_type_template_id_14dcd469_bindings_profile_setup_letters_setup_initializeLetterStoreForm_setup_hrs_setup_activeFilters_setup_take_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LettersTableControl.vue?vue&type=template&id=14dcd469&bindings={"profile":"setup","letters":"setup","initializeLetterStoreForm":"setup","hrs":"setup","activeFilters":"setup","take":"setup","refresh":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/control/LettersTableControl.vue?vue&type=template&id=14dcd469&bindings={\"profile\":\"setup\",\"letters\":\"setup\",\"initializeLetterStoreForm\":\"setup\",\"hrs\":\"setup\",\"activeFilters\":\"setup\",\"take\":\"setup\",\"refresh\":\"setup\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LettersTableControl_vue_vue_type_template_id_14dcd469_bindings_profile_setup_letters_setup_companies_setup_initializeLetterStoreForm_setup_hrs_setup_activeFilters_setup_take_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LettersTableControl.vue?vue&type=template&id=14dcd469&bindings={"profile":"setup","letters":"setup","companies":"setup","initializeLetterStoreForm":"setup","hrs":"setup","activeFilters":"setup","take":"setup","refresh":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/control/LettersTableControl.vue?vue&type=template&id=14dcd469&bindings={\"profile\":\"setup\",\"letters\":\"setup\",\"companies\":\"setup\",\"initializeLetterStoreForm\":\"setup\",\"hrs\":\"setup\",\"activeFilters\":\"setup\",\"take\":\"setup\",\"refresh\":\"setup\"}");
 
 
 /***/ }),
@@ -3651,10 +3673,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/TotalLettersTableRow.vue?vue&type=template&id=98eee374&bindings={\"profile\":\"setup\",\"hrs\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\"}":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/TotalLettersTableRow.vue?vue&type=template&id=98eee374&bindings={"profile":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup"} ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/TotalLettersTableRow.vue?vue&type=template&id=98eee374&bindings={\"profile\":\"setup\",\"statistics\":\"setup\",\"hrs\":\"setup\",\"profileIsAdmin\":\"setup\",\"profileIsTopHr\":\"setup\",\"profileIsHr\":\"setup\"}":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/TotalLettersTableRow.vue?vue&type=template&id=98eee374&bindings={"profile":"setup","statistics":"setup","hrs":"setup","profileIsAdmin":"setup","profileIsTopHr":"setup","profileIsHr":"setup"} ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -3678,8 +3700,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_HrRow, { key: 0 }))
       : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
     ($setup.profileIsTopHr || $setup.profileIsAdmin)
-      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, { key: 1 }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.hrs, (hr) => {
-          return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_AdminRow, { hr: hr }, null, 8 /* PROPS */, ["hr"]))
+      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, { key: 1 }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.statistics, (record) => {
+          return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_AdminRow, { hr: record }, null, 8 /* PROPS */, ["hr"]))
         }), 256 /* UNKEYED_FRAGMENT */))
       : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
   ], 64 /* STABLE_FRAGMENT */))
@@ -3756,10 +3778,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/control/LettersTableControl.vue?vue&type=template&id=14dcd469&bindings={\"profile\":\"setup\",\"letters\":\"setup\",\"initializeLetterStoreForm\":\"setup\",\"hrs\":\"setup\",\"activeFilters\":\"setup\",\"take\":\"setup\",\"refresh\":\"setup\"}":
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/control/LettersTableControl.vue?vue&type=template&id=14dcd469&bindings={"profile":"setup","letters":"setup","initializeLetterStoreForm":"setup","hrs":"setup","activeFilters":"setup","take":"setup","refresh":"setup"} ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/control/LettersTableControl.vue?vue&type=template&id=14dcd469&bindings={\"profile\":\"setup\",\"letters\":\"setup\",\"companies\":\"setup\",\"initializeLetterStoreForm\":\"setup\",\"hrs\":\"setup\",\"activeFilters\":\"setup\",\"take\":\"setup\",\"refresh\":\"setup\"}":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/letters/control/LettersTableControl.vue?vue&type=template&id=14dcd469&bindings={"profile":"setup","letters":"setup","companies":"setup","initializeLetterStoreForm":"setup","hrs":"setup","activeFilters":"setup","take":"setup","refresh":"setup"} ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -3780,6 +3802,10 @@ const _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
   value: "",
   selected: ""
 }, "Hr", -1 /* HOISTED */)
+const _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+  value: "",
+  selected: ""
+}, "Company", -1 /* HOISTED */)
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
@@ -3812,7 +3838,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         ], 512 /* NEED_PATCH */)), [
           [vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.activeFilters.hr_id]
         ])
-      : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)
+      : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+      "onUpdate:modelValue": _cache[4] || (_cache[4] = $event => ($setup.activeFilters.company_id = $event)),
+      class: "custom-select form-control ml-2 col-sm-2"
+    }, [
+      _hoisted_4,
+      ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.companies, (company) => {
+        return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
+          value: company.id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(company.name), 9 /* TEXT, PROPS */, ["value"]))
+      }), 256 /* UNKEYED_FRAGMENT */))
+    ], 512 /* NEED_PATCH */), [
+      [vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.activeFilters.company_id]
+    ])
   ]))
 }
 
@@ -3981,7 +4020,7 @@ const _hoisted_7 = { class: "col-2" }
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_1, [
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.hr.login), 1 /* TEXT */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.hr.hr.login), 1 /* TEXT */),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.hr.google_total ?? 0), 1 /* TEXT */),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.hr.outlook_total ?? 0), 1 /* TEXT */),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.hr.yahoo_total ?? 0), 1 /* TEXT */),
@@ -4112,9 +4151,7 @@ const _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Outlook"),
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Yahoo"),
   /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Other"),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Total"),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Hired"),
-  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Rate")
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", { class: "text-left font-weight-bold" }, "Total")
 ], -1 /* HOISTED */)
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -4149,15 +4186,6 @@ const _hoisted_3 = { class: "col-2" }
 const _hoisted_4 = { class: "col-2" }
 const _hoisted_5 = { class: "col-2" }
 const _hoisted_6 = { class: "col-2" }
-const _hoisted_7 = { class: "col-2" }
-const _hoisted_8 = {
-  key: 0,
-  class: "col-3"
-}
-const _hoisted_9 = {
-  key: 1,
-  class: "col-3"
-}
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_1, [
@@ -4165,11 +4193,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.profile.outlook_total ?? 0), 1 /* TEXT */),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.profile.yahoo_total ?? 0), 1 /* TEXT */),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.profile.other_total ?? 0), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.total), 1 /* TEXT */),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.profile.good_hr_employees_count), 1 /* TEXT */),
-    ($setup.profile.good_hr_employees_count>0)
-      ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(($setup.profile.good_hr_employees_count/$setup.total * 100).toFixed(2)) + "% ", 1 /* TEXT */))
-      : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_9, " 0%"))
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.total), 1 /* TEXT */)
   ]))
 }
 

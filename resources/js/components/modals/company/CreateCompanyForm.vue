@@ -35,11 +35,20 @@
             const emitter = inject("emitter");
             const companyFields = ref(null);
             const profile = computed(() => store.getters.getProfile)
+            const managers = computed(() => store.getters.getUsers)
 
             let emptyCompany = {...store.getters.getEmptyCompany};
 
-            if(profile.role === 'personnel'){
-                emptyCompany.personnel_id = profile.id
+            if(profile.value.role === 'personnel' || profile.value.role === 'hr'){
+                emptyCompany.manager_id = profile.id
+            }
+
+            if(profile.value.role === 'personnel'){
+                emptyCompany.type = 0
+            }
+
+            if(profile.value.role === 'hr'){
+                emptyCompany.type = 1
             }
 
             let company = reactive({...emptyCompany});
@@ -48,14 +57,18 @@
                 try {
                     await companyFields.value.validate();
                     let response = await container.CompanyService.storeCompany(company);
-
                     let storedCompany = response.data.model;
+
+                    if(storedCompany.manager_id) {
+                        storedCompany.manager = managers.value[storedCompany.manager_id];
+                    }
 
                     store.commit('company/setCompanyById', storedCompany);
                     document.getElementById('storeCompanyFormClose').click()
                     emitter.emit('notification-success', 'company was created');
                     resetForm()
                 } catch (e) {
+                    console.log(e);
                     if(e.response.data) {
                         emitter.emit('notification-error', e.response.data)
                     }
@@ -66,17 +79,21 @@
             function resetForm() {
                 Object.keys(emptyCompany).forEach(key => company[key] = emptyCompany[key]);
 
-                if(profile.value.role === 'personnel'){
-                    company.personnel_id = profile.value.id
-                    company.personnel = profile.value
-                    console.log(company.personnel.login)
+                if(profile.value.role === 'personnel' || profile.value.role === 'hr'){
+                    company.manager_id = profile.value.id
+                    company.manager = profile.value
+                    console.log(company.manager.login)
                 }
             }
 
             emitter.on('create-company-form', resetForm);
             onBeforeUnmount(() => emitter.off('create-company-form', resetForm));
 
-            return {storeCompany, company, companyFields}
+            return {
+                storeCompany,
+                company,
+                companyFields
+            }
         },
         components: {
             CompanyFormFields

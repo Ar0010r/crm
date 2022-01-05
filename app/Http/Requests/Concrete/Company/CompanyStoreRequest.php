@@ -3,13 +3,12 @@
 namespace App\Http\Requests\Concrete\Company;
 
 use App\Http\Requests\AbstractStoreRequest;
-use App\Http\Requests\Permissions\PersonnelAllowed;
+use App\Http\Requests\Permissions\AnyManagerAllowed;
 use App\Http\Requests\Rules\CompanyRequestRules;
-
 
 class CompanyStoreRequest extends AbstractStoreRequest
 {
-    use PersonnelAllowed;
+    use AnyManagerAllowed;
     use CompanyRequestRules;
 
     public function required(): array

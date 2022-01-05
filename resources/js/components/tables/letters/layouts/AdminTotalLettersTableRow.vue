@@ -1,6 +1,6 @@
 <template>
     <tr class="odd gradeX">
-        <td  class="col-2">{{hr.login}}</td>
+        <td  class="col-2">{{hr.hr.login}}</td>
         <td class="col-2" >{{hr.google_total ?? 0}}</td>
         <td class="col-2" >{{hr.outlook_total ?? 0}}</td>
         <td class="col-2" >{{hr.yahoo_total ?? 0}}</td>

@@ -14,6 +14,12 @@
                 {{hr.login}}
             </option>
         </select>
+        <select v-model="activeFilters.company_id" class="custom-select form-control ml-2 col-sm-2">
+            <option value="" selected>Company</option>
+            <option v-for="company in companies" :value="company.id">
+                {{company.name}}
+            </option>
+        </select>
     </div>
 </template>
 <script>
@@ -24,7 +30,7 @@
         setup() {
             let store = useStore();
             const emitter = inject("emitter");
-            let activeFilters = computed(() => store.getters.getEmployeeQueryParams);
+            let activeFilters = computed(() => store.getters.getLetterQueryParams);
 
             async function filter() {
                 store.commit('letter/setQueryParam', {'key':'hr_id', 'value': activeFilters.value.hr_id});
@@ -33,11 +39,28 @@
             }
 
             async function getLetters(){
-                await store.dispatch('letter/setLettersToStore', {
+               /* let filters = {
                     'page': 1,
-                    'filter[hr_id]': activeFilters.value.hr_id,
+                    'hr_id': activeFilters.value.hr_id,
+                    'company_id': activeFilters.value.company_id,
                     'take': activeFilters.value.take,
+                };*/
+
+              /*  let filters = {};
+
+                ["page", "hr_id", "company_id", "take"].map(function(item) {
+                    console.log(item)
+                });*/
+
+                let filters = {};
+
+                ["page", "hr_id", "company_id", "take"].map(function(item) {
+                    if(activeFilters.value[item]) {
+                        filters[item] = activeFilters.value[item];
+                    }
                 });
+
+                await store.dispatch('letter/setLettersToStore', filters);
             }
 
             watch(() => activeFilters, (first, second) => filter(), {deep: true});
@@ -45,6 +68,7 @@
             return {
                 profile: computed(() => store.getters.getProfile),
                 letters: computed(() => store.getters.getLetters),
+                companies: computed(() => store.getters.getCompanies),
                 initializeLetterStoreForm : () =>  emitter.emit('create-letter-form'),
                 hrs: computed(() => store.getters.getHrs),
 

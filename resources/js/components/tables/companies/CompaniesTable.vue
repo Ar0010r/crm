@@ -4,17 +4,9 @@
             Companies
         </h4>
 
-        <div class="d-flex mb-3 mt-2">
-            <button @click="refresh" class="btn btn-secondary" type="button" title="Refresh">
-                <i class="opacity-75 ion ion-md-refresh icon-refresh"></i>
-            </button>
-            <button v-if="profile.role === 'admin' || profile.role === 'personnel'"
-                    @click="initializeCompanyStoreForm" class="btn btn-primary btn ml-2" data-toggle="modal"
-                    data-target="#addCompanyForm">Add company
-            </button>
-        </div>
+        <Control/>
         <div v-if="Object.keys(companies).length > 0" class=" table-responsive">
-            <table class="datatables-demo table table-striped table-bordered">
+            <table class="datatables-demo table table-striped table-bordered" style="width: 65%">
                 <CompaniesTableHead/>
                 <tbody>
                 <CompaniesTableRow v-for="company in companies" :company="company" :key="company.id + company.name"/>
@@ -27,6 +19,7 @@
 
 <script>
     import CompaniesTableHead from './CompaniesTableHead.vue';
+    import Control from './control/CompaniesControl';
     import CompaniesTableRow from './CompaniesTableRow.vue';
     import CreateCompanyForm from '../../modals/company/CreateCompanyForm';
     import EditCompanyForm from '../../modals/company/EditCompanyForm';
@@ -52,7 +45,8 @@
             CompaniesTableRow,
             CreateCompanyForm,
             EditCompanyForm,
-            NoRecords
+            NoRecords,
+            Control
         }
     };
 </script>

@@ -24,11 +24,15 @@ Route::group(['namespace' => 'App\Http\Controllers\V1'], function () {
         Route::apiResource('/companies', 'CompanyController');
         Route::get('employees/statistics', 'EmployeeController@statistics');
         Route::apiResource('/employees', 'EmployeeController');
-        Route::apiResource('/letter', 'LetterController');
+
+        Route::get('letter/statistics', 'LetterController@statistics');
         Route::get('letter/total', 'LetterController@total');
+        Route::apiResource('/letter', 'LetterController');
+
         Route::post('employees/import', 'EmployeeController@import');
         Route::patch('employees', 'EmployeeController@bulkDestroy');
         Route::put('employees', 'EmployeeController@bulkUpdate');
+
         Route::get('/races', 'EmployeeController@races');
         Route::get('/profile', 'AuthController@profile');
         Route::get('/statuses', 'EmployeeController@statuses');

@@ -4,12 +4,11 @@
 namespace App\Services\Concrete\Employee;
 
 use App\Models\Employee;
-use App\Services\AbstractSearchableResourceService;
+use App\Services\AbstractStoreService;
 use App\Shared\Value\Status;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 
-class EmployeeService extends AbstractSearchableResourceService
+class StoreEmployeeService extends AbstractStoreService
 {
     public function store(Model $model): bool
     {
@@ -34,6 +33,11 @@ class EmployeeService extends AbstractSearchableResourceService
         }, $employees);
 
         return Employee::destroy($ids);
+    }
+
+    protected function getModel(): Model
+    {
+        return new Employee();
     }
 
 }

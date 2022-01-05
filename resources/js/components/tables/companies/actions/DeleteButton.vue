@@ -1,16 +1,17 @@
 <template>
-    <a  data-toggle="modal" data-target="#deleteForm" @click="deleteWarning" type="button" class="ion ion-md-trash danger"></a>
+    <button :disabled="disabled()"  data-toggle="modal" data-target="#deleteForm" @click="deleteWarning" type="button" class="ion ion-md-trash danger border-0"></button>
 </template>
 
 <script>
     import {useStore} from 'vuex'
-    import {inject, onBeforeUnmount, on} from 'vue';
+    import {inject, onBeforeUnmount, computed} from 'vue';
 
     export default {
         setup(props) {
             const store = useStore();
             const emitter = inject("emitter");
             const container = inject('container');
+            const profile = computed(() => store.getters.getProfile)
             const deleteEventId = 'delete-company-' + props.company.id;
 
             emitter.on(deleteEventId, deleteCompany);
@@ -40,7 +41,16 @@
             }
 
             return {
-                deleteWarning, deleteEventId
+                deleteWarning, deleteEventId,
+                disabled: function () {
+                    console.log('disable ? ' , profile.value.role, props.company.type)
+                    if(profile.value.role == 'hr' || profile.value.role == 'top hr') {
+                        if(props.company.type == 0) {
+                            return true
+                        }
+                    }
+                    return false
+                },
             }
         },
         props: {

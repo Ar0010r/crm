@@ -29,10 +29,13 @@ export default createStore({
         },
 
         getCompanies: state => state.company.companies,
+        getCompanyQueryParams: state => state.company.queryParams,
         getStatistics: state => state.company.statistics,
         getEmptyCompany: state => state.company.emptyCompany,
 
         getLetters: state => state.letter.letters,
+        getLetterQueryParams: state => state.letter.queryParams,
+        getLetterStatistics: state => state.letter.statistics,
         getEmptyLetter: state => state.letter.emptyLetter,
     },
     modules: {

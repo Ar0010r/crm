@@ -14,11 +14,6 @@
         </div>
         <div v-if="Object.keys(users).length > 0" class="table-responsive d-flex align-items-start">
             <Managers/>
-            <div class="d-flex flex-column align-items-center col-6">
-                <PersonnelStatistics/>
-                <HrStatistics/>
-            </div>
-
         </div>
         <NoRecords v-else/>
     </div>
@@ -27,8 +22,6 @@
 <script>
     import NoRecords from '../../layout/NoRecords';
     import Managers from './ManagersTable'
-    import HrStatistics from './HrStatisticsTable'
-    import PersonnelStatistics from './PersonnelStatisticsTable'
 
     import {computed, inject} from 'vue';
     import {useStore} from 'vuex';
@@ -47,8 +40,6 @@
 
         components: {
             Managers,
-            HrStatistics,
-            PersonnelStatistics,
             NoRecords
         }
     };

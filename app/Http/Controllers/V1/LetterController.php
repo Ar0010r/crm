@@ -1,39 +1,48 @@
 <?php
+
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Concrete\Letter\LetterGetRequest;
 use App\Http\Requests\Concrete\Letter\LetterStoreRequest;
 use App\Http\Requests\Concrete\Letter\LetterUpdateRequest;
 use App\Http\Resources\Base\ListResource;
 use App\Http\Resources\Base\ModelResource;
 use App\Http\Resources\LetterResource;
 use App\Models\Letter;
-use App\Services\Concrete\Letter\LetterService;
-use App\Services\Concrete\Letter\UserLetterService;
-use App\Services\Contracts\ResourceServiceInterface;
+use App\Services\Concrete\Letter\GetLetterService;
+use App\Services\Concrete\Letter\LetterStatisticsService;
+use App\Services\Concrete\Letter\StoreLetterService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
-
 class LetterController extends Controller
 {
-    private ResourceServiceInterface $service;
+    private LetterStatisticsService $statisticsService;
+    private StoreLetterService $storeService;
+    private GetLetterService $getService;
 
-    public function __construct(ResourceServiceInterface $service) {
-        $this->service = $service;
+    public function __construct(
+        StoreLetterService $storeService,
+        GetLetterService $getService,
+        LetterStatisticsService $statisticsService
+    ) {
+        $this->statisticsService = $statisticsService;
+        $this->storeService = $storeService;
+        $this->getService = $getService;
     }
 
-    public function index()
+    public function index(LetterGetRequest $request)
     {
-        $data = $this->service->get()->items();
+        $data = $this->getService->get($request)->items();
 
         return new ListResource($data);
     }
 
-    public function store(LetterStoreRequest $r)
+    public function store(LetterStoreRequest $request)
     {
-        $letter = $this->service->make($r);
-        $this->service->store($letter);
+        $letter = $this->storeService->make($request);
+        $this->storeService->store($letter);
 
         return new LetterResource($letter);
     }
@@ -41,15 +50,15 @@ class LetterController extends Controller
 
     public function show(Letter $letter)
     {
-        $letter = $this->service->show($letter);
+        $letter = $this->getService->show($letter);
 
         return new LetterResource($letter);
     }
 
-    public function update(LetterUpdateRequest $r, Letter $letter)
+    public function update(LetterUpdateRequest $request, Letter $letter)
     {
-        $letter = $this->service->make($r, $letter);
-        $this->service->update($letter);
+        $letter = $this->storeService->make($request, $letter);
+        $this->storeService->update($letter);
 
         return new LetterResource($letter);
     }
@@ -57,7 +66,7 @@ class LetterController extends Controller
     public function destroy(Letter $letter)
     {
         try {
-            $this->service->destroy($letter);
+            $this->storeService->destroy($letter);
             return new LetterResource($letter);
         } catch (\Exception $e) {
             return response($e->getMessage(), JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
@@ -72,5 +81,13 @@ class LetterController extends Controller
         }
 
         return new ModelResource($q->get());
+    }
+
+    public function statistics()
+    {
+        $data = $this->statisticsService->calculate(auth()->user());
+
+        return new ListResource(['list' => $data]);
+
     }
 }

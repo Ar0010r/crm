@@ -8,6 +8,7 @@ const ManagersView = () => import('./views/ManagersView.vue');
 const LoginView = () => import('./views/LoginView.vue');
 const LettersView = () => import('./views/LettersView.vue');
 const StatisticsView = () => import('./views/StatisticsView.vue');
+const TestsView = () => import('./views/TestsView.vue');
 
 const history = createWebHistory();
 
@@ -49,6 +50,12 @@ const router = createRouter({
             component: StatisticsView,
             name: 'statistics',
             meta: {title: 'statistics'}
+        },
+        {
+            path: '/tests',
+            component: TestsView,
+            name: 'tests',
+            meta: {title: 'tests'}
         },
         {
             path: '/',

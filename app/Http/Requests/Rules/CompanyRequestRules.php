@@ -15,7 +15,7 @@ trait CompanyRequestRules
             'type' => ['numeric'],
             'domain' => ['string'],
             'email' => ['string'],
-            'manager_id' => ['exists:users,id', new UserIdBelongsToPersonnel()]
+            'manager_id' => ['exists:users,id']
         ];
     }
 }

@@ -1,6 +1,6 @@
 <template>
     <HrRow v-if="profileIsHr" />
-    <AdminRow v-if="profileIsTopHr || profileIsAdmin" v-for="hr in hrs" :hr="hr" />
+    <AdminRow v-if="profileIsTopHr || profileIsAdmin" v-for="record in statistics" :hr="record" />
 </template>
 
 <script>
@@ -15,6 +15,7 @@
 
             return {
                 profile: computed(() => store.getters.getProfile),
+                statistics: computed(() => store.getters.getLetterStatistics),
                 hrs: computed(() => store.getters.getHrs),
                 profileIsAdmin: computed(() => {
                     return store.getters.getProfile.role === 'admin'

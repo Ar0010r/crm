@@ -16,13 +16,14 @@ class Company extends Model
 
     protected $fillable = [
         'name',
+        'type',
         'email',
         'domain',
         'pseudonym',
         'manager_id'
     ];
 
-    public function personnel()
+    public function manager()
     {
         return $this->belongsTo(User::class, 'manager_id', 'id');
     }

@@ -19,4 +19,8 @@ export class LetterService {
     async delete(letter) {
         return await this.client.delete('/api/letter/' + letter.id);
     }
+
+    async getStatistics() {
+        return await this.client.get('api/letter/statistics');
+    }
 }

@@ -17,11 +17,13 @@
             let rolesAreUndefined = Object.keys(store.getters.getRoles).length === 0;
             let lettersAreUndefined = Object.keys(store.getters.getLetters).length === 0;
             let companiesAreUndefined = Object.keys(store.getters.getCompanies).length === 0;
+            let statisticsUndefined = Object.keys(store.getters.getLetterStatistics).length === 0;
 
             if (usersAreUndefined) store.dispatch('user/setUsersToStore');
             if (rolesAreUndefined) store.dispatch('user/setRolesToStore');
             if (lettersAreUndefined) store.dispatch('letter/setLettersToStore');
             if (companiesAreUndefined) store.dispatch('company/setCompaniesToStore');
+            if (statisticsUndefined) store.dispatch('letter/setStatisticsToStore');
         },
         components: {
             LettersBundleTable,

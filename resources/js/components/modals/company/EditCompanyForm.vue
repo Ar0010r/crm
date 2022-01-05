@@ -44,8 +44,8 @@
                     await companyFields.value.validate();
                     await container.CompanyService.updateCompany(company);
 
-                    if (profile.value.role !== 'personnel') {
-                        company.personnel = users.value[company.personnel_id];
+                    if (profile.value.role !== 'personnel' && profile.value.role !== 'hr') {
+                        company.manager = users.value[company.manager_id];
                     }
 
                     store.commit('company/setCompanyById', company);

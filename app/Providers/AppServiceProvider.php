@@ -2,64 +2,39 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\V1\CompanyController;
-use App\Http\Controllers\V1\EmployeeController;
-use App\Http\Controllers\V1\LetterController;
-use App\Http\Controllers\V1\UserController;
-use App\Services\Concrete\Company\CompanyService;
-use App\Services\Concrete\Company\UserCompanyService;
-use App\Services\Concrete\Employee\EmployeeSearchService;
-use App\Services\Concrete\Employee\EmployeeService;
-use App\Services\Concrete\Employee\UserEmployeeService;
-use App\Services\Concrete\Letter\LetterService;
-use App\Services\Concrete\Letter\UserLetterService;
-use App\Services\Concrete\User\UserService;
-use App\Services\Concrete\User\UserSubordinateService;
-use App\Services\Contracts\ResourceSearchServiceInterface;
-use App\Services\Contracts\ResourceServiceInterface;
-use App\Services\Contracts\UserResourceServiceInterface;
+use App\Services\Concrete\Company\GetCompanyService;
+use App\Services\Concrete\Company\ScopeCompanyService;
+use App\Services\Concrete\Employee\GetEmployeeService;
+use App\Services\Concrete\Employee\ScopeEmployeeService;
+use App\Services\Concrete\Letter\GetLetterService;
+use App\Services\Concrete\Letter\ScopeLetterService;
+use App\Services\Concrete\User\GetUserService;
+use App\Services\Concrete\User\ScopeUserService;
+use App\Services\Contracts\ScopeResourceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->when(CompanyService::class)
-            ->needs(UserResourceServiceInterface::class)
-            ->give(UserCompanyService::class);
-
-        $this->app->when(CompanyController::class)
-            ->needs(ResourceServiceInterface::class)
-            ->give(CompanyService::class);
+        $this->app->when(GetCompanyService::class)
+            ->needs(ScopeResourceInterface::class)
+            ->give(ScopeCompanyService::class);
 
 
-        $this->app->when(EmployeeService::class)
-            ->needs(UserResourceServiceInterface::class)
-            ->give(UserEmployeeService::class);
-
-        $this->app->when(EmployeeService::class)
-            ->needs(ResourceSearchServiceInterface::class)
-            ->give(EmployeeSearchService::class);
-
-        $this->app->when(EmployeeController::class)
-            ->needs(ResourceSearchServiceInterface::class)
-            ->give(EmployeeService::class);
+        $this->app->when(GetEmployeeService::class)
+            ->needs(ScopeResourceInterface::class)
+            ->give(ScopeEmployeeService::class);
 
 
-        $this->app->when(LetterService::class)
-            ->needs(UserResourceServiceInterface::class)
-            ->give(UserLetterService::class);
-        $this->app->when(LetterController::class)
-            ->needs(ResourceServiceInterface::class)
-            ->give(LetterService::class);
+        $this->app->when(GetLetterService::class)
+            ->needs(ScopeResourceInterface::class)
+            ->give(ScopeLetterService::class);
 
 
-        $this->app->when(UserService::class)
-            ->needs(UserResourceServiceInterface::class)
-            ->give(UserSubordinateService::class);
-        $this->app->when(UserController::class)
-            ->needs(ResourceServiceInterface::class)
-            ->give(UserService::class);
+        $this->app->when(GetUserService::class)
+            ->needs(ScopeResourceInterface::class)
+            ->give(ScopeUserService::class);
     }
 
     public function boot()

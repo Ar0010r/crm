@@ -4,16 +4,20 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Base\ModelResource;
-use App\Services\Concrete\User\UserService;
+use App\Services\Concrete\User\StoreUserService;
+use App\Services\Concrete\User\UserProfileService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    private UserService $userService;
-    public function __construct(UserService $userService)
+    private StoreUserService $storeService;
+    private UserProfileService $profileService;
+
+    public function __construct(StoreUserService $storeService, UserProfileService $profileService)
     {
-        $this->userService = $userService;
+        $this->storeService = $storeService;
+        $this->profileService = $profileService;
     }
 
     public function login(Request $r)
@@ -30,7 +34,7 @@ class AuthController extends Controller
 
     public function profile()
     {
-        $user = $this->userService->getProfile(auth()->user());
+        $user = $this->profileService->getProfile(auth()->user());
 
         return new ModelResource($user);
     }

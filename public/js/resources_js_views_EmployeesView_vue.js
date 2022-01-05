@@ -89,6 +89,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     (0,vue__WEBPACK_IMPORTED_MODULE_1__.watch)(function () {
       return props.data;
     }, function (first, second) {
+      getPages();
+
       if (props.data.current_page > props.data.last_page) {
         goToPage(props.data.last_page);
       }
@@ -105,21 +107,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                console.log(props.data);
+                _context.next = 3;
                 return container.EmployeeService.getEmployees({
                   'page': page,
-                  'filter[hr_id]': activeFilters.value.hr_id,
-                  'filter[status]': activeFilters.value.status,
-                  'filter[company_id]': activeFilters.value.company_id,
-                  'recordsPerPage': activeFilters.value.recordsPerPage
+                  'hr_id': activeFilters.value.hr_id,
+                  'status': activeFilters.value.status,
+                  'company_id': activeFilters.value.company_id,
+                  'take': activeFilters.value.take
                 });
 
-              case 2:
+              case 3:
                 employees = _context.sent;
                 store.commit('employee/setEmployees', employees.employees);
                 store.commit('employee/setPagination', employees.pagination);
 
-              case 5:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -129,8 +132,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return _goToPage.apply(this, arguments);
     }
 
+    function getPages(current, last) {
+      var show = 10;
+      var pages = [];
+      last = parseInt(last);
+      current = parseInt(current);
+      var start = current - show / 2,
+          end = current + show / 2;
+
+      if (end > last) {
+        start -= end - last;
+        end = last;
+      }
+
+      if (start <= 0) {
+        end += (start - 1) * -1;
+        start = 1;
+      }
+
+      end = end > last ? last : end;
+
+      for (var i = start; i < end; i++) {
+        pages.push(i);
+      }
+
+      return pages;
+    }
+
     return {
-      goToPage: goToPage
+      goToPage: goToPage,
+      getPages: getPages
     };
   },
   props: {
@@ -1496,8 +1527,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   'value': activeFilters.value.status
                 });
                 store.commit('employee/setQueryParam', {
-                  'key': 'recordsPerPage',
-                  'value': activeFilters.value.recordsPerPage
+                  'key': 'take',
+                  'value': activeFilters.value.take
                 });
                 store.commit('employee/setQueryParam', {
                   'key': 'hr_id',
@@ -1522,20 +1553,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     function _getEmployees() {
       _getEmployees = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var filters;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return store.dispatch('employee/setEmployeesToStore', {
-                  'page': 1,
-                  'filter[hr_id]': activeFilters.value.hr_id,
-                  'filter[status]': activeFilters.value.status,
-                  'filter[company_id]': activeFilters.value.company_id,
-                  'recordsPerPage': activeFilters.value.recordsPerPage
+                filters = {};
+                ["page", "hr_id", "company_id", "status", "take"].map(function (key) {
+                  if (activeFilters.value[key]) {
+                    filters[key] = activeFilters.value[key];
+                  }
                 });
+                _context2.next = 4;
+                return store.dispatch('employee/setEmployeesToStore', filters);
 
-              case 2:
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -1557,7 +1589,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       hrs: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
         return store.getters.getHrs;
       }),
-      recordsPerPage: [150, 200, 300, 500],
+      take: [150, 200, 300, 500],
       profile: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
         return store.getters.getProfile;
       }),
@@ -2081,12 +2113,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _Pagination_vue_vue_type_template_id_5c18b184_bindings_goToPage_setup_data_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Pagination.vue?vue&type=template&id=5c18b184&bindings={"goToPage":"setup","data":"props"} */ "./resources/js/components/layout/Pagination.vue?vue&type=template&id=5c18b184&bindings={\"goToPage\":\"setup\",\"data\":\"props\"}");
+/* harmony import */ var _Pagination_vue_vue_type_template_id_5c18b184_bindings_goToPage_setup_getPages_setup_data_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Pagination.vue?vue&type=template&id=5c18b184&bindings={"goToPage":"setup","getPages":"setup","data":"props"} */ "./resources/js/components/layout/Pagination.vue?vue&type=template&id=5c18b184&bindings={\"goToPage\":\"setup\",\"getPages\":\"setup\",\"data\":\"props\"}");
 /* harmony import */ var _Pagination_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Pagination.vue?vue&type=script&lang=js */ "./resources/js/components/layout/Pagination.vue?vue&type=script&lang=js");
 
 
 
-_Pagination_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _Pagination_vue_vue_type_template_id_5c18b184_bindings_goToPage_setup_data_props___WEBPACK_IMPORTED_MODULE_0__.render
+_Pagination_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _Pagination_vue_vue_type_template_id_5c18b184_bindings_goToPage_setup_getPages_setup_data_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -2561,12 +2593,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var _EmployeesTableMainControl_vue_vue_type_template_id_bd5c2340_bindings_activeFilters_setup_hrs_setup_recordsPerPage_setup_profile_setup_statuses_setup_companies_setup_showCreateEmployeeForm_setup_showFileUploadForm_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmployeesTableMainControl.vue?vue&type=template&id=bd5c2340&bindings={"activeFilters":"setup","hrs":"setup","recordsPerPage":"setup","profile":"setup","statuses":"setup","companies":"setup","showCreateEmployeeForm":"setup","showFileUploadForm":"setup","refresh":"setup"} */ "./resources/js/components/tables/employees/control/EmployeesTableMainControl.vue?vue&type=template&id=bd5c2340&bindings={\"activeFilters\":\"setup\",\"hrs\":\"setup\",\"recordsPerPage\":\"setup\",\"profile\":\"setup\",\"statuses\":\"setup\",\"companies\":\"setup\",\"showCreateEmployeeForm\":\"setup\",\"showFileUploadForm\":\"setup\",\"refresh\":\"setup\"}");
+/* harmony import */ var _EmployeesTableMainControl_vue_vue_type_template_id_bd5c2340_bindings_activeFilters_setup_hrs_setup_take_setup_profile_setup_statuses_setup_companies_setup_showCreateEmployeeForm_setup_showFileUploadForm_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmployeesTableMainControl.vue?vue&type=template&id=bd5c2340&bindings={"activeFilters":"setup","hrs":"setup","take":"setup","profile":"setup","statuses":"setup","companies":"setup","showCreateEmployeeForm":"setup","showFileUploadForm":"setup","refresh":"setup"} */ "./resources/js/components/tables/employees/control/EmployeesTableMainControl.vue?vue&type=template&id=bd5c2340&bindings={\"activeFilters\":\"setup\",\"hrs\":\"setup\",\"take\":\"setup\",\"profile\":\"setup\",\"statuses\":\"setup\",\"companies\":\"setup\",\"showCreateEmployeeForm\":\"setup\",\"showFileUploadForm\":\"setup\",\"refresh\":\"setup\"}");
 /* harmony import */ var _EmployeesTableMainControl_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmployeesTableMainControl.vue?vue&type=script&lang=js */ "./resources/js/components/tables/employees/control/EmployeesTableMainControl.vue?vue&type=script&lang=js");
 
 
 
-_EmployeesTableMainControl_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _EmployeesTableMainControl_vue_vue_type_template_id_bd5c2340_bindings_activeFilters_setup_hrs_setup_recordsPerPage_setup_profile_setup_statuses_setup_companies_setup_showCreateEmployeeForm_setup_showFileUploadForm_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__.render
+_EmployeesTableMainControl_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _EmployeesTableMainControl_vue_vue_type_template_id_bd5c2340_bindings_activeFilters_setup_hrs_setup_take_setup_profile_setup_statuses_setup_companies_setup_showCreateEmployeeForm_setup_showFileUploadForm_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
 
@@ -3256,12 +3288,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/layout/Pagination.vue?vue&type=template&id=5c18b184&bindings={\"goToPage\":\"setup\",\"data\":\"props\"}":
-/*!**********************************************************************************************************************************!*\
-  !*** ./resources/js/components/layout/Pagination.vue?vue&type=template&id=5c18b184&bindings={"goToPage":"setup","data":"props"} ***!
-  \**********************************************************************************************************************************/
+/***/ "./resources/js/components/layout/Pagination.vue?vue&type=template&id=5c18b184&bindings={\"goToPage\":\"setup\",\"getPages\":\"setup\",\"data\":\"props\"}":
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/layout/Pagination.vue?vue&type=template&id=5c18b184&bindings={"goToPage":"setup","getPages":"setup","data":"props"} ***!
+  \*****************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/Pagination.vue?vue&type=template&id=5c18b184&bindings={"goToPage":"setup","data":"props"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/Pagination.vue?vue&type=template&id=5c18b184&bindings={"goToPage":"setup","getPages":"setup","data":"props"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3269,9 +3301,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Pagination_vue_vue_type_template_id_5c18b184_bindings_goToPage_setup_data_props___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Pagination_vue_vue_type_template_id_5c18b184_bindings_goToPage_setup_getPages_setup_data_props___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Pagination_vue_vue_type_template_id_5c18b184_bindings_goToPage_setup_data_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Pagination.vue?vue&type=template&id=5c18b184&bindings={"goToPage":"setup","data":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/Pagination.vue?vue&type=template&id=5c18b184&bindings={\"goToPage\":\"setup\",\"data\":\"props\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Pagination_vue_vue_type_template_id_5c18b184_bindings_goToPage_setup_getPages_setup_data_props___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Pagination.vue?vue&type=template&id=5c18b184&bindings={"goToPage":"setup","getPages":"setup","data":"props"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/Pagination.vue?vue&type=template&id=5c18b184&bindings={\"goToPage\":\"setup\",\"getPages\":\"setup\",\"data\":\"props\"}");
 
 
 /***/ }),
@@ -3576,12 +3608,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/employees/control/EmployeesTableMainControl.vue?vue&type=template&id=bd5c2340&bindings={\"activeFilters\":\"setup\",\"hrs\":\"setup\",\"recordsPerPage\":\"setup\",\"profile\":\"setup\",\"statuses\":\"setup\",\"companies\":\"setup\",\"showCreateEmployeeForm\":\"setup\",\"showFileUploadForm\":\"setup\",\"refresh\":\"setup\"}":
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/tables/employees/control/EmployeesTableMainControl.vue?vue&type=template&id=bd5c2340&bindings={"activeFilters":"setup","hrs":"setup","recordsPerPage":"setup","profile":"setup","statuses":"setup","companies":"setup","showCreateEmployeeForm":"setup","showFileUploadForm":"setup","refresh":"setup"} ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./resources/js/components/tables/employees/control/EmployeesTableMainControl.vue?vue&type=template&id=bd5c2340&bindings={\"activeFilters\":\"setup\",\"hrs\":\"setup\",\"take\":\"setup\",\"profile\":\"setup\",\"statuses\":\"setup\",\"companies\":\"setup\",\"showCreateEmployeeForm\":\"setup\",\"showFileUploadForm\":\"setup\",\"refresh\":\"setup\"}":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/tables/employees/control/EmployeesTableMainControl.vue?vue&type=template&id=bd5c2340&bindings={"activeFilters":"setup","hrs":"setup","take":"setup","profile":"setup","statuses":"setup","companies":"setup","showCreateEmployeeForm":"setup","showFileUploadForm":"setup","refresh":"setup"} ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
-/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/control/EmployeesTableMainControl.vue?vue&type=template&id=bd5c2340&bindings={"activeFilters":"setup","hrs":"setup","recordsPerPage":"setup","profile":"setup","statuses":"setup","companies":"setup","showCreateEmployeeForm":"setup","showFileUploadForm":"setup","refresh":"setup"} .render */
+/*! export render [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/control/EmployeesTableMainControl.vue?vue&type=template&id=bd5c2340&bindings={"activeFilters":"setup","hrs":"setup","take":"setup","profile":"setup","statuses":"setup","companies":"setup","showCreateEmployeeForm":"setup","showFileUploadForm":"setup","refresh":"setup"} .render */
 /*! other exports [not provided] [no usage info] */
 /*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -3589,9 +3621,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EmployeesTableMainControl_vue_vue_type_template_id_bd5c2340_bindings_activeFilters_setup_hrs_setup_recordsPerPage_setup_profile_setup_statuses_setup_companies_setup_showCreateEmployeeForm_setup_showFileUploadForm_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__.render
+/* harmony export */   "render": () => /* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EmployeesTableMainControl_vue_vue_type_template_id_bd5c2340_bindings_activeFilters_setup_hrs_setup_take_setup_profile_setup_statuses_setup_companies_setup_showCreateEmployeeForm_setup_showFileUploadForm_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__.render
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EmployeesTableMainControl_vue_vue_type_template_id_bd5c2340_bindings_activeFilters_setup_hrs_setup_recordsPerPage_setup_profile_setup_statuses_setup_companies_setup_showCreateEmployeeForm_setup_showFileUploadForm_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./EmployeesTableMainControl.vue?vue&type=template&id=bd5c2340&bindings={"activeFilters":"setup","hrs":"setup","recordsPerPage":"setup","profile":"setup","statuses":"setup","companies":"setup","showCreateEmployeeForm":"setup","showFileUploadForm":"setup","refresh":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/control/EmployeesTableMainControl.vue?vue&type=template&id=bd5c2340&bindings={\"activeFilters\":\"setup\",\"hrs\":\"setup\",\"recordsPerPage\":\"setup\",\"profile\":\"setup\",\"statuses\":\"setup\",\"companies\":\"setup\",\"showCreateEmployeeForm\":\"setup\",\"showFileUploadForm\":\"setup\",\"refresh\":\"setup\"}");
+/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_EmployeesTableMainControl_vue_vue_type_template_id_bd5c2340_bindings_activeFilters_setup_hrs_setup_take_setup_profile_setup_statuses_setup_companies_setup_showCreateEmployeeForm_setup_showFileUploadForm_setup_refresh_setup___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./EmployeesTableMainControl.vue?vue&type=template&id=bd5c2340&bindings={"activeFilters":"setup","hrs":"setup","take":"setup","profile":"setup","statuses":"setup","companies":"setup","showCreateEmployeeForm":"setup","showFileUploadForm":"setup","refresh":"setup"} */ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/control/EmployeesTableMainControl.vue?vue&type=template&id=bd5c2340&bindings={\"activeFilters\":\"setup\",\"hrs\":\"setup\",\"take\":\"setup\",\"profile\":\"setup\",\"statuses\":\"setup\",\"companies\":\"setup\",\"showCreateEmployeeForm\":\"setup\",\"showFileUploadForm\":\"setup\",\"refresh\":\"setup\"}");
 
 
 /***/ }),
@@ -3798,10 +3830,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/Pagination.vue?vue&type=template&id=5c18b184&bindings={\"goToPage\":\"setup\",\"data\":\"props\"}":
-/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/Pagination.vue?vue&type=template&id=5c18b184&bindings={"goToPage":"setup","data":"props"} ***!
-  \*******************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/Pagination.vue?vue&type=template&id=5c18b184&bindings={\"goToPage\":\"setup\",\"getPages\":\"setup\",\"data\":\"props\"}":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/layout/Pagination.vue?vue&type=template&id=5c18b184&bindings={"goToPage":"setup","getPages":"setup","data":"props"} ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -3846,14 +3878,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 _hoisted_3
               ]))
             : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true),
-          ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.data.last_page, (i=1) => {
+          ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.getPages($props.data.current_page, $props.data.last_page), (page) => {
             return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("li", {
-              class: ["page-item", { active: i === $props.data.current_page}],
-              onClick: $event => ($setup.goToPage(i))
+              class: ["page-item", { active: page === $props.data.current_page}],
+              onClick: $event => ($setup.goToPage(page))
             }, [
-              (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(i), 1 /* TEXT */)
+              (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(page), 1 /* TEXT */)
             ], 10 /* CLASS, PROPS */, ["onClick"]))
           }), 256 /* UNKEYED_FRAGMENT */)),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                <li class=\"page-item\"\n                                    v-for=\"i=1 in data.last_page\"\n                                    :class=\"{ active: i === data.current_page}\"\n                                    @click=\"goToPage(i)\"\n                                >\n\n                                    <a class=\"page-link\" href=\"javascript:void(0)\">{{i}}</a>\n                                </li>"),
           ($props.data.next_page_url)
             ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("li", {
                 key: 1,
@@ -5064,10 +5097,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/control/EmployeesTableMainControl.vue?vue&type=template&id=bd5c2340&bindings={\"activeFilters\":\"setup\",\"hrs\":\"setup\",\"recordsPerPage\":\"setup\",\"profile\":\"setup\",\"statuses\":\"setup\",\"companies\":\"setup\",\"showCreateEmployeeForm\":\"setup\",\"showFileUploadForm\":\"setup\",\"refresh\":\"setup\"}":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/control/EmployeesTableMainControl.vue?vue&type=template&id=bd5c2340&bindings={"activeFilters":"setup","hrs":"setup","recordsPerPage":"setup","profile":"setup","statuses":"setup","companies":"setup","showCreateEmployeeForm":"setup","showFileUploadForm":"setup","refresh":"setup"} ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/control/EmployeesTableMainControl.vue?vue&type=template&id=bd5c2340&bindings={\"activeFilters\":\"setup\",\"hrs\":\"setup\",\"take\":\"setup\",\"profile\":\"setup\",\"statuses\":\"setup\",\"companies\":\"setup\",\"showCreateEmployeeForm\":\"setup\",\"showFileUploadForm\":\"setup\",\"refresh\":\"setup\"}":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/tables/employees/control/EmployeesTableMainControl.vue?vue&type=template&id=bd5c2340&bindings={"activeFilters":"setup","hrs":"setup","take":"setup","profile":"setup","statuses":"setup","companies":"setup","showCreateEmployeeForm":"setup","showFileUploadForm":"setup","refresh":"setup"} ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! namespace exports */
 /*! export render [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -5104,7 +5137,7 @@ const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)
   selected: ""
 }, "Status", -1 /* HOISTED */)
 const _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
-  value: "",
+  value: "100",
   selected: ""
 }, "100", -1 /* HOISTED */)
 
@@ -5180,15 +5213,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         [vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.activeFilters.status]
       ]),
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-        "onUpdate:modelValue": _cache[7] || (_cache[7] = $event => ($setup.activeFilters.recordsPerPage = $event)),
+        "onUpdate:modelValue": _cache[7] || (_cache[7] = $event => ($setup.activeFilters.take = $event)),
         class: "custom-select ml-2 col-sm-2"
       }, [
         _hoisted_7,
-        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.recordsPerPage, (record) => {
+        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.take, (record) => {
           return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", { value: record }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record), 9 /* TEXT, PROPS */, ["value"]))
         }), 256 /* UNKEYED_FRAGMENT */))
       ], 512 /* NEED_PATCH */), [
-        [vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.activeFilters.recordsPerPage]
+        [vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.activeFilters.take]
       ])
     ])
   ]))

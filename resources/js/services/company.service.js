@@ -4,8 +4,8 @@ export class CompanyService {
         this.client = client;
     }
 
-    async getCompanies() {
-        return await this.client.get('/api/companies');
+    async getCompanies(params) {
+        return await this.client.get('/api/companies', {params});
     }
 
     async storeCompany(company) {

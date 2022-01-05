@@ -7,7 +7,7 @@ namespace App\Services\Concrete\User;
 use App\Models\Employee;
 use App\Models\Letter;
 use App\Models\User;
-use App\Services\AbstractUserResourceService;
+use App\Services\AbstractScopeService;
 use App\Shared\Value\Role;
 use App\Shared\Value\Status;
 use Illuminate\Database\Eloquent\Model;
@@ -60,7 +60,7 @@ class UserProfileService
 
     private function getTopHrProfile(User $user): User
     {
-        $ids = UserService::getTopHrTeamIds($user);
+        $ids = StoreUserService::getTopHrTeamIds($user);
         $user['top_hr_employees_count'] = Employee::whereIn('hr_id', $ids)->count();
         $user['good_top_hr_employees_count'] = Employee::whereIn('hr_id', $ids)
             ->whereIn('employees.status', [

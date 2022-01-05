@@ -5,21 +5,11 @@ namespace App\Services\Concrete\Company;
 
 use App\Models\Company;
 use App\Models\User;
-use App\Services\AbstractResourceService;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator as LengthAwarePaginatorContract;
+use App\Services\AbstractStoreService;
 use Illuminate\Database\Eloquent\Model;
 
-class CompanyService extends AbstractResourceService
+class StoreCompanyService extends AbstractStoreService
 {
-    public function store(Model $model): bool
-    {
-        return parent::store($model);
-
-        /*$model->employees_count = 0;
-        $model->exported_employees_count = 0;
-        $model->good_employees_count = 0;*/
-    }
-
     public static function getUserCompanyIds(User $user = null)
     {
         $user = $user ?? auth()->user();
@@ -28,6 +18,11 @@ class CompanyService extends AbstractResourceService
         return array_map(function ($company) {
             return $company['id'];
         }, $companies);
+    }
+
+    protected function getModel(): Model
+    {
+        return new Company();
     }
 
 }

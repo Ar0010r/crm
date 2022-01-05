@@ -4,7 +4,8 @@
             <button @click="refresh" class="btn btn-secondary" type="button" title="Refresh">
                 <i class="opacity-75 ion ion-md-refresh icon-refresh"></i>
             </button>
-            <button v-if="profile.role !== 'personnel'" type="button" data-toggle="modal" data-target="#storeEmployeeForm"
+            <button v-if="profile.role !== 'personnel'" type="button" data-toggle="modal"
+                    data-target="#storeEmployeeForm"
                     class=" ml-2 p-0 btn-primary btn col-sm-2 text-nowrap text-center"
                     @click.prevent="showCreateEmployeeForm"
             >Add applicant
@@ -16,75 +17,77 @@
             <select v-model="activeFilters.company_id" class="custom-select form-control ml-2 col-sm-2">
                 <option value="" selected>Company</option>
                 <option v-for="company in companies" :value="company.id">
-                    {{company.name}}
+                    {{ company.name }}
                 </option>
             </select>
             <select v-if="profile.role === 'admin' || profile.role === 'top hr'"
                     v-model="activeFilters.hr_id" class="custom-select form-control ml-2 col-sm-2">
                 <option value="" selected>Hr</option>
                 <option v-for="hr in hrs" :value="hr.id">
-                    {{hr.login}}
+                    {{ hr.login }}
                 </option>
             </select>
             <select v-model="activeFilters.status"
                     class="custom-select custom-select form-control-lg  ml-2 col-sm-2">
                 <option value="" selected>Status</option>
-                <option v-for="(key, value) in statuses" :value="value">{{value}}</option>
+                <option v-for="(key, value) in statuses" :value="value">{{ value }}</option>
             </select>
-            <select v-model="activeFilters.recordsPerPage" class="custom-select ml-2 col-sm-2">
-                <option value="" selected>100</option>
-                <option v-for="record in recordsPerPage" :value="record">
-                    {{record}}
+            <select v-model="activeFilters.take" class="custom-select ml-2 col-sm-2">
+                <option value="100" selected>100</option>
+                <option v-for="record in take" :value="record">
+                    {{ record }}
                 </option>
             </select>
         </div>
     </div>
 </template>
 <script>
-    import {useStore} from 'vuex';
-    import {computed, watch, inject} from 'vue';
+import {useStore} from 'vuex';
+import {computed, watch, inject} from 'vue';
 
-    export default {
-        setup() {
-            let store = useStore();
-            const emitter = inject("emitter");
-            let activeFilters = computed(() => store.getters.getEmployeeQueryParams);
+export default {
+    setup() {
+        let store = useStore();
+        const emitter = inject("emitter");
+        let activeFilters = computed(() => store.getters.getEmployeeQueryParams);
 
-            async function filter() {
-                store.commit('employee/setQueryParam', {'key':'company', 'value': activeFilters.value.company_id});
-                store.commit('employee/setQueryParam', {'key':'status', 'value': activeFilters.value.status});
-                store.commit('employee/setQueryParam', {'key':'recordsPerPage', 'value': activeFilters.value.recordsPerPage});
-                store.commit('employee/setQueryParam', {'key':'hr_id', 'value': activeFilters.value.hr_id});
+        async function filter() {
+            store.commit('employee/setQueryParam', {'key': 'company', 'value': activeFilters.value.company_id});
+            store.commit('employee/setQueryParam', {'key': 'status', 'value': activeFilters.value.status});
+            store.commit('employee/setQueryParam', {'key': 'take', 'value': activeFilters.value.take});
+            store.commit('employee/setQueryParam', {'key': 'hr_id', 'value': activeFilters.value.hr_id});
 
-                await getEmployees();
-            }
+            await getEmployees();
+        }
 
-            async function getEmployees(){
-                await store.dispatch('employee/setEmployeesToStore', {
-                    'page': 1,
-                    'filter[hr_id]': activeFilters.value.hr_id,
-                    'filter[status]': activeFilters.value.status,
-                    'filter[company_id]': activeFilters.value.company_id,
-                    'recordsPerPage': activeFilters.value.recordsPerPage,
-                });
-            }
+        async function getEmployees() {
+            let filters = {};
 
-            watch(() => activeFilters, (first, second) => filter(), {deep: true});
-
-            return {
-                activeFilters,
-                hrs: computed(() => store.getters.getHrs),
-                recordsPerPage: [150, 200, 300, 500],
-                profile: computed(() => store.getters.getProfile),
-                statuses: computed(() => store.getters.getStatuses),
-                companies: computed(() => store.getters.getCompanies),
-                showCreateEmployeeForm: () => emitter.emit('create-employee-form'),
-                showFileUploadForm: () => emitter.emit('file-input-form'),
-                refresh: () => {
-                    getEmployees()
-                    store.dispatch('user/setProfileToStore')
+            ["page", "hr_id", "company_id", "status", "take"].map(function (key) {
+                if (activeFilters.value[key]) {
+                    filters[key] = activeFilters.value[key];
                 }
+            });
+
+            await store.dispatch('employee/setEmployeesToStore', filters);
+        }
+
+        watch(() => activeFilters, (first, second) => filter(), {deep: true});
+
+        return {
+            activeFilters,
+            hrs: computed(() => store.getters.getHrs),
+            take: [150, 200, 300, 500],
+            profile: computed(() => store.getters.getProfile),
+            statuses: computed(() => store.getters.getStatuses),
+            companies: computed(() => store.getters.getCompanies),
+            showCreateEmployeeForm: () => emitter.emit('create-employee-form'),
+            showFileUploadForm: () => emitter.emit('file-input-form'),
+            refresh: () => {
+                getEmployees()
+                store.dispatch('user/setProfileToStore')
             }
         }
-    };
+    }
+};
 </script>

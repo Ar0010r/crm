@@ -5,8 +5,8 @@ namespace App\Services\Concrete\User;
 
 use App\Models\Pivot\TopHrHr;
 use App\Models\User;
-use App\Services\AbstractResourceService;
-use App\Services\Contracts\UserResourceServiceInterface;
+use App\Services\AbstractStoreService;
+use App\Services\Contracts\ScopeResourceInterface;
 use App\Shared\Value\Role;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
@@ -15,16 +15,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 
-class UserService extends AbstractResourceService
+class StoreUserService extends AbstractStoreService
 {
-    private UserProfileService $userProfileService;
-
-    public function __construct(UserResourceServiceInterface $s)
-    {
-        $this->userProfileService = new UserProfileService();
-        parent::__construct($s);
-    }
-
     public static function getTopHrTeamIds(User $user = null): Collection
     {
         $user = $user ?? auth()->user();
@@ -33,12 +25,6 @@ class UserService extends AbstractResourceService
         $ids[] = $user->id;
 
         return $ids;
-    }
-
-    public function getProfile(User $user = null): User
-    {
-        $user = $user ?? auth()->user();
-        return $this->userProfileService->getProfile($user);
     }
 
     public function update(Model $model): bool
@@ -66,8 +52,6 @@ class UserService extends AbstractResourceService
         }
 
         return true;
-
-        //return $this->userProfileService->getProfile($user);
     }
 
     public function destroy(Model $model): bool
@@ -88,17 +72,22 @@ class UserService extends AbstractResourceService
         }
     }
 
-    public function make(Request $r, Model $model = null): Model
+    public function make(Request $request, Model $resource = null): Model
     {
-        $avatar = $r->file('file');
+        $avatar = $request->file('file');
 
         if ($avatar) {
-            $r->merge(["avatar" => $avatar]);
+            $request->merge(["avatar" => $avatar]);
         }
-        if ($r->password) {
-            $r->merge(["password" => bcrypt($r->password)]);
+        if ($request->password) {
+            $request->merge(["password" => bcrypt($request->password)]);
         }
 
-        return parent::make($r, $model);
+        return parent::make($request, $resource);
+    }
+
+    protected function getModel(): Model
+    {
+        return new User();
     }
 }

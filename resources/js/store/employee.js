@@ -16,7 +16,7 @@ export default {
             status: "",
             page: "",
             hr_id: "",
-            recordsPerPage: ""
+            take: 100
         },
 
         emptyEmployee: {

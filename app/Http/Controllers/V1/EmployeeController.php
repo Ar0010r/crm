@@ -5,6 +5,7 @@ namespace App\Http\Controllers\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Concrete\Employee\EmployeeBulkDestroyRequest;
 use App\Http\Requests\Concrete\Employee\EmployeeBulkUpdateRequest;
+use App\Http\Requests\Concrete\Employee\EmployeeGetRequest;
 use App\Http\Requests\Concrete\Employee\EmployeeStoreRequest;
 use App\Http\Requests\Concrete\Employee\EmployeeUpdateRequest;
 use App\Http\Resources\Base\ListResource;
@@ -13,15 +14,12 @@ use App\Http\Resources\EmployeeResource;
 use App\Imports\EmployeeImport;
 use App\Models\Employee;
 use App\Models\Letter;
-use App\Models\User;
-use App\Services\Contracts\ResourceSearchServiceInterface;
+use App\Services\Concrete\Employee\GetEmployeeService;
+use App\Services\Concrete\Employee\StoreEmployeeService;
 use App\Shared\Value\Race;
-use App\Shared\Value\Role;
 use App\Shared\Value\Status;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -29,31 +27,33 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class EmployeeController extends Controller
 {
-    private ResourceSearchServiceInterface $service;
+    private StoreEmployeeService $storeService;
+    private GetEmployeeService $getService;
 
-    public function __construct(ResourceSearchServiceInterface $service)
+    public function __construct(StoreEmployeeService $storeService, GetEmployeeService $getService)
     {
-        $this->service = $service;
+        $this->storeService = $storeService;
+        $this->getService = $getService;
     }
 
-    public function index()
+    public function index(EmployeeGetRequest $request)
     {
-        $data = $this->service->get();
+        $data = $this->getService->get($request);
 
         return new ListResource($data);
     }
 
     public function store(EmployeeStoreRequest $r)
     {
-        $employee = $this->service->make($r);
-        $this->service->store($employee);
+        $employee = $this->storeService->make($r);
+        $this->storeService->store($employee);
 
         return new EmployeeResource($employee);
     }
 
-    public function import(Request $r, EmployeeImport $import)
+    public function import(Request $request, EmployeeImport $import)
     {
-        $file = $r->file('file');
+        $file = $request->file('file');
         Excel::import($import, $file);
 
         return new ModelResource([]);
@@ -61,22 +61,22 @@ class EmployeeController extends Controller
 
     public function show(Employee $employee)
     {
-        $employee = $this->service->show($employee);
+        $employee = $this->getService->show($employee);
 
         return new EmployeeResource($employee);
     }
 
-    public function update(EmployeeUpdateRequest $r, Employee $employee)
+    public function update(EmployeeUpdateRequest $request, Employee $employee)
     {
-        $employee = $this->service->make($r, $employee);
-        $this->service->update($employee);
+        $employee = $this->storeService->make($request, $employee);
+        $this->storeService->update($employee);
 
         return new EmployeeResource($employee);
     }
 
-    public function bulkUpdate(EmployeeBulkUpdateRequest $r)
+    public function bulkUpdate(EmployeeBulkUpdateRequest $request)
     {
-        $this->service->bulkUpdate($r->employees, $r->status);
+        $this->storeService->bulkUpdate($request->employees, $request->status);
 
         return new ModelResource([]);
     }
@@ -93,20 +93,9 @@ class EmployeeController extends Controller
 
     public function bulkDestroy(EmployeeBulkDestroyRequest $r)
     {
-        $this->service->bulkDestroy($r->employees);
+        $this->storeService->bulkDestroy($r->employees);
 
         return new ModelResource([]);
-    }
-
-    public function search(Request $r)
-    {
-        if (!$r->keyword || trim($r->keyword) === "") {
-            return $this->index();
-        }
-
-        $data = $this->service->search($r->keyword);
-
-        return response(['list' => $data, 'meta' => []], JsonResponse::HTTP_OK);
     }
 
     public function statuses()
@@ -145,7 +134,7 @@ class EmployeeController extends Controller
                 return [
                     'id' => $emp->company->id,
                     'name' => $emp->company->name,
-                    'personnel' => $emp->company->personnel->login,
+                    'personnel' => $emp->company->manager->login,
                 ];
             })->unique();
 

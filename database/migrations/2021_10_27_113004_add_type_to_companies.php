@@ -1,5 +1,6 @@
 <?php
 
+use App\Shared\Value\CompanyType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,7 @@ class AddTypeToCompanies extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->smallInteger('type')->default(0);
+            $table->smallInteger('type')->default(CompanyType::DELIVERY);
             $table->renameColumn('personnel_id', 'manager_id');
         });
     }
