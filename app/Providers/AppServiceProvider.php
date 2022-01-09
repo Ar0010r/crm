@@ -8,6 +8,8 @@ use App\Services\Concrete\Employee\GetEmployeeService;
 use App\Services\Concrete\Employee\ScopeEmployeeService;
 use App\Services\Concrete\Letter\GetLetterService;
 use App\Services\Concrete\Letter\ScopeLetterService;
+use App\Services\Concrete\Test\GetTestService;
+use App\Services\Concrete\Test\ScopeTestService;
 use App\Services\Concrete\User\GetUserService;
 use App\Services\Concrete\User\ScopeUserService;
 use App\Services\Contracts\ScopeResourceInterface;
@@ -35,6 +37,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->when(GetUserService::class)
             ->needs(ScopeResourceInterface::class)
             ->give(ScopeUserService::class);
+
+        $this->app->when(GetTestService::class)
+            ->needs(ScopeResourceInterface::class)
+            ->give(ScopeTestService::class);
     }
 
     public function boot()

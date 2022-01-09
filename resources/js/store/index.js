@@ -2,6 +2,7 @@ import user from './user'
 import employee from './employee'
 import company from "./company";
 import letter from "./letter";
+import test from "./test";
 import {createStore} from 'vuex'
 
 export default createStore({
@@ -37,11 +38,19 @@ export default createStore({
         getLetterQueryParams: state => state.letter.queryParams,
         getLetterStatistics: state => state.letter.statistics,
         getEmptyLetter: state => state.letter.emptyLetter,
+
+        getTests: state => state.test.tests,
+        getTestQueryParams: state => state.test.queryParams,
+        getTestStatistics: state => state.test.statistics,
+        getEmptyTest: state => state.test.emptyTest,
+        getEnvs: state => state.test.envs,
+        getTemplates: state => state.test.templates,
     },
     modules: {
         user: user,
         employee: employee,
         company: company,
-        letter: letter
+        letter: letter,
+        test: test
     }
 })

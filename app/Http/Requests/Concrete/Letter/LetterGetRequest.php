@@ -24,11 +24,4 @@ class LetterGetRequest extends AbstractGetRequest
             'processed'
         ];
     }
-
-    public function required(): array
-    {
-        return [
-            'received_at'
-        ];
-    }
 }

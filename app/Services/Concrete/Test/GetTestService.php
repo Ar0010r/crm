@@ -1,33 +1,38 @@
 <?php
 
 
-namespace App\Services\Concrete\Letter;
+namespace App\Services\Concrete\Test;
 
 
-use App\Models\Letter;
+use App\Models\Test;
 use App\Models\User;
 use App\Services\AbstractGetService;
 use Illuminate\Database\Eloquent\Model;
 
-class GetLetterService extends AbstractGetService
+class GetTestService extends AbstractGetService
 {
     protected array $notStringFilters = [
-        'hr_id',
+        'manager_id',
         'company_id',
+    ];
+
+    protected array $whereFilters = [
+        'env',
+        'template'
     ];
 
     protected function setBaseQuery(User $user = null): AbstractGetService
     {
         parent::setBaseQuery($user);
 
-        $this->query->with(['hr', 'company']);
+        $this->query->with(['manager', 'company']);
 
         return $this;
     }
 
     protected function getModel(): Model
     {
-        return new Letter();
+        return new Test();
     }
 
 }

@@ -39,6 +39,8 @@ Route::group(['namespace' => 'App\Http\Controllers\V1'], function () {
         Route::get('/available-roles', 'UserController@getAvailableRoles');
         Route::get('/search', 'EmployeeController@search');
 
+        Route::apiResource('/test', 'TestController');
+
         Route::get('/logout', 'AuthController@logout');
     });
 });

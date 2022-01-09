@@ -35,7 +35,7 @@
                 </a>
             </router-link>
             <router-link tag="li" :to="{ name : 'tests'}" class="sidenav-item">
-                <a class="sidenav-link"><i class="sidenav-icon ion ion-ios-checkbox"></i>
+                <a class="sidenav-link"><i class="sidenav-icon ion ion-md-checkbox"></i>
                     <div>Tests</div>
                 </a>
             </router-link>

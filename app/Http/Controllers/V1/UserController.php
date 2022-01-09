@@ -70,11 +70,6 @@ class UserController extends Controller
         }
     }
 
-    public function statustics()
-    {
-
-    }
-
     public function getAvailableRoles()
     {
         switch (auth()->user()->role) {
