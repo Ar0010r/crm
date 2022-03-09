@@ -53,17 +53,17 @@ export default {
         },
         set(state, company) {
             let key = company.id;
-            if (state.companies[key]) {
-                state.companies[key] = {...state.companies[key], ...company};
+            if (state.data[key]) {
+                state.data[key] = {...state.data[key], ...company};
 
             } else {
                 let newCompanyObj = {};
                 newCompanyObj[key] = company;
-                state.companies = {...newCompanyObj, ...state.companies};
+                state.data = {...newCompanyObj, ...state.data};
             }
         },
         unset(state, id) {
-            delete state.companies[id];
+            delete state.data[id];
         },
     },
     actions: {
@@ -79,9 +79,30 @@ export default {
             }
         },
 
-        delete({commit, dispatch, state}, company) {
+        async create({commit, dispatch}, model) {
+            try {
+                let response = await container.CompanyService.store(model);
+                commit('set', response.data.model);
+            } catch (e) {
+                console.log(e)
+                emitter.emit('notification-error', e.response.data)
+            }
+        },
+
+        async update({commit, dispatch}, model) {
+            try {
+                let response = await container.CompanyService.update(model);
+                commit('set', response.data.model);
+            } catch (e) {
+                console.log(e)
+                emitter.emit('notification-error', e.response.data)
+            }
+        },
+
+        async delete({commit, dispatch, state}, company) {
             let key = company.id;
-            if (state.companies[key]) {
+            if (state.data[key]) {
+                await container.CompanyService.delete(company)
                 commit('unset', key);
             } else {
                 emitter.emit('notification-error', e.response.data)

@@ -11,7 +11,7 @@ class CompanyResource extends ModelResource
         return array_merge(
             $this->resource->attributesToArray(),
             [
-                'personnel' => $this->personnel,
+                'manager' => $this->manager,
                 'employees_count' => $this->employees_count ?? 0,
                 'good_employees_count' => $this->good_employees_count ?? 0,
                 'exported_employees_count' => $this->exported_employees_count ?? 0,

@@ -23258,16 +23258,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     set: function set(state, company) {
       var key = company.id;
 
-      if (state.companies[key]) {
-        state.companies[key] = _objectSpread(_objectSpread({}, state.companies[key]), company);
+      if (state.data[key]) {
+        state.data[key] = _objectSpread(_objectSpread({}, state.data[key]), company);
       } else {
         var newCompanyObj = {};
         newCompanyObj[key] = company;
-        state.companies = _objectSpread(_objectSpread({}, newCompanyObj), state.companies);
+        state.data = _objectSpread(_objectSpread({}, newCompanyObj), state.data);
       }
     },
     unset: function unset(state, id) {
-      delete state.companies[id];
+      delete state.data[id];
     }
   },
   actions: {
@@ -23305,41 +23305,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee, null, [[1, 9]]);
       }))();
     },
-    "delete": function _delete(_ref3, company) {
-      var commit = _ref3.commit,
-          dispatch = _ref3.dispatch,
-          state = _ref3.state;
-      var key = company.id;
-
-      if (state.companies[key]) {
-        commit('unset', key);
-      } else {
-        _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', e.response.data);
-      }
-    },
-    statistics: function statistics(_ref4, params) {
+    create: function create(_ref3, model) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var commit, statistics;
+        var commit, dispatch, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                commit = _ref4.commit;
+                commit = _ref3.commit, dispatch = _ref3.dispatch;
                 _context2.prev = 1;
                 _context2.next = 4;
-                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.CompanyService.statistics();
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.CompanyService.store(model);
 
               case 4:
-                statistics = _context2.sent;
-                commit('setStatistics', statistics.data.list);
+                response = _context2.sent;
+                commit('set', response.data.model);
                 _context2.next = 12;
                 break;
 
               case 8:
                 _context2.prev = 8;
                 _context2.t0 = _context2["catch"](1);
+                console.log(_context2.t0);
                 _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context2.t0.response.data);
-                if (_context2.t0.response.status === 401) _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
 
               case 12:
               case "end":
@@ -23347,6 +23335,104 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
           }
         }, _callee2, null, [[1, 8]]);
+      }))();
+    },
+    update: function update(_ref4, model) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var commit, dispatch, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                commit = _ref4.commit, dispatch = _ref4.dispatch;
+                _context3.prev = 1;
+                _context3.next = 4;
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.CompanyService.update(model);
+
+              case 4:
+                response = _context3.sent;
+                commit('set', response.data.model);
+                _context3.next = 12;
+                break;
+
+              case 8:
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](1);
+                console.log(_context3.t0);
+                _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context3.t0.response.data);
+
+              case 12:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[1, 8]]);
+      }))();
+    },
+    "delete": function _delete(_ref5, company) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var commit, dispatch, state, key;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                commit = _ref5.commit, dispatch = _ref5.dispatch, state = _ref5.state;
+                key = company.id;
+
+                if (!state.data[key]) {
+                  _context4.next = 8;
+                  break;
+                }
+
+                _context4.next = 5;
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.CompanyService["delete"](company);
+
+              case 5:
+                commit('unset', key);
+                _context4.next = 9;
+                break;
+
+              case 8:
+                _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', e.response.data);
+
+              case 9:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+    statistics: function statistics(_ref6, params) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        var commit, statistics;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                commit = _ref6.commit;
+                _context5.prev = 1;
+                _context5.next = 4;
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.CompanyService.statistics();
+
+              case 4:
+                statistics = _context5.sent;
+                commit('setStatistics', statistics.data.list);
+                _context5.next = 12;
+                break;
+
+              case 8:
+                _context5.prev = 8;
+                _context5.t0 = _context5["catch"](1);
+                _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context5.t0.response.data);
+                if (_context5.t0.response.status === 401) _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
+
+              case 12:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, null, [[1, 8]]);
       }))();
     }
   }

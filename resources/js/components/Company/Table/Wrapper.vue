@@ -11,7 +11,7 @@
         </template>
         <template v-slot:body>
             <tbody>
-            <Row v-for="company in companies" :company="company" :key="company.id + company.name"/>
+            <Row v-for="company in companies" :company="company" :key="company.id"/>
             </tbody>
         </template>
         <template v-slot:pagination>

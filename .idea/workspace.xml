@@ -3,16 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6dd06283-79a3-451e-93c8-b1b73cd686ac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Modal/CreateForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Modal/CreateForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Modal/EditForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Modal/EditForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Company/Modal/CreateForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Company/Modal/CreateForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Company/Modal/EditForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Company/Modal/EditForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Mail/Modal/CreateForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Mail/Modal/CreateForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Mail/Modal/EditForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Mail/Modal/EditForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Manager/Modal/CreateForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Manager/Modal/CreateForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Manager/Modal/EditForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Manager/Modal/EditForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Test/Modal/CreateForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Test/Modal/CreateForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Test/Modal/EditForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Test/Modal/EditForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/company.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/company.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -580,7 +572,7 @@
       <workItem from="1646261305989" duration="40153000" />
       <workItem from="1646661935985" duration="149000" />
       <workItem from="1646662116016" duration="23000" />
-      <workItem from="1646662395257" duration="47705000" />
+      <workItem from="1646662395257" duration="49266000" />
     </task>
     <servers />
   </component>
