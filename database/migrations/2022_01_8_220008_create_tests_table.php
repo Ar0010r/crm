@@ -1,6 +1,6 @@
 <?php
 
-use App\Shared\Value\Status;
+use App\Domain\Enums\Status;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

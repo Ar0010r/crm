@@ -8,21 +8,21 @@ export class ApplicantService {
     }
 
     async get(params) {
-        let response =  await this.client.get('/api/employees', {params});
+        let response =  await this.client.get('/api/employee', {params});
         let data = this.setIdKeys(response.data.list);
         return {data: data, meta: response.data.meta}
     }
 
     async store(applicant) {
-        return await this.client.post('/api/employees', applicant);
+        return await this.client.post('/api/employee', applicant);
     }
 
     async update(applicant) {
-        return await this.client.put('/api/employees/' + applicant.id, applicant);
+        return await this.client.put('/api/employee/' + applicant.id, applicant);
     }
 
     async delete(applicant) {
-        return await this.client.delete('/api/employees/' + applicant.id);
+        return await this.client.delete('/api/employee/' + applicant.id);
     }
 
     async races() {

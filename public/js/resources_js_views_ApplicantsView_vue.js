@@ -81,7 +81,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
                 if (!input.meta.valid) {
-                  console.log(props.label, input.value);
+                  console.log(props.label, input.errors.value);
+                  console.log(props.label, input.value.value);
                   emitter.emit(props.validate + '-invalid');
                 }
 
@@ -245,6 +246,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
                 if (!model.meta.valid) {
+                  console.log(props.label, model.errors.value);
+                  console.log(props.label, model.value.value);
                   emitter.emit(props.validate + '-invalid');
                 }
 
@@ -2435,7 +2438,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)("emitter");
     return {
       profileIsHr: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
-        return store.getters.getProfile.role === 'hr' || store.getters.getProfile.role === 'top hr';
+        return store.getters.getProfile.role === 'hr' || store.getters.getProfile.role === 'top hr' || store.getters.getProfile.role === 'admin';
       }),
       updateEmployee: function () {
         var _updateEmployee = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -2654,7 +2657,7 @@ __webpack_require__.r(__webpack_exports__);
     var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)("emitter");
     return {
       profileIsHr: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
-        return store.getters.getProfile.role === 'hr' || store.getters.getProfile.role === 'top hr';
+        return store.getters.getProfile.role === 'hr' || store.getters.getProfile.role === 'top hr' || store.getters.getProfile.role === 'admin';
       }),
       showUploadForm: function showUploadForm() {
         return emitter.emit('show-upload-form', props.applicant);
@@ -5223,7 +5226,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  return $setup.profileIsHr ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+    key: 0,
     "data-target": "#uploadForm",
     "data-toggle": "modal",
     "class": "fas fa-paperclip border-0 bg-transparent",
@@ -5232,7 +5236,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[0] || (_cache[0] = function () {
       return $setup.showUploadForm && $setup.showUploadForm.apply($setup, arguments);
     })
-  });
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
 }
 
 /***/ }),
@@ -5467,10 +5471,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 8
       /* PROPS */
       , ["model"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ContactedButton, {
-        applicant: $props.applicant
-      }, null, 8
-      /* PROPS */
-      , ["applicant"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ContactedButton, {
         applicant: $props.applicant
       }, null, 8
       /* PROPS */

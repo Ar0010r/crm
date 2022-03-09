@@ -1,6 +1,6 @@
 <?php
 
-use App\Shared\Value\CompanyType;
+use App\Domain\Enums\CompanyType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

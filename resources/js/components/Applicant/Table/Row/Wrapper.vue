@@ -79,7 +79,6 @@
         <template v-slot:actions>
             <EditButton :model="applicant" target="#editApplicantForm" event="edit-applicant-form"/>
             <ContactedButton :applicant="applicant"/>
-            <ContactedButton :applicant="applicant"/>
             <UploadButton :applicant="applicant"/>
             <DeleteButton
                 :model="applicant"

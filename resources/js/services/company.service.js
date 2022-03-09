@@ -5,25 +5,25 @@ export class CompanyService {
     }
 
     async get(params) {
-        let response = await this.client.get('/api/companies', {params});
+        let response = await this.client.get('/api/company', {params});
         let data = this.setIdKeys(response.data.list);
         return {data: data, meta: response.data.meta}
     }
 
     async store(company) {
-        return await this.client.post('/api/companies', company);
+        return await this.client.post('/api/company', company);
     }
 
     async update(company) {
-        return await this.client.put('/api/companies/' + company.id, company);
+        return await this.client.put('/api/company/' + company.id, company);
     }
 
     async delete(company) {
-        return await this.client.delete('/api/companies/' + company.id);
+        return await this.client.delete('/api/company/' + company.id);
     }
 
     async statistics() {
-        return await this.client.get('api/companies/statistics');
+        return await this.client.get('api/company/statistics');
     }
 
     setIdKeys(data) {

@@ -12,7 +12,7 @@ export default {
 
         return {
             profileIsHr: computed(() => {
-                return store.getters.getProfile.role === 'hr' || store.getters.getProfile.role === 'top hr'
+                return store.getters.getProfile.role === 'hr' || store.getters.getProfile.role === 'top hr' || store.getters.getProfile.role === 'admin'
             }),
 
             updateEmployee: async function () {

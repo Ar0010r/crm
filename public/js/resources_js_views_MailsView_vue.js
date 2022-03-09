@@ -203,7 +203,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
                 if (!input.meta.valid) {
-                  console.log(props.label, input.value);
+                  console.log(props.label, input.errors.value);
+                  console.log(props.label, input.value.value);
                   emitter.emit(props.validate + '-invalid');
                 }
 
@@ -519,6 +520,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
                 if (!model.meta.valid) {
+                  console.log(props.label, model.errors.value);
+                  console.log(props.label, model.value.value);
                   emitter.emit(props.validate + '-invalid');
                 }
 

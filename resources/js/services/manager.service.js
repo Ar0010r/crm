@@ -5,7 +5,7 @@ export class ManagerService {
     }
 
     async get(params) {
-        let response =  await this.client.get('/api/users', {params});
+        let response =  await this.client.get('/api/user', {params});
         let data = this.setIdKeys(response.data.list);
 
         return {data: data, meta: response.data.meta}
@@ -20,19 +20,19 @@ export class ManagerService {
     }
 
     async store(user) {
-        return this.client.post('api/users', user);
+        return this.client.post('api/user', user);
     }
 
     async update(user) {
         if (user instanceof FormData) {
-            return await this.client.post('api/users/' + user.get('id'), user, {headers: {'Content-Type': 'multipart/form-data'}});
+            return await this.client.post('api/user/' + user.get('id'), user, {headers: {'Content-Type': 'multipart/form-data'}});
         }
 
-        return await this.client.put('api/users/' + user.id, user);
+        return await this.client.put('api/user/' + user.id, user);
     }
 
     async delete(user) {
-        return await this.client.delete('api/users/' + user.id);
+        return await this.client.delete('api/user/' + user.id);
     }
 
     sort(list){

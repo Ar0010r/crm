@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Employee;
-use App\Models\User;
-use App\Shared\Value\Role;
+use App\Domain\Models\Employee;
+use App\Domain\Models\User;
+use App\Domain\Enums\Role;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,7 +22,11 @@ class DatabaseSeeder extends Seeder
             $this->demoUsers();
         }
 
-        $this->setRandomContactDates();
+        DB::table('personal_access_tokens')->where('tokenable_type', 'App\Models\User')
+            ->update(['tokenable_type' => User::class]);
+
+        DB::table('media')->where('model_type', 'App\Models\Employee')
+            ->update(['model_type' => Employee::class]);
     }
 
     private function demoUsers()

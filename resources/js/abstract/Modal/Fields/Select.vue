@@ -60,6 +60,8 @@ export default {
             model.setTouched(true)
             await model.validate()
             if (!model.meta.valid) {
+                console.log(props.label, model.errors.value)
+                console.log(props.label, model.value.value)
                 emitter.emit(props.validate + '-invalid')
             }
         }

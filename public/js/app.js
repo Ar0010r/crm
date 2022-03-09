@@ -21362,7 +21362,7 @@ var ApplicantService = /*#__PURE__*/function () {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return this.client.get('/api/employees', {
+                return this.client.get('/api/employee', {
                   params: params
                 });
 
@@ -21397,7 +21397,7 @@ var ApplicantService = /*#__PURE__*/function () {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return this.client.post('/api/employees', applicant);
+                return this.client.post('/api/employee', applicant);
 
               case 2:
                 return _context2.abrupt("return", _context2.sent);
@@ -21425,7 +21425,7 @@ var ApplicantService = /*#__PURE__*/function () {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return this.client.put('/api/employees/' + applicant.id, applicant);
+                return this.client.put('/api/employee/' + applicant.id, applicant);
 
               case 2:
                 return _context3.abrupt("return", _context3.sent);
@@ -21453,7 +21453,7 @@ var ApplicantService = /*#__PURE__*/function () {
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return this.client["delete"]('/api/employees/' + applicant.id);
+                return this.client["delete"]('/api/employee/' + applicant.id);
 
               case 2:
                 return _context4.abrupt("return", _context4.sent);
@@ -21898,7 +21898,7 @@ var CompanyService = /*#__PURE__*/function () {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return this.client.get('/api/companies', {
+                return this.client.get('/api/company', {
                   params: params
                 });
 
@@ -21933,7 +21933,7 @@ var CompanyService = /*#__PURE__*/function () {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return this.client.post('/api/companies', company);
+                return this.client.post('/api/company', company);
 
               case 2:
                 return _context2.abrupt("return", _context2.sent);
@@ -21961,7 +21961,7 @@ var CompanyService = /*#__PURE__*/function () {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return this.client.put('/api/companies/' + company.id, company);
+                return this.client.put('/api/company/' + company.id, company);
 
               case 2:
                 return _context3.abrupt("return", _context3.sent);
@@ -21989,7 +21989,7 @@ var CompanyService = /*#__PURE__*/function () {
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return this.client["delete"]('/api/companies/' + company.id);
+                return this.client["delete"]('/api/company/' + company.id);
 
               case 2:
                 return _context4.abrupt("return", _context4.sent);
@@ -22017,7 +22017,7 @@ var CompanyService = /*#__PURE__*/function () {
             switch (_context5.prev = _context5.next) {
               case 0:
                 _context5.next = 2;
-                return this.client.get('api/companies/statistics');
+                return this.client.get('api/company/statistics');
 
               case 2:
                 return _context5.abrupt("return", _context5.sent);
@@ -22356,7 +22356,7 @@ var ManagerService = /*#__PURE__*/function () {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return this.client.get('/api/users', {
+                return this.client.get('/api/user', {
                   params: params
                 });
 
@@ -22446,7 +22446,7 @@ var ManagerService = /*#__PURE__*/function () {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                return _context4.abrupt("return", this.client.post('api/users', user));
+                return _context4.abrupt("return", this.client.post('api/user', user));
 
               case 1:
               case "end":
@@ -22476,7 +22476,7 @@ var ManagerService = /*#__PURE__*/function () {
                 }
 
                 _context5.next = 3;
-                return this.client.post('api/users/' + user.get('id'), user, {
+                return this.client.post('api/user/' + user.get('id'), user, {
                   headers: {
                     'Content-Type': 'multipart/form-data'
                   }
@@ -22487,7 +22487,7 @@ var ManagerService = /*#__PURE__*/function () {
 
               case 4:
                 _context5.next = 6;
-                return this.client.put('api/users/' + user.id, user);
+                return this.client.put('api/user/' + user.id, user);
 
               case 6:
                 return _context5.abrupt("return", _context5.sent);
@@ -22515,7 +22515,7 @@ var ManagerService = /*#__PURE__*/function () {
             switch (_context6.prev = _context6.next) {
               case 0:
                 _context6.next = 2;
-                return this.client["delete"]('api/users/' + user.id);
+                return this.client["delete"]('api/user/' + user.id);
 
               case 2:
                 return _context6.abrupt("return", _context6.sent);
