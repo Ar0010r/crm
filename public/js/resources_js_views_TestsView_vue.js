@@ -1216,7 +1216,7 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup() {
     return {
       open: "create-test-form",
-      validate: "validate-create-form"
+      validate: "validate-create-test"
     };
   },
   components: {
@@ -1245,7 +1245,7 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup() {
     return {
       open: "edit-test-form",
-      validate: "validate-edit-form"
+      validate: "validate-edit-test"
     };
   },
   components: {

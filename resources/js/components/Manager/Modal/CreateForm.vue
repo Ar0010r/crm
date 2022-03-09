@@ -21,7 +21,7 @@
         setup() {
             return {
                 open : "create-manager-form",
-                validate : "validate-create-form"
+                validate : "validate-create-manager"
             }
         },
         components: {

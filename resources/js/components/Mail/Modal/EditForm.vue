@@ -21,7 +21,7 @@
         setup() {
             return {
                 open : "edit-mail-form",
-                validate : "validate-edit-form"
+                validate : "validate-edit-mail"
             }
         },
         components: {

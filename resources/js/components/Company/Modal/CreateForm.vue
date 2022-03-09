@@ -21,7 +21,7 @@
         setup() {
             return {
                 open : "create-company-form",
-                validate : "validate-create-form"
+                validate : "validate-create-company"
             }
         },
         components: {

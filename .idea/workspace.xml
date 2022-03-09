@@ -2,150 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6dd06283-79a3-451e-93c8-b1b73cd686ac" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/laravel-vue-3-starter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/laravel-vue-3-starter.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Support/Console/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Support/Exceptions/Handler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Exceptions/Responder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Support/Exceptions/Responder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Helpers/SearchService/QueryBuilderFilterHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/System/SearchService/QueryBuilderFilterHelper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Helpers/SearchService/QueryBuilderRequestHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/System/SearchService/QueryBuilderRequestHelper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Helpers/SearchService/QueryBuilderSearchHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/System/SearchService/QueryBuilderSearchHelper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Helpers/SearchService/SearchQueryBuilder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/System/SearchService/SearchQueryBuilder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Control/Controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/V1/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Controllers/V1/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/V1/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Controllers/V1/CompanyController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/V1/EmployeeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Controllers/V1/EmployeeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/V1/LetterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Controllers/V1/LetterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/V1/TestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Controllers/V1/TestController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/V1/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Controllers/V1/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Control/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Middleware/Authenticate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/EncryptCookies.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Middleware/EncryptCookies.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/PreventRequestsDuringMaintenance.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Middleware/PreventRequestsDuringMaintenance.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Middleware/RedirectIfAuthenticated.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/TrimStrings.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Middleware/TrimStrings.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/TrustHosts.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Middleware/TrustHosts.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/TrustProxies.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Middleware/TrustProxies.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Middleware/VerifyCsrfToken.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/AbstractGetRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Requests/AbstractGetRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/AbstractRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Requests/AbstractRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/AbstractStoreRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Requests/AbstractStoreRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/AbstractUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Requests/AbstractUpdateRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/Company/CompanyGetRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Company/CompanyGetRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/Company/CompanyStoreRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Company/CompanyStoreRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/Company/CompanyUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Company/CompanyUpdateRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/Employee/EmployeeBulkDestroyRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Employee/EmployeeBulkDestroyRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/Employee/EmployeeBulkUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Employee/EmployeeBulkUpdateRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/Employee/EmployeeGetRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Employee/EmployeeGetRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/Employee/EmployeeStoreRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Employee/EmployeeStoreRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/Employee/EmployeeUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Employee/EmployeeUpdateRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/Employee/GetMediaRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Employee/GetMediaRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/Employee/UploadFileRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Employee/UploadFileRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/Letter/LetterGetRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Letter/LetterGetRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/Letter/LetterStoreRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Letter/LetterStoreRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/Letter/LetterUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Letter/LetterUpdateRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/Test/TestGetRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Test/TestGetRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/Test/TestStoreRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Test/TestStoreRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/Test/TestUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Test/TestUpdateRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/User/UserGetRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/User/UserGetRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/User/UserStoreRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/User/UserStoreRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Concrete/User/UserUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/User/UserUpdateRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Contracts/AuthorizeRequestInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Requests/Contracts/AuthorizeRequestInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Contracts/RequestInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Requests/Contracts/RequestInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Permissions/AnyManagerAllowed.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Permissions/AnyManagerAllowed.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Permissions/HrAllowed.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Permissions/HrAllowed.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Permissions/OwnerAllowed.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Permissions/OwnerAllowed.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Permissions/PersonnelAllowed.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Permissions/PersonnelAllowed.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Permissions/TopHrAllowed.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Permissions/TopHrAllowed.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Rules/CompanyRequestRules.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Rules/CompanyRequestRules.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Rules/EmployeeRequestRules.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Rules/EmployeeRequestRules.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Rules/LetterRequestRules.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Rules/LetterRequestRules.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Rules/TestRequestRules.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Rules/TestRequestRules.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Rules/UserRequestRules.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Rules/UserRequestRules.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Base/BaseResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Resources/BaseResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Base/ListResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Resources/ListResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Base/ModelResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Resources/ModelResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/Base/PartialListResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Resources/PartialListResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/CompanyResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Resources/CompanyResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/EmployeeResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Resources/EmployeeResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/LetterResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Resources/LetterResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/TestResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Resources/TestResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/UserResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Resources/UserResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Imports/EmployeeImport.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/System/Imports/EmployeeImport.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Company.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Employee.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Employee.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Letter.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Letter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Media.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/System/Media/Media.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Pivot/TopHrHr.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Pivot/TopHrHr.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Subscription.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Subscription.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Test.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Test.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Traits/HasUuid.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Traits/HasUuid.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Support/Providers/AppServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Support/Providers/AuthServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/BroadcastServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Support/Providers/BroadcastServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Support/Providers/EventServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Support/Providers/RouteServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Rules/Employee/EmployeesAreEditable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Rules/Employee/EmployeesAreEditable.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Rules/User/UserIdBelongsToHr.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Rules/User/UserIdBelongsToHr.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Rules/User/UserIdBelongsToPersonnel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Rules/User/UserIdBelongsToPersonnel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/AbstractGetService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Services/AbstractGetService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/AbstractScopeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Services/AbstractScopeService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/AbstractStoreService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Services/AbstractStoreService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/Company/CompanyStatisticService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Company/CompanyStatisticService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/Company/GetCompanyService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Company/GetCompanyService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/Company/ScopeCompanyService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Company/ScopeCompanyService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/Company/StoreCompanyService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Company/StoreCompanyService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/Employee/GetEmployeeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Employee/GetEmployeeService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/Employee/ScopeEmployeeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Employee/ScopeEmployeeService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/Employee/StoreEmployeeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Employee/StoreEmployeeService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/Letter/GetLetterService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Letter/GetLetterService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/Letter/LetterStatisticsService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Letter/LetterStatisticsService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/Letter/ScopeLetterService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Letter/ScopeLetterService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/Letter/StoreLetterService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Letter/StoreLetterService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/Test/GetTestService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Test/GetTestService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/Test/ScopeTestService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Test/ScopeTestService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/Test/StoreTestService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Test/StoreTestService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/User/GetUserService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/User/GetUserService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/User/ScopeUserService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/User/ScopeUserService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/User/StoreUserService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/User/StoreUserService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/User/UserProfileService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/User/UserProfileService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Concrete/User/UserStatisticsService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/User/UserStatisticsService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Contracts/GetResourceInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Services/Contracts/GetResourceInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Contracts/ScopeResourceInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Services/Contracts/ScopeResourceInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Contracts/StoreResourceInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Services/Contracts/StoreResourceInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Shared/Value/CompanyType.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Enums/CompanyType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Shared/Value/MediaCollection.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/System/Media/MediaCollection.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Shared/Value/Race.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Enums/Race.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Shared/Value/Role.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Enums/Role.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Shared/Value/Status.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Enums/Status.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bootstrap/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/media-library.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/media-library.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/sanctum.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/sanctum.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/UserFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_12_220008_create_employees_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_01_12_220008_create_employees_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_10_27_113004_add_type_to_companies.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_10_27_113004_add_type_to_companies.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2022_01_8_220008_create_tests_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2022_01_8_220008_create_tests_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2022_01_9_220008_add_contacted_to_employees.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2022_01_9_220008_add_contacted_to_employees.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_ApplicantsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_ApplicantsView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_CompaniesView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_CompaniesView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_MailsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_MailsView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_ManagersView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_ManagersView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/abstract/Modal/Fields/Input.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/abstract/Modal/Fields/Input.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Row/ContactedButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Row/ContactedButton.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Row/UploadButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Row/UploadButton.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Row/Wrapper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Row/Wrapper.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/services/applicant.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/applicant.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/services/company.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/company.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/services/employee.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/deprecated/services/employee.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/services/letter.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/deprecated/services/letter.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/services/manager.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/manager.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Modal/CreateForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Modal/CreateForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Modal/EditForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Modal/EditForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Company/Modal/CreateForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Company/Modal/CreateForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Company/Modal/EditForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Company/Modal/EditForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Mail/Modal/CreateForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Mail/Modal/CreateForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Mail/Modal/EditForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Mail/Modal/EditForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Manager/Modal/CreateForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Manager/Modal/CreateForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Manager/Modal/EditForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Manager/Modal/EditForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Test/Modal/CreateForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Test/Modal/CreateForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Test/Modal/EditForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Test/Modal/EditForm.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -713,7 +580,7 @@
       <workItem from="1646261305989" duration="40153000" />
       <workItem from="1646661935985" duration="149000" />
       <workItem from="1646662116016" duration="23000" />
-      <workItem from="1646662395257" duration="46741000" />
+      <workItem from="1646662395257" duration="47705000" />
     </task>
     <servers />
   </component>

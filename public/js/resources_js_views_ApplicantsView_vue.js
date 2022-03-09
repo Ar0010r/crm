@@ -1386,7 +1386,7 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup() {
     return {
       open: "create-applicant-form",
-      validate: "validate-create-form"
+      validate: "validate-create-applicant"
     };
   },
   components: {
@@ -1415,7 +1415,7 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup() {
     return {
       open: "edit-applicant-form",
-      validate: "validate-edit-form"
+      validate: "validate-edit-applicant"
     };
   },
   components: {

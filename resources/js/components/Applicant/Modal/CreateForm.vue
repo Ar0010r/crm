@@ -21,7 +21,7 @@
         setup() {
             return {
                 open : "create-applicant-form",
-                validate : "validate-create-form"
+                validate : "validate-create-applicant"
             }
         },
         components: {

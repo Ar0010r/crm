@@ -1214,7 +1214,7 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup() {
     return {
       open: "create-company-form",
-      validate: "validate-create-form"
+      validate: "validate-create-company"
     };
   },
   components: {
@@ -1243,7 +1243,7 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup() {
     return {
       open: "edit-company-form",
-      validate: "validate-edit-form"
+      validate: "validate-edit-company"
     };
   },
   components: {

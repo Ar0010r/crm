@@ -21,7 +21,7 @@
         setup() {
             return {
                 open : "create-test-form",
-                validate : "validate-create-form"
+                validate : "validate-create-test"
             }
         },
         components: {

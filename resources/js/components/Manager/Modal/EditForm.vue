@@ -21,7 +21,7 @@
         setup() {
             return {
                 open : "edit-manager-form",
-                validate : "validate-edit-form"
+                validate : "validate-edit-manager"
             }
         },
         components: {

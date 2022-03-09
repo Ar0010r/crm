@@ -1218,7 +1218,7 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup() {
     return {
       open: "create-manager-form",
-      validate: "validate-create-form"
+      validate: "validate-create-manager"
     };
   },
   components: {
@@ -1247,7 +1247,7 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup() {
     return {
       open: "edit-manager-form",
-      validate: "validate-edit-form"
+      validate: "validate-edit-manager"
     };
   },
   components: {

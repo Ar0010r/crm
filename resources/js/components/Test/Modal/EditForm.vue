@@ -21,7 +21,7 @@
         setup() {
             return {
                 open : "edit-test-form",
-                validate : "validate-edit-form"
+                validate : "validate-edit-test"
             }
         },
         components: {
