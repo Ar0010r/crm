@@ -4,27 +4,29 @@ import {emitter} from '../app';
 export default {
     namespaced: true,
     state: {
-        tests: {},
+        data: {},
+        meta: {},
         envs: [
             'Web',
             'The Bat',
             'Thunderbird'
         ],
         templates: [
-            'Welcome letter',
+            'Link',
+            'File',
             'Hello',
             'Random'
         ],
         queryParams: {
-            manager_id: "",
-            company_id: "",
-            env: "",
-            template: "",
+            manager_id: null,
+            company_id: null,
+            env: null,
+            template: null,
+            search_term: null,
             take: 100,
-            page: "",
+            page: 1,
         },
-        emptyTest: {
-            date: null,
+        testModel: {
             manager_id: null,
             manager: {login: null},
             company_id: null,
@@ -35,72 +37,84 @@ export default {
             yahoo: null,
             outlook: null,
             other: null,
-            progress: null
+            date_after: null,
+            date_before: null,
+            date: function () {
+                let today = new Date();
+                let dd = today.getDate();
+                let mm = today.getMonth() + 1;
+                let yyyy = today.getFullYear();
+                if (dd < 10) dd = '0' + dd;
+                if (mm < 10) mm = '0' + mm;
+
+                return  yyyy + '-' + mm + '-' + dd;
+            }()
         }
     },
     mutations: {
         setQueryParam(state, {key, value}) {
             state.queryParams[key] = value
         },
-        async setTests(state, tests) {
-            state.tests = tests;
+
+        setData(state, tests) {
+            state.data = tests;
         },
-        setStatistics(state, statistics) {
-            state.statistics = statistics;
+
+        setMeta(state, meta) {
+            state.meta = meta;
         },
-        setTestById(state, test) {
+        set(state, test) {
             let key = test.id;
-            if (state.tests[key]) {
-                state.tests[key] = {...state.tests[key], ...test};
+            if (state.data[key]) {
+                state.data[key] = {...state.data[key], ...test};
 
             } else {
                 let newTestObj = {};
                 newTestObj[key] = test;
-                state.tests = {...newTestObj, ...state.tests};
+                state.data = {...newTestObj, ...state.data};
             }
         },
-        deleteTestById(state, id) {
-            delete state.tests[id];
+        unset(state, id) {
+            delete state.data[id];
         }
     },
     actions: {
-        async setTestsToStore({commit, dispatch}, params) {
+        async get({commit, dispatch}, params) {
             try {
-                let testsList = await container.TestService.get(params);
-                testsList = testsList.data.list;
-
-                let tests = {};
-                Object.keys(testsList).map(function (key) {
-                    let index = testsList[key].id;
-                    tests[index] = testsList[key];
-                });
-
-
-                commit('setTests', tests);
+                let response = await container.TestService.get(params);
+                commit('setData', response.data);
+                commit('setMeta', response.meta);
             } catch (e) {
-                console.log('error', e)
                 emitter.emit('notification-error', e.response.data)
                 if (e.response.status === 401) container.AuthService.logout()
             }
         },
 
-        deleteTest({commit, dispatch, state}, test) {
-            let key = test.id;
-            if (state.tests[key]) {
-                commit('deleteTestById', key);
+        async create({commit, dispatch}, model) {
+            try {
+                let response = await container.TestService.store(model);
+                commit('set', response.data.model);
+            } catch (e) {
+                emitter.emit('notification-error', e.response.data)
+            }
+        },
+
+        async update({commit, dispatch}, model) {
+            try {
+                let response = await container.TestService.update(model);
+                commit('set', response.data.model);
+            } catch (e) {
+                emitter.emit('notification-error', e.response.data)
+            }
+        },
+
+        async delete({commit, dispatch, state}, test) {
+            let id = test.id;
+            if (state.data[id]) {
+                await container.TestService.delete(test)
+                commit('unset', id);
             } else {
                 emitter.emit('notification-error', e.response.data)
-            }
-        },
-
-        async setStatisticsToStore({commit}, params) {
-            try {
-                let statisticts = await container.TestService.getStatistics();
-
-                commit('setStatistics', statisticts.data.list);
-            } catch (e) {
-                emitter.emit('notification-error', e.response.data)
-                if (e.response.status === 401) container.AuthService.logout()
             }
         },
     },

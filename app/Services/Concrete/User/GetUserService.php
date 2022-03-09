@@ -16,6 +16,12 @@ class GetUserService extends AbstractGetService
     protected array $likeFilters = [
         'login',
     ];
+
+    protected array $scopeFilters = [
+        'created_before',
+        'created_after',
+    ];
+
     protected function getModel(): Model
     {
        return new User();

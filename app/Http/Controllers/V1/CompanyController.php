@@ -9,12 +9,9 @@ use App\Http\Requests\Concrete\Company\CompanyUpdateRequest;
 use App\Http\Resources\Base\ListResource;
 use App\Http\Resources\CompanyResource;
 use App\Models\Company;
-use App\Models\Employee;
 use App\Services\Concrete\Company\CompanyStatisticService;
 use App\Services\Concrete\Company\GetCompanyService;
 use App\Services\Concrete\Company\StoreCompanyService;
-use App\Shared\Value\CompanyType;
-use App\Shared\Value\Status;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 
@@ -36,7 +33,7 @@ class CompanyController extends Controller
 
     public function index(CompanyGetRequest $request)
     {
-        $data = $this->getService->get($request)->items();
+        $data = $this->getService->get($request);
         return new ListResource($data);
     }
 

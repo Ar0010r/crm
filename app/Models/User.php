@@ -7,9 +7,11 @@ use App\Models\Traits\HasUuid;
 use App\Shared\Value\Role;
 use App\Shared\Value\Status;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -129,8 +131,13 @@ class User extends Authenticatable
         return $date->format('Y-m-d');
     }
 
-    /* public function topHrEmployees()
+    public function scopeCreatedBefore(Builder $query, $date): Builder
     {
-        return $this->topHrHrs()->with('employees')->select('employees.*');
-    }*/
+        return $query->where('created_at', '<=', Carbon::parse($date)->format('Y-m-d h:m:s'));
+    }
+
+    public function scopeCreatedAfter(Builder $query, $date): Builder
+    {
+        return $query->where('created_at', '>=', Carbon::parse($date)->format('Y-m-d h:m:s'));
+    }
 }

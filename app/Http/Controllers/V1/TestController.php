@@ -33,16 +33,6 @@ class TestController extends Controller
     {
         $data = $this->getService->get($request);
 
-       /* $a = collect($data)->whereInstanceOf(Test::class)
-            ->map(fn(Test $test) => $test->toArray())
-            ->groupBy('company_id')
-            ->map(function (Collection $record) {
-                return [
-                    'company' => $record[0]['company']['name'],
-                    'results' => $record->take(5),
-                ];
-            });*/
-
         return new ListResource($data);
     }
 

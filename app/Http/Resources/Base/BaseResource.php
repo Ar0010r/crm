@@ -17,4 +17,9 @@ trait BaseResource
             'errors' => $this->errors ?? json_decode('{}'),
         ];
     }
+
+    public function withResponse($request, $response)
+    {
+        $response->setEncodingOptions(JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    }
 }

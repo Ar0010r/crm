@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Concrete\Employee;
 
 use App\Http\Requests\AbstractRequest;
-use App\Http\Requests\Permissions\HrAllowed;
 use App\Rules\Employee\EmployeesAreEditable;
 
 class EmployeeBulkDestroyRequest extends AbstractRequest

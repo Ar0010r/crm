@@ -1,56 +1,62 @@
-import user from './user'
-import employee from './employee'
+import applicant from './applicant'
 import company from "./company";
-import letter from "./letter";
+import mail from "./mail";
 import test from "./test";
+import manager from "./manager";
 import {createStore} from 'vuex'
 
 export default createStore({
     getters: {
-        getProfile: state => state.user.profile,
-        getUsers: state => state.user.users,
-        getEmptyUser: state => state.user.emptyUser,
-        getRoles: state => state.user.roles,
-        getHrs: state => state.user.hrs,
-        getPersonnels: state => state.user.personnels,
+        getProfile: state => state.manager.profile,
+        getManagers: state => state.manager.data,
+        getManagerModel: state => state.manager.managerModel,
+        getManagerMeta: state => state.manager.meta,
+        getManagerQueryParams: state => state.manager.queryParams,
+        getRoles: state => state.manager.roles,
+        getHrs: state => state.manager.hrs,
+        getPersonnels: state => state.manager.personnels,
 
         getShowNotification: state => state.notification.show,
         getNotificationMessage: state => state.notification.message,
 
-        getRaces: state => state.employee.races,
-        getStatuses: state => state.employee.statuses,
-        getAvailableStatuses: state => state.employee.availableStatuses,
-        getEmptyEmployee: state => state.employee.emptyEmployee,
-        getEmployees: state => state.employee.employees,
-        getMonthlyStatistics: state => state.employee.statistics,
-        getEmployeesPagination: state => state.employee.pagination,
-        getEmployeeQueryParams: state => state.employee.queryParams,
-        getEmployeeById: (id, state) => {
-            return state.employee.employees[id]
-        },
+        getRaces: state => state.applicant.races,
+        getStatuses: state => state.applicant.statuses,
+        getContactedStatuses: state => state.applicant.contacted,
+        getAvailableStatuses: state => state.applicant.availableStatuses,
+        getApplicantModel: state => state.applicant.applicantModel,
+        getApplicants: state => state.applicant.data,
+        getMonthlyStatistics: state => state.applicant.statistics,
+        getApplicantsMeta: state => state.applicant.meta,
+        getApplicantQueryParams: state => state.applicant.queryParams,
+        /*getApplicant: (id, state) => {
+            return state.applicant.data[id]
+        },*/
 
-        getCompanies: state => state.company.companies,
+        getCompanies: state => state.company.data,
+        getCompaniesMeta: state => state.company.meta,
         getCompanyQueryParams: state => state.company.queryParams,
         getStatistics: state => state.company.statistics,
-        getEmptyCompany: state => state.company.emptyCompany,
+        getCompanyModel: state => state.company.companyModel,
+        getTypes: state => state.company.types,
 
-        getLetters: state => state.letter.letters,
-        getLetterQueryParams: state => state.letter.queryParams,
-        getLetterStatistics: state => state.letter.statistics,
-        getEmptyLetter: state => state.letter.emptyLetter,
+        getMails: state => state.mail.data,
+        getMailsMeta: state => state.mail.meta,
+        getMailQueryParams: state => state.mail.queryParams,
+        getMailStatistics: state => state.mail.statistics,
+        getMailModel: state => state.mail.mailModel,
 
-        getTests: state => state.test.tests,
+        getTests: state => state.test.data,
+        getTestsMeta: state => state.test.meta,
         getTestQueryParams: state => state.test.queryParams,
-        getTestStatistics: state => state.test.statistics,
-        getEmptyTest: state => state.test.emptyTest,
+        getTestModel: state => state.test.testModel,
         getEnvs: state => state.test.envs,
         getTemplates: state => state.test.templates,
     },
     modules: {
-        user: user,
-        employee: employee,
+        applicant: applicant,
         company: company,
-        letter: letter,
-        test: test
+        test: test,
+        manager: manager,
+        mail: mail
     }
 })

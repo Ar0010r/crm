@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Models\Traits\HasUuid;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Test extends Model
 {
@@ -37,5 +39,15 @@ class Test extends Model
     public function company()
     {
         return $this->hasOne(Company::class, 'id', 'company_id');
+    }
+
+    public function scopeDateBefore(Builder $query, $date): Builder
+    {
+        return $query->where('date', '<=', Carbon::parse($date)->format('Y-m-d h:m:s'));
+    }
+
+    public function scopeDateAfter(Builder $query, $date): Builder
+    {
+        return $query->where('date', '>=', Carbon::parse($date)->format('Y-m-d h:m:s'));
     }
 }

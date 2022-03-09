@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Services;
 
 use App\Services\Contracts\StoreResourceInterface;
@@ -11,17 +10,17 @@ abstract class AbstractStoreService implements StoreResourceInterface
 {
     public function store(Model $model): bool
     {
-        return $model->save();
+        return $model->saveOrFail();
     }
 
     public function update(Model $model): bool
     {
-        return $model->update();
+        return $model->updateOrFail();
     }
 
     public function destroy(Model $model): bool
     {
-        return $model->delete();
+        return $model->deleteOrFail();
     }
 
     public function updateOrCreate(Model $model): bool

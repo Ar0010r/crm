@@ -32,13 +32,15 @@ class Status
         self::INVITED,
         self::EXPORTED,
         self::BAD,
+        self::DIED
     ];
 
     public const ALL_STATUSES = [
         self::NEED_DATA => self::WHITE_COLOR_STYLE,
-        self::READY => self::OCEAN_COLOR_STYLE,
-        self::INVITED => self::BLUE_COLOR_STYLE,
         self::BAD => self::RED_COLOR_STYLE,
+        self::READY => self::OCEAN_COLOR_STYLE,
+        self::DIED => self::BLACK_COLOR_STYLE,
+        self::INVITED => self::BLUE_COLOR_STYLE,
         self::EXPORTED => self::GREEN_COLOR_STYLE,
     ];
 
@@ -52,7 +54,7 @@ class Status
     public const PERSONNEL_STATUSES = [
         self::READY => self::OCEAN_COLOR_STYLE,
         self::INVITED => self::BLUE_COLOR_STYLE,
-       // self::BAD => self::RED_COLOR_STYLE,
+        self::DIED => self::BLACK_COLOR_STYLE,
         self::EXPORTED => self::GREEN_COLOR_STYLE,
     ];
 

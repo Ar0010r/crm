@@ -6,8 +6,10 @@ use App\Models\Traits\HasUuid;
 use App\Shared\Value\Role;
 use App\Shared\Value\Status;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Company extends Model
 {
@@ -61,5 +63,15 @@ class Company extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d');
+    }
+
+    public function scopeCreatedBefore(Builder $query, $date): Builder
+    {
+        return $query->where('created_at', '<=', Carbon::parse($date)->format('Y-m-d h:m:s'));
+    }
+
+    public function scopeCreatedAfter(Builder $query, $date): Builder
+    {
+        return $query->where('created_at', '>=', Carbon::parse($date)->format('Y-m-d h:m:s'));
     }
 }

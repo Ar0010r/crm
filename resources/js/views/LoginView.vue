@@ -8,8 +8,8 @@
 </template>
 
 <script>
-    import LoginIcon from '../components/auth/LoginIcon.vue';
-    import LoginForm from '../components/auth/LoginForm.vue';
+    import LoginIcon from '../components/Auth/LoginIcon.vue';
+    import LoginForm from '../components/Auth/LoginForm.vue';
 
     export default {
         mounted() {

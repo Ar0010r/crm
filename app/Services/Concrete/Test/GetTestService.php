@@ -21,6 +21,11 @@ class GetTestService extends AbstractGetService
         'template'
     ];
 
+    protected array $scopeFilters = [
+        "date_before",
+        "date_after",
+    ];
+
     protected function setBaseQuery(User $user = null): AbstractGetService
     {
         parent::setBaseQuery($user);

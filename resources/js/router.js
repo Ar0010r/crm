@@ -2,11 +2,11 @@ import {createWebHistory, createRouter} from 'vue-router';
 import store from './store'
 import axios from "axios";
 
-const EmployeesView = () => import('./views/EmployeesView.vue');
+const ApplicantsView = () => import('./views/ApplicantsView.vue');
 const CompaniesView = () => import('./views/CompaniesView.vue');
 const ManagersView = () => import('./views/ManagersView.vue');
 const LoginView = () => import('./views/LoginView.vue');
-const LettersView = () => import('./views/LettersView.vue');
+const MailsView = () => import('./views/MailsView.vue');
 const StatisticsView = () => import('./views/StatisticsView.vue');
 const TestsView = () => import('./views/TestsView.vue');
 
@@ -16,10 +16,10 @@ const router = createRouter({
     history,
     routes: [
         {
-            path: '/employees',
-            component: EmployeesView,
-            name: 'employees-table',
-            meta: {title: 'employees'}
+            path: '/applicants',
+            component: ApplicantsView,
+            name: 'applicants-table',
+            meta: {title: 'applicants'}
         },
         {
             path: '/managers',
@@ -35,7 +35,7 @@ const router = createRouter({
         },
         {
             path: '/mails',
-            component: LettersView,
+            component: MailsView,
             name: 'mails-table',
             meta: {title: 'mails'}
         },
@@ -59,7 +59,7 @@ const router = createRouter({
         },
         {
             path: '/',
-            redirect: '/employees'
+            redirect: '/applicants'
         },
     ],
     linkActiveClass: "active",
@@ -69,22 +69,22 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     document.title = to.meta.title;
 
-    if (!to.matched.length) return next('/employees');
+    if (!to.matched.length) return next('/applicants');
     const tokenIsOk = axios.defaults.headers.common['Authorization'] === 'Bearer ' + localStorage.getItem('token');
 
     if (tokenIsOk && to.name !== 'login') return next();
-    if (tokenIsOk && to.name === 'login') return next("/employees");
+    if (tokenIsOk && to.name === 'login') return next("/applicants");
 
     if (localStorage.getItem('token')) {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
         let profileIsUndefined = Object.keys(store.getters.getProfile).length === 0;
-        if (profileIsUndefined) await store.dispatch('user/setProfileToStore');
+        if (profileIsUndefined) await store.dispatch('manager/setProfile');
         const profile = store.getters.getProfile;
 
 
-        if(to.name !== 'managers' && (profile.role === 'hr' || profile.role === 'personnel')) return next("/employees")
+        if(to.name !== 'managers' && (profile.role === 'hr' || profile.role === 'personnel')) return next("/applicants")
 
-        if (to.name === 'login') return next("/employees");
+        if (to.name === 'login') return next("/applicants");
         next();
     } else {
         if (to.name === 'login') return next();

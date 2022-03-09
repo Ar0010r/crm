@@ -5,7 +5,9 @@ export class TestService {
     }
 
     async get(params) {
-        return await this.client.get('/api/test', {params});
+        let response =  await this.client.get('/api/test', {params});
+        let data = this.setIdKeys(response.data.list);
+        return {data: data, meta: response.data.meta}
     }
 
     async store(test) {
@@ -18,5 +20,15 @@ export class TestService {
 
     async delete(test) {
         return await this.client.delete('/api/test/' + test.id);
+    }
+
+    setIdKeys(data) {
+        let refactored = {};
+        Object.keys(data).map(function (key) {
+            let index = data[key].id
+            refactored[index] = data[key];
+        });
+
+        return refactored;
     }
 }

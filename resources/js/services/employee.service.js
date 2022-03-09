@@ -9,26 +9,14 @@ export class EmployeeService {
         return await this.client.post('api/employees', employee)
     }
 
-    async getEmployees(params) {
+    async get(params) {
         let response = await this.client.get('/api/employees', {params});
-        let employees = this.setIdKeys(response.data.list);
+        let data = this.setIdKeys(response.data.list);
 
-        return {employees: employees, pagination: response.data.meta}
+        return {data: data, meta: response.data.meta}
     }
 
-    async search(keyword) {
-        let response = await this.client.get('api/search', {
-            params: {
-                keyword: keyword
-            }
-        });
-
-        let employees = this.setIdKeys(response.data.list);
-
-        return {employees: employees, pagination: response.data.meta}
-    }
-
-    async getRaces() {
+    async races() {
         return await this.client.get('api/races');
     }
 
@@ -36,25 +24,15 @@ export class EmployeeService {
         return await this.client.post('api/employees/import', file, {headers: {'Content-Type': 'multipart/form-data'}});
     }
 
-    async getStatuses() {
+    async statuses() {
         return await this.client.get('api/statuses');
     }
 
-    setIdKeys(employeesList) {
-        let employees = {};
-        Object.keys(employeesList).map(function (key) {
-            let index = employeesList[key].id
-            employees[index] = employeesList[key];
-        });
-
-        return employees;
-    }
-
-    async deleteEmployee(employee) {
+    async delete(employee) {
         return await this.client.delete('api/employees/' + employee.id);
     }
 
-    async deleteSelected(employees) {
+    async bulkDelete(employees) {
         return await this.client.patch('api/employees', {'employees': employees});
     }
 
@@ -62,12 +40,22 @@ export class EmployeeService {
         return await this.client.put('api/employees/' + employee.id, employee);
     }
 
-    async updateSelected(employees, status) {
+    async bulkUpdate(employees, status) {
         return await this.client.put('api/employees', {employees: employees, status: status});
     }
 
     async getMonthlyStatistics() {
         return await this.client.get('api/employees/statistics');
+    }
+
+    setIdKeys(data) {
+        let refactored = {};
+        Object.keys(data).map(function (key) {
+            let index = data[key].id
+            refactored[index] = data[key];
+        });
+
+        return refactored;
     }
 
 }

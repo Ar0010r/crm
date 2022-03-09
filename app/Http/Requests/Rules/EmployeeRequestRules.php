@@ -35,6 +35,7 @@ trait EmployeeRequestRules
             'phone_1' => ['nullable', 'regex:/^\d{3}-\d{3}-\d{4}$/'], //'unique:employees,phone_2'
             'phone_2' => ['nullable', 'regex:/^\d{3}-\d{3}-\d{4}$/'], //'unique:employees,phone_1'
             'birthday' => ['nullable', 'date'],
+            'contacted' => ['nullable', 'date'],
             'race' => ['nullable', 'string', 'in:' . implode(',', Race::RACES)],
             'status' => ['nullable', 'string', 'in:' . implode(',', Status::STATUSES)],
         ];

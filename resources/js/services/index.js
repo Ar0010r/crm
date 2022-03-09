@@ -1,20 +1,20 @@
 import axios from 'axios'
 
 import store from '../store'
-import { EmployeeService } from "./employee.service";
+import { ApplicantService } from "./applicant.service";
 import { CompanyService } from "./company.service";
 import { AuthService } from "./auth.service";
-import { UserService } from "./user.service";
-import { LetterService } from "./letter.service";
+import { ManagerService } from "./manager.service";
+import { MailService } from "./mail.service";
 import { TestService } from "./test.service";
 
 //axios.defaults.baseURL = '/api/';
 const serviceProviders = {
     AuthService: () => new AuthService(axios, store),
-    EmployeeService: () => new EmployeeService(axios),
+    ApplicantService: () => new ApplicantService(axios),
     CompanyService: () => new CompanyService(axios),
-    UserService: () => new UserService(axios),
-    LetterService: () => new LetterService(axios),
+    ManagerService: () => new ManagerService(axios),
+    MailService: () => new MailService(axios),
     TestService: () => new TestService(axios),
 };
 

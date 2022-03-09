@@ -34,7 +34,7 @@ class LetterController extends Controller
 
     public function index(LetterGetRequest $request)
     {
-        $data = $this->getService->get($request)->items();
+        $data = $this->getService->get($request);
 
         return new ListResource($data);
     }

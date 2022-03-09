@@ -4,15 +4,19 @@ import {emitter} from '../app';
 export default {
     namespaced: true,
     state: {
-        companies: {},
+        data: {},
+        meta: {},
         statistics: {},
         queryParams: {
-            page: "",
-            manager_id: "",
-            type: "",
-            take: 100
+            manager_id: null,
+            type: null,
+            search_term: null,
+            created_before: null,
+            created_after: null,
+            take: 100,
+            page: 1,
         },
-        emptyCompany: {
+        companyModel: {
             name: null,
             manager_id: null,
             manager: {login: null},
@@ -22,19 +26,32 @@ export default {
             type: null,
             created_at: null,
             dataIsValid: null,
-        }
+        },
+        types: [
+            {
+                id: 0,
+                name:'Delivery'
+            },
+            {
+                id: 1,
+                name:'Hiring'
+            }
+        ],
     },
     mutations: {
         setQueryParam(state, {key, value}) {
             state.queryParams[key] = value
         },
-        async setCompanies(state, companies) {
-            state.companies = companies;
+        setData(state, companies) {
+            state.data = companies;
+        },
+        setMeta(state, meta) {
+            state.meta = meta;
         },
         setStatistics(state, statistics) {
             state.statistics = statistics;
         },
-        setCompanyById(state, company) {
+        set(state, company) {
             let key = company.id;
             if (state.companies[key]) {
                 state.companies[key] = {...state.companies[key], ...company};
@@ -45,24 +62,16 @@ export default {
                 state.companies = {...newCompanyObj, ...state.companies};
             }
         },
-        deleteCompanyById(state, id) {
+        unset(state, id) {
             delete state.companies[id];
         },
     },
     actions: {
-        async setCompaniesToStore({commit}, params) {
+        async get({commit}, params) {
             try {
-                console.log(111111, params)
-                let companiesList = await container.CompanyService.getCompanies(params);
-                companiesList = companiesList.data.list;
-
-                let companies = {};
-                Object.keys(companiesList).map(function (key) {
-                    let index = companiesList[key].id;
-                    companies[index] = companiesList[key];
-                });
-
-                commit('setCompanies', companies);
+                let response = await container.CompanyService.get(params);
+                commit('setData', response.data);
+                commit('setMeta', response.meta);
             } catch (e) {
                 console.log('error', e)
                 emitter.emit('notification-error', e.response.data)
@@ -70,17 +79,17 @@ export default {
             }
         },
 
-        deleteCompany({commit, dispatch, state}, company) {
+        delete({commit, dispatch, state}, company) {
             let key = company.id;
             if (state.companies[key]) {
-                commit('deleteCompanyById', key);
+                commit('unset', key);
             } else {
                 emitter.emit('notification-error', e.response.data)
             }
         },
-        async setStatisticsToStore({commit}, params) {
+        async statistics({commit}, params) {
             try {
-                let statistics = await container.CompanyService.getStatistics();
+                let statistics = await container.CompanyService.statistics();
 
                 commit('setStatistics', statistics.data.list);
             } catch (e) {

@@ -12,6 +12,7 @@ class LetterResource extends ModelResource
             $this->resource->attributesToArray(),
             [
                 'hr' => $this->hr,
+                'company' => $this->company,
                 'total' => $this->total()
             ]
         );

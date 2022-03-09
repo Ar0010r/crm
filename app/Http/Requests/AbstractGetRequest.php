@@ -30,7 +30,8 @@ abstract class AbstractGetRequest extends FormRequest implements RequestInterfac
     public function messages()
     {
         return [
-            'order_by.in' => 'order by field is invalid. List of valid values: created_at,updated_at,' . implode(',', $this->orderByFields())
+            'order_by.in' => 'order by field is invalid. List of valid values: created_at,updated_at,' . implode(',',
+                    $this->orderByFields())
         ];
     }
 

@@ -71,6 +71,8 @@ abstract class AbstractGetService implements GetResourceInterface
             $this->relatedLikeFilters
         );
 
+       /* dd($this->request);*/
+
         return $this;
     }
 

@@ -47,11 +47,12 @@ class CompanyStatisticService
         $record['hrs'] = $this->getHrsData($company);
         $record['applicants'] = [
             'total' => $company->employees_count,
-            'good' => $company->ready_employees_count + $company->invited_employees_count + $company->exported_employees_count,
+            'good' => $company->ready_employees_count + $company->invited_employees_count + $company->exported_employees_count + $company->died_employees_count,
             'need_data' => $company->need_data_employees_count,
             'ready' => $company->ready_employees_count,
             'invited' => $company->invited_employees_count,
             'bad' => $company->bad_employees_count,
+            'died' => $company->died_employees_count,
             'exported' => $company->exported_employees_count,
         ];
 

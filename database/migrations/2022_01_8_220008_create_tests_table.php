@@ -10,7 +10,7 @@ class CreateTestsTable extends Migration
     public function up()
     {
         Schema::create('tests', function (Blueprint $table) {
-            $table->engine = 'MyISAM';
+            //$table->engine = 'MyISAM';
 
             $table->uuid('id')->primary();
             $table->date('date');

@@ -15,7 +15,7 @@ export class AuthService {
 
             this.client.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.model.token.plainTextToken;
 
-            this.store.commit('user/setProfile', response.data.model.user);
+            this.store.commit('manager/setProfile', response.data.model.user);
 
             return true;
         }

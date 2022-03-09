@@ -20,6 +20,11 @@ class GetCompanyService extends AbstractGetService
         'pseudonym',
     ];
 
+    protected array $scopeFilters = [
+        'created_before',
+        'created_after',
+    ];
+
     protected function getModel(): Model
     {
         return new Company();

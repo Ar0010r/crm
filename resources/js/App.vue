@@ -17,11 +17,11 @@
 </template>
 
 <script>
-    import SideBar from './components/layout/SideBar.vue';
-    import NavBar from './components/layout/NavBar.vue';
-    import ProfileForm from './components/modals/profile/ProfileForm';
-    import Notification from './components/modals/notification/Notification';
-    import DeleteForm from './components/modals/notification/DeleteForm';
+    import SideBar from './components/Layout/SideBar.vue';
+    import NavBar from './components/Layout/NavBar.vue';
+    import ProfileForm from './deprecated/modals/profile/ProfileForm';
+    import Notification from './components/Notification/Notification';
+    import DeleteForm from './components/Notification/DeleteForm';
 
     export default {
         components: {

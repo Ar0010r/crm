@@ -32,7 +32,9 @@
     <link rel="stylesheet" href="assets/vendor/libs/bootstrap-select/bootstrap-select.css">
     <link rel="stylesheet" href="assets/vendor/libs/select2/select2.css">
     <link rel="stylesheet" href="assets/vendor/libs/bootstrap-tagsinput/bootstrap-tagsinput.css">
+    <link rel="stylesheet" href="assets/vendor/libs/sweetalert2/sweetalert2.css">
     <link rel="stylesheet" href="assets/css/demo.css">
+
 
     <!-- Load polyfills -->
     <script src="assets/vendor/js/polyfills.js"></script>
@@ -54,6 +56,7 @@
     <!-- Core scripts -->
     <script src="assets/vendor/js/pace.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css">
 
     <!-- Libs -->
     <link rel="stylesheet" href="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css">
@@ -62,6 +65,7 @@
 
     <link rel="stylesheet" href="assets/vendor/libs/dropzone/dropzone.css">
     <link rel="stylesheet" href="assets/vendor/libs/flow-js/flow.css">
+    <link rel="stylesheet" href="assets/vendor/libs/datatables/datatables.css">
 </head>
 
 <body class="light-style" style="background-color: #f5f5f5!important;">
@@ -95,7 +99,5 @@
 <script src="assets/js/demo.js"></script>
 <script src="assets/js/tables_datatables.js"></script>
 
-</body>
 
-</html>
-</html>
+</body>

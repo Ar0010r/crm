@@ -13,6 +13,7 @@ use App\Services\Concrete\User\GetUserService;
 use App\Services\Concrete\User\StoreUserService;
 use App\Shared\Value\Role;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -26,7 +27,7 @@ class UserController extends Controller
 
     public function index(UserGetRequest $request)
     {
-        $data = $this->getService->get($request)->items();
+        $data = $this->getService->get($request);
 
         return new ListResource($data);
     }
