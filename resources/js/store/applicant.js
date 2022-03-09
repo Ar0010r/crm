@@ -44,11 +44,7 @@ export default {
     },
     mutations: {
         setQueryParam(state, {key, value}) {
-
-            console.log('key',key)
-            console.log('value',value)
             state.queryParams[key] = value
-            console.log('state.queryParams[key]',state.queryParams[key])
         },
 
         setData(state, applicants) {

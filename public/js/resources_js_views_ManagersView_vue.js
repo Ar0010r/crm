@@ -794,8 +794,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 filters = store.getters[props.getter];
-                console.log('props.getter', props.getter);
-                console.log('props.getter filters', filters);
                 queryParams = {};
                 Object.keys(filters).map(function (key) {
                   if (filters[key]) {
@@ -803,10 +801,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }
                 });
                 queryParams.page = page;
-                _context.next = 8;
+                _context.next = 6;
                 return store.dispatch(props.dispatch, queryParams);
 
-              case 8:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -1031,16 +1029,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return store.dispatch(props.namespace + "/get", queryParams);
 
                 case 7:
-                  _context.next = 9;
-                  return store.commit(props.namespace + "/setQueryParam", {
+                  store.commit(props.namespace + "/setQueryParam", {
                     'key': 'take',
                     'value': take
                   });
 
-                case 9:
-                  console.log('props.getter', props.getter);
-
-                case 10:
+                case 8:
                 case "end":
                   return _context.stop();
               }

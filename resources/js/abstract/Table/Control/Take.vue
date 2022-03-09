@@ -43,8 +43,7 @@ export default {
                 })
                 queryParams.take = take;
                 await store.dispatch(props.namespace + "/get", queryParams);
-                await store.commit(props.namespace + "/setQueryParam", {'key': 'take', 'value': take})
-                console.log('props.getter', props.getter)
+                store.commit(props.namespace + "/setQueryParam", {'key': 'take', 'value': take})
             }
         }
     },

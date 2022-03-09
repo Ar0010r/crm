@@ -70,8 +70,6 @@ export default {
 
         async function goToPage(page) {
             let filters = store.getters[props.getter]
-            console.log('props.getter', props.getter);
-            console.log('props.getter filters', filters);
             let queryParams = {};
             Object.keys(filters).map(function (key) {
                 if (filters[key]) {

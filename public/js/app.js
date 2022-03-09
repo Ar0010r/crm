@@ -22824,10 +22824,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     setQueryParam: function setQueryParam(state, _ref) {
       var key = _ref.key,
           value = _ref.value;
-      console.log('key', key);
-      console.log('value', value);
       state.queryParams[key] = value;
-      console.log('state.queryParams[key]', state.queryParams[key]);
     },
     setData: function setData(state, applicants) {
       state.data = applicants;
