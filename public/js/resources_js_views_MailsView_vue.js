@@ -28,7 +28,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup(props) {
     var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)("emitter");
-    var rule = (0,yup__WEBPACK_IMPORTED_MODULE_2__.string)().nullable().matches("^((?:19|20)[0-9][0-9])-(0[1-9]|1[012])-([12][0-9]|3[01]|0[1-9])$", 'valid date format is yyyy-mm-dd');
+    var rule = (0,yup__WEBPACK_IMPORTED_MODULE_2__.string)().trim().nullable().matches("^((?:19|20)[0-9][0-9])-(0[1-9]|1[012])-([12][0-9]|3[01]|0[1-9])$", 'valid date format is yyyy-mm-dd');
     rule = props.required ? rule.required() : rule;
     var date = (0,vee_validate__WEBPACK_IMPORTED_MODULE_3__.useField)('vmodel', rule);
     date.setValue(props.vmodel);
@@ -43,18 +43,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
+                console.log('props.vmodel', props.vmodel);
                 date.setValue(props.vmodel);
                 date.setTouched(true);
-                _context3.next = 4;
+                _context3.next = 5;
                 return date.validate();
 
-              case 4:
+              case 5:
                 if (!date.meta.valid) {
                   console.log('input.meta.valid' + props.label, props.vmodel);
                   emitter.emit(props.validate + '-invalid');
                 }
 
-              case 5:
+              case 6:
               case "end":
                 return _context3.stop();
             }
@@ -132,7 +133,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   props: {
     label: {
       type: String,
-      "default": 'Date'
+      "default": 'date'
     },
     reset: String,
     validate: String,

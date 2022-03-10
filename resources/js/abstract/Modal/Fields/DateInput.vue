@@ -28,13 +28,15 @@ import {string} from "yup";
 export default {
     setup(props) {
         const emitter = inject("emitter");
-        let rule = string().nullable().matches("^((?:19|20)[0-9][0-9])-(0[1-9]|1[012])-([12][0-9]|3[01]|0[1-9])$", 'valid date format is yyyy-mm-dd');
+        let rule = string().trim().nullable().matches("^((?:19|20)[0-9][0-9])-(0[1-9]|1[012])-([12][0-9]|3[01]|0[1-9])$", 'valid date format is yyyy-mm-dd');
         rule = props.required ? rule.required() : rule;
         let date = useField('vmodel', rule )
 
         date.setValue(props.vmodel)
 
         async function validate() {
+            console.log('props.vmodel',props.vmodel)
+
             date.setValue(props.vmodel)
             date.setTouched(true)
             await date.validate()
@@ -67,7 +69,7 @@ export default {
     props: {
         label: {
             type: String,
-            default: 'Date'
+            default: 'date'
         },
         reset: String,
         validate: String,

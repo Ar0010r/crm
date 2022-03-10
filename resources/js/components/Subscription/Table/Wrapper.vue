@@ -42,8 +42,9 @@
                     "Provider",
                     'Service',
                     'Price',
-                    'Last_payment',
-                    'Period'
+                    'Last payment',
+                    'Period',
+                    'Actions'
                 ]
             }
         },

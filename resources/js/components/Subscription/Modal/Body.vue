@@ -1,4 +1,4 @@
-<service>
+<template>
    <div class="modal-body">
         <Select :options=companies
                 title="select company"
@@ -41,17 +41,17 @@
               :validate="validate"
               :reset="reset"
               label="price"
-              regex='(\d+\.\d{1,2})'
+              regex="^\d+(?:[.]\d{1,2}|$)$"
               :required=true />
-
         <DateInput
             :vmodel="object.last_payment"
+            v-model="object.last_payment"
             :reset="reset"
             :validate="validate"
-            label="last payment"
+            label="prolonged"
         />
     </div>
-</service>
+</template>
 
 <script>
     import Select from '../../../abstract/Modal/Fields/Select.vue';

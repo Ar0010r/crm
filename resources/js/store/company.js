@@ -5,7 +5,7 @@ export default {
     namespaced: true,
     state: {
         data: {},
-        meta: {},
+        meta: {from: 0, to: 0, total: 0},
         statistics: {},
         queryParams: {
             manager_id: null,

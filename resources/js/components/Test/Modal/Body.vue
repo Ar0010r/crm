@@ -62,7 +62,8 @@
             :reset="reset"
             :validate="validate"
         />
-        <DateInput :vmodel="object.date" :reset="reset" :validate="validate"/>
+       <pre>{{object.date}}</pre>
+        <DateInput v-model="object.date" :vmodel="object.date" :reset="reset" :validate="validate"/>
     </div>
 </template>
 

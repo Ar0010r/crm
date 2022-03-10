@@ -46,7 +46,7 @@
                     <i class="ion ion-ios-search navbar-icon align-middle"></i>
                     <span class="navbar-search-input pl-2">
                   <input v-model="keyword" type="text" class="form-control navbar-text mx-2"
-                         placeholder="Search for applicants"
+                         placeholder="Search"
                          style="width:200px">
                 </span>
                 </label>
@@ -74,9 +74,9 @@
             const store = useStore();
 
             async function search(keyword) {
-                store.dispatch('applicant/get', {
+                /*store.dispatch('applicant/get', {
                     "search_term" : keyword
-                });
+                });*/
             }
             return {keyword: ref(null), search}
         },

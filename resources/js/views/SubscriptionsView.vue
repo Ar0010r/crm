@@ -14,10 +14,10 @@
         setup() {
             let store = useStore();
 
+            let subscriptionsAreUndefined = Object.keys(store.getters.getSubscriptions).length === 0;
             let companiesAreUndefined = Object.keys(store.getters.getCompanies).length === 0;
-            let testsAreUndefined = Object.keys(store.getters.getSubscriptions).length === 0;
 
-            if (testsAreUndefined) store.dispatch('test/get');
+            if (subscriptionsAreUndefined) store.dispatch('subscription/get');
             if (companiesAreUndefined) store.dispatch('company/get');
         },
         components: {

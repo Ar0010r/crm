@@ -14,14 +14,14 @@
             :vmodel=filters.provider
             :options="providers()"
             commit="subscription/setQueryParam"
-            param="env"
+            param="provider"
         ></Select>
         <Select
-            title="Template"
+            title="Service"
             :vmodel=filters.service
             :options="services()"
             commit="subscription/setQueryParam"
-            param="template"
+            param="service"
         ></Select>
         <DatePicker
             title="Paid before"

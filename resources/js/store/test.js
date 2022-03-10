@@ -5,7 +5,7 @@ export default {
     namespaced: true,
     state: {
         data: {},
-        meta: {},
+        meta: {from: 0, to: 0, total: 0},
         envs: [
             'Web',
             'The Bat',
@@ -47,7 +47,7 @@ export default {
                 if (dd < 10) dd = '0' + dd;
                 if (mm < 10) mm = '0' + mm;
 
-                return  yyyy + '-' + mm + '-' + dd;
+                return yyyy + '-' + mm + '-' + dd;
             }()
         }
     },

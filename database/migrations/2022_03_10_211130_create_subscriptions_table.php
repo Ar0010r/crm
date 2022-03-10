@@ -13,6 +13,7 @@ class CreateSubscriptionsTable extends Migration
 
             $table->uuid('id')->primary();
             $table->uuid('company_id');
+            $table->string('period');
             $table->string('provider');
             $table->string('service');
             $table->float('price');

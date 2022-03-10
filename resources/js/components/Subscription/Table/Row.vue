@@ -10,6 +10,7 @@
         </template>
         <template v-slot:actions>
             <EditButton :model="subscription" target="#editSubscriptionForm" event="edit-subscription-form"/>
+            <PaidButton :subscription="subscription"></PaidButton>
             <DeleteButton
                 :model="subscription"
                 event="delete-subscription-"
@@ -21,6 +22,7 @@
 
 <script>
 import Row from '../../../abstract/Table/Row';
+import PaidButton from "./PaidButton";
 import DeleteButton from '../../../abstract/Table/Actions/DeleteButton';
 import EditButton from '../../../abstract/Table/Actions/EditButton';
 
@@ -28,6 +30,7 @@ export default {
     props: {subscription: Object},
     components: {
         Row,
+        PaidButton,
         DeleteButton,
         EditButton
     }

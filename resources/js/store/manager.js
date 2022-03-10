@@ -6,7 +6,7 @@ export default {
     state: {
         profile: {},
         data: {},
-        meta: {},
+        meta: {from: 0, to: 0, total: 0},
         managerModel: {
             created_at: null,
             deleted_at: null,

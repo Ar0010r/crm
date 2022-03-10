@@ -3,12 +3,14 @@
 namespace App\Domain\Models;
 
 use App\Source\Traits\HasUuid;
+use App\System\Search\Database\RangeFilters\SubscriptionRangeFilters;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class Subscription extends Model
 {
     use HasUuid;
+    use SubscriptionRangeFilters;
 
     protected $fillable = [
         'company_id',

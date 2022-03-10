@@ -19287,11 +19287,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                store.dispatch('applicant/get', {
-                  "search_term": keyword
-                });
-
-              case 1:
               case "end":
                 return _context.stop();
             }
@@ -20228,7 +20223,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     type: "text",
     "class": "form-control navbar-text mx-2",
-    placeholder: "Search for applicants",
+    placeholder: "Search",
     style: {
       "width": "200px"
     }
@@ -20410,6 +20405,14 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   "class": "sidenav-link"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "sidenav-icon ion ion-md-card"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, "Subscriptions")], -1
+/* HOISTED */
+);
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  "class": "sidenav-link"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "sidenav-icon ion ion-md-analytics"
 }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, "Statistics")], -1
 /* HOISTED */
@@ -20485,10 +20488,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  }), $setup.profile.role === 'admin' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
-    key: 2,
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: {
-      name: 'statistics'
+      name: 'subscriptions'
     },
     tag: "li",
     "class": "sidenav-item"
@@ -20499,7 +20501,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <router-link :to=\"{ name : 'subscriptions'}\" tag=\"li\" class=\"sidenav-item\">\n                <a class=\"sidenav-link\"><i class=\"sidenav-icon ion ion-md-card\"></i>\n                    <div>Subscriptions</div>\n                </a>\n            </router-link>")])]);
+  }), $setup.profile.role === 'admin' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
+    key: 2,
+    to: {
+      name: 'statistics'
+    },
+    tag: "li",
+    "class": "sidenav-item"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_11];
+    }),
+    _: 1
+    /* STABLE */
+
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
 }
 
 /***/ }),
@@ -22961,7 +22977,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   namespaced: true,
   state: {
     data: {},
-    meta: {},
+    meta: {
+      from: 0,
+      to: 0,
+      total: 0
+    },
     races: [],
     statuses: {},
     availableStatuses: {},
@@ -23389,7 +23409,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   namespaced: true,
   state: {
     data: {},
-    meta: {},
+    meta: {
+      from: 0,
+      to: 0,
+      total: 0
+    },
     statistics: {},
     queryParams: {
       manager_id: null,
@@ -23827,7 +23851,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   namespaced: true,
   state: {
     data: {},
-    meta: {},
+    meta: {
+      from: 0,
+      to: 0,
+      total: 0
+    },
     statistics: {},
     queryParams: {
       hr_id: null,
@@ -24095,7 +24123,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   state: {
     profile: {},
     data: {},
-    meta: {},
+    meta: {
+      from: 0,
+      to: 0,
+      total: 0
+    },
     managerModel: {
       created_at: null,
       deleted_at: null,
@@ -24393,7 +24425,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   namespaced: true,
   state: {
     data: {},
-    meta: {},
+    meta: {
+      from: 0,
+      to: 0,
+      total: 0
+    },
     providers: ['Google', 'Outlook', 'Namecheap'],
     services: ['Email', 'Hosting'],
     periods: ['monthly', 'quarterly', 'half-yearly', 'yearly'],
@@ -24622,7 +24658,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   namespaced: true,
   state: {
     data: {},
-    meta: {},
+    meta: {
+      from: 0,
+      to: 0,
+      total: 0
+    },
     envs: ['Web', 'The Bat', 'Thunderbird'],
     templates: ['Link', 'File', 'Hello', 'Random'],
     queryParams: {
