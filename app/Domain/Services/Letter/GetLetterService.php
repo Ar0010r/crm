@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class GetLetterService extends AbstractGetService
 {
-    protected array $notStringFilters = [
+    protected array $whereFilters = [
         'hr_id',
         'company_id',
     ];

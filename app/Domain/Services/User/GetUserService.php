@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class GetUserService extends AbstractGetService
 {
-    protected array $notStringFilters = [
+    protected array $whereFilters = [
         'role',
     ];
 

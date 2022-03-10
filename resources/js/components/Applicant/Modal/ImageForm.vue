@@ -20,6 +20,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" @click="deleteMedia">Delete</button>
+                    <a v-if="media" class="btn btn-primary" :href="media.url" download>Download</a>
                     <button type="button" id="imageFormClose" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </form>

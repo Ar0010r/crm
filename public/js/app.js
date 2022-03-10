@@ -20499,7 +20499,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <router-link :to=\"{ name : 'subscriptions'}\" tag=\"li\" class=\"sidenav-item\">\n                <a class=\"sidenav-link\"><i class=\"sidenav-icon ion ion-md-card\"></i>\n                    <div>Subscriptions</div>\n                </a>\n            </router-link>")])]);
 }
 
 /***/ }),
@@ -21156,6 +21156,10 @@ var TestsView = function TestsView() {
   return __webpack_require__.e(/*! import() */ "resources_js_views_TestsView_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./views/TestsView.vue */ "./resources/js/views/TestsView.vue"));
 };
 
+var SubscriptionsView = function SubscriptionsView() {
+  return __webpack_require__.e(/*! import() */ "resources_js_views_SubscriptionsView_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./views/SubscriptionsView.vue */ "./resources/js/views/SubscriptionsView.vue"));
+};
+
 var history = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.createWebHistory)();
 var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.createRouter)({
   history: history,
@@ -21207,6 +21211,13 @@ var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_3__.createRouter)({
     name: 'tests',
     meta: {
       title: 'tests'
+    }
+  }, {
+    path: '/subscriptions',
+    component: SubscriptionsView,
+    name: 'subscriptions',
+    meta: {
+      title: 'subscriptions'
     }
   }, {
     path: '/',
@@ -21329,8 +21340,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index */ "./resources/js/services/index.js");
-/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../app */ "./resources/js/app.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -21342,8 +21351,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-
 
 var ApplicantService = /*#__PURE__*/function () {
   function ApplicantService(client) {
@@ -21509,7 +21516,7 @@ var ApplicantService = /*#__PURE__*/function () {
             switch (_context6.prev = _context6.next) {
               case 0:
                 _context6.next = 2;
-                return this.client.post('api/employees/import', file, {
+                return this.client.post('api/employee/import', file, {
                   headers: {
                     'Content-Type': 'multipart/form-data'
                   }
@@ -21541,7 +21548,7 @@ var ApplicantService = /*#__PURE__*/function () {
             switch (_context7.prev = _context7.next) {
               case 0:
                 _context7.next = 2;
-                return this.client.post('api/employees/upload', request, {
+                return this.client.post('api/employee/upload', request, {
                   headers: {
                     'Content-Type': 'multipart/form-data'
                   }
@@ -22073,6 +22080,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _manager_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./manager.service */ "./resources/js/services/manager.service.js");
 /* harmony import */ var _mail_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./mail.service */ "./resources/js/services/mail.service.js");
 /* harmony import */ var _test_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./test.service */ "./resources/js/services/test.service.js");
+/* harmony import */ var _subscription_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./subscription.service */ "./resources/js/services/subscription.service.js");
+
 
 
 
@@ -22100,6 +22109,9 @@ var serviceProviders = {
   },
   TestService: function TestService() {
     return new _test_service__WEBPACK_IMPORTED_MODULE_7__.TestService((axios__WEBPACK_IMPORTED_MODULE_0___default()));
+  },
+  SubscriptionService: function SubscriptionService() {
+    return new _subscription_service__WEBPACK_IMPORTED_MODULE_8__.SubscriptionService((axios__WEBPACK_IMPORTED_MODULE_0___default()));
   }
 };
 var container = new Proxy(serviceProviders, {
@@ -22571,6 +22583,175 @@ var ManagerService = /*#__PURE__*/function () {
   }]);
 
   return ManagerService;
+}();
+
+/***/ }),
+
+/***/ "./resources/js/services/subscription.service.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/services/subscription.service.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "SubscriptionService": () => (/* binding */ SubscriptionService)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var SubscriptionService = /*#__PURE__*/function () {
+  function SubscriptionService(client) {
+    _classCallCheck(this, SubscriptionService);
+
+    this.client = client;
+  }
+
+  _createClass(SubscriptionService, [{
+    key: "get",
+    value: function () {
+      var _get = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(params) {
+        var response, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.client.get('/api/subscription', {
+                  params: params
+                });
+
+              case 2:
+                response = _context.sent;
+                data = this.setIdKeys(response.data.list);
+                return _context.abrupt("return", {
+                  data: data,
+                  meta: response.data.meta
+                });
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function get(_x) {
+        return _get.apply(this, arguments);
+      }
+
+      return get;
+    }()
+  }, {
+    key: "store",
+    value: function () {
+      var _store = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(subscription) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return this.client.post('/api/subscription', subscription);
+
+              case 2:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function store(_x2) {
+        return _store.apply(this, arguments);
+      }
+
+      return store;
+    }()
+  }, {
+    key: "update",
+    value: function () {
+      var _update = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(subscription) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return this.client.put('/api/subscription/' + subscription.id, subscription);
+
+              case 2:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function update(_x3) {
+        return _update.apply(this, arguments);
+      }
+
+      return update;
+    }()
+  }, {
+    key: "delete",
+    value: function () {
+      var _delete2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(subscription) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return this.client["delete"]('/api/subscription/' + subscription.id);
+
+              case 2:
+                return _context4.abrupt("return", _context4.sent);
+
+              case 3:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function _delete(_x4) {
+        return _delete2.apply(this, arguments);
+      }
+
+      return _delete;
+    }()
+  }, {
+    key: "setIdKeys",
+    value: function setIdKeys(data) {
+      var refactored = {};
+      Object.keys(data).map(function (key) {
+        var index = data[key].id;
+        refactored[index] = data[key];
+      });
+      return refactored;
+    }
+  }]);
+
+  return SubscriptionService;
 }();
 
 /***/ }),
@@ -23456,14 +23637,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mail__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mail */ "./resources/js/store/mail.js");
 /* harmony import */ var _test__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./test */ "./resources/js/store/test.js");
 /* harmony import */ var _manager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./manager */ "./resources/js/store/manager.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var _subscription__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./subscription */ "./resources/js/store/subscription.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
 
 
 
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vuex__WEBPACK_IMPORTED_MODULE_5__.createStore)({
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vuex__WEBPACK_IMPORTED_MODULE_6__.createStore)({
   getters: {
     getProfile: function getProfile(state) {
       return state.manager.profile;
@@ -23576,6 +23759,27 @@ __webpack_require__.r(__webpack_exports__);
     },
     getTemplates: function getTemplates(state) {
       return state.test.templates;
+    },
+    getSubscriptions: function getSubscriptions(state) {
+      return state.subscription.data;
+    },
+    getSubscriptionsMeta: function getSubscriptionsMeta(state) {
+      return state.subscription.meta;
+    },
+    getSubscriptionQueryParams: function getSubscriptionQueryParams(state) {
+      return state.subscription.queryParams;
+    },
+    getSubscriptionModel: function getSubscriptionModel(state) {
+      return state.subscription.subscriptionModel;
+    },
+    getProviders: function getProviders(state) {
+      return state.subscription.providers;
+    },
+    getServices: function getServices(state) {
+      return state.subscription.services;
+    },
+    getPeriods: function getPeriods(state) {
+      return state.subscription.periods;
     }
   },
   modules: {
@@ -23583,7 +23787,8 @@ __webpack_require__.r(__webpack_exports__);
     company: _company__WEBPACK_IMPORTED_MODULE_1__["default"],
     test: _test__WEBPACK_IMPORTED_MODULE_3__["default"],
     manager: _manager__WEBPACK_IMPORTED_MODULE_4__["default"],
-    mail: _mail__WEBPACK_IMPORTED_MODULE_2__["default"]
+    mail: _mail__WEBPACK_IMPORTED_MODULE_2__["default"],
+    subscription: _subscription__WEBPACK_IMPORTED_MODULE_5__["default"]
   }
 }));
 
@@ -24148,6 +24353,235 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
           }
         }, _callee6);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/subscription.js":
+/*!********************************************!*\
+  !*** ./resources/js/store/subscription.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/index */ "./resources/js/services/index.js");
+/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../app */ "./resources/js/app.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  state: {
+    data: {},
+    meta: {},
+    providers: ['Google', 'Outlook', 'Namecheap'],
+    services: ['Email', 'Hosting'],
+    periods: ['monthly', 'quarterly', 'half-yearly', 'yearly'],
+    queryParams: {
+      company_id: null,
+      provider: null,
+      service: null,
+      paid_before: null,
+      paid_after: null,
+      search_term: null,
+      take: 100,
+      page: 1
+    },
+    subscriptionModel: {
+      company_id: null,
+      company: {
+        name: null
+      },
+      provider: null,
+      service: null,
+      price: null,
+      period: null,
+      last_payment: function () {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+        return yyyy + '-' + mm + '-' + dd;
+      }()
+    }
+  },
+  mutations: {
+    setQueryParam: function setQueryParam(state, _ref) {
+      var key = _ref.key,
+          value = _ref.value;
+      state.queryParams[key] = value;
+    },
+    setData: function setData(state, subscriptions) {
+      state.data = subscriptions;
+    },
+    setMeta: function setMeta(state, meta) {
+      state.meta = meta;
+    },
+    set: function set(state, subscription) {
+      var key = subscription.id;
+
+      if (state.data[key]) {
+        state.data[key] = _objectSpread(_objectSpread({}, state.data[key]), subscription);
+      } else {
+        var newSubscriptionObj = {};
+        newSubscriptionObj[key] = subscription;
+        state.data = _objectSpread(_objectSpread({}, newSubscriptionObj), state.data);
+      }
+    },
+    unset: function unset(state, id) {
+      delete state.data[id];
+    }
+  },
+  actions: {
+    get: function get(_ref2, params) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var commit, dispatch, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref2.commit, dispatch = _ref2.dispatch;
+                _context.prev = 1;
+                _context.next = 4;
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.SubscriptionService.get(params);
+
+              case 4:
+                response = _context.sent;
+                commit('setData', response.data);
+                commit('setMeta', response.meta);
+                _context.next = 13;
+                break;
+
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](1);
+                _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context.t0.response.data);
+                if (_context.t0.response.status === 401) _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
+
+              case 13:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[1, 9]]);
+      }))();
+    },
+    create: function create(_ref3, model) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var commit, dispatch, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                commit = _ref3.commit, dispatch = _ref3.dispatch;
+                _context2.prev = 1;
+                _context2.next = 4;
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.SubscriptionService.store(model);
+
+              case 4:
+                response = _context2.sent;
+                commit('set', response.data.model);
+                _context2.next = 11;
+                break;
+
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](1);
+                _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context2.t0.response.data);
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[1, 8]]);
+      }))();
+    },
+    update: function update(_ref4, model) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var commit, dispatch, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                commit = _ref4.commit, dispatch = _ref4.dispatch;
+                _context3.prev = 1;
+                _context3.next = 4;
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.SubscriptionService.update(model);
+
+              case 4:
+                response = _context3.sent;
+                commit('set', response.data.model);
+                _context3.next = 11;
+                break;
+
+              case 8:
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](1);
+                _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context3.t0.response.data);
+
+              case 11:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[1, 8]]);
+      }))();
+    },
+    "delete": function _delete(_ref5, subscription) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var commit, dispatch, state, id;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                commit = _ref5.commit, dispatch = _ref5.dispatch, state = _ref5.state;
+                id = subscription.id;
+
+                if (!state.data[id]) {
+                  _context4.next = 8;
+                  break;
+                }
+
+                _context4.next = 5;
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.SubscriptionService["delete"](subscription);
+
+              case 5:
+                commit('unset', id);
+                _context4.next = 9;
+                break;
+
+              case 8:
+                _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', e.response.data);
+
+              case 9:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
       }))();
     }
   }
@@ -64779,7 +65213,7 @@ function toArray(value) {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_views_ApplicantsView_vue":1,"resources_js_views_CompaniesView_vue":1,"resources_js_views_ManagersView_vue":1,"resources_js_views_LoginView_vue":1,"resources_js_views_MailsView_vue":1,"resources_js_views_StatisticsView_vue":1,"resources_js_views_TestsView_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_views_ApplicantsView_vue":1,"resources_js_views_CompaniesView_vue":1,"resources_js_views_ManagersView_vue":1,"resources_js_views_LoginView_vue":1,"resources_js_views_MailsView_vue":1,"resources_js_views_StatisticsView_vue":1,"resources_js_views_TestsView_vue":1,"resources_js_views_SubscriptionsView_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

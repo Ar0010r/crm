@@ -4,19 +4,17 @@ namespace App\Domain\Models;
 
 use App\Domain\Models\Pivot\TopHrHr;
 use App\Source\Traits\HasUuid;
-use App\Domain\Enums\Role;
 use App\Domain\Enums\Status;
+use App\System\Search\Database\RangeFilters\UserRangeFilters;
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens, HasUuid;
+    use HasFactory, Notifiable, HasApiTokens, HasUuid, UserRangeFilters;
 
     public $incrementing = false;
     protected $keyType = 'string';
@@ -41,30 +39,8 @@ class User extends Authenticatable
 
     public function companies()
     {
-        if($this->role === Role::PERSONNEL){
-            return $this->hasMany(Company::class, 'manager_id', 'id');
-        }
-        return Company::query()->select('companies.*');
+        return $this->hasMany(Company::class, 'manager_id', 'id');
     }
-
-    /*public function employees()
-    {
-        switch ($this->role) {
-            case Role::PERSONNEL:
-                return $this->hasManyThrough(Employee::class, Company::class);
-            case Role::ADMIN:
-                return Employee::query()->select('employees.*');
-            default:
-                return $this->hasManyThrough(
-                    Employee::class,
-                    Company::class,
-                    'manager_id',
-                    'company_id',
-                    'id',
-                    'id'
-                );
-        }
-    }*/
 
     public function letters()
     {
@@ -77,7 +53,8 @@ class User extends Authenticatable
             ->whereIn('status', [
                     Status::READY,
                     Status::INVITED,
-                    Status::EXPORTED
+                    Status::EXPORTED,
+                    Status::DIED
                 ]
             );
     }
@@ -109,10 +86,10 @@ class User extends Authenticatable
         )->whereIn('employees.status', [
             Status::READY,
             Status::INVITED,
-            Status::EXPORTED
+            Status::EXPORTED,
+            Status::DIED,
         ]);
     }
-
 
     public function topHrHrs()
     {
@@ -129,15 +106,5 @@ class User extends Authenticatable
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d');
-    }
-
-    public function scopeCreatedBefore(Builder $query, $date): Builder
-    {
-        return $query->where('created_at', '<=', Carbon::parse($date)->format('Y-m-d h:m:s'));
-    }
-
-    public function scopeCreatedAfter(Builder $query, $date): Builder
-    {
-        return $query->where('created_at', '>=', Carbon::parse($date)->format('Y-m-d h:m:s'));
     }
 }

@@ -14,7 +14,6 @@ use App\Domain\Services\Letter\GetLetterService;
 use App\Domain\Services\Letter\LetterStatisticsService;
 use App\Domain\Services\Letter\StoreLetterService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 
 class LetterController extends Controller
 {
@@ -75,12 +74,9 @@ class LetterController extends Controller
 
     public function total()
     {
-        $q = DB::table('letters');
-        foreach (['google', 'yahoo', 'outlook', 'other'] as $client) {
-            $q->selectRaw("SUM($client) as {$client}_total");
-        }
+        $total = $this->statisticsService->getTotal();
 
-        return new ModelResource($q->get());
+        return new ModelResource($total);
     }
 
     public function statistics()

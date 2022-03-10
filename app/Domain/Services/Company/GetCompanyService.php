@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class GetCompanyService extends AbstractGetService
 {
-    protected array $notStringFilters = [
+    protected array $whereFilters = [
         'type', 'manager_id'
     ];
 

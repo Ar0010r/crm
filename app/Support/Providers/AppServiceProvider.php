@@ -8,6 +8,8 @@ use App\Domain\Services\Employee\GetEmployeeService;
 use App\Domain\Services\Employee\ScopeEmployeeService;
 use App\Domain\Services\Letter\GetLetterService;
 use App\Domain\Services\Letter\ScopeLetterService;
+use App\Domain\Services\Subscription\GetSubscriptionService;
+use App\Domain\Services\Subscription\ScopeSubscriptionService;
 use App\Domain\Services\Test\GetTestService;
 use App\Domain\Services\Test\ScopeTestService;
 use App\Domain\Services\User\GetUserService;
@@ -41,6 +43,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->when(GetTestService::class)
             ->needs(ScopeResourceInterface::class)
             ->give(ScopeTestService::class);
+
+        $this->app->when(GetSubscriptionService::class)
+            ->needs(ScopeResourceInterface::class)
+            ->give(ScopeSubscriptionService::class);
     }
 
     public function boot()

@@ -7,6 +7,7 @@ import { AuthService } from "./auth.service";
 import { ManagerService } from "./manager.service";
 import { MailService } from "./mail.service";
 import { TestService } from "./test.service";
+import { SubscriptionService } from "./subscription.service";
 
 //axios.defaults.baseURL = '/api/';
 const serviceProviders = {
@@ -16,6 +17,7 @@ const serviceProviders = {
     ManagerService: () => new ManagerService(axios),
     MailService: () => new MailService(axios),
     TestService: () => new TestService(axios),
+    SubscriptionService: () => new SubscriptionService(axios),
 };
 
 export const container = (new Proxy(serviceProviders, {

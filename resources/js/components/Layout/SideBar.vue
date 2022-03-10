@@ -44,6 +44,11 @@
                     <div>Statistics</div>
                 </a>
             </router-link>
+<!--            <router-link :to="{ name : 'subscriptions'}" tag="li" class="sidenav-item">
+                <a class="sidenav-link"><i class="sidenav-icon ion ion-md-card"></i>
+                    <div>Subscriptions</div>
+                </a>
+            </router-link>-->
         </ul>
     </div>
 </template>

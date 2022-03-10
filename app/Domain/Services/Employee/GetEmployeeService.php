@@ -22,7 +22,7 @@ class GetEmployeeService extends AbstractGetService
         'phone_2',
     ];
 
-    protected array $notStringFilters = [
+    protected array $whereFilters = [
         'company_id',
         'hr_id',
         'status',

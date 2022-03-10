@@ -1,40 +1,37 @@
 <?php
 
 
-namespace App\Domain\Services\Test;
+namespace App\Domain\Services\Subscription;
 
-
-use App\Domain\Models\Test;
+use App\Domain\Models\Subscription;
 use App\Domain\Models\User;
 use App\Source\Services\AbstractGetService;
 use Illuminate\Database\Eloquent\Model;
 
-class GetTestService extends AbstractGetService
+class GetSubscriptionService extends AbstractGetService
 {
     protected array $whereFilters = [
-        'env',
-        'template',
-        'manager_id',
         'company_id',
+        'provider',
+        'service',
     ];
 
     protected array $scopeFilters = [
-        "date_before",
-        "date_after",
+        'paid_before',
+        'paid_after',
     ];
 
     protected function setBaseQuery(User $user = null): AbstractGetService
     {
         parent::setBaseQuery($user);
 
-        $this->query->with(['manager', 'company']);
+        $this->query->with(['company']);
 
         return $this;
     }
 
     protected function getModel(): Model
     {
-        return new Test();
+        return new Subscription();
     }
-
 }

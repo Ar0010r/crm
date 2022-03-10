@@ -4,6 +4,7 @@ namespace App\Domain\Models;
 
 use App\Source\Traits\HasUuid;
 use App\Domain\Enums\Status;
+use App\System\Search\Database\RangeFilters\CompanyRangeFilters;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,6 +15,7 @@ class Company extends Model
 {
     use HasUuid;
     use HasFactory;
+    use CompanyRangeFilters;
 
     protected $fillable = [
         'name',
@@ -62,15 +64,5 @@ class Company extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d');
-    }
-
-    public function scopeCreatedBefore(Builder $query, $date): Builder
-    {
-        return $query->where('created_at', '<=', Carbon::parse($date)->format('Y-m-d h:m:s'));
-    }
-
-    public function scopeCreatedAfter(Builder $query, $date): Builder
-    {
-        return $query->where('created_at', '>=', Carbon::parse($date)->format('Y-m-d h:m:s'));
     }
 }

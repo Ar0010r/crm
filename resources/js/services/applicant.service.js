@@ -1,5 +1,3 @@
-import {container} from "./index";
-import {emitter} from "../app";
 
 export class ApplicantService {
 
@@ -30,11 +28,11 @@ export class ApplicantService {
     }
 
     async import(file) {
-        return await this.client.post('api/employees/import', file, {headers: {'Content-Type': 'multipart/form-data'}});
+        return await this.client.post('api/employee/import', file, {headers: {'Content-Type': 'multipart/form-data'}});
     }
 
     async upload(request) {
-        return await this.client.post('api/employees/upload', request, {headers: {'Content-Type': 'multipart/form-data'}});
+        return await this.client.post('api/employee/upload', request, {headers: {'Content-Type': 'multipart/form-data'}});
     }
 
     async statuses() {

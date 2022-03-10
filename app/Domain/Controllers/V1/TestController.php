@@ -69,14 +69,4 @@ class TestController extends Controller
             return response($e->getMessage(), JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         }
     }
-
-    public function total()
-    {
-        $q = DB::table('tests');
-        foreach (['google', 'yahoo', 'outlook', 'other'] as $client) {
-            $q->selectRaw("SUM($client) as {$client}_total");
-        }
-
-        return new ModelResource($q->get());
-    }
 }

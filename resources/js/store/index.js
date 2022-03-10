@@ -3,6 +3,7 @@ import company from "./company";
 import mail from "./mail";
 import test from "./test";
 import manager from "./manager";
+import subscription from "./subscription";
 import {createStore} from 'vuex'
 
 export default createStore({
@@ -51,12 +52,21 @@ export default createStore({
         getTestModel: state => state.test.testModel,
         getEnvs: state => state.test.envs,
         getTemplates: state => state.test.templates,
+
+        getSubscriptions: state => state.subscription.data,
+        getSubscriptionsMeta: state => state.subscription.meta,
+        getSubscriptionQueryParams: state => state.subscription.queryParams,
+        getSubscriptionModel: state => state.subscription.subscriptionModel,
+        getProviders: state => state.subscription.providers,
+        getServices: state => state.subscription.services,
+        getPeriods: state => state.subscription.periods,
     },
     modules: {
         applicant: applicant,
         company: company,
         test: test,
         manager: manager,
-        mail: mail
+        mail: mail,
+        subscription: subscription
     }
 })

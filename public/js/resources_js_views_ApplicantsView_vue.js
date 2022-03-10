@@ -4150,8 +4150,9 @@ var _hoisted_14 = [_hoisted_13];
 var _hoisted_15 = {
   "class": "modal-footer"
 };
+var _hoisted_16 = ["href"];
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "button",
   id: "imageFormClose",
   "class": "btn btn-default",
@@ -4179,7 +4180,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[0] || (_cache[0] = function () {
       return $setup.deleteMedia && $setup.deleteMedia.apply($setup, arguments);
     })
-  }, "Delete"), _hoisted_16])])])]);
+  }, "Delete"), $setup.media ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
+    key: 0,
+    "class": "btn btn-primary",
+    href: $setup.media.url,
+    download: ""
+  }, "Download", 8
+  /* PROPS */
+  , _hoisted_16)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_17])])])]);
 }
 
 /***/ }),

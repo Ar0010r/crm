@@ -3,11 +3,11 @@
 
 namespace App\Source\Services;
 
-use App\System\SearchService\SearchQueryBuilder;
 use App\Source\Requests\AbstractGetRequest;
 use App\Domain\Models\User;
 use App\Source\Services\Contracts\ScopeResourceInterface;
 use App\Source\Services\Contracts\GetResourceInterface;
+use App\System\Search\Database\SearchQueryBuilder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -24,7 +24,6 @@ abstract class AbstractGetService implements GetResourceInterface
     protected array $likeFilters = [];
     protected array $whereFilters = [];
     protected array $jsonFilters = [];
-    protected array $notStringFilters = [];
     protected array $relatedWhereFilters = [];
     protected array $relatedLikeFilters = [];
     protected array $scopeFilters = [];
@@ -71,8 +70,6 @@ abstract class AbstractGetService implements GetResourceInterface
             $this->relatedLikeFilters
         );
 
-       /* dd($this->request);*/
-
         return $this;
     }
 
@@ -87,12 +84,12 @@ abstract class AbstractGetService implements GetResourceInterface
 
     protected function applyFilters(): AbstractGetService
     {
-        $this->notStringFilters[] = $this->model->getTable() . '.' . $this->model->getKeyName();
+        $this->whereFilters[] = $this->model->getTable() . '.' . $this->model->getKeyName();
 
         $this->query = $this->helper->applyFiltersToQuery(
             $this->query,
             $this->likeFilters,
-            array_merge($this->whereFilters, $this->notStringFilters),
+            $this->whereFilters,
             $this->relatedLikeFilters,
             $this->relatedWhereFilters,
             $this->scopeFilters

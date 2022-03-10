@@ -2,8 +2,6 @@
 
 namespace App\Domain\Services\Letter;
 
-
-
 use App\Domain\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -30,6 +28,16 @@ class LetterStatisticsService
                 'other_total' => $scope->sum('other'),
             ];
         })->toArray();
+    }
+
+    public function getTotal()
+    {
+        $q = DB::table('letters');
+        foreach (['google', 'yahoo', 'outlook', 'other'] as $client) {
+            $q->selectRaw("SUM($client) as {$client}_total");
+        }
+
+        return $q->get();
     }
 
 }
