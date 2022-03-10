@@ -46,8 +46,6 @@ export default {
             await input.validate()
 
             if (!input.meta.valid) {
-                console.log(props.label, input.errors.value)
-                console.log(props.label, input.value.value)
                 emitter.emit(props.validate + '-invalid')
             }
         }

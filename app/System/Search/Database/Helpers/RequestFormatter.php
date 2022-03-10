@@ -43,12 +43,11 @@ class RequestFormatter
 
     private function setQueryBuilderRequestWrapper(): RequestFormatter
     {
-        $skip = $this->httpRequest->get('skip', 0);
-        $take = $this->httpRequest->get('take', 30);
+        $page = $this->httpRequest->get('page', 1);
+        $take = $this->httpRequest->get('take', 100);
         $this->queryBuilderRequest = $this->queryBuilderRequest->merge([
-            'skip' => $skip,
             'take' => $take,
-            'page' => ($skip + $take) / $take,
+            'page' => $page,
             'order_by' => $this->httpRequest->get('order_by', 'created_at'),
             'asc' => $this->httpRequest->get('asc', false),
             'search_term' => $this->httpRequest->get('search_term', ""),

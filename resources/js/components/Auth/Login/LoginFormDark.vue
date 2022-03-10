@@ -21,7 +21,7 @@
 </template>
 
 <script>
-    import router from '../../router.js'
+    import router from '../../../router.js'
 
     import {inject, ref, reactive} from 'vue';
 

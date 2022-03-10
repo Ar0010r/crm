@@ -80,8 +80,6 @@
                 });
                 store.commit('employee/setQueryParam', {'key': 'hr_id', 'value': activeFilters.value.hr_id});
 
-                console.log('filterrrr');
-
                 await getApplicants();
             }
 
@@ -94,7 +92,6 @@
                     }
                 });
 
-                console.log('filters', filters)
                 /*if (Object.keys(filters).length == 1 && Object.keys(filters).shift() == 'take') {
                     return
                 }*/

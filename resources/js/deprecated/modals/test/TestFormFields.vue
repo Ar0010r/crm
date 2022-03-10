@@ -207,7 +207,6 @@ export default {
             /*config.forEach(item => {
                 props.test[item.name] = item.field.value.value;
             });*/
-            console.log(date.value.value)
         }
 
         emitter.on('edit-test-form', setValues);

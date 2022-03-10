@@ -71,8 +71,6 @@ export default {
         async get({commit, dispatch}, params) {
             try {
                 let response = await container.MailService.get(params);
-                console.log('response.data', response.data)
-                console.log('response.meta', response.meta)
                 commit('setData', response.data);
                 commit('setMeta', response.meta);
             } catch (e) {

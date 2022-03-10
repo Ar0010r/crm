@@ -39,8 +39,6 @@
 
             let testModel = {...store.getters.getTestModel};
 
-            console.log('testModel', testModel)
-
             if(profile.value.role === 'personnel' || profile.value.role === 'hr'){
                 testModel.manager_id = profile.id
             }
@@ -61,8 +59,6 @@
                     let response = await container.TestService.store(test);
                     let storedTest = response.data.model;
 
-                    console.log('storedTest', storedTest);
-
                     store.commit('test/set', storedTest);
                     document.getElementById('storeTestFormClose').click();
                     emitter.emit('notification-success', 'test was created');
@@ -81,7 +77,6 @@
 
                 test.manager_id = profile.value.id;
                 test.manager = profile.value;
-                console.log(test.manager.login)
             }
 
             emitter.on('create-test-form', resetForm);

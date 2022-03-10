@@ -58,8 +58,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
                 if (!input.meta.valid) {
-                  console.log(props.label, input.errors.value);
-                  console.log(props.label, input.value.value);
                   emitter.emit(props.validate + '-invalid');
                 }
 
@@ -223,8 +221,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
                 if (!model.meta.valid) {
-                  console.log(props.label, model.errors.value);
-                  console.log(props.label, model.value.value);
                   emitter.emit(props.validate + '-invalid');
                 }
 
@@ -396,26 +392,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
                 case 3:
                   formValid = _context.sent;
-                  console.log('formValid', formValid);
 
                   if (!formValid) {
-                    _context.next = 10;
+                    _context.next = 9;
                     break;
                   }
 
-                  _context.next = 8;
+                  _context.next = 7;
                   return store.dispatch(props.dispatch, model);
 
-                case 8:
+                case 7:
                   emitter.emit('notification-success', props.message);
                   document.getElementById(props.id).click();
 
-                case 10:
-                  _context.next = 16;
+                case 9:
+                  _context.next = 15;
                   break;
 
-                case 12:
-                  _context.prev = 12;
+                case 11:
+                  _context.prev = 11;
                   _context.t0 = _context["catch"](0);
                   console.log(_context.t0);
 
@@ -423,12 +418,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                     emitter.emit('notification-error', _context.t0.response.data);
                   }
 
-                case 16:
+                case 15:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[0, 12]]);
+          }, _callee, null, [[0, 11]]);
         }));
 
         function action() {
@@ -681,7 +676,6 @@ __webpack_require__.r(__webpack_exports__);
             return queryParams[key] = filters[key];
           }
         });
-        console.log('queryParams', queryParams);
         store.dispatch(props.dispatch, queryParams);
       }
     };
@@ -737,7 +731,6 @@ __webpack_require__.r(__webpack_exports__);
     return {
       format: format,
       setDate: function setDate(value) {
-        console.log(3123123123123, value);
         var wtf = value == null ? null : new Date(value);
         store.commit(props.commit, {
           'key': props.param,
@@ -805,9 +798,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
                 queryParams.page = page;
                 _context.next = 6;
-                return store.dispatch(props.dispatch, queryParams);
+                return store.dispatch(props.namespace + "/get", queryParams);
 
               case 6:
+                store.commit(props.namespace + "/setQueryParam", {
+                  'key': 'page',
+                  'value': page
+                });
+
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -852,7 +851,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   props: {
     meta: Object,
     getter: String,
-    dispatch: String
+    namespace: String
   }
 });
 
@@ -2650,7 +2649,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     pagination: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Pagination, {
-        dispatch: "manager/get",
+        namespace: "manager",
         meta: $setup.meta,
         getter: "getManagerQueryParams"
       }, null, 8

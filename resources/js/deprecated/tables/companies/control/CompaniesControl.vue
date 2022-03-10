@@ -50,8 +50,6 @@ export default {
                 }
             });
 
-            console.log(filters, );
-
             await store.dispatch('company/get', filters);
         }
 

@@ -69,7 +69,6 @@ export default {
             action: async function () {
                 try {
                     let formValid = await validate()
-                    console.log('formValid', formValid)
                     if (formValid) {
                         await store.dispatch(props.dispatch, model);
                         emitter.emit('notification-success', props.message);

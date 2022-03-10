@@ -35,14 +35,11 @@ export default {
         date.setValue(props.vmodel)
 
         async function validate() {
-            console.log('props.vmodel',props.vmodel)
-
             date.setValue(props.vmodel)
             date.setTouched(true)
             await date.validate()
 
             if (!date.meta.valid) {
-                console.log('input.meta.valid' + props.label, props.vmodel )
                 emitter.emit(props.validate + '-invalid')
             }
         }

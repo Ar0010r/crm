@@ -49,7 +49,6 @@ export default {
                         return  queryParams[key] = filters[key];
                     }
                 })
-                console.log('queryParams', queryParams)
                 store.dispatch(props.dispatch, queryParams);
             }
         }

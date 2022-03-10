@@ -19852,7 +19852,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 [login, role, password].forEach(function (field) {
-                  console.log(field.meta);
                   field.setTouched(true);
                   field.setValue(props.user[field.name]);
                   /* field.meta.dirty = true;
@@ -23935,25 +23934,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
               case 4:
                 response = _context.sent;
-                console.log('response.data', response.data);
-                console.log('response.meta', response.meta);
                 commit('setData', response.data);
                 commit('setMeta', response.meta);
-                _context.next = 15;
+                _context.next = 13;
                 break;
 
-              case 11:
-                _context.prev = 11;
+              case 9:
+                _context.prev = 9;
                 _context.t0 = _context["catch"](1);
                 _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context.t0.response.data);
                 if (_context.t0.response.status === 401) _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
 
-              case 15:
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[1, 11]]);
+        }, _callee, null, [[1, 9]]);
       }))();
     },
     create: function create(_ref3, model) {

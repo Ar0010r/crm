@@ -15,7 +15,7 @@
             </tbody>
         </template>
         <template v-slot:pagination>
-            <Pagination dispatch="manager/get" :meta="meta" getter="getManagerQueryParams"/>
+            <Pagination namespace="manager" :meta="meta" getter="getManagerQueryParams"/>
         </template>
     </Table>
 </template>

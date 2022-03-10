@@ -18,6 +18,7 @@ class LetterStatisticsService
         $user = $user ?? auth()->user();
         $letters = $this->scopeService->getScope($user)->with('hr')->get()->toArray();
         $letters = collect($letters)->map(fn($item) => collect($item));
+
         return $letters->pluck('hr_id')->unique()->map(function ($hr_id) use($letters) {
             $scope = $letters->where('hr_id', $hr_id);
             return [

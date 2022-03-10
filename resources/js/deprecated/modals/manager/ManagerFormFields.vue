@@ -111,7 +111,6 @@
 
             async function validate() {
                 [login, role, password].forEach(field => {
-                    console.log(field.meta);
                     field.setTouched(true);
                     field.setValue(props.user[field.name]);
                    /* field.meta.dirty = true;

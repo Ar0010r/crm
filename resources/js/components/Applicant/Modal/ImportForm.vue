@@ -100,7 +100,6 @@
             let success = ref(false);
 
             function setFile(event) {
-                console.log(event);
                 file.value = event.target.files[0];
             }
 

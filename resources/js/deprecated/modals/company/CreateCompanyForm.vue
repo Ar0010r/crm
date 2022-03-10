@@ -82,7 +82,6 @@
                 if(profile.value.role === 'personnel' || profile.value.role === 'hr'){
                     company.manager_id = profile.value.id
                     company.manager = profile.value
-                    console.log(company.manager.login)
                 }
             }
 

@@ -15,7 +15,7 @@
             </tbody>
         </template>
         <template v-slot:pagination>
-            <Pagination dispatch="subscription/get" :meta="meta" getter="getSubscriptionQueryParams"/>
+            <Pagination namespace="subscription" :meta="meta" getter="getSubscriptionQueryParams"/>
         </template>
     </Table>
 </template>

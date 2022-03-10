@@ -16,7 +16,7 @@
             </tbody>
         </template>
         <template v-slot:pagination>
-            <Pagination dispatch="mail/get" :meta="meta" getter="getMailQueryParams"/>
+            <Pagination namespace="mail" :meta="meta" getter="getMailQueryParams"/>
         </template>
     </Table>
 </template>

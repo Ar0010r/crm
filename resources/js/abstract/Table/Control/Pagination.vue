@@ -77,7 +77,8 @@ export default {
                 }
             })
             queryParams.page = page;
-            await store.dispatch(props.dispatch, queryParams);
+            await store.dispatch(props.namespace + "/get", queryParams);
+            store.commit(props.namespace + "/setQueryParam", {'key': 'page', 'value': page})
         }
 
         function getPages(current, last) {
@@ -116,7 +117,7 @@ export default {
     props: {
         meta: Object,
         getter: String,
-        dispatch: String,
+        namespace: String,
     },
 };
 </script>

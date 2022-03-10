@@ -27,7 +27,6 @@ export default {
             state.managers = users;
         },
         setUserById(state, user) {
-            console.log(user);
             let key = user.id;
             if (state.managers[key]) {
                 state.managers[key] = {...state.managers[key], ...user};

@@ -43,7 +43,6 @@
             return {
                 deleteWarning, deleteEventId,
                 disabled: function () {
-                    console.log('disable ? ' , profile.value.role, props.company.type)
                     if(profile.value.role == 'hr' || profile.value.role == 'top hr') {
                         if(props.company.type == 0) {
                             return true

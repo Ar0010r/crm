@@ -210,7 +210,6 @@ export default {
                 type.handleChange
                 props.company.manager = {"login" : ""}
                 props.company.manager_id = null
-                console.log('set null');
             }
         }
     },

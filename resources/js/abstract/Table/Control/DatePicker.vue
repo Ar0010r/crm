@@ -37,7 +37,6 @@ export default {
         return {
             format,
             setDate: function (value) {
-                console.log(3123123123123, value)
                 let wtf = value == null ? null : new Date(value)
                 store.commit(props.commit, {'key': props.param, 'value': format(wtf)})
             },
