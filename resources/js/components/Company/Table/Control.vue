@@ -18,15 +18,15 @@
             param="type"
         ></Select>
         <DatePicker
-            title="Created before"
-            :vmodel=filters.created_before
-            param="created_before"
-            commit="company/setQueryParam"
-        />
-        <DatePicker
             title="Created after"
             :vmodel=filters.created_after
             param="created_after"
+            commit="company/setQueryParam"
+        />
+        <DatePicker
+            title="Created before"
+            :vmodel=filters.created_before
+            param="created_before"
             commit="company/setQueryParam"
         />
     </Control>

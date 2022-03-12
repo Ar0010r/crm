@@ -62,7 +62,6 @@
             :reset="reset"
             :validate="validate"
         />
-       <pre>{{object.date}}</pre>
         <DateInput v-model="object.date" :vmodel="object.date" :reset="reset" :validate="validate"/>
     </div>
 </template>
@@ -71,14 +70,17 @@
     import Select from '../../../abstract/Modal/Fields/Select.vue';
     import DateInput from '../../../abstract/Modal/Fields/DateInput.vue';
     import {useStore} from 'vuex';
-    import {computed} from 'vue';
+    import {computed, inject} from 'vue';
 
     export default {
         props: {object:Object, reset:String, validate:String},
         setup() {
             const store = useStore()
+            const container = inject('container')
             return {
-                companies: computed(() => store.getters.getCompanies),
+                companies: computed(() => container.CompanyService.controlled(
+                    store.getters.getCompanies, store.getters.getProfile
+                )),
                 envs: function () {
                     return store.getters.getEnvs.map(function (value) {
                         return {

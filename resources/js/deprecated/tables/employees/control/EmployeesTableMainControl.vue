@@ -285,7 +285,8 @@
 
                 refresh: () => {
                     getApplicants()
-                    store.dispatch('manager/setProfile')
+                    store.dispatch('profile/get')
+                    //store.dispatch('manager/setProfile')
                 }
             }
         }

@@ -85,7 +85,8 @@ router.beforeEach(async (to, from, next) => {
     if (localStorage.getItem('token')) {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
         let profileIsUndefined = Object.keys(store.getters.getProfile).length === 0;
-        if (profileIsUndefined) await store.dispatch('manager/setProfile');
+        //if (profileIsUndefined) await store.dispatch('manager/setProfile');
+        if (profileIsUndefined) await store.dispatch('profile/get');
         const profile = store.getters.getProfile;
 
 

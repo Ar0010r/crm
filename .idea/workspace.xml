@@ -2,10 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6dd06283-79a3-451e-93c8-b1b73cd686ac" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Domain/Controllers/V1/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Controllers/V1/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Services/Letter/LetterStatisticsService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Letter/LetterStatisticsService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/System/Search/Database/Helpers/RequestFormatter.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/System/Search/Database/Helpers/RequestFormatter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Enums/Status.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Enums/Status.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Models/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Company.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Models/Employee.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Employee.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Models/Letter.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Letter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Models/Pivot/TopHrHr.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Pivot/TopHrHr.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Models/Subscription.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Subscription.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Models/Test.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Test.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Subscription/SubscriptionUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Subscription/SubscriptionUpdateRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Test/TestUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Test/TestUpdateRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Resources/CompanyResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Resources/CompanyResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Services/Company/StoreCompanyService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Company/StoreCompanyService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Services/User/UserProfileService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Support/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Support/Exceptions/Handler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2022_03_10_211130_create_subscriptions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2022_03_10_211130_create_subscriptions_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_ApplicantsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_ApplicantsView_vue.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_CompaniesView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_CompaniesView_vue.js" afterDir="false" />
@@ -14,18 +28,54 @@
       <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_ManagersView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_ManagersView_vue.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_SubscriptionsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_SubscriptionsView_vue.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_TestsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_TestsView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/abstract/Table/Control/Pagination.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/abstract/Table/Control/Pagination.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Wrapper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Wrapper.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Auth/LoginForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Auth/Login/LoginForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Auth/LoginFormDark.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Auth/Login/LoginFormDark.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Auth/LoginIcon.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Auth/Login/LoginIcon.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/abstract/Modal/Fields/DateInput.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/abstract/Modal/Fields/DateInput.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/abstract/Modal/Fields/Input.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/abstract/Modal/Fields/Input.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/abstract/Modal/Fields/IntegerInput.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/abstract/Modal/Fields/IntegerInput.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/abstract/Modal/Fields/Select.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/abstract/Modal/Fields/Select.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/abstract/Modal/Fields/SpecialValuesInput.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/abstract/Modal/Fields/SpecialValuesInput.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/abstract/Modal/Form.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/abstract/Modal/Form.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/abstract/Table/Actions/EditButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/abstract/Table/Actions/EditButton.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/abstract/Table/Wrapper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/abstract/Table/Wrapper.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Modal/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Modal/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Control/MainControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Control/MainControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Auth/Login/LoginForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Auth/Login/LoginForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Auth/Profile/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Auth/Profile/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Auth/Profile/ProfileForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Auth/Profile/ProfileForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Company/Modal/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Company/Modal/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Company/Table/Control.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Company/Table/Control.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Company/Table/Row.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Company/Table/Row.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Company/Table/Wrapper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Company/Table/Wrapper.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Layout/NavBarDropdown.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Layout/NavBarDropdown.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Mail/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Mail/Content.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Mail/Modal/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Mail/Modal/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Mail/Table/Control.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Mail/Table/Control.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Mail/Table/History.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Mail/Table/History.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Manager/Table/Wrapper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Manager/Table/Wrapper.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Subscription/Table/Wrapper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Subscription/Table/Wrapper.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Mail/Table/HistoryRow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Mail/Table/HistoryRow.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Manager/Table/Control.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Manager/Table/Control.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Notification/Error.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Notification/Error.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Subscription/Modal/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Subscription/Modal/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Subscription/Table/Control.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Subscription/Table/Control.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Subscription/Table/Row.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Subscription/Table/Row.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Test/Modal/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Test/Modal/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Test/Table/Control.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Test/Table/Control.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Test/Table/Row.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Test/Table/Row.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Test/Table/Wrapper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Test/Table/Wrapper.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/deprecated/modals/profile/ProfileForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/deprecated/modals/profile/ProfileForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/deprecated/tables/employees/control/EmployeesTableMainControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/deprecated/tables/employees/control/EmployeesTableMainControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/deprecated/tables/letters/control/LettersTableControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/deprecated/tables/letters/control/LettersTableControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/deprecated/tables/statistics/control/StatisticsTableControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/deprecated/tables/statistics/control/StatisticsTableControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/services/auth.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/auth.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/services/company.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/company.service.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/store/applicant.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/applicant.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/views/LoginView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/LoginView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/company.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/company.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/mail.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/mail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/manager.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/manager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/subscription.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/subscription.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/app.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -429,7 +479,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/js/components/Auth/Profile" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/js/abstract/Modal/Fields" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -440,11 +490,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/js/abstract/Modal/Fields" />
+      <recent name="$PROJECT_DIR$/resources/js/store" />
       <recent name="$PROJECT_DIR$/resources/js/components/Auth/Profile" />
       <recent name="$PROJECT_DIR$/resources/js/components/Subscription/Table" />
       <recent name="$PROJECT_DIR$/resources/js/views" />
-      <recent name="$PROJECT_DIR$/app/System/Search/Database/RangeFilters" />
-      <recent name="$PROJECT_DIR$/resources/js/components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/resources/js/components/Auth/Login" />
@@ -593,7 +643,7 @@
       <workItem from="1646261305989" duration="40153000" />
       <workItem from="1646661935985" duration="149000" />
       <workItem from="1646662116016" duration="23000" />
-      <workItem from="1646662395257" duration="77989000" />
+      <workItem from="1646662395257" duration="117515000" />
     </task>
     <servers />
   </component>

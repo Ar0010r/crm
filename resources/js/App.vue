@@ -19,7 +19,8 @@
 <script>
     import SideBar from './components/Layout/SideBar.vue';
     import NavBar from './components/Layout/NavBar.vue';
-    import ProfileForm from './deprecated/modals/profile/ProfileForm';
+    import ProfileForm from './components/Auth/Profile/ProfileForm';
+    //import ProfileForm from './deprecated/modals/profile/ProfileForm';
     import Notification from './components/Notification/Notification';
     import DeleteForm from './components/Notification/DeleteForm';
 

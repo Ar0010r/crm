@@ -1,6 +1,5 @@
 <template>
     <Table :from="meta.from" :to="meta.to" :total="meta.total">
-        <pre>{{mails}}</pre>
         <template v-slot:take>
             <Take getter="getMailQueryParams" namespace="mail" :vmodel="params.take"></Take>
         </template>
@@ -22,44 +21,40 @@
 </template>
 
 <script>
-    import Table from '../../../abstract/Table/Wrapper';
-    import Head from '../../../abstract/Table/Head';
-    import Pagination from '../../../abstract/Table/Control/Pagination';
-    import Take from '../../../abstract/Table/Control/Take';
-    import Search from '../../../abstract/Table/Control/Search';
-    import Row from './HistoryRow';
-    import {useStore} from "vuex";
-    import {computed} from "vue";
+import Table from '../../../abstract/Table/Wrapper';
+import Head from '../../../abstract/Table/Head';
+import Pagination from '../../../abstract/Table/Control/Pagination';
+import Take from '../../../abstract/Table/Control/Take';
+import Search from '../../../abstract/Table/Control/Search';
+import Row from './HistoryRow';
+import {useStore} from "vuex";
+import {computed} from "vue";
 
-    export default {
-        setup() {
+export default {
+    setup() {
 
-            const store = useStore();
-            return {
-                mails: computed(() => store.getters.getMails),
-                meta: computed(() => store.getters.getMailsMeta),
-                params: computed(() => store.getters.getMailQueryParams),
-                columns: [
-                    "Received",
-                    "Hr",
-                    "Company",
-                    "Google",
-                    "Outlook",
-                    "Yahoo",
-                    "Other",
-                    "Total",
-                    "Progress",
-                    "Actions",
-                ]
-            }
-        },
-        components: {
-            Table,
-            Head,
-            Pagination,
-            Row,
-            Take,
-            Search,
+        const store = useStore();
+        return {
+            mails: computed(() => store.getters.getMails),
+            meta: computed(() => store.getters.getMailsMeta),
+            params: computed(() => store.getters.getMailQueryParams),
+            columns: computed(function () {
+                let profile = store.getters.getProfile
+                if (profile.role == 'admin' || profile.role == 'top hr') {
+                    return ["Received", "Hr", "Company", "Google", "Outlook", "Yahoo", "Other", "Total", "Progress", "Actions",]
+                } else {
+                    return ["Received", "Company", "Google", "Outlook", "Yahoo", "Other", "Total", "Progress", "Actions",]
+                }
+            })
         }
-    };
+    },
+    components: {
+        Table,
+        Head,
+        Pagination,
+        Row,
+        Take,
+        Search,
+    }
+};
 </script>

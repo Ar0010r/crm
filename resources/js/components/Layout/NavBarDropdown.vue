@@ -44,7 +44,7 @@
             return {
                 logout,
                 profile,
-                showProfileForm: () => emitter.emit('open-profile-form', profile)
+                showProfileForm: () => emitter.emit('open-profile-form', profile.value)
             }
         }
     };

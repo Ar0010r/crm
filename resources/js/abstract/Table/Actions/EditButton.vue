@@ -1,6 +1,8 @@
 <template>
-    <a data-toggle="modal" v-bind="attribute">
-        <button type="button" class="fas fa-edit p-0 bg-transparent border-0"
+    <a data-toggle="modal" v-bind="attribute" :disabled="disabled">
+        <button
+            :disabled="disabled"
+            type="button" class="fas fa-edit p-0 bg-transparent border-0"
                 data-toggle="tooltip"
                 data-placement="right" title="Edit"
                 @click="showEditForm"
@@ -26,6 +28,10 @@ export default {
         model: Object,
         target: String,
         event: String,
+        disabled: {
+            type: Boolean,
+            default: false
+        },
     },
 };
 </script>

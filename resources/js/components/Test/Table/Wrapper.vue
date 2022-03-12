@@ -37,18 +37,15 @@
                 tests: computed(() => store.getters.getTests),
                 meta: computed(() => store.getters.getTestsMeta),
                 params: computed(() => store.getters.getTestQueryParams),
-                columns: [
-                    "Date",
-                    "Tester",
-                    "Company",
-                    "Env",
-                    "Template",
-                    "Google",
-                    "Outlook",
-                    "Yahoo",
-                    "Other",
-                    "Actions",
-                ]
+                columns: computed(function () {
+                    let profile = store.getters.getProfile
+
+                    if (profile.role == 'admin' || profile.role == 'top hr') {
+                        return ["Date", "Tester", "Company", "Env", "Template", "Google", "Outlook", "Yahoo", "Other", "Actions"]
+                    } else {
+                        return ["Date", "Company", "Env", "Template", "Google", "Outlook", "Yahoo", "Other", "Actions"]
+                    }
+                })
             }
         },
         components: {

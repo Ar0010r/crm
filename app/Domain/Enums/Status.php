@@ -47,7 +47,7 @@ class Status
     public const HR_STATUSES = [
         self::NEED_DATA => self::WHITE_COLOR_STYLE,
         self::READY => self::OCEAN_COLOR_STYLE,
-        self::INVITED => self::BLUE_COLOR_STYLE,
+       // self::INVITED => self::BLUE_COLOR_STYLE,
         self::BAD => self::RED_COLOR_STYLE,
     ];
 

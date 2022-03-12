@@ -77,6 +77,7 @@ export default {
                 let newApplicantObj = {};
                 newApplicantObj[key] = applicant;
                 state.data = {...newApplicantObj, ...state.data};
+                state.meta.total = state.meta.total + 1
             }
         },
         unset(state, id) {

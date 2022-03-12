@@ -66,7 +66,8 @@
                     await managerFields.value.validate();
                     let response = await container.ManagerService.update(formData);
 
-                    store.commit('manager/setProfile', response.data);
+                    store.commit('profile/set', response.data.model);
+                    //store.commit('manager/setProfile', response.data);
                     emitter.emit('notification-success', 'profile was updated');
                     document.getElementById('profileFormClose').click()
                 } catch (e) {
@@ -76,7 +77,8 @@
             }
 
             function setProfile(userData) {
-                Object.keys(userData.value).forEach(key => user[key] = userData.value[key])
+                console.log('userData', userData)
+                Object.keys(userData).forEach(key => user[key] = userData[key])
             }
 
             return {

@@ -58,14 +58,14 @@
     import Input from '../../../abstract/Modal/Fields/Input.vue';
     import DateInput from '../../../abstract/Modal/Fields/DateInput.vue';
     import {useStore} from 'vuex';
-    import {computed} from 'vue';
+    import {computed, inject} from 'vue';
 
     export default {
         props: {object:Object, reset:String, validate:String},
         setup() {
             const store = useStore()
+            const container = inject('container')
             return {
-                companies: computed(() => store.getters.getCompanies),
                 providers: function () {
                     return store.getters.getProviders.map(function (value) {
                         return {
@@ -89,7 +89,10 @@
                             "name": value
                         }
                     })
-                }
+                },
+                companies: computed(() => container.CompanyService.controlled(
+                    store.getters.getCompanies, store.getters.getProfile
+                )),
             }
         },
         components: {

@@ -35,6 +35,13 @@ export default {
         date.setValue(props.vmodel)
 
         async function validate() {
+            if(props.vmodel == null || props.vmodel == "") {
+                if(!props.required) {
+                    input.resetField()
+                    input.setTouched(false)
+                    return
+                }
+            }
             date.setValue(props.vmodel)
             date.setTouched(true)
             await date.validate()
@@ -48,7 +55,7 @@ export default {
         onBeforeUnmount(() => emitter.off(props.reset, date.resetField));
 
         emitter.on(props.validate, validate);
-        onBeforeUnmount(() => emitter.off(props.reset, validate));
+        onBeforeUnmount(() => emitter.off(props.validate, validate));
 
         return {
             date,

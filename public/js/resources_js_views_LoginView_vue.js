@@ -52,9 +52,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 _context.next = 5;
-                return store.dispatch('manager/setProfile');
+                return store.dispatch('profile/get');
 
               case 5:
+                //await store.dispatch('manager/setProfile');
                 _router_js__WEBPACK_IMPORTED_MODULE_1__["default"].push("/employees");
                 _context.next = 12;
                 break;

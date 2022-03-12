@@ -56,6 +56,7 @@
                :vmodel="object.zip"
                :validate="validate"
                :reset="reset"
+               placeholder="xxxxx-xxxx"
                label="zip"
                regex="^\d{5}(-\d{4})?$"
         />
@@ -64,6 +65,7 @@
                :validate="validate"
                :reset="reset"
                label="phone 1"
+               placeholder="xxx-xxx-xxxx"
                regex="^\d{3}-\d{3}-\d{4}$"
         />
         <Input v-model="object.phone_2"
@@ -71,12 +73,14 @@
                :validate="validate"
                :reset="reset"
                label="phone 2"
+               placeholder="xxx-xxx-xxxx"
                regex="^\d{3}-\d{3}-\d{4}$"
         />
         <Input v-model="object.birthday"
                :vmodel="object.birthday"
                :validate="validate"
                :reset="reset"
+               placeholder="yyyy-mm-dd"
                label="birthday"
                regex="^((?:19|20)[0-9][0-9])-(0[1-9]|1[012])-([12][0-9]|3[01]|0[1-9])$"
         />
@@ -101,14 +105,15 @@ import Input from '../../../abstract/Modal/Fields/Input.vue';
 import Checkbox from '../../../abstract/Modal/Fields/Checkbox.vue';
 import StateInput from '../../../abstract/Modal/Fields/SpecialValuesInput.vue';
 import {useStore} from 'vuex';
-import {computed} from 'vue';
+import {computed, inject} from 'vue';
 
 export default {
     props: {object: Object, reset: String, validate: String},
     setup() {
         const store = useStore()
+        const container = inject('container')
         return {
-            companies: computed(() => store.getters.getCompanies),
+            companies: computed(() => container.CompanyService.delivery(store.getters.getCompanies)),
             races: function () {
                 return store.getters.getRaces.map(function (value) {
                     return {

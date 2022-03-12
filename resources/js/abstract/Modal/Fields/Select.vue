@@ -11,7 +11,7 @@
                     @focus="focus"
                     @change=model.handleChange
                     @blur="model.handleBlur"
-                    :class="{'is-invalid': !model.meta.valid  && model.meta.touched}"
+                    :class="{'is-invalid': !model.meta.valid  && model.meta.touched, 'light-grey': vmodel == null}"
             >
                 <option disabled selected :value=null> -- {{ title }} --</option>
                 <option v-for="option in options"
@@ -56,10 +56,12 @@ export default {
         });
 
         async function validate() {
+            console.log(props.label, 'fired')
             model.setValue(props.vmodel)
             model.setTouched(true)
             await model.validate()
             if (!model.meta.valid) {
+                //console.log(props.label, props.vmodel)
                 emitter.emit(props.validate + '-invalid')
             }
         }
@@ -68,7 +70,7 @@ export default {
         onBeforeUnmount(() => emitter.off(props.reset, model.resetField));
 
         emitter.on(props.validate, validate);
-        onBeforeUnmount(() => emitter.off(props.reset, validate));
+        onBeforeUnmount(() => emitter.off(props.validate, validate));
 
         return {
             model,
@@ -102,4 +104,11 @@ export default {
     },
 };
 </script>
+
+<style lang="scss">
+.light-grey{
+    color: #babbbc
+}
+</style>
+
 

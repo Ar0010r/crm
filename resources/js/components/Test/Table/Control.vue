@@ -33,15 +33,15 @@
             param="template"
         ></Select>
         <DatePicker
-            title="Tested before"
-            :vmodel=filters.date_before
-            param="date_before"
-            commit="test/setQueryParam"
-        />
-        <DatePicker
             title="Tested after"
             :vmodel=filters.date_after
             param="date_after"
+            commit="test/setQueryParam"
+        />
+        <DatePicker
+            title="Tested before"
+            :vmodel=filters.date_before
+            param="date_before"
             commit="test/setQueryParam"
         />
     </Control>
@@ -53,13 +53,17 @@ import Select from '../../../abstract/Table/Control/Select';
 import Button from '../../../abstract/Table/Control/Button';
 import DatePicker from '../../../abstract/Table/Control/DatePicker';
 import {useStore} from "vuex";
-import {computed} from "vue";
+import {computed, inject} from "vue";
 
 export default {
     setup() {
         const store = useStore();
+        const container = inject('container')
+
         return {
-            companies: computed(() => store.getters.getCompanies),
+            companies: computed(() => container.CompanyService.controlled(
+                store.getters.getCompanies, store.getters.getProfile
+            )),
             managers: computed(() => store.getters.getManagers),
             filters: computed(() => store.getters.getTestQueryParams),
             profileIsAdmin: computed(() => {

@@ -1,7 +1,8 @@
 <template>
     <Row>
         <template v-slot:default>
-            <td>{{ subscription.company.name }}</td>
+            <td v-if="subscription.company">{{ subscription.company.name }}</td>
+            <td v-else></td>
             <td>{{ subscription.provider }}</td>
             <td>{{ subscription.service }}</td>
             <td>{{ subscription.price }}</td>

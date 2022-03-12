@@ -15,7 +15,8 @@ export class AuthService {
 
             this.client.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.model.token.plainTextToken;
 
-            this.store.commit('manager/setProfile', response.data.model.user);
+            this.store.commit('profile/set', response.data.model.user);
+            //this.store.commit('manager/setProfile', response.data.model.user);
 
             return true;
         }
@@ -32,5 +33,10 @@ export class AuthService {
             localStorage.removeItem('token');
             window.location.href = '/login';
         }
+    }
+
+    async profile()
+    {
+        return await this.client.get('/api/profile');
     }
 }

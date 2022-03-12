@@ -16,16 +16,15 @@
                 param="company_id"
         />
         <DatePicker
-            title="Hired before"
-            :vmodel=filters.created_before
-            param="created_before"
-            commit="manager/setQueryParam"
-        />
-
-        <DatePicker
             title="Hired after"
             :vmodel=filters.created_after
             param="created_after"
+            commit="manager/setQueryParam"
+        />
+        <DatePicker
+            title="Hired before"
+            :vmodel=filters.created_before
+            param="created_before"
             commit="manager/setQueryParam"
         />
     </Control>

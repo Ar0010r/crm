@@ -43,6 +43,13 @@ export default {
         input.setValue(props.vmodel)
 
         async function validate() {
+            if(props.vmodel == null || props.vmodel == "") {
+                if(!props.required) {
+                    input.resetField()
+                    input.setTouched(false)
+                    return
+                }
+            }
             input.setValue(props.vmodel)
             input.setTouched(true)
             await input.validate()
@@ -56,7 +63,7 @@ export default {
         onBeforeUnmount(() => emitter.off(props.reset, input.resetField));
 
         emitter.on(props.validate, validate);
-        onBeforeUnmount(() => emitter.off(props.reset, validate));
+        onBeforeUnmount(() => emitter.off(props.validate, validate));
 
         return {
             focus: async function () {

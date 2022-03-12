@@ -34,7 +34,8 @@
                 monthly: () =>  emitter.emit('set-statistics-view', 1),
                 refresh: () => {
                     getMonthlyStatistics()
-                    store.dispatch('manager/setProfile')
+                    store.dispatch('profile/get')
+                    //store.dispatch('manager/setProfile')
                 }
             }
         }

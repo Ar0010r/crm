@@ -72,6 +72,7 @@ export default {
                 let newTestObj = {};
                 newTestObj[key] = test;
                 state.data = {...newTestObj, ...state.data};
+                state.meta.total = state.meta.total + 1
             }
         },
         unset(state, id) {

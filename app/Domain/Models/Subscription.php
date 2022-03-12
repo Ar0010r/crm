@@ -6,11 +6,13 @@ use App\Source\Traits\HasUuid;
 use App\System\Search\Database\RangeFilters\SubscriptionRangeFilters;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Subscription extends Model
 {
     use HasUuid;
     use SubscriptionRangeFilters;
+    use SoftDeletes;
 
     protected $fillable = [
         'company_id',

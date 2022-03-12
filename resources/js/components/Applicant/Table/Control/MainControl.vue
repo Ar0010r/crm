@@ -38,15 +38,15 @@
             commit="applicant/setQueryParam"
         />
         <DatePicker
-            title="Applied before"
-            :vmodel=filters.created_before
-            param="created_before"
-            commit="applicant/setQueryParam"
-        />
-        <DatePicker
             title="Applied after"
             :vmodel=filters.created_after
             param="created_after"
+            commit="applicant/setQueryParam"
+        />
+        <DatePicker
+            title="Applied before"
+            :vmodel=filters.created_before
+            param="created_before"
             commit="applicant/setQueryParam"
         />
     </Control>
@@ -59,14 +59,14 @@ import ContactedSelect from './ContactedSelect';
 import Button from '../../../../abstract/Table/Control/Button';
 import DatePicker from '../../../../abstract/Table/Control/DatePicker';
 import {useStore} from "vuex";
-import {computed} from "vue";
+import {computed, inject} from "vue";
 
 export default {
     setup() {
         const store = useStore();
+        const container = inject('container')
 
         return {
-            companies: computed(() => store.getters.getCompanies),
             hrs: computed(() => store.getters.getHrs),
             filters: computed(() => store.getters.getApplicantQueryParams),
             profileIsAdmin: computed(() => {
@@ -79,13 +79,35 @@ export default {
                 return store.getters.getProfile.role === 'hr' || store.getters.getProfile.role === 'top hr'
             }),
             statuses: function () {
-                return Object.keys(store.getters.getStatuses).map(function (key) {
+                let statuses;
+
+                if(store.getters.getProfile.role === 'personnel') {
+                    statuses = store.getters.getAvailableStatuses
+                } else {
+                    statuses = store.getters.getStatuses
+                }
+                return Object.keys(statuses).map(function (key) {
                     return {
                         "id": key,
                         "name": key
                     }
                 })
-            }
+            },
+            companies: computed(() =>{
+                let profile = store.getters.getProfile
+                let companies = store.getters.getCompanies
+                if(profile.role == 'admin') {
+                    return companies
+                }
+
+                if(profile.role == 'hr') {
+                    return container.CompanyService.delivery(companies)
+                }
+
+                if(profile.role == 'personnel') {
+                    return container.CompanyService.controlled(companies, profile)
+                }
+            }),
         }
     },
     components: {

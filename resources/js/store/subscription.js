@@ -10,6 +10,7 @@ export default {
             'Google',
             'Outlook',
             'Namecheap',
+            'Megahoster',
         ],
         services: [
             'Email',
@@ -71,6 +72,7 @@ export default {
                 let newSubscriptionObj = {};
                 newSubscriptionObj[key] = subscription;
                 state.data = {...newSubscriptionObj, ...state.data};
+                state.meta.total = state.meta.total + 1
             }
         },
         unset(state, id) {

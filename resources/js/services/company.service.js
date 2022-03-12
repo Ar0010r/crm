@@ -26,6 +26,46 @@ export class CompanyService {
         return await this.client.get('api/company/statistics');
     }
 
+    controlled(companies, profile) {
+        if (profile.role == "admin") {
+            return companies
+        }
+
+        let filtered = []
+
+        Object.values(companies).forEach((company) => {
+            if (company.manager_id == profile.id) {
+                filtered.push(company)
+            }
+        })
+
+        return filtered
+    }
+
+    hr(companies) {
+        let hr = []
+
+        Object.values(companies).forEach((company) => {
+            if(company.type == 1) {
+                hr.push(company)
+            }
+        })
+
+        return  hr
+    }
+
+    delivery(companies) {
+        let delivery = []
+
+        Object.values(companies).forEach((company) => {
+            if(company.type == 0) {
+                delivery.push(company)
+            }
+        })
+
+       return  delivery
+    }
+
     setIdKeys(data) {
         let refactored = {};
         Object.keys(data).map(function (key) {

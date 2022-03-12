@@ -12,8 +12,6 @@ export default {
             deleted_at: null,
             login: null,
             role: null,
-            created_before: null,
-            created_after: null,
             updated_at: null,
             password: null
         },
@@ -22,6 +20,8 @@ export default {
         roles: [],
         queryParams: {
             company_id: null,
+            created_before: null,
+            created_after: null,
             role: null,
             search_term: null,
             take: 100,
@@ -51,6 +51,7 @@ export default {
                 let newManagerObj = {};
                 newManagerObj[key] = manager;
                 state.data = {...newManagerObj, ...state.data};
+                state.meta.total = state.meta.total + 1
             }
 
             if (manager.role === 'personnel') state.personnels[key] = manager;

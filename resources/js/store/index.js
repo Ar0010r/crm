@@ -4,11 +4,15 @@ import mail from "./mail";
 import test from "./test";
 import manager from "./manager";
 import subscription from "./subscription";
+import profile from "./profile";
 import {createStore} from 'vuex'
 
 export default createStore({
     getters: {
-        getProfile: state => state.manager.profile,
+        getProfileModel: state =>  state.profile.model,
+        getProfile: state => state.profile.profile,
+
+        //getProfile: state => state.manager.profile,
         getManagers: state => state.manager.data,
         getManagerModel: state => state.manager.managerModel,
         getManagerMeta: state => state.manager.meta,
@@ -62,6 +66,7 @@ export default createStore({
         getPeriods: state => state.subscription.periods,
     },
     modules: {
+        profile: profile,
         applicant: applicant,
         company: company,
         test: test,

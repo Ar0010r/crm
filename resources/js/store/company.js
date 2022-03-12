@@ -5,6 +5,9 @@ export default {
     namespaced: true,
     state: {
         data: {},
+        controlled: {},
+        hr: {},
+        delivery: {},
         meta: {from: 0, to: 0, total: 0},
         statistics: {},
         queryParams: {
@@ -30,11 +33,11 @@ export default {
         types: [
             {
                 id: 0,
-                name:'Delivery'
+                name: 'Delivery'
             },
             {
                 id: 1,
-                name:'Hiring'
+                name: 'Hiring'
             }
         ],
     },
@@ -48,6 +51,9 @@ export default {
         setMeta(state, meta) {
             state.meta = meta;
         },
+        sortTypes(state, companies) {
+
+        },
         setStatistics(state, statistics) {
             state.statistics = statistics;
         },
@@ -60,6 +66,7 @@ export default {
                 let newCompanyObj = {};
                 newCompanyObj[key] = company;
                 state.data = {...newCompanyObj, ...state.data};
+                state.meta.total = state.meta.total + 1
             }
         },
         unset(state, id) {
@@ -67,7 +74,7 @@ export default {
         },
     },
     actions: {
-        async get({commit}, params) {
+        async get({commit, roo}, params) {
             try {
                 let response = await container.CompanyService.get(params);
                 commit('setData', response.data);
@@ -75,12 +82,21 @@ export default {
             } catch (e) {
                 console.log('error', e)
                 emitter.emit('notification-error', e.response.data)
-                if(e.response.status === 401) container.AuthService.logout()
+                if (e.response.status === 401) container.AuthService.logout()
             }
         },
 
-        async create({commit, dispatch}, model) {
+        async create({commit, dispatch, rootState}, model) {
             try {
+                const profile = rootState.profile.profile;
+                if (profile.role == 'hr' || profile.role == 'top hr') {
+                    model.type = 1
+                    model.manager_id = profile.id
+                }
+                if (profile.role == 'personnel') {
+                    model.type = 0
+                    model.manager_id = profile.id
+                }
                 let response = await container.CompanyService.store(model);
                 commit('set', response.data.model);
             } catch (e) {
@@ -89,7 +105,7 @@ export default {
             }
         },
 
-        async update({commit, dispatch}, model) {
+        async update({commit, dispatch, state}, model) {
             try {
                 let response = await container.CompanyService.update(model);
                 commit('set', response.data.model);

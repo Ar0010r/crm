@@ -1,5 +1,5 @@
 <template>
-  <Template title="Mails" styling="pt-3 mb-0">
+  <Template title="Mails" :styling="styling">
       <template v-slot:control>
           <Breadcrumbs v-if="profileIsAdmin"/>
           <Control v-if="showHistory"/>
@@ -47,6 +47,13 @@
                 showStatistics, showHistory,
                 profileIsAdmin: computed(() => {
                     return store.getters.getProfile.role === 'admin'
+                }),
+                styling: computed(() => {
+                    if (store.getters.getProfile.role === 'admin') {
+                        return "pt-3 mb-0"
+                    }
+
+                    return 'py-3 mb-4';
                 }),
             }
 

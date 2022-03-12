@@ -6,15 +6,15 @@ use App\Source\Traits\HasUuid;
 use App\Domain\Enums\Status;
 use App\System\Search\Database\RangeFilters\CompanyRangeFilters;
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Company extends Model
 {
     use HasUuid;
     use HasFactory;
+    use SoftDeletes;
     use CompanyRangeFilters;
 
     protected $fillable = [
@@ -36,29 +36,19 @@ class Company extends Model
         return $this->hasMany(Employee::class, 'company_id', 'id');
     }
 
-    public function goodEmployees()
-    {
-        return $this->employees()
-            ->whereIn('status', [
-                    Status::READY,
-                    Status::INVITED,
-                    Status::EXPORTED
-                ]
-            );
-    }
-
-    public function exportedEmployees()
-    {
-        return $this->employees()
-            ->whereIn('status', [
-                    Status::EXPORTED
-                ]
-            );
-    }
-
     public function letters()
     {
         return $this->hasMany(Letter::class, 'company_id', 'id');
+    }
+
+    public function tests()
+    {
+        return $this->hasMany(Test::class, 'company_id', 'id');
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class, 'company_id', 'id');
     }
 
     protected function serializeDate(DateTimeInterface $date)

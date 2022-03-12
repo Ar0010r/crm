@@ -2,19 +2,20 @@
     <div class="form-row mb-2">
         <div class="form-group col mb-0 d-flex align-items-center justify-content-between flex-wrap">
             <label class="form-label col-md-2 m-0">{{ label }}</label>
-            <input class="form-control col-md-10" type="text" :placeholder="placeholder ?? label"
-                   v-model="vmodel"
-                   v-bind="{
-                       ...$attrs,
-                       onChange: ($event) => {$emit('update:vmodel', $event.target.value)}
-                    }"
-                   @focus="focus"
-                   @input="change"
-                   @blur="input.handleBlur"
-                   @change="$emit('update:vmodel', $event.target.value)"
+            <input class="form-control col-md-10" type="text" placeholder="Click to select an image"
+                   @click="selectFile"
                    :class="{ 'is-invalid': !input.meta.valid && input.meta.touched}"
             >
             <small class=" col-md-12 invalid-feedback text-right p-0">please enter valid {{ label }}</small>
+            <input type="file" id="avatarInput" accept=".jpg, .png, .jpeg"
+                   v-bind="{
+                       ...$attrs,
+                       onChange: ($event) => {
+                           setFile($event)
+                           $emit('update:vmodel', 1112345)
+                       }
+                    }"
+                   style="visibility: hidden; position: absolute; width: 1px; height: 1px;">
         </div>
     </div>
 </template>
@@ -22,39 +23,31 @@
 <script>
 import {useField} from 'vee-validate';
 import {inject, onBeforeUnmount} from "vue";
-import {string} from "yup";
 
 export default {
-    setup(props) {
+    setup(props, context) {
         const emitter = inject("emitter");
-        let rule = props.required ? string().trim().required() : string().trim().nullable();
 
-        if (props.regex != "") {
-            if (props.regex == "email") {
-                rule = rule.email()
-            } else {
-                rule = rule.matches(props.regex, "")
+        let input = useField('vmodel', function (value) {
+            if (!props.required) {
+                return true
             }
-        }
-        let input = useField('vmodel', rule)
+
+            if(value == null || value == undefined) {
+                return 'please select file'
+            }
+
+            return true
+        })
 
         input.setValue(props.vmodel)
 
         async function validate() {
-            console.log(props.label, 'fired')
-            if(props.vmodel == null || props.vmodel == "") {
-                if(!props.required) {
-                    input.resetField()
-                    input.setTouched(false)
-                    return
-                }
-            }
-            input.setValue(props.vmodel)
+            //input.setValue(props.vmodel)
             input.setTouched(true)
             await input.validate()
 
             if (!input.meta.valid) {
-                //console.log(props.label, props.vmodel)
                 emitter.emit(props.validate + '-invalid')
             }
         }
@@ -67,6 +60,15 @@ export default {
 
         return {
             input,
+            selectFile: () => document.getElementById("avatarInput").click(),
+            setFile: event => {
+                console.log('event.target.files', event.target.files)
+
+                //context.emit('update:vmodel', 12345)
+                context.emit('update:vmodel', event.target.files[0])
+                input.setValue(event.target.files[0])
+            },
+            //setFile: event => props.vmodel = event.target.files[0],
             focus: async function () {
                 await validate()
                 input.setTouched(false)
@@ -81,14 +83,7 @@ export default {
     props: {
         label: {
             type: String,
-            default: 'data'
-        },
-        regex: {
-            type: String,
-            default: ""
-        },
-        placeholder: {
-            default: null
+            default: 'file'
         },
         reset: String,
         validate: String,

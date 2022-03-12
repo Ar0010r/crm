@@ -63,6 +63,10 @@ class Handler extends ExceptionHandler
             return $this->responder->validationResponse($e);
         });
 
+        $this->renderable(function (ValidationException $e) {
+            return $this->responder->validationResponse($e);
+        });
+
         $this->renderable(function (\Exception $e) {
             return $this->responder->exceptionResponse($e);
         });

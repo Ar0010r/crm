@@ -61,6 +61,7 @@ export default {
                 let newTestObj = {};
                 newTestObj[key] = mail;
                 state.data = {...newTestObj, ...state.data};
+                state.meta.total = state.meta.total + 1
             }
         },
         unset(state, id) {
@@ -79,8 +80,13 @@ export default {
             }
         },
 
-        async create({commit, dispatch}, model) {
+        async create({commit, dispatch, rootState}, model) {
             try {
+                const profile = rootState.profile.profile;
+                if (profile.role == 'personnel' || profile.role == 'hr') {
+                    model.hr_id = profile.id
+                }
+
                 let response = await container.MailService.store(model);
                 commit('set', response.data.model);
             } catch (e) {

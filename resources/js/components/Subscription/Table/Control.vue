@@ -24,15 +24,15 @@
             param="service"
         ></Select>
         <DatePicker
-            title="Paid before"
-            :vmodel=filters.paid_before
-            param="paid_before"
-            commit="subscription/setQueryParam"
-        />
-        <DatePicker
             title="Paid after"
             :vmodel=filters.paid_after
             param="paid_after"
+            commit="subscription/setQueryParam"
+        />
+        <DatePicker
+            title="Paid before"
+            :vmodel=filters.paid_before
+            param="paid_before"
             commit="subscription/setQueryParam"
         />
     </Control>
@@ -44,13 +44,13 @@ import Select from '../../../abstract/Table/Control/Select';
 import Button from '../../../abstract/Table/Control/Button';
 import DatePicker from '../../../abstract/Table/Control/DatePicker';
 import {useStore} from "vuex";
-import {computed} from "vue";
+import {computed, inject} from "vue";
 
 export default {
     setup() {
         const store = useStore();
+        const container = inject('container')
         return {
-            companies: computed(() => store.getters.getCompanies),
             filters: computed(() => store.getters.getSubscriptionQueryParams),
             profileIsAdmin: computed(() => {
                 return store.getters.getProfile.role === 'admin'
@@ -70,7 +70,10 @@ export default {
                         "name": value
                     }
                 })
-            }
+            },
+            companies: computed(() => container.CompanyService.controlled(
+                store.getters.getCompanies, store.getters.getProfile
+            )),
         }
     },
     components: {

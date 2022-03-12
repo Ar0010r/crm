@@ -7,11 +7,12 @@ use App\System\Search\Database\RangeFilters\LetterRangeFilters;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
 class Letter extends Model
 {
-    use HasFactory, HasUuid, LetterRangeFilters;
+    use HasFactory, HasUuid, LetterRangeFilters, SoftDeletes;
 
     protected $fillable = [
         'id',

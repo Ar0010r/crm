@@ -4,12 +4,14 @@ namespace App\Domain\Models;
 
 use App\Domain\Requests\Rules\TestRequestRules;
 use App\Source\Traits\HasUuid;
+use App\System\Search\Database\RangeFilters\TestRangeFilters;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Test extends Model
 {
-    use HasFactory, HasUuid, TestRequestRules;
+    use HasFactory, HasUuid, TestRangeFilters, SoftDeletes;
 
     protected $fillable = [
         'id',

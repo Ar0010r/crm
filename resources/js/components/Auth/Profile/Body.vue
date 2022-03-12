@@ -1,12 +1,13 @@
 <template>
    <div class="modal-body">
-       <Input v-model="object.login" :vmodel="object.login" :reset="reset" :validate="validate" label="login" :required=true />
-       <Input v-model="object.password" :vmodel="object.password" :reset="reset" :validate="validate" :required=requirePassword label="password"/>
+       <FileInput v-model="object.file" :vmodel="object.file" :reset="reset" :validate="validate" label="avatar"/>
+       <Input v-model="object.login" :vmodel="object.login" :reset="reset" :validate="validate" label="login" />
+       <Input v-model="object.password" :vmodel="object.password" :reset="reset" :validate="validate" label="password"/>
     </div>
 </template>
 
 <script>
-    import Select from '../../../abstract/Modal/Fields/Select.vue';
+    import FileInput from '../../../abstract/Modal/Fields/FileInput';
     import Input from '../../../abstract/Modal/Fields/Input.vue';
     import {useStore} from 'vuex';
     import {computed} from 'vue';
@@ -34,7 +35,7 @@
             }
         },
         components: {
-            Select,
+            FileInput,
             Input,
         }
     };

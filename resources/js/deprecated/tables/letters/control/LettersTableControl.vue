@@ -76,7 +76,8 @@
                 take: [150, 200, 300, 500],
                 refresh: () => {
                     getMails()
-                    store.dispatch('manager/setProfile')
+                    store.dispatch('profile/get')
+                   // store.dispatch('manager/setProfile')
                 }
             }
         }

@@ -37,7 +37,8 @@
             async function login() {
                 try {
                     await container.AuthService.login(user);
-                    await store.dispatch('manager/setProfile');
+                    await store.dispatch('profile/get');
+                    //await store.dispatch('manager/setProfile');
                     router.push("/employees");
                 } catch (e) {
                     isInvalid.value = true;
