@@ -35,9 +35,7 @@ class CompanyController extends Controller
 
     public function index(CompanyGetRequest $request)
     {
-
         $data = $this->getService->get($request);
-
 
         return new CompanyCollection($data);
     }
@@ -74,16 +72,8 @@ class CompanyController extends Controller
 
     public function destroy(Company $company)
     {
-        try {
-            $this->storeService->destroy($company);
-            return new CompanyResource($company);
-        } catch (QueryException $e) {
-            return response([
-                'message' => 'can`t delete company ' . $company->name,
-                'errors' => [['there are might be applicants in it']]
-            ], JsonResponse::HTTP_NOT_ACCEPTABLE);
-        } catch (\Exception $e) {
-            return response(['message' => $e->getMessage()], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-        }
+        $this->storeService->destroy($company);
+
+        return new CompanyResource($company);
     }
 }

@@ -2237,7 +2237,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         model: $props.company,
         event: "delete-company-",
         dispatch: "company/delete",
-        warning: "You want to delete company:" + $props.company.name
+        warning: "You want to delete company:" + $props.company.name + " with all applicants"
       }, null, 8
       /* PROPS */
       , ["disabled", "model", "warning"])];

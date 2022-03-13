@@ -21,7 +21,7 @@
                 :model="company"
                 event="delete-company-"
                 dispatch="company/delete"
-                :warning='"You want to delete company:" + company.name '/>
+                :warning='"You want to delete company:" + company.name + " with all applicants" '/>
         </template>
     </Row>
 </template>

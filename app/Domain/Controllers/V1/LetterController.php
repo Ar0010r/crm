@@ -81,6 +81,5 @@ class LetterController extends Controller
         $data = $this->statisticsService->calculate(auth()->user());
 
         return new ListResource(['list' => $data]);
-
     }
 }

@@ -8,14 +8,9 @@ use App\Source\Control\Controller;
 use App\Domain\Requests\Concrete\Test\TestGetRequest;
 use App\Domain\Requests\Concrete\Test\TestStoreRequest;
 use App\Domain\Requests\Concrete\Test\TestUpdateRequest;
-use App\Source\Resources\ListResource;
-use App\Source\Resources\ModelResource;
 use App\Domain\Models\Test;
 use App\Domain\Services\Test\GetTestService;
 use App\Domain\Services\Test\StoreTestService;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 class TestController extends Controller
 {
@@ -63,11 +58,7 @@ class TestController extends Controller
 
     public function destroy(Test $test)
     {
-        try {
-            $this->storeService->destroy($test);
-            return new TestResource($test);
-        } catch (\Exception $e) {
-            return response($e->getMessage(), JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        $this->storeService->destroy($test);
+        return new TestResource($test);
     }
 }
