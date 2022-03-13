@@ -90,19 +90,15 @@ class EmployeeController extends Controller
 
     public function destroy(Employee $employee)
     {
-        try {
-            $employee->delete();
-            return new ModelResource([]);
-        } catch (\Exception $e) {
-            return response($e->getMessage(), JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        $employee->delete();
+        return new ModelResource(['model' => true]);
     }
 
     public function bulkDestroy(EmployeeBulkDestroyRequest $r)
     {
         $this->storeService->bulkDestroy($r->employees);
 
-        return new ModelResource([]);
+        return new ModelResource(['model' => true]);
     }
 
     public function getMedia(GetMediaRequest $request)
@@ -118,9 +114,7 @@ class EmployeeController extends Controller
 
     public function deleteMedia(Media $media)
     {
-        $employee = Employee::query()->findOrFail($media->model_id);
-        $employee->clearMediaCollection($media->collection_name);
-        $media->deleteOrFail();
+        $this->storeService->deleteMedia($media);
 
         return new ModelResource(['model' => true]);
     }

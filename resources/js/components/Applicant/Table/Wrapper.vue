@@ -37,18 +37,6 @@
                 applicants: computed(() => store.getters.getApplicants),
                 meta: computed(() => store.getters.getApplicantsMeta),
                 params: computed(() => store.getters.getTestQueryParams),
-                columns: [
-                    "Date",
-                    "Tester",
-                    "Company",
-                    "Env",
-                    "Template",
-                    "Google",
-                    "Outlook",
-                    "Yahoo",
-                    "Other",
-                    "Actions",
-                ]
             }
         },
         components: {

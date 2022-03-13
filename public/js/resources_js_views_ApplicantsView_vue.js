@@ -2497,8 +2497,7 @@ __webpack_require__.r(__webpack_exports__);
       }),
       params: (0,vue__WEBPACK_IMPORTED_MODULE_6__.computed)(function () {
         return store.getters.getTestQueryParams;
-      }),
-      columns: ["Date", "Tester", "Company", "Env", "Template", "Google", "Outlook", "Yahoo", "Other", "Actions"]
+      })
     };
   },
   components: {

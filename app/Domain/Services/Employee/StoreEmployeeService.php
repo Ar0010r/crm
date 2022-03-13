@@ -8,8 +8,10 @@ use App\Domain\Requests\Concrete\Employee\UploadFileRequest;
 use App\Domain\Models\Employee;
 use App\Source\Services\AbstractStoreService;
 use App\Domain\Enums\Status;
+use App\System\Media\Media as SystemMedia;
 use App\System\Media\MediaCollection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class StoreEmployeeService extends AbstractStoreService
@@ -61,6 +63,18 @@ class StoreEmployeeService extends AbstractStoreService
            MediaCollection::SCAN => $employee->scan()->first(),
            default => throw new \Exception('Unknown media collection')
        };
+
+    }
+
+    public function deleteMedia(SystemMedia $media)
+    {
+        DB::transaction(function () use($media){
+            $employee = Employee::query()->findOrFail($media->model_id);
+            $employee->clearMediaCollection($media->collection_name);
+            $media->deleteOrFail();
+        });
+
+        return true;
 
     }
 
