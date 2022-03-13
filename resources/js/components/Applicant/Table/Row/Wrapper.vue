@@ -84,7 +84,9 @@
                 :model="applicant"
                 event="delete-applicant-"
                 dispatch="applicant/delete"
-                :warning='"You want to delete applicant :" + applicant.name '/>
+                :warning='"You want to delete applicant :" + applicant.name '
+                :disabled="canDelete"
+            />
         </template>
     </Row>
 </template>
@@ -98,19 +100,25 @@ import ContactedButton from './ContactedButton';
 import UploadButton from './UploadButton';
 import StatusSelect from './StatusSelect';
 import ContactedField from './ContactedField';
-import {inject} from "vue";
+import {computed, inject} from "vue";
+import {useStore} from "vuex";
 
 export default {
     props: {applicant: Object},
     setup(props) {
         const emitter = inject('emitter');
+        const store = useStore();
+
         return {
             showDocument: function (collection) {
                 emitter.emit('show-image-form', {
                     applicant: props.applicant,
                     collection: collection,
                 })
-            }
+            },
+            canDelete: computed(() => {
+                return store.getters.getProfile.role === 'personnel'
+            }),
         }
     },
     components: {

@@ -2415,6 +2415,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _StatusSelect__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./StatusSelect */ "./resources/js/components/Applicant/Table/Row/StatusSelect.vue");
 /* harmony import */ var _ContactedField__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ContactedField */ "./resources/js/components/Applicant/Table/Row/ContactedField.vue");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+
 
 
 
@@ -2430,13 +2432,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   setup: function setup(props) {
     var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_8__.inject)('emitter');
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_9__.useStore)();
     return {
       showDocument: function showDocument(collection) {
         emitter.emit('show-image-form', {
           applicant: props.applicant,
           collection: collection
         });
-      }
+      },
+      canDelete: (0,vue__WEBPACK_IMPORTED_MODULE_8__.computed)(function () {
+        return store.getters.getProfile.role === 'personnel';
+      })
     };
   },
   components: {
@@ -5101,10 +5107,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         model: $props.applicant,
         event: "delete-applicant-",
         dispatch: "applicant/delete",
-        warning: "You want to delete applicant :" + $props.applicant.name
+        warning: "You want to delete applicant :" + $props.applicant.name,
+        disabled: $setup.canDelete
       }, null, 8
       /* PROPS */
-      , ["model", "warning"])];
+      , ["model", "warning", "disabled"])];
     }),
     _: 1
     /* STABLE */

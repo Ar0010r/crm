@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6dd06283-79a3-451e-93c8-b1b73cd686ac" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_ApplicantsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_ApplicantsView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_CompaniesView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_CompaniesView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_MailsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_MailsView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_ManagersView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_ManagersView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_SubscriptionsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_SubscriptionsView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_TestsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_TestsView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/abstract/Table/Control/Control.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/abstract/Table/Control/Control.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/abstract/Table/Control/Select.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/abstract/Table/Control/Select.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/abstract/Table/Control/Take.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/abstract/Table/Control/Take.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Mail/Modal/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Mail/Modal/Body.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Test/Modal/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Test/Modal/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Row/Wrapper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Row/Wrapper.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -582,7 +571,7 @@
       <workItem from="1646661935985" duration="149000" />
       <workItem from="1646662116016" duration="23000" />
       <workItem from="1646662395257" duration="117981000" />
-      <workItem from="1647161710957" duration="14495000" />
+      <workItem from="1647161710957" duration="14877000" />
     </task>
     <servers />
   </component>
