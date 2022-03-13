@@ -23,10 +23,10 @@
         />
         <IntegerInput v-model="object.google" :vmodel="object.google" :reset="reset" :validate="validate" label="google"
                       :required="true"/>
-        <IntegerInput v-model="object.yahoo" :vmodel="object.yahoo" :reset="reset" :validate="validate" label="yahoo"
-                      :required="true"/>
         <IntegerInput v-model="object.outlook" :vmodel="object.outlook" :reset="reset" :validate="validate"
                       label="outlook" :required="true"/>
+        <IntegerInput v-model="object.yahoo" :vmodel="object.yahoo" :reset="reset" :validate="validate" label="yahoo"
+                      :required="true"/>
         <IntegerInput v-model="object.other" :vmodel="object.other" :reset="reset" :validate="validate" label="other"
                       :required="true"/>
         <DateInput v-model="object.received_at" :vmodel="object.received_at" :reset="reset" :validate="validate"

@@ -62,13 +62,9 @@ export default {
             input,
             selectFile: () => document.getElementById("avatarInput").click(),
             setFile: event => {
-                console.log('event.target.files', event.target.files)
-
-                //context.emit('update:vmodel', 12345)
                 context.emit('update:vmodel', event.target.files[0])
                 input.setValue(event.target.files[0])
             },
-            //setFile: event => props.vmodel = event.target.files[0],
             focus: async function () {
                 await validate()
                 input.setTouched(false)

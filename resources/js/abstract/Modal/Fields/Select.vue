@@ -56,12 +56,10 @@ export default {
         });
 
         async function validate() {
-            console.log(props.label, 'fired')
             model.setValue(props.vmodel)
             model.setTouched(true)
             await model.validate()
             if (!model.meta.valid) {
-                //console.log(props.label, props.vmodel)
                 emitter.emit(props.validate + '-invalid')
             }
         }

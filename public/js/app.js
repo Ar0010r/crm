@@ -19331,12 +19331,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return document.getElementById("avatarInput").click();
       },
       setFile: function setFile(event) {
-        console.log('event.target.files', event.target.files); //context.emit('update:vmodel', 12345)
-
         context.emit('update:vmodel', event.target.files[0]);
         input.setValue(event.target.files[0]);
       },
-      //setFile: event => props.vmodel = event.target.files[0],
       focus: function () {
         var _focus = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -19460,15 +19457,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                console.log(props.label, 'fired');
-
                 if (!(props.vmodel == null || props.vmodel == "")) {
-                  _context3.next = 6;
+                  _context3.next = 5;
                   break;
                 }
 
                 if (props.required) {
-                  _context3.next = 6;
+                  _context3.next = 5;
                   break;
                 }
 
@@ -19476,19 +19471,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 input.setTouched(false);
                 return _context3.abrupt("return");
 
-              case 6:
+              case 5:
                 input.setValue(props.vmodel);
                 input.setTouched(true);
-                _context3.next = 10;
+                _context3.next = 9;
                 return input.validate();
 
-              case 10:
+              case 9:
                 if (!input.meta.valid) {
-                  //console.log(props.label, props.vmodel)
                   emitter.emit(props.validate + '-invalid');
                 }
 
-              case 11:
+              case 10:
               case "end":
                 return _context3.stop();
             }
@@ -19642,7 +19636,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
 
     function isInvalid() {
-      //console.log('isValid fired')
       isValid = false;
     }
 

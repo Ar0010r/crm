@@ -35,21 +35,21 @@
                 :reset="reset"
                 :validate="validate"
         />
+       <Select
+           :options=results
+           title="select result"
+           label="outlook"
+           :vmodel=object.outlook
+           v-model="object.outlook"
+           :reset="reset"
+           :validate="validate"
+       />
         <Select
             :options=results
             title="select result"
             label="yahoo"
             :vmodel=object.yahoo
             v-model="object.yahoo"
-            :reset="reset"
-            :validate="validate"
-        />
-        <Select
-            :options=results
-            title="select result"
-            label="outlook"
-            :vmodel=object.outlook
-            v-model="object.outlook"
             :reset="reset"
             :validate="validate"
         />

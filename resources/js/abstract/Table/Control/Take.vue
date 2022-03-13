@@ -25,7 +25,7 @@ export default {
         const emitter = inject("emitter");
 
         function reset() {
-            props.vmodel = 100
+            store.commit(props.namespace + "/setQueryParam", {'key': 'take', 'value': 100})
         }
 
         emitter.on('reset-controls', reset);

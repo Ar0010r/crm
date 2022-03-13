@@ -31,7 +31,7 @@ export default {
             reset: function () {
                 let filters = store.getters[props.getter]
                 Object.keys(filters).map(function (key) {
-                    if (filters[key] && filters[key] !== "take" && filters[key] !== "page") {
+                    if (key in filters && filters[key] !== "take" && filters[key] !== "page") {
                         store.commit(props.commit, {'key': key, 'value': null})
                     }
                     store.commit(props.commit, {'key': "take", 'value': 100})

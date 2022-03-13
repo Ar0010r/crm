@@ -25,7 +25,7 @@ export default {
             type: String,
             default: 'name'
         },
-        vmodel: String,
+        vmodel: String|Number,
         commit: String,
         param: String
     },

@@ -41,7 +41,6 @@ export default {
         input.setValue(props.vmodel)
 
         async function validate() {
-            console.log(props.label, 'fired')
             if(props.vmodel == null || props.vmodel == "") {
                 if(!props.required) {
                     input.resetField()
@@ -54,7 +53,6 @@ export default {
             await input.validate()
 
             if (!input.meta.valid) {
-                //console.log(props.label, props.vmodel)
                 emitter.emit(props.validate + '-invalid')
             }
         }

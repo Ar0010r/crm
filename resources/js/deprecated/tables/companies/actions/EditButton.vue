@@ -22,7 +22,6 @@ import {useStore} from "vuex";
             return {
                 showEditCompanyForm: () => emitter.emit('edit-company-form', props.company),
                 disabled: function () {
-                    console.log(profile.value)
                     if(profile.value.role == 'hr' || profile.value.role == 'top hr') {
                         if(props.company.type == 0) {
                             return true

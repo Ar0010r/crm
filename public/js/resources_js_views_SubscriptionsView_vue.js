@@ -217,19 +217,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log(props.label, 'fired');
                 model.setValue(props.vmodel);
                 model.setTouched(true);
-                _context.next = 5;
+                _context.next = 4;
                 return model.validate();
 
-              case 5:
+              case 4:
                 if (!model.meta.valid) {
-                  //console.log(props.label, props.vmodel)
                   emitter.emit(props.validate + '-invalid');
                 }
 
-              case 6:
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -492,7 +490,7 @@ __webpack_require__.r(__webpack_exports__);
       reset: function reset() {
         var filters = store.getters[props.getter];
         Object.keys(filters).map(function (key) {
-          if (filters[key] && filters[key] !== "take" && filters[key] !== "page") {
+          if (key in filters && filters[key] !== "take" && filters[key] !== "page") {
             store.commit(props.commit, {
               'key': key,
               'value': null
@@ -802,7 +800,7 @@ __webpack_require__.r(__webpack_exports__);
       type: String,
       "default": 'name'
     },
-    vmodel: String,
+    vmodel: String | Number,
     commit: String,
     param: String
   },
@@ -850,7 +848,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)("emitter");
 
     function reset() {
-      props.vmodel = 100;
+      store.commit(props.namespace + "/setQueryParam", {
+        'key': 'take',
+        'value': 100
+      });
     }
 
     emitter.on('reset-controls', reset);

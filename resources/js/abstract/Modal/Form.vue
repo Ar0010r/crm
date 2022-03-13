@@ -45,7 +45,6 @@ export default {
         }
 
         function isInvalid() {
-            //console.log('isValid fired')
             isValid = false
         }
 

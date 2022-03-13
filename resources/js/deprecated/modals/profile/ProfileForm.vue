@@ -77,7 +77,6 @@
             }
 
             function setProfile(userData) {
-                console.log('userData', userData)
                 Object.keys(userData).forEach(key => user[key] = userData[key])
             }
 
