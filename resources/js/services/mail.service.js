@@ -5,6 +5,7 @@ export class MailService {
     }
 
     async get(params) {
+        params = params ?? {order_by:"received_at"}
         let response =  await this.client.get('/api/letter', {params});
         let data = this.setIdKeys(response.data.list);
         return {data: data, meta: response.data.meta}

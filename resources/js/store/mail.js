@@ -12,6 +12,7 @@ export default {
             company_id: null,
             received_before: null,
             received_after: null,
+            order_by: 'received_at',
             take: 100,
             page: 1,
         },

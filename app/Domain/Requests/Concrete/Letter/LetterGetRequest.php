@@ -9,6 +9,7 @@ use App\Domain\Requests\Rules\LetterRequestRules;
 class LetterGetRequest extends AbstractGetRequest
 {
     use LetterRequestRules;
+    protected array $with=['hr', 'company'];
 
     public function orderByFields(): array
     {

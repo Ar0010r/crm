@@ -34,11 +34,13 @@ class Test extends Model
 
     public function manager()
     {
-        return $this->hasOne(User::class, 'id', 'manager_id');
+        return $this->hasOne(User::class, 'id', 'manager_id')
+            ->select(['users.id', 'users.login']);
     }
 
     public function company()
     {
-        return $this->hasOne(Company::class, 'id', 'company_id');
+        return $this->hasOne(Company::class, 'id', 'company_id')
+            ->select(['companies.id', 'companies.name']);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Domain\Controllers\V1;
 
+use App\Domain\Resources\Employee\EmployeeCollection;
+use App\Domain\Resources\Employee\EmployeeResource;
 use App\Source\Control\Controller;
 use App\Domain\Requests\Concrete\Employee\EmployeeBulkDestroyRequest;
 use App\Domain\Requests\Concrete\Employee\EmployeeBulkUpdateRequest;
@@ -12,7 +14,6 @@ use App\Domain\Requests\Concrete\Employee\GetMediaRequest;
 use App\Domain\Requests\Concrete\Employee\UploadFileRequest;
 use App\Source\Resources\ListResource;
 use App\Source\Resources\ModelResource;
-use App\Domain\Resources\EmployeeResource;
 use App\System\Imports\EmployeeImport;
 use App\Domain\Models\Employee;
 use App\System\Media\Media;
@@ -20,7 +21,6 @@ use App\Domain\Services\Employee\GetEmployeeService;
 use App\Domain\Services\Employee\StoreEmployeeService;
 use App\Domain\Enums\Race;
 use App\Domain\Enums\Status;
-use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
@@ -40,7 +40,7 @@ class EmployeeController extends Controller
     {
         $data = $this->getService->get($request);
 
-        return new ListResource($data);
+        return new EmployeeCollection($data);
     }
 
     public function store(EmployeeStoreRequest $r)

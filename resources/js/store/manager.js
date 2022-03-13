@@ -126,7 +126,7 @@ export default {
         delete({commit, dispatch, state}, manager) {
             let key = manager.id;
             if (state.data[key]) {
-                container.ManagerService.delete(test)
+                container.ManagerService.delete(manager)
                 commit('unset', key);
                 dispatch('sort', state.data);
             } else {

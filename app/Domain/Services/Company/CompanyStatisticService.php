@@ -22,7 +22,10 @@ class CompanyStatisticService
 
     private function getCompanies(): Collection
     {
-        $query = Company::query()->where('type', CompanyType::DELIVERY)->with('letters')->withCount('employees');
+        $query = Company::query()->where('type', CompanyType::DELIVERY)->with([
+            'letters',
+            'manager'
+        ])->withCount('employees');
 
         foreach (Status::STATUSES as $status) {
             $alias = str_ireplace(' ', '_', strtolower($status));
@@ -33,7 +36,8 @@ class CompanyStatisticService
             ]);
         }
 
-        return $query->orderByDesc('companies.created_at')->get()->toBase();
+        return $query->orderByDesc('companies.created_at')
+            ->take(20)->get()->toBase();
     }
 
     private function buildRecord(Company $company): array
@@ -72,7 +76,8 @@ class CompanyStatisticService
                 'id' => $hr->id,
                 'login' => $hr->login,
                 'total' => $hrEmployees->count(),
-                'hired' => $hrEmployees->whereIn('status', [Status::READY, Status::INVITED, Status::EXPORTED])->count(),
+                'hired' => $hrEmployees->whereIn('status',
+                    [Status::READY, Status::INVITED, Status::EXPORTED, Status::DIED])->count(),
                 'letters' => $hrLetters->sum('google') + $hrLetters->sum('outlook') + $hrLetters->sum('yahoo') + $hrLetters->sum('other'),
             ];
         });

@@ -2,12 +2,13 @@
 
 namespace App\Domain\Controllers\V1;
 
+use App\Domain\Resources\User\UserCollection;
+use App\Domain\Resources\User\UserResource;
 use App\Source\Control\Controller;
 use App\Domain\Requests\Concrete\User\UserGetRequest;
 use App\Domain\Requests\Concrete\User\UserStoreRequest;
 use App\Domain\Requests\Concrete\User\UserUpdateRequest;
 use App\Source\Resources\ListResource;
-use App\Domain\Resources\UserResource;
 use App\Domain\Models\User;
 use App\Domain\Services\User\GetUserService;
 use App\Domain\Services\User\StoreUserService;
@@ -29,7 +30,7 @@ class UserController extends Controller
     {
         $data = $this->getService->get($request);
 
-        return new ListResource($data);
+        return new UserCollection($data);
     }
 
     public function store(UserStoreRequest $request)

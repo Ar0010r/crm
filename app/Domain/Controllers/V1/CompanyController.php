@@ -2,18 +2,20 @@
 
 namespace App\Domain\Controllers\V1;
 
+use App\Domain\Resources\Company\CompanyCollection;
+use App\Domain\Resources\Company\CompanyResource;
 use App\Source\Control\Controller;
 use App\Domain\Requests\Concrete\Company\CompanyGetRequest;
 use App\Domain\Requests\Concrete\Company\CompanyStoreRequest;
 use App\Domain\Requests\Concrete\Company\CompanyUpdateRequest;
 use App\Source\Resources\ListResource;
-use App\Domain\Resources\CompanyResource;
 use App\Domain\Models\Company;
 use App\Domain\Services\Company\CompanyStatisticService;
 use App\Domain\Services\Company\GetCompanyService;
 use App\Domain\Services\Company\StoreCompanyService;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class CompanyController extends Controller
 {
@@ -33,8 +35,11 @@ class CompanyController extends Controller
 
     public function index(CompanyGetRequest $request)
     {
+
         $data = $this->getService->get($request);
-        return new ListResource($data);
+
+
+        return new CompanyCollection($data);
     }
 
     public function store(CompanyStoreRequest $r)

@@ -20,15 +20,6 @@ class GetLetterService extends AbstractGetService
         'received_after',
     ];
 
-    protected function setBaseQuery(User $user = null): AbstractGetService
-    {
-        parent::setBaseQuery($user);
-
-        $this->query->with(['hr', 'company']);
-
-        return $this;
-    }
-
     protected function getModel(): Model
     {
         return new Letter();

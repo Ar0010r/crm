@@ -8,6 +8,7 @@ use App\Source\Requests\AbstractGetRequest;
 class SubscriptionGetRequest extends AbstractGetRequest
 {
     use SubscriptionRequestRules;
+    protected array $with=['company'];
 
     public function orderByFields(): array
     {

@@ -2,12 +2,12 @@
 
 namespace App\Domain\Controllers\V1;
 
+use App\Domain\Resources\Subscription\SubscriptionCollection;
+use App\Domain\Resources\Subscription\SubscriptionResource;
 use App\Source\Control\Controller;
 use App\Domain\Requests\Concrete\Subscription\SubscriptionGetRequest;
 use App\Domain\Requests\Concrete\Subscription\SubscriptionStoreRequest;
 use App\Domain\Requests\Concrete\Subscription\SubscriptionUpdateRequest;
-use App\Source\Resources\ListResource;
-use App\Domain\Resources\SubscriptionResource;
 use App\Domain\Models\Subscription;
 use App\Domain\Services\Subscription\GetSubscriptionService;
 use App\Domain\Services\Subscription\StoreSubscriptionService;
@@ -29,7 +29,7 @@ class SubscriptionController extends Controller
     {
         $data = $this->getService->get($request);
 
-        return new ListResource($data);
+        return new SubscriptionCollection($data);
     }
 
     public function store(SubscriptionStoreRequest $request)

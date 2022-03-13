@@ -17,7 +17,7 @@ class ScopeCompanyService extends AbstractScopeService
 {
     protected function adminScope(): QueryBuilder|Builder|QBuilder
     {
-        return Company::with('manager');
+        return Company::query();
     }
 
     protected function personnelScope(User $user): QueryBuilder|Builder|QBuilder

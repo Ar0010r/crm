@@ -52,6 +52,9 @@ class RequestFormatter
             'asc' => $this->httpRequest->get('asc', false),
             'search_term' => $this->httpRequest->get('search_term', ""),
             '_without_scope' => $this->httpRequest->input('_without_scope', false),
+            '_with' => $this->httpRequest->input('_with', []),
+            '_with_count' => $this->httpRequest->input('_with_count', []),
+            '_with_exists' => $this->httpRequest->input('_with_exists', []),
         ]);
 
         return $this;

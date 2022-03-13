@@ -22873,17 +22873,22 @@ var MailService = /*#__PURE__*/function () {
     key: "get",
     value: function () {
       var _get = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(params) {
+        var _params;
+
         var response, data;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                params = (_params = params) !== null && _params !== void 0 ? _params : {
+                  order_by: "received_at"
+                };
+                _context.next = 3;
                 return this.client.get('/api/letter', {
                   params: params
                 });
 
-              case 2:
+              case 3:
                 response = _context.sent;
                 data = this.setIdKeys(response.data.list);
                 return _context.abrupt("return", {
@@ -22891,7 +22896,7 @@ var MailService = /*#__PURE__*/function () {
                   meta: response.data.meta
                 });
 
-              case 5:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -24579,6 +24584,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       company_id: null,
       received_before: null,
       received_after: null,
+      order_by: 'received_at',
       take: 100,
       page: 1
     },
@@ -25081,7 +25087,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var key = manager.id;
 
       if (state.data[key]) {
-        _services_index__WEBPACK_IMPORTED_MODULE_1__.container.ManagerService["delete"](test);
+        _services_index__WEBPACK_IMPORTED_MODULE_1__.container.ManagerService["delete"](manager);
         commit('unset', key);
         dispatch('sort', state.data);
       } else {

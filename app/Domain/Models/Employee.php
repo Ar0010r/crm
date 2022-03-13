@@ -42,12 +42,14 @@ class Employee extends Model  implements HasMedia
 
     public function hr()
     {
-        return $this->belongsTo(User::class, 'hr_id', 'id');
+        return $this->belongsTo(User::class, 'hr_id', 'id')
+            ->select(['users.id', 'users.login']);
     }
 
     public function company()
     {
-        return $this->belongsTo(Company::class, 'company_id', 'id');
+        return $this->belongsTo(Company::class, 'company_id', 'id')
+            ->select(['companies.id', 'companies.name']);
     }
 
     public function selfie(): MorphMany

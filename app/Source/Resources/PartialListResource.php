@@ -4,15 +4,14 @@ namespace App\Source\Resources;
 
 class PartialListResource extends ListResource
 {
-    public ?int $rowsCount = null;
-
-    public function with($request)
+   /* public function with($request)
     {
         return array_merge(parent::with($request), ['pagination' => $this->resource]);
-    }
+    }*/
 
     public function toArray($request)
     {
-        return $this->collection->items();
+        return $this->collection;
+       // return $this->collection->items();
     }
 }

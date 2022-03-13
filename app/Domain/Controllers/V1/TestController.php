@@ -2,13 +2,14 @@
 
 namespace App\Domain\Controllers\V1;
 
+use App\Domain\Resources\Test\TestCollection;
+use App\Domain\Resources\Test\TestResource;
 use App\Source\Control\Controller;
 use App\Domain\Requests\Concrete\Test\TestGetRequest;
 use App\Domain\Requests\Concrete\Test\TestStoreRequest;
 use App\Domain\Requests\Concrete\Test\TestUpdateRequest;
 use App\Source\Resources\ListResource;
 use App\Source\Resources\ModelResource;
-use App\Domain\Resources\TestResource;
 use App\Domain\Models\Test;
 use App\Domain\Services\Test\GetTestService;
 use App\Domain\Services\Test\StoreTestService;
@@ -33,7 +34,7 @@ class TestController extends Controller
     {
         $data = $this->getService->get($request);
 
-        return new ListResource($data);
+        return new TestCollection($data);
     }
 
     public function store(TestStoreRequest $request)

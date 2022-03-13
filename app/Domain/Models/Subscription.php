@@ -25,7 +25,8 @@ class Subscription extends Model
 
     public function company()
     {
-        return $this->belongsTo(Company::class, 'company_id', 'id');
+        return $this->belongsTo(Company::class, 'company_id', 'id')
+            ->select(['companies.id', 'companies.name']);
     }
 
     protected function serializeDate(DateTimeInterface $date)

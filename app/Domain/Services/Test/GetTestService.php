@@ -23,15 +23,6 @@ class GetTestService extends AbstractGetService
         "date_after",
     ];
 
-    protected function setBaseQuery(User $user = null): AbstractGetService
-    {
-        parent::setBaseQuery($user);
-
-        $this->query->with(['manager', 'company']);
-
-        return $this;
-    }
-
     protected function getModel(): Model
     {
         return new Test();

@@ -43,13 +43,4 @@ class GetEmployeeService extends AbstractGetService
     {
         return new Employee();
     }
-
-    protected function setBaseQuery(User $user = null): AbstractGetService
-    {
-        parent::setBaseQuery($user);
-
-        $this->query->with(['hr', 'company'])->withExists(['selfie', 'agreement', 'scan']);
-
-        return $this;
-    }
 }

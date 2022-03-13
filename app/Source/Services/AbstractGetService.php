@@ -11,6 +11,7 @@ use App\System\Search\Database\SearchQueryBuilder;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\QueryBuilder\QueryBuilder;
 
 abstract class AbstractGetService implements GetResourceInterface
@@ -35,6 +36,9 @@ abstract class AbstractGetService implements GetResourceInterface
         'order_by',
         'asc',
         'search_term',
+        '_with',
+        '_with_count',
+        '_with_exists',
     ];
     public const POSSIBLE_PLURAL_REQUEST_KEYS = [
         'type' => 'types',
@@ -115,15 +119,25 @@ abstract class AbstractGetService implements GetResourceInterface
     {
         $orderBy = $this->request->get('order_by', 'created_at');
         $sortBy = $this->model->getTable() . '.' . $orderBy;
+        $take = $this->request->get('take', 100);
+        $with = $this->request->get('_with', []);
+        $withExists = $this->request->get('_with_exists', []);
+        $withCount = $this->request->get('_with_count', []);
+        $page = $this->request->get('page', 1);
 
         if (isset($this->orderByAssociates[$orderBy])) {
             $sortBy = $this->orderByAssociates[$orderBy];
         }
 
+        $this->query = $with == [] ? $this->query : $this->query->with($with);
+        $this->query = $withExists == [] ? $this->query : $this->query->withExists($withExists);
+        $this->query = $withCount == [] ? $this->query : $this->query->withCount($withCount);
+
         $asc = (bool)$this->request->get('asc', false);
         $this->query = $asc ? $this->query->orderBy($sortBy) : $this->query->orderByDesc($sortBy);
 
-        return $this->query->paginate($this->request->get('take'), ['*'], 'page', $this->request['page']);
+        return $this->query->paginate(perPage: $take,page: $page);
+        //return $this->query->paginate($this->request->get('take'), $select, 'page', $this->request['page']);
     }
 
     public function show(Model $model): Model

@@ -2,13 +2,14 @@
 
 namespace App\Domain\Controllers\V1;
 
+use App\Domain\Resources\Letter\LetterCollection;
+use App\Domain\Resources\Letter\LetterResource;
 use App\Source\Control\Controller;
 use App\Domain\Requests\Concrete\Letter\LetterGetRequest;
 use App\Domain\Requests\Concrete\Letter\LetterStoreRequest;
 use App\Domain\Requests\Concrete\Letter\LetterUpdateRequest;
 use App\Source\Resources\ListResource;
 use App\Source\Resources\ModelResource;
-use App\Domain\Resources\LetterResource;
 use App\Domain\Models\Letter;
 use App\Domain\Services\Letter\GetLetterService;
 use App\Domain\Services\Letter\LetterStatisticsService;
@@ -35,7 +36,7 @@ class LetterController extends Controller
     {
         $data = $this->getService->get($request);
 
-        return new ListResource($data);
+        return new LetterCollection($data);
     }
 
     public function store(LetterStoreRequest $request)
@@ -64,12 +65,8 @@ class LetterController extends Controller
 
     public function destroy(Letter $letter)
     {
-        try {
-            $this->storeService->destroy($letter);
-            return new LetterResource($letter);
-        } catch (\Exception $e) {
-            return response($e->getMessage(), JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        $this->storeService->destroy($letter);
+        return new LetterResource($letter);
     }
 
     public function total()

@@ -3,7 +3,6 @@
 namespace App\Domain\Models;
 
 use App\Source\Traits\HasUuid;
-use App\Domain\Enums\Status;
 use App\System\Search\Database\RangeFilters\CompanyRangeFilters;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -28,7 +27,8 @@ class Company extends Model
 
     public function manager()
     {
-        return $this->belongsTo(User::class, 'manager_id', 'id');
+        return $this->belongsTo(User::class, 'manager_id', 'id')
+            ->select(['users.id', 'users.login']);
     }
 
     public function employees()

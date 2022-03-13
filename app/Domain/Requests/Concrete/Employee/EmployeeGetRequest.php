@@ -9,6 +9,9 @@ class EmployeeGetRequest extends AbstractGetRequest
 {
     use EmployeeRequestRules;
 
+    protected array $with = ['hr', 'company'];
+    protected array $withExists = ['selfie', 'agreement', 'scan'];
+
     public function rules(): array
     {
         return array_merge(parent::rules(), [

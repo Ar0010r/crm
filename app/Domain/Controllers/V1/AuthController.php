@@ -2,6 +2,7 @@
 
 namespace App\Domain\Controllers\V1;
 
+use App\Domain\Resources\User\UserResource;
 use App\Source\Control\Controller;
 use App\Source\Resources\ModelResource;
 use App\System\Auth\AuthService;
@@ -25,7 +26,7 @@ class AuthController extends Controller
 
     public function profile()
     {
-        return new ModelResource(auth()->user());
+        return new UserResource(auth()->user());
     }
 
     public function logout()

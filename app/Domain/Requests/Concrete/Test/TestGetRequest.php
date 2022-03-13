@@ -10,6 +10,8 @@ class TestGetRequest extends AbstractGetRequest
 {
     use TestRequestRules;
 
+    protected array $with=['manager', 'company'];
+
     public function orderByFields(): array
     {
         return [
@@ -29,7 +31,6 @@ class TestGetRequest extends AbstractGetRequest
         if(!$this->has('order_by')) {
             $this->merge([
                 'order_by' => 'date',
-
             ]);
         }
 
