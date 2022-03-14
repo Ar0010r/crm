@@ -69,9 +69,10 @@ class SearchApplier
                 $query->orWhereRaw("LOWER($field) LIKE LOWER(?)", ["%{$term}%"]);
             }
 
+
             foreach ($this->whereSearchFields as $field) {
-                $query->orWhere($field, '=', $term);
-                //$query->orWhereRaw("LOWER($field) = LOWER(?)", ["{$term}"]);
+                $query->orWhereRaw("LOWER($field) = LOWER(?)", ["%{$term}%"]);
+                //$query->orWhere($field, '==', $term);
             }
 
             foreach ($this->jsonSearchFilters as $field) {

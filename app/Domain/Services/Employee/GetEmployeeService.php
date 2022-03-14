@@ -4,7 +4,6 @@
 namespace App\Domain\Services\Employee;
 
 use App\Domain\Models\Employee;
-use App\Domain\Models\User;
 use App\Source\Services\AbstractGetService;
 use Illuminate\Database\Eloquent\Model;
 
