@@ -8,7 +8,7 @@
                 </div>
                 <slot :object="model"></slot>
                 <div class="modal-footer">
-                    <button :id="id + 'Close'" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button :id="id + 'Close'" type="button" class="btn btn-default" data-dismiss="modal">close</button>
                     <button @click.prevent="action" :disabled="disabled" type="button" class="btn btn-primary">{{ purpose }}</button>
                 </div>
             </form>

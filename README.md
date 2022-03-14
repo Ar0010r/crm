@@ -1,13 +1,10 @@
-# Laravel-vue-3-starter
+# Laravel 9 & Vue 3 CRM System
 
-It's a pre-configured project using Laravel 8 and Vue 3
+to get it up and run just clone the repo :
 
-to get it up and run just clone it and enhoy coding :
+     git clone https://github.com/Ar0010r/crm.git
 
-     git clone https://github.com/boussadjra/laravel-vue-3-starter.git
-
-     cd laravel-vue-3-starter
-
+     cd crm
 
 
 then install backend modules by running 
@@ -18,5 +15,13 @@ and front-end modules :
 
      npm install
 
-finally add your magic.     
+setup the database :
+
+     php artisan migrate  
+     php artisan db:seed
+
+compile js  :
+
+     npm run production
+
 
