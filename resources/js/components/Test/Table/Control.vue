@@ -1,6 +1,6 @@
 <template>
     <Control getter="getTestQueryParams" dispatch="test/get" commit="test/setQueryParam">
-        <Button title="Add test" event="create-test-form" target="#createTestForm" getter="getTestModel"/>
+        <Button title="Create" event="create-test-form" target="#createTestForm" getter="getTestModel"/>
         <Select title="Company"
                 :vmodel=filters.company_id
                 :options="companies"

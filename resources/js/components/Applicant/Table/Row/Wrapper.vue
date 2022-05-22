@@ -6,7 +6,8 @@
             </td>
             <td class="text-center">
                 <p class="m-0">{{ applicant.created_at }}</p>
-                <p class="m-0">HR : {{ applicant.hr.login }}</p>
+                <p v-if="applicant.hr" class="m-0">HR : {{ applicant.hr.login }}</p>
+                <p v-if="applicant.hrCompany" class="m-0">{{ applicant.hrCompany.name }}</p>
             </td>
             <td v-if="applicant.company">{{ applicant.company.name }}</td>
             <td v-else></td>

@@ -1,6 +1,6 @@
 <template>
     <Control getter="getSubscriptionQueryParams" dispatch="subscription/get" commit="subscription/setQueryParam">
-        <Button title="Add subscription" event="create-subscription-form" target="#createSubscriptionForm" getter="getSubscriptionModel"/>
+        <Button title="Create" event="create-subscription-form" target="#createSubscriptionForm" getter="getSubscriptionModel"/>
         <Select title="Company"
                 :vmodel=filters.company_id
                 :options="companies"
@@ -22,6 +22,13 @@
             :options="services()"
             commit="subscription/setQueryParam"
             param="service"
+        ></Select>
+        <Select
+            title="Status"
+            :vmodel=filters.status
+            :options="statuses()"
+            commit="subscription/setQueryParam"
+            param="status"
         ></Select>
         <DatePicker
             title="Paid after"
@@ -65,6 +72,14 @@ export default {
             },
             services: function () {
                 return store.getters.getServices.map(function (value) {
+                    return {
+                        "id": value,
+                        "name": value
+                    }
+                })
+            },
+            statuses: function () {
+                return store.getters.getSubscriptionStatuses.map(function (value) {
                     return {
                         "id": value,
                         "name": value

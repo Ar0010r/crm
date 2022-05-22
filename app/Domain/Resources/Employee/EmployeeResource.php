@@ -31,6 +31,7 @@ class EmployeeResource extends ModelResource
 
             'hr' => $this->hr,
             'company' => $this->company,
+            'hrCompany' => $this->hrCompany,
             'agreement_exists' => $this->agreement_exists ?? $this->agreement()->exists(),
             'selfie_exists' => $this->selfie_exists ?? $this->selfie()->exists(),
             'scan_exists' => $this->scan_exists ?? $this->scan()->exists()

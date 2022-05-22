@@ -2,6 +2,7 @@
 
 namespace App\Domain\Requests\Concrete\Company;
 
+use App\Domain\Requests\Permissions\AnyManagerAllowed;
 use App\Source\Requests\AbstractUpdateRequest;
 use App\Domain\Requests\Permissions\PersonnelAllowed;
 use App\Domain\Requests\Rules\CompanyRequestRules;
@@ -9,7 +10,7 @@ use App\Domain\Requests\Rules\CompanyRequestRules;
 class CompanyUpdateRequest extends AbstractUpdateRequest
 {
     use CompanyRequestRules;
-    use PersonnelAllowed;
+    use AnyManagerAllowed;
 
     public const ENTITY = 'company';
 

@@ -1,6 +1,6 @@
 <template>
     <Control getter="getCompanyQueryParams" dispatch="company/get" commit="company/setQueryParam">
-        <Button title="Add company" event="create-company-form" target="#createCompanyForm" getter="getCompanyModel"/>
+        <Button title="Create" event="create-company-form" target="#createCompanyForm" getter="getCompanyModel"/>
         <Select
             v-if="profileIsAdmin"
             title="Manager"
@@ -16,6 +16,20 @@
             :options="types"
             commit="company/setQueryParam"
             param="type"
+        ></Select>
+        <Select
+            title="Status"
+            :vmodel=filters.status
+            :options="statuses"
+            commit="company/setQueryParam"
+            param="status"
+        ></Select>
+        <Select
+            title="Scam"
+            :vmodel=filters.scam
+            :options="scam"
+            commit="company/setQueryParam"
+            param="scam"
         ></Select>
         <DatePicker
             title="Created after"
@@ -47,6 +61,8 @@ export default {
             managers: computed(() => store.getters.getManagers),
             filters: computed(() => store.getters.getCompanyQueryParams),
             types: store.getters.getTypes,
+            statuses: store.getters.getCompanyStatuses,
+            scam: store.getters.getCompanyScam,
             profileIsAdmin: computed(() => {
                 return store.getters.getProfile.role === 'admin'
             }),

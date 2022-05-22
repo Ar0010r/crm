@@ -10,7 +10,7 @@
 
             <slot></slot>
 
-            <div class="col-md col-xl-2 mb-4">
+            <div class="mb-4" :class="show">
                 <label class="form-label d-none d-md-block">&nbsp;</label>
                 <button type="button" class="btn btn-secondary btn-block" @click="submit">Show</button>
             </div>
@@ -57,6 +57,10 @@ export default {
         getter: String,
         dispatch: String,
         commit: String,
+        show: {
+            type: String,
+            default: 'col-md col-xl-2'
+        }
     },
 };
 </script>

@@ -12,30 +12,18 @@ class LetterResource extends ModelResource
             'id' => $this->id,
             'hr_id' => $this->hr_id,
             'company_id' => $this->company_id,
-            'google' => $this->google,
-            'outlook' => $this->outlook,
-            'yahoo' => $this->yahoo,
-            'other' => $this->other,
+            'google' => (int)$this->google,
+            'outlook' => (int)$this->outlook,
+            'yahoo' => (int)$this->yahoo,
+            'other' => (int)$this->other,
             'received_at' => $this->received_at,
-            'processed' => $this->processed,
+            'processed' => (int)$this->processed,
 
             'hr' => $this->hr,
             'company' => $this->company,
             'total' => $this->total()
         ];
     }
-
-    /*public function toArray($request)
-    {
-        return array_merge(
-            $this->resource->attributesToArray(),
-            [
-                'hr' => $this->hr,
-                'company' => $this->company,
-                'total' => $this->total()
-            ]
-        );
-    }*/
 
     private function total(): int
     {

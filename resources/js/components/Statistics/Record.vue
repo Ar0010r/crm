@@ -8,14 +8,22 @@
                 <th class="text-left font-weight-bold">Hr</th>
                 <th class="text-left font-weight-bold">Mails</th>
                 <th class="text-left font-weight-bold">Total</th>
-                <th class="text-left font-weight-bold">Ready</th>
+                <th class="text-left font-weight-bold">Hired</th>
                 <th class="text-left font-weight-bold">Rate</th>
             </tr>
             </thead>
             <tbody>
             <tr class="odd gradeX" v-for="hr in record.hrs">
                 <td>{{ hr.login }}</td>
-                <td>{{ hr.letters }}</td>
+                <td>
+                    <p class="m-0">Total : {{ hr.letters }}</p>
+                    <p class="m-0" v-if="hr.processed < hr.letters">
+                        Processed : {{ hr.processed }} mails
+                    </p>
+                    <p class="m-0" v-else>
+                        Processed : {{(hr.processed/hr.letters * 100).toFixed(2)}}%
+                    </p>
+                </td>
                 <td>{{ hr.total }}</td>
                 <td>{{ hr.hired }}</td>
                 <td>{{(hr.hired/hr.letters * 100).toFixed(2)}}%</td>
@@ -65,24 +73,28 @@
             </thead>
             <tbody>
             <tr class="odd gradeX">
-                <td>mails/ready+exported+invited</td>
-                <td> {{(record.applicants.good/record.head.letters * 100).toFixed(2)}}%</td>
-            </tr>
-            <tr class="odd gradeX">
-                <td>mails/exported</td>
-                <td> {{(record.applicants.exported/record.head.letters * 100).toFixed(2)}}%</td>
-            </tr>
-            <tr class="odd gradeX">
-                <td>total/ready+exported+invited</td>
+                <td>hired/interested</td>
                 <td> {{(record.applicants.good/record.applicants.total * 100).toFixed(2)}}%</td>
             </tr>
             <tr class="odd gradeX">
-                <td>ready/exported</td>
+                <td>hired/exported</td>
                 <td> {{(record.applicants.exported/record.applicants.good * 100).toFixed(2)}}%</td>
             </tr>
             <tr class="odd gradeX">
-                <td>total/exported</td>
+                <td>interested/exported</td>
                 <td> {{(record.applicants.exported/record.applicants.total * 100).toFixed(2)}}%</td>
+            </tr>
+            <tr class="odd gradeX">
+                <td>interested/mails</td>
+                <td> {{(record.applicants.total/record.head.letters * 100).toFixed(2)}}%</td>
+            </tr>
+            <tr class="odd gradeX">
+                <td>hired/mails</td>
+                <td> {{(record.applicants.good/record.head.letters * 100).toFixed(2)}}%</td>
+            </tr>
+            <tr class="odd gradeX">
+                <td>exported/mails</td>
+                <td> {{(record.applicants.exported/record.head.letters * 100).toFixed(2)}}%</td>
             </tr>
             </tbody>
         </table>

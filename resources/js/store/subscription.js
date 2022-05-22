@@ -11,16 +11,22 @@ export default {
             'Outlook',
             'Namecheap',
             'Megahoster',
+            'Warmup Inbox',
         ],
         services: [
             'Email',
             'Hosting',
+            'Warmup',
         ],
         periods: [
             'monthly',
             'quarterly',
             'half-yearly',
             'yearly',
+        ],
+        statuses: [
+            'in use',
+            'terminated',
         ],
         queryParams: {
             company_id: null,
@@ -29,6 +35,7 @@ export default {
             paid_before: null,
             paid_after: null,
             search_term: null,
+            status: null,
             take: 100,
             page: 1,
         },
@@ -39,6 +46,7 @@ export default {
             service: null,
             price: null,
             period: null,
+            status: 'in use',
             last_payment: function () {
                 let today = new Date();
                 let dd = today.getDate();

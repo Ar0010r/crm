@@ -528,7 +528,11 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     getter: String,
     dispatch: String,
-    commit: String
+    commit: String,
+    show: {
+      type: String,
+      "default": 'col-md col-xl-2'
+    }
   }
 });
 
@@ -1049,6 +1053,14 @@ __webpack_require__.r(__webpack_exports__);
           };
         });
       },
+      statuses: function statuses() {
+        return store.getters.getSubscriptionStatuses.map(function (value) {
+          return {
+            "id": value,
+            "name": value
+          };
+        });
+      },
       companies: (0,vue__WEBPACK_IMPORTED_MODULE_3__.computed)(function () {
         return container.CompanyService.controlled(store.getters.getCompanies, store.getters.getProfile);
       })
@@ -1164,6 +1176,14 @@ __webpack_require__.r(__webpack_exports__);
       },
       services: function services() {
         return store.getters.getServices.map(function (value) {
+          return {
+            "id": value,
+            "name": value
+          };
+        });
+      },
+      statuses: function statuses() {
+        return store.getters.getSubscriptionStatuses.map(function (value) {
           return {
             "id": value,
             "name": value
@@ -1338,7 +1358,7 @@ __webpack_require__.r(__webpack_exports__);
       params: (0,vue__WEBPACK_IMPORTED_MODULE_6__.computed)(function () {
         return store.getters.getSubscriptionQueryParams;
       }),
-      columns: ["Company", "Provider", 'Service', 'Price', 'Last payment', 'Period', 'Actions']
+      columns: ["Company", "Provider", 'Service', 'Price', 'Last payment', 'Next payment', 'Period', 'Status', 'Actions']
     };
   },
   components: {
@@ -1685,11 +1705,8 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_6 = [_hoisted_5];
-var _hoisted_7 = {
-  "class": "col-md col-xl-2 mb-4"
-};
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "form-label d-none d-md-block"
 }, " ", -1
 /* HOISTED */
@@ -1703,13 +1720,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[0] || (_cache[0] = function () {
       return $setup.reset && $setup.reset.apply($setup, arguments);
     })
-  }, _hoisted_6)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, _hoisted_6)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["mb-4", $props.show])
+  }, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn btn-secondary btn-block",
     onClick: _cache[1] || (_cache[1] = function () {
       return $setup.submit && $setup.submit.apply($setup, arguments);
     })
-  }, "Show")])])]);
+  }, "Show")], 2
+  /* CLASS */
+  )])]);
 }
 
 /***/ }),
@@ -2302,10 +2323,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     required: true
   }, null, 8
   /* PROPS */
-  , ["modelValue", "vmodel", "validate", "reset"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DateInput, {
+  , ["modelValue", "vmodel", "validate", "reset"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Select, {
+    options: $setup.statuses(),
+    title: "select status",
+    label: "status",
+    vmodel: $props.object.status,
+    modelValue: $props.object.status,
+    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+      return $props.object.status = $event;
+    }),
+    required: true,
+    reset: $props.reset,
+    validate: $props.validate
+  }, null, 8
+  /* PROPS */
+  , ["options", "vmodel", "modelValue", "reset", "validate"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DateInput, {
     vmodel: $props.object.last_payment,
     modelValue: $props.object.last_payment,
-    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
       return $props.object.last_payment = $event;
     }),
     reset: $props.reset,
@@ -2438,7 +2473,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        title: "Add subscription",
+        title: "Create",
         event: "create-subscription-form",
         target: "#createSubscriptionForm",
         getter: "getSubscriptionModel"
@@ -2465,6 +2500,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         options: $setup.services(),
         commit: "subscription/setQueryParam",
         param: "service"
+      }, null, 8
+      /* PROPS */
+      , ["vmodel", "options"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Select, {
+        title: "Status",
+        vmodel: $setup.filters.status,
+        options: $setup.statuses(),
+        commit: "subscription/setQueryParam",
+        param: "status"
       }, null, 8
       /* PROPS */
       , ["vmodel", "options"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DatePicker, {
@@ -2553,9 +2596,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* TEXT */
       ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.subscription.last_payment), 1
       /* TEXT */
+      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.subscription.next_payment), 1
+      /* TEXT */
       ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.subscription.period), 1
       /* TEXT */
-      )];
+      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["badge", $props.subscription.status === 'in use' ? 'badge-outline-success' : 'badge-outline-danger'])
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.subscription.status), 3
+      /* TEXT, CLASS */
+      )])];
     }),
     actions: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_EditButton, {

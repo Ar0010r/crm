@@ -43,7 +43,9 @@
                     'Service',
                     'Price',
                     'Last payment',
+                    'Next payment',
                     'Period',
+                    'Status',
                     'Actions'
                 ]
             }

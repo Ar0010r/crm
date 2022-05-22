@@ -1,5 +1,5 @@
 <template>
-    <Control getter="getApplicantQueryParams" dispatch="applicant/get" commit="applicant/setQueryParam">
+    <Control getter="getApplicantQueryParams" dispatch="applicant/get" commit="applicant/setQueryParam" show="col-auto">
         <Button
             v-if="!profileIsPersonnel"
             title="Create"
@@ -13,21 +13,28 @@
             event="file-input-form"
             target="#fileInputForm"/>
 
-        <Select title="Company"
+        <Select title="Delivery company"
                 :vmodel=filters.company_id
                 :options="companies"
                 name="name"
                 commit="applicant/setQueryParam"
                 param="company_id"
         />
+        <Select title="Hiring company"
+                :vmodel=filters.hr_company_id
+                :options="hrCompanies"
+                name="name"
+                commit="applicant/setQueryParam"
+                param="hr_company_id"
+        />
         <Select
             v-if="profileIsAdmin"
             title="Hr"
             :vmodel=filters.hr_id
             :options="hrs"
-            name="hr"
+            name="login"
             commit="applicant/setQueryParam"
-            param="manager_id"
+            param="hr_id"
         />
         <ContactedSelect v-if="!profileIsPersonnel"/>
         <Select
@@ -97,7 +104,7 @@ export default {
                 let profile = store.getters.getProfile
                 let companies = store.getters.getCompanies
                 if(profile.role == 'admin') {
-                    return companies
+                    return container.CompanyService.delivery(companies)
                 }
 
                 if(profile.role == 'hr') {
@@ -108,6 +115,22 @@ export default {
                     return container.CompanyService.controlled(companies, profile)
                 }
             }),
+
+            hrCompanies: computed(() =>{
+            let profile = store.getters.getProfile
+            let companies = store.getters.getCompanies
+            if(profile.role == 'admin') {
+                return container.CompanyService.hr(companies)
+            }
+
+            if(profile.role == 'hr') {
+                return container.CompanyService.controlled(companies, profile)
+            }
+
+            if(profile.role == 'personnel') {
+                return container.CompanyService.hr(companies)
+            }
+        }),
         }
     },
     components: {

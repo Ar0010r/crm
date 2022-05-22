@@ -43,6 +43,8 @@ export default createStore({
         getStatistics: state => state.company.statistics,
         getCompanyModel: state => state.company.companyModel,
         getTypes: state => state.company.types,
+        getCompanyStatuses: state => state.company.statuses,
+        getCompanyScam: state => state.company.scam,
 
         getMails: state => state.mail.data,
         getMailsMeta: state => state.mail.meta,
@@ -64,6 +66,7 @@ export default createStore({
         getProviders: state => state.subscription.providers,
         getServices: state => state.subscription.services,
         getPeriods: state => state.subscription.periods,
+        getSubscriptionStatuses: state => state.subscription.statuses,
     },
     modules: {
         profile: profile,

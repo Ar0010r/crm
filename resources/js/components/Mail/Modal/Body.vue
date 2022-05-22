@@ -59,7 +59,7 @@ export default {
         const container = inject('container')
 
         return {
-            hrs: computed(() => store.getters.getHrs),
+            hrs: computed(() => store.getters.getManagers),
             companies: computed(() => container.CompanyService.delivery(store.getters.getCompanies)),
             profileIsAdmin: computed(() => {
                 return store.getters.getProfile.role === 'admin' || store.getters.getProfile.role === 'top hr'

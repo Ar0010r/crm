@@ -22,7 +22,9 @@ class Company extends Model
         'email',
         'domain',
         'pseudonym',
-        'manager_id'
+        'manager_id',
+        'status',
+        'scam'
     ];
 
     public function manager()

@@ -9,7 +9,7 @@ class CreateSubscriptionsTable extends Migration
     public function up()
     {
         Schema::create('subscriptions', function (Blueprint $table) {
-            $table->engine = 'MyISAM';
+            //$table->engine = 'MyISAM';
 
             $table->uuid('id')->primary();
             $table->uuid('company_id');

@@ -20,6 +20,7 @@ trait EmployeeRequestRules
     {
         return [
             'company_id' => ['nullable', 'exists:companies,id'],
+            'hr_company_id' => ['nullable', 'exists:companies,id'],
             'hr_id' => ['nullable', 'exists:users,id'],
             'name' => ['nullable', 'regex:/^[a-zA-Z ]+$/'],
             'avatar' => ['nullable', 'string'],

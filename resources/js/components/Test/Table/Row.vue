@@ -2,7 +2,7 @@
     <Row>
         <template v-slot:default>
             <td>{{ test.date }}</td>
-            <td v-if="profileIsAdmin">{{ test.manager.login }}</td>
+            <td v-if="profileIsAdmin && test.manager">{{ test.manager.login }}</td>
             <td>{{ test.company.name }}</td>
             <td>{{ test.env }}</td>
             <td>{{ test.template }}</td>

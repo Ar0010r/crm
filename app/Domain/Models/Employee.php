@@ -22,6 +22,7 @@ class Employee extends Model  implements HasMedia
     protected $fillable = [
         'id',
         'company_id',
+        'hr_company_id',
         'hr_id',
         'status',
         'birthday',
@@ -49,6 +50,12 @@ class Employee extends Model  implements HasMedia
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id', 'id')
+            ->select(['companies.id', 'companies.name']);
+    }
+
+    public function hrCompany()
+    {
+        return $this->belongsTo(Company::class, 'hr_company_id', 'id')
             ->select(['companies.id', 'companies.name']);
     }
 

@@ -12,6 +12,7 @@ export default {
         availableStatuses: {},
         queryParams: {
             company_id: null,
+            hr_company_id: null,
             status: null,
             hr_id: null,
             contacted_between: null,

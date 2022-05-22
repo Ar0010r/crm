@@ -24,14 +24,4 @@ class TestResource extends ModelResource
             'company' => $this->company,
         ];
     }
-    /*public function toArray($request)
-    {
-        return array_merge(
-            $this->resource->attributesToArray(),
-            [
-                'manager' => $this->manager,
-                'company' => $this->company,
-            ]
-        );
-    }*/
 }

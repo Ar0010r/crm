@@ -20,7 +20,12 @@ class Subscription extends Model
         'service',
         'price',
         'last_payment',
-        'period'
+        'period',
+        'status',
+    ];
+
+    protected $casts = [
+        'last_payment' => 'date'
     ];
 
     public function company()

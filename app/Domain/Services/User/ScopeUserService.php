@@ -16,22 +16,22 @@ class ScopeUserService extends AbstractScopeService
     {
         $ids = StoreUserService::getTopHrTeamIds($user);
 
-        return User::whereIn('id', $ids);
+        return $this->adminScope()->whereIn('id', $ids);
     }
 
     protected function adminScope(): QueryBuilder|Builder|QBuilder
     {
-        return User::query();
+        return User::query()->with('companies:id,name,manager_id,status');
     }
 
     protected function personnelScope(User $user): QueryBuilder|Builder|QBuilder
     {
-        return User::where('id', $user->getKey());
+        return $this->adminScope()->where('id', $user->getKey());
     }
 
     protected function hrScope(User $user): QueryBuilder|Builder|QBuilder
     {
-        return User::where('id', $user->getKey());
+        return $this->adminScope()->where('id', $user->getKey());
     }
 
     public function getModel(): Model

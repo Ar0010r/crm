@@ -43,6 +43,15 @@
               label="price"
               regex="^\d+(?:[.]\d{1,2}|$)$"
               :required=true />
+       <Select :options=statuses()
+               title="select status"
+               label="status"
+               :vmodel=object.status
+               v-model="object.status"
+               :required="true"
+               :reset="reset"
+               :validate="validate"
+       />
         <DateInput
             :vmodel="object.last_payment"
             v-model="object.last_payment"
@@ -84,6 +93,14 @@
                 },
                 periods: function () {
                     return store.getters.getPeriods.map(function (value) {
+                        return {
+                            "id": value,
+                            "name": value
+                        }
+                    })
+                },
+                statuses: function () {
+                    return store.getters.getSubscriptionStatuses.map(function (value) {
                         return {
                             "id": value,
                             "name": value

@@ -186,6 +186,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   setup: function setup(props) {
     var emitter = (0,vue__WEBPACK_IMPORTED_MODULE_1__.inject)("emitter");
     var input = (0,vee_validate__WEBPACK_IMPORTED_MODULE_2__.useField)('vmodel', function (value) {
+      if (typeof value === 'string' || value instanceof String) {
+        value = parseInt(value);
+      }
+
       if (!props.required) {
         if (typeof value === 'number' || value === null || value === undefined || value === 0) {
           return true;
@@ -695,7 +699,11 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     getter: String,
     dispatch: String,
-    commit: String
+    commit: String,
+    show: {
+      type: String,
+      "default": 'col-md col-xl-2'
+    }
   }
 });
 
@@ -1272,7 +1280,7 @@ __webpack_require__.r(__webpack_exports__);
     var container = (0,vue__WEBPACK_IMPORTED_MODULE_4__.inject)('container');
     return {
       hrs: (0,vue__WEBPACK_IMPORTED_MODULE_4__.computed)(function () {
-        return store.getters.getHrs;
+        return store.getters.getManagers;
       }),
       companies: (0,vue__WEBPACK_IMPORTED_MODULE_4__.computed)(function () {
         return container.CompanyService.delivery(store.getters.getCompanies);
@@ -2140,11 +2148,8 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_6 = [_hoisted_5];
-var _hoisted_7 = {
-  "class": "col-md col-xl-2 mb-4"
-};
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "form-label d-none d-md-block"
 }, " ", -1
 /* HOISTED */
@@ -2158,13 +2163,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[0] || (_cache[0] = function () {
       return $setup.reset && $setup.reset.apply($setup, arguments);
     })
-  }, _hoisted_6)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, _hoisted_6)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["mb-4", $props.show])
+  }, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn btn-secondary btn-block",
     onClick: _cache[1] || (_cache[1] = function () {
       return $setup.submit && $setup.submit.apply($setup, arguments);
     })
-  }, "Show")])])]);
+  }, "Show")], 2
+  /* CLASS */
+  )])]);
 }
 
 /***/ }),
@@ -3024,7 +3033,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Button, {
-        title: "Add mail",
+        title: "Create",
         event: "create-mail-form",
         target: "#createMailForm",
         getter: "getMailModel"
@@ -3042,7 +3051,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         vmodel: $setup.filters.hr_id,
         options: $setup.hrs,
         commit: "mail/setQueryParam",
-        param: "Hr",
+        param: "hr_id",
         name: "login"
       }, null, 8
       /* PROPS */
@@ -3187,7 +3196,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.mail.received_at), 1
       /* TEXT */
-      ), $setup.profileIsAdmin ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.mail.hr.login), 1
+      ), $setup.profileIsAdmin && $props.mail.hr ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.mail.hr.login), 1
       /* TEXT */
       )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.mail.company.name), 1
       /* TEXT */

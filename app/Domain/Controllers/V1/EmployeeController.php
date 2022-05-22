@@ -21,8 +21,6 @@ use App\Domain\Services\Employee\GetEmployeeService;
 use App\Domain\Services\Employee\StoreEmployeeService;
 use App\Domain\Enums\Race;
 use App\Domain\Enums\Status;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 

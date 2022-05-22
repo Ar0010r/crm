@@ -60,6 +60,26 @@
             regex='email'
             :required=true
         />
+        <Select
+            :options=statuses
+            title="select status"
+            label="status"
+            :vmodel=object.status
+            v-model="object.status"
+            :required="true"
+            :reset="reset"
+            :validate="validate"
+        />
+        <Select
+            :options=scam
+            title="select scam status"
+            label="scam"
+            :vmodel=object.scam
+            v-model="object.scam"
+            :required="true"
+            :reset="reset"
+            :validate="validate"
+        />
     </div>
 </template>
 
@@ -75,6 +95,8 @@ export default {
         const store = useStore()
         return {
             types: store.getters.getTypes,
+            statuses: store.getters.getCompanyStatuses,
+            scam: store.getters.getCompanyScam,
             managers: computed(() => props.object.type == 1 ? store.getters.getHrs : store.getters.getPersonnels),
             results: [{"name": "inbox", "id": 1}, {"name": "spam", "id": 0}],
             profileIsAdmin: computed(() => {

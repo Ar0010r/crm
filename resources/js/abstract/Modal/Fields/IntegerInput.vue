@@ -27,6 +27,11 @@ export default {
     setup(props) {
         const emitter = inject("emitter");
         let input = useField('vmodel', function (value) {
+
+            if(typeof value === 'string' || value instanceof String) {
+               value = parseInt(value);
+            }
+
             if (!props.required) {
                 if (typeof value === 'number' || value === null || value === undefined || value === 0) {
                     return true

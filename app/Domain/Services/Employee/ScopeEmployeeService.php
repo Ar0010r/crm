@@ -3,6 +3,7 @@
 
 namespace App\Domain\Services\Employee;
 
+use App\Domain\Enums\CompanyType;
 use App\Domain\Models\Employee;
 use App\Domain\Models\User;
 use App\Source\Services\AbstractScopeService;
@@ -22,13 +23,17 @@ class ScopeEmployeeService extends AbstractScopeService
         return Employee::query()
             ->orderByDesc('employees.created_at')
             ->with('hr')
+            ->with('hrCompany')
             ->with('company');
     }
 
     protected function hrScope(User $user): QueryBuilder|Builder|QBuilder
     {
+        $companyIds = $user->companies()->where('type', CompanyType::HIRING)->pluck('id');
         return $this->adminScope()
-            ->where('hr_id', $user->id)
+            ->where(function($query) use ($user, $companyIds) {
+                $query->orWhere('hr_id', $user->getKey())->orWhereIn('hr_company_id', $companyIds);
+            })
             ->whereIn('status', Status::STATUSES);
     }
 

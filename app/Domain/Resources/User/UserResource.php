@@ -13,6 +13,7 @@ class UserResource extends ModelResource
             'login'=> $this->login,
             'avatar'=> $this->avatar,
             'role'=> $this->role,
+            'companies'=> $this->companies,
             'created_at'=> $this->created_at->format('Y-m-d'),
         ];
     }

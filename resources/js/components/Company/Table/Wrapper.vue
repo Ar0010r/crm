@@ -21,40 +21,40 @@
 </template>
 
 <script>
-    import Table from '../../../abstract/Table/Wrapper';
-    import Head from '../../../abstract/Table/Head';
-    import Pagination from '../../../abstract/Table/Control/Pagination';
-    import Take from '../../../abstract/Table/Control/Take';
-    import Search from '../../../abstract/Table/Control/Search';
-    import Row from './Row';
-    import {useStore} from "vuex";
-    import {computed, inject} from "vue";
+import Table from '../../../abstract/Table/Wrapper';
+import Head from '../../../abstract/Table/Head';
+import Pagination from '../../../abstract/Table/Control/Pagination';
+import Take from '../../../abstract/Table/Control/Take';
+import Search from '../../../abstract/Table/Control/Search';
+import Row from './Row';
+import {useStore} from "vuex";
+import {computed, inject} from "vue";
 
-    export default {
-        setup() {
-            const store = useStore();
-            const container = inject('container')
-            return {
-                companies: computed(() => store.getters.getCompanies),
-                meta: computed(() => store.getters.getCompaniesMeta),
-                params: computed(() => store.getters.getCompanyQueryParams),
-                columns: function () {
-                    let profile = store.getters.getProfile
-                   if(profile.role == 'admin' || profile.role == 'top hr'){
-                       return  ["Created", "Manager", "Name", "Type", "Domain", "Email", "Pseudonym", "Actions"]
-                   } else {
-                       return  ["Created", "Name", "Type", "Domain", "Email", "Pseudonym", "Actions"]
-                   }
+export default {
+    setup() {
+        const store = useStore();
+        const container = inject('container')
+        return {
+            companies: computed(() => store.getters.getCompanies),
+            meta: computed(() => store.getters.getCompaniesMeta),
+            params: computed(() => store.getters.getCompanyQueryParams),
+            columns: function () {
+                let profile = store.getters.getProfile
+                if (profile.role == 'admin' || profile.role == 'top hr') {
+                    return ["Created", "Manager", "Name", "Type", "Domain/Email", "Pseudonym", "Scam", "Status", "Actions"]
+                } else {
+                    return ["Created", "Name", "Type", "Domain/Email", "Pseudonym", "Scam", "Status", "Actions"]
                 }
             }
-        },
-        components: {
-            Table,
-            Head,
-            Pagination,
-            Row,
-            Take,
-            Search,
         }
-    };
+    },
+    components: {
+        Table,
+        Head,
+        Pagination,
+        Row,
+        Take,
+        Search,
+    }
+};
 </script>

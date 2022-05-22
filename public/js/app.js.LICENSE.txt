@@ -1,17 +1,21 @@
 /*!
-  * vue-router v4.0.3
+  * vue-router v4.0.12
   * (c) 2021 Eduardo San Martin Morote
   * @license MIT
   */
 
 /*!
- * vuex v4.0.0-rc.2
- * (c) 2020 Evan You
+ * vuex v4.0.2
+ * (c) 2021 Evan You
  * @license MIT
  */
 
 /**
-  * vee-validate v4.1.11
-  * (c) 2021 Abdelrahman Awad
+  * vee-validate v4.5.8
+  * (c) 2022 Abdelrahman Awad
   * @license MIT
   */
+
+//! moment.js
+
+//! moment.js locale configuration

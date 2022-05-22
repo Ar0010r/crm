@@ -20725,7 +20725,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "button",
     "class": "btn btn-default",
     "data-dismiss": "modal"
-  }, "Close", 8
+  }, "close", 8
   /* PROPS */
   , _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
@@ -23677,6 +23677,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     availableStatuses: {},
     queryParams: {
       company_id: null,
+      hr_company_id: null,
       status: null,
       hr_id: null,
       contacted_between: null,
@@ -24112,6 +24113,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     queryParams: {
       manager_id: null,
       type: null,
+      scam: null,
+      status: null,
       search_term: null,
       created_before: null,
       created_after: null,
@@ -24128,6 +24131,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       pseudonym: null,
       email: null,
       type: null,
+      scam: null,
+      status: null,
       created_at: null,
       dataIsValid: null
     },
@@ -24137,6 +24142,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }, {
       id: 1,
       name: 'Hiring'
+    }],
+    statuses: [{
+      id: 'in use',
+      name: 'in use'
+    }, {
+      id: 'terminated',
+      name: 'terminated'
+    }],
+    scam: [{
+      id: 'ok',
+      name: 'ok'
+    }, {
+      id: 'scam',
+      name: 'scam'
     }]
   },
   mutations: {
@@ -24465,6 +24484,12 @@ __webpack_require__.r(__webpack_exports__);
     getTypes: function getTypes(state) {
       return state.company.types;
     },
+    getCompanyStatuses: function getCompanyStatuses(state) {
+      return state.company.statuses;
+    },
+    getCompanyScam: function getCompanyScam(state) {
+      return state.company.scam;
+    },
     getMails: function getMails(state) {
       return state.mail.data;
     },
@@ -24518,6 +24543,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPeriods: function getPeriods(state) {
       return state.subscription.periods;
+    },
+    getSubscriptionStatuses: function getSubscriptionStatuses(state) {
+      return state.subscription.statuses;
     }
   },
   modules: {
@@ -25267,9 +25295,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       to: 0,
       total: 0
     },
-    providers: ['Google', 'Outlook', 'Namecheap', 'Megahoster'],
-    services: ['Email', 'Hosting'],
+    providers: ['Google', 'Outlook', 'Namecheap', 'Megahoster', 'Warmup Inbox'],
+    services: ['Email', 'Hosting', 'Warmup'],
     periods: ['monthly', 'quarterly', 'half-yearly', 'yearly'],
+    statuses: ['in use', 'terminated'],
     queryParams: {
       company_id: null,
       provider: null,
@@ -25277,6 +25306,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       paid_before: null,
       paid_after: null,
       search_term: null,
+      status: null,
       take: 100,
       page: 1
     },
@@ -25289,6 +25319,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       service: null,
       price: null,
       period: null,
+      status: 'in use',
       last_payment: function () {
         var today = new Date();
         var dd = today.getDate();

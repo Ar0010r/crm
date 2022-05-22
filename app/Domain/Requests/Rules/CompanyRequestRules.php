@@ -15,7 +15,9 @@ trait CompanyRequestRules
             'type' => ['numeric'],
             'domain' => ['string'],
             'email' => ['string'],
-            'manager_id' => ['exists:users,id']
+            'manager_id' => ['exists:users,id'],
+            'status' => ['string'],
+            'scam' => ['string'],
         ];
     }
 }

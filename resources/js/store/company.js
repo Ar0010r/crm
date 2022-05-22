@@ -13,6 +13,8 @@ export default {
         queryParams: {
             manager_id: null,
             type: null,
+            scam: null,
+            status: null,
             search_term: null,
             created_before: null,
             created_after: null,
@@ -27,6 +29,8 @@ export default {
             pseudonym: null,
             email: null,
             type: null,
+            scam: null,
+            status: null,
             created_at: null,
             dataIsValid: null,
         },
@@ -38,6 +42,26 @@ export default {
             {
                 id: 1,
                 name: 'Hiring'
+            }
+        ],
+        statuses: [
+            {
+                id: 'in use',
+                name: 'in use'
+            },
+            {
+                id: 'terminated',
+                name: 'terminated'
+            }
+        ],
+        scam: [
+            {
+                id: 'ok',
+                name: 'ok'
+            },
+            {
+                id: 'scam',
+                name: 'scam'
             }
         ],
     },

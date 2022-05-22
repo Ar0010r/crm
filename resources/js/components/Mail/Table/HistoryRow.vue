@@ -2,7 +2,7 @@
     <Row>
         <template v-slot:default>
             <td>{{mail.received_at}}</td>
-            <td v-if="profileIsAdmin">{{mail.hr.login}}</td>
+            <td v-if="profileIsAdmin && mail.hr">{{mail.hr.login}}</td>
             <td>{{mail.company.name}}</td>
             <td >{{mail.google}}</td>
             <td >{{mail.outlook}}</td>

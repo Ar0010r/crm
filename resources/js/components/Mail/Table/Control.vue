@@ -1,6 +1,6 @@
 <template>
     <Control getter="getMailQueryParams" dispatch="mail/get" commit="mail/setQueryParam">
-        <Button title="Add mail" event="create-mail-form" target="#createMailForm" getter="getMailModel"/>
+        <Button title="Create" event="create-mail-form" target="#createMailForm" getter="getMailModel"/>
         <Select title="Company"
                 :vmodel=filters.company_id
                 :options="companies"
@@ -12,7 +12,7 @@
             :vmodel=filters.hr_id
             :options="hrs"
             commit="mail/setQueryParam"
-            param="Hr"
+            param="hr_id"
             name="login"
         />
         <DatePicker

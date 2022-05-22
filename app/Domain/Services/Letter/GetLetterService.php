@@ -4,7 +4,6 @@
 namespace App\Domain\Services\Letter;
 
 use App\Domain\Models\Letter;
-use App\Domain\Models\User;
 use App\Source\Services\AbstractGetService;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,5 +23,4 @@ class GetLetterService extends AbstractGetService
     {
         return new Letter();
     }
-
 }

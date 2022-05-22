@@ -4,6 +4,11 @@
             <td>{{manager.created_at}}</td>
             <td>{{manager.login}}</td>
             <td>{{manager.role}}</td>
+            <td>
+                <p class="m-0" v-for="company in manager.companies">
+                    {{company.name}}
+                </p>
+            </td>
         </template>
         <template v-slot:actions>
             <EditButton :model="manager" target="#editManagerForm" event="edit-manager-form"/>

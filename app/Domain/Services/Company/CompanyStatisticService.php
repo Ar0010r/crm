@@ -79,6 +79,7 @@ class CompanyStatisticService
                 'hired' => $hrEmployees->whereIn('status',
                     [Status::READY, Status::INVITED, Status::EXPORTED, Status::DIED])->count(),
                 'letters' => $hrLetters->sum('google') + $hrLetters->sum('outlook') + $hrLetters->sum('yahoo') + $hrLetters->sum('other'),
+                'processed' => $hrLetters->sum('processed'),
             ];
         });
     }

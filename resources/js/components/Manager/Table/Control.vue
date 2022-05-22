@@ -1,6 +1,6 @@
 <template>
     <Control getter="getManagerQueryParams" dispatch="manager/get" commit="manager/setQueryParam">
-        <Button title="Add manager" event="create-manager-form" target="#createManagerForm" getter="getManagerModel"/>
+        <Button title="Create" event="create-manager-form" target="#createManagerForm" getter="getManagerModel"/>
         <Select
             title="Role"
             :vmodel=filters.role

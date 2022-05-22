@@ -1,5 +1,5 @@
 <template>
-    <Main v-if="selectedItems === 0"/>
+    <Main v-if="selectedItems === 0" />
     <Secondary v-else />
 </template>
 

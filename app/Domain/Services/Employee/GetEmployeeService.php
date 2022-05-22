@@ -23,6 +23,7 @@ class GetEmployeeService extends AbstractGetService
 
     protected array $whereFilters = [
         'company_id',
+        'hr_company_id',
         'hr_id',
         'status',
         'pickup',

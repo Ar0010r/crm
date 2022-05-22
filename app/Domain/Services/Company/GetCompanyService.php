@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class GetCompanyService extends AbstractGetService
 {
     protected array $whereFilters = [
-        'type', 'manager_id'
+        'type', 'manager_id', 'status', 'scam'
     ];
 
     protected array $likeFilters = [

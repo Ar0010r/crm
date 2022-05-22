@@ -24,10 +24,19 @@
                regex='email'
         />
         <Select :options=companies
-                title="select company"
-                label="company"
+                title="select delivery company"
+                label="delivery"
                 :vmodel=object.company_id
                 v-model="object.company_id"
+                :required="true"
+                :reset="reset"
+                :validate="validate"
+        />
+        <Select :options=hrCompanies
+                title="select hr company"
+                label="hiring"
+                :vmodel=object.hr_company_id
+                v-model="object.hr_company_id"
                 :required="true"
                 :reset="reset"
                 :validate="validate"
@@ -114,6 +123,7 @@ export default {
         const container = inject('container')
         return {
             companies: computed(() => container.CompanyService.delivery(store.getters.getCompanies)),
+            hrCompanies: computed(() => container.CompanyService.hr(store.getters.getCompanies)),
             races: function () {
                 return store.getters.getRaces.map(function (value) {
                     return {

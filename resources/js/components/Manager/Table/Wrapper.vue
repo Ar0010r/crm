@@ -41,6 +41,7 @@
                     "Created",
                     "Login",
                     "Role",
+                    "Companies",
                     "Actions",
                 ]
             }

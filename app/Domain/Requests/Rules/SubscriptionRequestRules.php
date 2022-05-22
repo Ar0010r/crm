@@ -12,7 +12,8 @@ trait SubscriptionRequestRules
             'provider' => ['nullable', 'string'],
             'service' => ['nullable', 'string'],
             'price' => ['nullable', 'numeric'],
-            'last_payment' => ['nullable', 'date']
+            'last_payment' => ['nullable', 'date'],
+            'status' => ['nullable', 'string']
         ];
     }
 }

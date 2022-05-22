@@ -7,7 +7,13 @@
             <td>{{ subscription.service }}</td>
             <td>{{ subscription.price }}</td>
             <td>{{ subscription.last_payment }}</td>
+            <td>{{ subscription.next_payment }}</td>
             <td>{{ subscription.period }}</td>
+            <td>
+            <span class="badge" :class="subscription.status === 'in use' ? 'badge-outline-success' : 'badge-outline-danger'">
+                {{ subscription.status }}
+            </span>
+            </td>
         </template>
         <template v-slot:actions>
             <EditButton :model="subscription" target="#editSubscriptionForm" event="edit-subscription-form"/>

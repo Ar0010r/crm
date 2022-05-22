@@ -13,6 +13,7 @@ class GetSubscriptionService extends AbstractGetService
         'company_id',
         'provider',
         'service',
+        'status',
     ];
 
     protected array $scopeFilters = [
