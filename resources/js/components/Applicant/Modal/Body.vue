@@ -1,4 +1,5 @@
 <template>
+<!--    <pre>{{object}}</pre>-->
     <div class="modal-body">
         <Input v-model="object.name"
                :vmodel="object.name"

@@ -29,6 +29,8 @@ export default {
             birthday: null,
             city: null,
             company_id: null,
+            hr_company_id: null,
+            hrCompany: {name: null},
             company: {name: null},
             hr: {login: null},
             email: null,

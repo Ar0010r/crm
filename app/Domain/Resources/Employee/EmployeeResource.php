@@ -11,6 +11,7 @@ class EmployeeResource extends ModelResource
         return [
             'id' => $this->id,
             'company_id' => $this->company_id,
+            'hr_company_id' => $this->hr_company_id,
             'hr_id' => $this->hr_id,
             'status' => $this->resource->status,
             'birthday' => $this->birthday,
