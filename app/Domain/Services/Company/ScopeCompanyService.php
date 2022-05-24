@@ -5,6 +5,7 @@ namespace App\Domain\Services\Company;
 
 use App\Domain\Models\Company;
 use App\Domain\Models\User;
+use App\Domain\Services\User\GetUserService;
 use App\Source\Services\AbstractScopeService;
 use App\Domain\Services\User\StoreUserService;
 use App\Domain\Enums\CompanyType;
@@ -27,7 +28,7 @@ class ScopeCompanyService extends AbstractScopeService
 
     protected function topHrScope(User $user): QueryBuilder|Builder|QBuilder
     {
-        $ids = StoreUserService::getTopHrTeamIds($user);
+        $ids = GetUserService::getTopHrTeamIds($user);
 
         return $this->adminScope()->where(function($query) use ($ids){
             $query->orWhere('type', CompanyType::DELIVERY)->orWhereIn('manager_id', $ids);

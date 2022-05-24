@@ -7,6 +7,7 @@ use App\Domain\Enums\Role;
 use App\Domain\Models\User;
 use App\Source\Services\AbstractGetService;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class GetUserService extends AbstractGetService
 {
@@ -38,5 +39,15 @@ class GetUserService extends AbstractGetService
             default:
                 return [];
         }
+    }
+
+    public static function getTopHrTeamIds(User $user = null): Collection
+    {
+        $user = $user ?? auth()->user();
+
+        $ids = $user->topHrHrs()->pluck('users.id');
+        $ids[] = $user->id;
+
+        return $ids;
     }
 }

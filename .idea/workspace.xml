@@ -3,65 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6dd06283-79a3-451e-93c8-b1b73cd686ac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Controllers/V1/EmployeeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Controllers/V1/EmployeeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Models/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Company.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Models/Employee.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Employee.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Models/Subscription.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Subscription.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Company/CompanyUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Company/CompanyUpdateRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Requests/Rules/CompanyRequestRules.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Rules/CompanyRequestRules.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Requests/Rules/EmployeeRequestRules.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Rules/EmployeeRequestRules.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Requests/Rules/SubscriptionRequestRules.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Rules/SubscriptionRequestRules.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Resources/Company/CompanyResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Resources/Company/CompanyResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Resources/Employee/EmployeeResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Resources/Employee/EmployeeResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Resources/Letter/LetterResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Resources/Letter/LetterResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Resources/Subscription/SubscriptionResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Resources/Subscription/SubscriptionResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Resources/Test/TestResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Resources/Test/TestResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Resources/User/UserResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Resources/User/UserResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Services/Company/CompanyStatisticService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Company/CompanyStatisticService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Services/Company/GetCompanyService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Company/GetCompanyService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Services/Employee/GetEmployeeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Employee/GetEmployeeService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Services/Employee/ScopeEmployeeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Employee/ScopeEmployeeService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Services/Letter/GetLetterService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Letter/GetLetterService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Services/Subscription/GetSubscriptionService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Subscription/GetSubscriptionService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Services/User/ScopeUserService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/User/ScopeUserService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Support/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Support/Exceptions/Handler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2022_03_10_211130_create_subscriptions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2022_03_10_211130_create_subscriptions_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js.LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js.LICENSE.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_ApplicantsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_ApplicantsView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_CompaniesView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_CompaniesView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_MailsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_MailsView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_ManagersView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_ManagersView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_StatisticsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_StatisticsView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_SubscriptionsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_SubscriptionsView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_TestsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_TestsView_vue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/abstract/Modal/Fields/IntegerInput.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/abstract/Modal/Fields/IntegerInput.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/abstract/Table/Control/Control.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/abstract/Table/Control/Control.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Modal/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Modal/Body.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Control/MainControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Control/MainControl.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Control/Wrapper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Control/Wrapper.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Row/Wrapper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Row/Wrapper.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Company/Modal/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Company/Modal/Body.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Company/Table/Control.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Company/Table/Control.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Company/Table/Row.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Company/Table/Row.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Company/Table/Wrapper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Company/Table/Wrapper.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Mail/Modal/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Mail/Modal/Body.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Mail/Table/Control.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Mail/Table/Control.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Mail/Table/HistoryRow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Mail/Table/HistoryRow.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Manager/Table/Control.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Manager/Table/Control.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Manager/Table/Row.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Manager/Table/Row.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Manager/Table/Wrapper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Manager/Table/Wrapper.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Statistics/Record.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Statistics/Record.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Subscription/Modal/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Subscription/Modal/Body.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Subscription/Table/Control.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Subscription/Table/Control.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Subscription/Table/Row.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Subscription/Table/Row.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Subscription/Table/Wrapper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Subscription/Table/Wrapper.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Test/Table/Control.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Test/Table/Control.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Test/Table/Row.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Test/Table/Row.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/store/applicant.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/applicant.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/store/company.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/company.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/store/subscription.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/subscription.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -643,7 +586,7 @@
       <workItem from="1649767812320" duration="258000" />
       <workItem from="1651608917955" duration="561000" />
       <workItem from="1652619785041" duration="12555000" />
-      <workItem from="1653160116706" duration="1272000" />
+      <workItem from="1653160116706" duration="1949000" />
     </task>
     <servers />
   </component>

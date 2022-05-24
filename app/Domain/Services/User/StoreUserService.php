@@ -15,16 +15,6 @@ use Illuminate\Support\Collection;
 
 class StoreUserService extends AbstractStoreService
 {
-    public static function getTopHrTeamIds(User $user = null): Collection
-    {
-        $user = $user ?? auth()->user();
-
-        $ids = $user->topHrHrs()->pluck('users.id');
-        $ids[] = $user->id;
-
-        return $ids;
-    }
-
     public function update(Model $model): bool
     {
         if ($model->avatar instanceof UploadedFile) {

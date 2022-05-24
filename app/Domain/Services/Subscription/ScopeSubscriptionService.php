@@ -30,7 +30,7 @@ class ScopeSubscriptionService extends AbstractScopeService
 
     protected function topHrScope(User $user): QueryBuilder|Builder|QBuilder
     {
-        $userIds = StoreUserService::getTopHrTeamIds($user);
+        $userIds = GetUserService::getTopHrTeamIds($user);
         $companyIds = Company::query()->whereIn('manager_id', $userIds)->pluck('id');
 
         return $this->adminScope()->whereIn('company_id', $companyIds);

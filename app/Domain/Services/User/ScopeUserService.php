@@ -14,7 +14,7 @@ class ScopeUserService extends AbstractScopeService
 {
     protected function topHrScope(User $user): QueryBuilder|Builder|QBuilder
     {
-        $ids = StoreUserService::getTopHrTeamIds($user);
+        $ids = GetUserService::getTopHrTeamIds($user);
 
         return $this->adminScope()->whereIn('id', $ids);
     }

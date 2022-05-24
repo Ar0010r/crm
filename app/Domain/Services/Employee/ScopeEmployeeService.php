@@ -39,7 +39,7 @@ class ScopeEmployeeService extends AbstractScopeService
 
     protected function personnelScope(User $user): QueryBuilder|Builder|QBuilder
     {
-        $companyIds = StoreCompanyService::getUserCompanyIds($user);
+        $companyIds = $user->companies()->pluck('companies.id');
 
         return $this->adminScope()
             ->whereIn('company_id', $companyIds)
@@ -48,7 +48,7 @@ class ScopeEmployeeService extends AbstractScopeService
 
     protected function topHrScope(User $user): QueryBuilder|Builder|QBuilder
     {
-        $hrIds = StoreUserService::getTopHrTeamIds($user);
+        $hrIds = GetUserService::getTopHrTeamIds($user);
 
         return $this->basicQuery
             ->whereIn('hr_id', $hrIds)

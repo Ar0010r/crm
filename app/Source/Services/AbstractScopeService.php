@@ -36,7 +36,7 @@ abstract class AbstractScopeService implements ScopeResourceInterface
 
     protected function topHrScope(User $user): QueryBuilder|Builder|QBuilder
     {
-        $hrIds = StoreUserService::getTopHrTeamIds($user);
+        $hrIds = GetUserService::getTopHrTeamIds($user);
 
         return $this->adminScope()->whereIn('hr_id', $hrIds);
     }

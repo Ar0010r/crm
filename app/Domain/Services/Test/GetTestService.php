@@ -5,7 +5,6 @@ namespace App\Domain\Services\Test;
 
 
 use App\Domain\Models\Test;
-use App\Domain\Models\User;
 use App\Source\Services\AbstractGetService;
 use Illuminate\Database\Eloquent\Model;
 
