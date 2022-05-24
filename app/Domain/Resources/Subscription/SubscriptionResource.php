@@ -2,8 +2,8 @@
 
 namespace App\Domain\Resources\Subscription;
 
+use App\Domain\Enums\Period;
 use App\Source\Resources\ModelResource;
-use Illuminate\Support\Carbon;
 
 class SubscriptionResource extends ModelResource
 {
@@ -26,10 +26,10 @@ class SubscriptionResource extends ModelResource
     private function nextPayment()
     {
         return match ($this->period) {
-            'monthly' => $this->last_payment->addMonth()->format('Y-m-d'),
-            'quarterly' => $this->last_payment->addMonths(3)->format('Y-m-d'),
-            'half-yearly' => $this->last_payment->addMonths(6)->format('Y-m-d'),
-            'yearly' => $this->last_payment->addYear()->format('Y-m-d'),
+            Period::MONTHLY => $this->last_payment->addMonth()->format('Y-m-d'),
+            Period::QUARTERLY => $this->last_payment->addMonths(3)->format('Y-m-d'),
+            Period::HALF_YEARLY => $this->last_payment->addMonths(6)->format('Y-m-d'),
+            Period::YEARLY => $this->last_payment->addYear()->format('Y-m-d'),
             default => ""
         };
     }
