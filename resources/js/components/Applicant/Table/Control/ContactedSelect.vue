@@ -4,9 +4,9 @@
         <select class="custom-select" v-model="contacted" @change="handleContacted"
                 :class="{ 'light-grey': contacted == null}">
             <option :value=null> Any</option>
-            <option value="today">Today</option>
-            <option value="yesterday">Yesterday</option>
-            <option value="2 days +">2 days +</option>
+            <option value="today">&lt 10 h</option>
+            <option value="yesterday">10 h &lt 48 h</option>
+            <option value="2 days +">&lt 48 h</option>
         </select>
     </div>
 </template>
@@ -44,11 +44,11 @@ export default {
         const setYesterday = () => {
             moment.locale('en-ca');
             let tenAgoDate = moment().subtract(10, 'hours').format('L');
-            let twentyForAgoDate = moment().subtract(24, 'hours').format('L');
+            let twentyForAgoDate = moment().subtract(48, 'hours').format('L');
 
             moment.locale('fr');
             let tenAgoTime = moment().subtract(10, 'hours').format('LTS');
-            let twentyForAgoTime = moment().subtract(24, 'hours').format('LTS');
+            let twentyForAgoTime = moment().subtract(48, 'hours').format('LTS');
 
             store.commit('applicant/setQueryParam', {'key': 'contacted_after', 'value': null})
             store.commit('applicant/setQueryParam', {'key': 'status', 'value': "Need data"})

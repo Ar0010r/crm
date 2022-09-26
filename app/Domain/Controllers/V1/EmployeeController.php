@@ -21,6 +21,7 @@ use App\Domain\Services\Employee\GetEmployeeService;
 use App\Domain\Services\Employee\StoreEmployeeService;
 use App\Domain\Enums\Race;
 use App\Domain\Enums\Status;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
@@ -82,9 +83,9 @@ class EmployeeController extends Controller
 
     public function bulkUpdate(EmployeeBulkUpdateRequest $request)
     {
-        $this->storeService->bulkUpdate($request->employees, $request->status);
+        $this->storeService->bulkUpdate($request->employees, $request->status, $request->contacted);
 
-        return new ModelResource([]);
+        return new ModelResource(['model' => true]);
     }
 
     public function destroy(Employee $employee)

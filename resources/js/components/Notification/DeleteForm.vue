@@ -14,8 +14,8 @@
                     <div id="swal2-content" class="swal2-html-container" style="display: block;" v-html="message"></div>
                 </div>
                 <div class="swal2-actions">
-                    <button type="button" class="btn btn-warning btn-lg" @click=confirmDelete>
-                        Delete
+                    <button type="button" class="btn btn-warning btn-lg" @click=confirmAction>
+                        Confirm
                     </button>
                     <button id="deleteFormClose" type="button" class="swal2-cancel btn btn-default btn-lg"
                             data-dismiss="modal"
@@ -49,7 +49,7 @@ export default {
 
         return {
             message, clearForm,
-            confirmDelete: () => {
+            confirmAction: () => {
                 emitter.emit(id)
                 document.getElementById('deleteFormClose').click();
             }

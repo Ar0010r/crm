@@ -20,6 +20,7 @@ class Subscription extends Model
         'service',
         'price',
         'last_payment',
+        'next_payment',
         'period',
         'status',
     ];
@@ -37,5 +38,10 @@ class Subscription extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d');
+    }
+
+    public function nextPayment()
+    {
+
     }
 }

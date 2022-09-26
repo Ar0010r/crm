@@ -18,6 +18,7 @@ class SubscriptionGetRequest extends AbstractGetRequest
             'service',
             'price',
             'last_payment',
+            'next_payment',
             'period'
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace App\Domain\Resources\Subscription;
 
+use App\Domain\Enums\CompanyType;
 use App\Domain\Enums\Period;
 use App\Source\Resources\ModelResource;
 use Illuminate\Support\Carbon;
@@ -17,7 +18,7 @@ class SubscriptionResource extends ModelResource
             'service' => $this->service,
             'price' => $this->price,
             'last_payment' => $this->last_payment->format('Y-m-d'),
-            'next_payment' => $this->nextPayment(),
+            'next_payment' => $this->next_payment,
             'period' => $this->period,
             'company' => $this->company,
             'status' => $this->resource->status,
@@ -25,28 +26,17 @@ class SubscriptionResource extends ModelResource
         ];
     }
 
-    private function nextPayment()
-    {
-        return match ($this->period) {
-            Period::MONTHLY => $this->last_payment->addMonth()->format('Y-m-d'),
-            Period::QUARTERLY => $this->last_payment->addMonths(3)->format('Y-m-d'),
-            Period::HALF_YEARLY => $this->last_payment->addMonths(6)->format('Y-m-d'),
-            Period::YEARLY => $this->last_payment->addYear()->format('Y-m-d'),
-            default => null
-        };
-    }
-
     private function isDelayed(): bool
     {
-        $nextPayment = $this->nextPayment();
+        $nextPayment = $this->next_payment;
 
         if(!is_null($nextPayment)) {
             $date = Carbon::parse($nextPayment);
             $now = Carbon::now();
 
-            return $date->diffInDays($now) < 3;
+            return $now->greaterThanOrEqualTo($date) ?? $date->diffInDays($now) < 3;
         }
 
-        return false;
+        return true;
     }
 }

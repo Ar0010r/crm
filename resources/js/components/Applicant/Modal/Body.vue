@@ -6,7 +6,7 @@
                :validate="validate"
                :reset="reset"
                label="name"
-               regex='^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$'
+               regex="^[a-zA-Z ,.'-]*[a-zA-Z ,.'-][a-zA-Z ,.'-]*$"
                :required=true
         />
         <Input v-model="object.email"

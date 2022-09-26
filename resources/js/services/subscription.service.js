@@ -5,6 +5,15 @@ export class SubscriptionService {
     }
 
     async get(params) {
+        if(params) {
+            params.order_by = "next_payment"
+            params.asc = true
+        } else {
+            params = {
+                'order_by' : 'next_payment',
+                'asc' : true
+            }
+        }
         let response =  await this.client.get('/api/subscription', {params});
         let data = this.setIdKeys(response.data.list);
         return {data: data, meta: response.data.meta}

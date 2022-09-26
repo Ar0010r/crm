@@ -22,7 +22,7 @@ trait EmployeeRequestRules
             'company_id' => ['nullable', 'exists:companies,id'],
             'hr_company_id' => ['nullable', 'exists:companies,id'],
             'hr_id' => ['nullable', 'exists:users,id'],
-            'name' => ['nullable', 'regex:/^[a-zA-Z ]+$/'],
+            'name' => ['nullable', "regex:/^[a-zA-Z ,.'-]+$/"],
             'avatar' => ['nullable', 'string'],
             'email' => ['nullable','email'], //'unique:employees,paypal'
             'paypal' => ['nullable','email'], //  'unique:employees,email'

@@ -16,6 +16,7 @@ export default {
         services: [
             'Email',
             'Hosting',
+            'Domain',
             'Warmup',
         ],
         periods: [

@@ -3,7 +3,7 @@
         <template v-slot:default>
             <td v-if="subscription.company">
                 {{ subscription.company.name }}
-                <span class="ion ion-ios-alarm text-danger"></span>
+                <span v-if="subscription.is_delayed" class="fas fa-clock text-danger"></span>
             </td>
             <td v-else></td>
             <td>{{ subscription.provider }}</td>

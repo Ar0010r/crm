@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Domain\Enums\Period;
 use App\Domain\Models\Employee;
+use App\Domain\Models\Subscription;
 use App\Domain\Models\User;
 use App\Domain\Enums\Role;
 use Carbon\Carbon;
@@ -22,11 +24,27 @@ class DatabaseSeeder extends Seeder
             $this->demoUsers();
         }
 
-        DB::table('personal_access_tokens')->where('tokenable_type', 'App\Models\User')
-            ->update(['tokenable_type' => User::class]);
+        Subscription::all()->whereInstanceOf(Subscription::class)
+            ->each(function (Subscription $subscription) {
+                $subscription->update([
+                    "next_payment" => $this->nextPayment($subscription)
+                ]);
+            });
+    }
 
-        DB::table('media')->where('model_type', 'App\Models\Employee')
-            ->update(['model_type' => Employee::class]);
+    public function nextPayment(Subscription $subscription)
+    {
+        if ($subscription->last_payment && is_string($subscription->period)) {
+            return match ($subscription->period) {
+                Period::MONTHLY => $subscription->last_payment->addMonth()->format('Y-m-d'),
+                Period::QUARTERLY => $subscription->last_payment->addMonths(3)->format('Y-m-d'),
+                Period::HALF_YEARLY => $subscription->last_payment->addMonths(6)->format('Y-m-d'),
+                Period::YEARLY => $subscription->last_payment->addYear()->format('Y-m-d'),
+                default => null
+            };
+        }
+
+        return null;
     }
 
     private function demoUsers()
@@ -50,24 +68,15 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 
-    private function setRandomContactDates()
+   /* private function nextPayment(Subscription $subscription)
     {
-        $dates = collect(
-            [
-                '2022-01-10 01:10:53',
-                '2022-01-09 18:10:53',
-                '2022-01-09 13:10:53',
-                '2022-01-08 13:10:53',
-                '2022-01-07 13:10:53',
-            ]
-        );
+        return match ($this->period) {
+            Period::MONTHLY => $this->last_payment->addMonth()->format('Y-m-d'),
+            Period::QUARTERLY => $this->last_payment->addMonths(3)->format('Y-m-d'),
+            Period::HALF_YEARLY => $this->last_payment->addMonths(6)->format('Y-m-d'),
+            Period::YEARLY => $this->last_payment->addYear()->format('Y-m-d'),
+            default => null
+        };
+    }*/
 
-
-        Employee::query()->whereNull('contacted')->take(500)->get()
-            ->map(function (Employee $employee) use ($dates) {
-                $employee->update(['contacted' => $dates->random()]);
-            });
-
-
-    }
 }

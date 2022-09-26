@@ -13,8 +13,9 @@ class EmployeeBulkUpdateRequest extends AbstractRequest
     public function baseRules(): array
     {
         return [
-            'employees' => ['required', 'array', new EmployeesAreEditable()],
-            'status' => 'required|string|in:' . implode(',', Status::STATUSES)
+            'employees' => ['required', 'nullable', 'array', new EmployeesAreEditable()],
+            'status' => 'nullable|string|in:' . implode(',', Status::STATUSES),
+            'contacted' => 'nullable|date',
         ];
     }
 }

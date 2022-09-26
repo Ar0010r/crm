@@ -3,11 +3,31 @@
   <component name="ChangeListManager">
     <list default="true" id="6dd06283-79a3-451e-93c8-b1b73cd686ac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Controllers/V1/EmployeeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Controllers/V1/EmployeeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Models/Subscription.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Subscription.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Employee/EmployeeBulkUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Employee/EmployeeBulkUpdateRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Subscription/SubscriptionGetRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Subscription/SubscriptionGetRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Requests/Rules/EmployeeRequestRules.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Rules/EmployeeRequestRules.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Domain/Resources/Subscription/SubscriptionResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Resources/Subscription/SubscriptionResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Services/Employee/StoreEmployeeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Employee/StoreEmployeeService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Services/Letter/StoreLetterService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Letter/StoreLetterService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Services/Subscription/StoreSubscriptionService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Subscription/StoreSubscriptionService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/System/Search/Database/RangeFilters/EmployeeRangeFilters.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/System/Search/Database/RangeFilters/EmployeeRangeFilters.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_ApplicantsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_ApplicantsView_vue.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_SubscriptionsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_SubscriptionsView_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Modal/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Modal/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Control/ContactedSelect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Control/ContactedSelect.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Control/SecondaryControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Control/SecondaryControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Row/ContactedField.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Row/ContactedField.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Notification/DeleteForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Notification/DeleteForm.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Subscription/Table/Row.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Subscription/Table/Row.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/services/applicant.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/applicant.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/services/subscription.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/subscription.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/applicant.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/applicant.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/subscription.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/subscription.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -322,110 +342,31 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
-              <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
-              <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
-              <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
-              <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
-              <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
-              <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="tables" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
-              <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="tables" type="462c0819:PsiDirectoryNode" />
-              <item name="employees" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
-              <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="tables" type="462c0819:PsiDirectoryNode" />
-              <item name="employees" type="462c0819:PsiDirectoryNode" />
-              <item name="layout" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
-              <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="tables" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="laravel-vue-3-starter" type="b2602c69:ProjectViewProjectNode" />
-              <item name="laravel-vue-3-starter" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="tables" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-              <item name="actions" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="Scope" />
+      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Applications/MAMP/htdocs/laravel-vue-3-starter&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Applications/MAMP/htdocs/laravel-vue-3-starter/resources/js/components/Applicant/Table/Control",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/Domain/Enums" />
+      <recent name="$PROJECT_DIR$/resources/js/components/Applicant/Table/Control" />
       <recent name="$PROJECT_DIR$/database/migrations" />
+      <recent name="$PROJECT_DIR$/app/Domain/Enums" />
       <recent name="$PROJECT_DIR$/app/Domain/Resources/User" />
       <recent name="$PROJECT_DIR$/app/Domain/Resources/Test" />
-      <recent name="$PROJECT_DIR$/app/Domain/Resources/Subscription" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/Domain/Resources/User" />
@@ -593,12 +534,19 @@
       <workItem from="1653845660790" duration="918000" />
       <workItem from="1655045195385" duration="72000" />
       <workItem from="1655045349588" duration="877000" />
-      <workItem from="1655561970209" duration="679000" />
+      <workItem from="1655561970209" duration="6322000" />
+      <workItem from="1655739942796" duration="1314000" />
+      <workItem from="1656763254697" duration="17000" />
+      <workItem from="1657011638141" duration="475000" />
+      <workItem from="1657280432823" duration="1030000" />
+      <workItem from="1660152928196" duration="887000" />
+      <workItem from="1662983611849" duration="511000" />
+      <workItem from="1664050225481" duration="12609000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="846713000" />
+    <option name="totallyTimeSpent" value="846730000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -611,9 +559,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2725322" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27968526" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -628,7 +575,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32891566" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.36626506" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.36626506" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -745,7 +692,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/layout/SideBar.vue">
+    <entry file="file://$PROJECT_DIR$/resources/js/components/Layout/SideBar.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="334">
           <caret line="37" column="82" selection-start-line="37" selection-start-column="82" selection-end-line="37" selection-end-column="82" />
@@ -755,7 +702,7 @@
     <entry file="file://$PROJECT_DIR$/resources/js/components/tables/companies/control/CompaniesControl.vue">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/layout/EmployeesStatusSelect.vue">
+    <entry file="file://$PROJECT_DIR$/resources/js/components/Layout/EmployeesStatusSelect.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
@@ -825,7 +772,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/layout/NavBar.vue">
+    <entry file="file://$PROJECT_DIR$/resources/js/components/Layout/NavBar.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="77" column="24" selection-start-line="77" selection-start-column="24" selection-end-line="77" selection-end-column="24" />
@@ -915,7 +862,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/layout/Pagination.vue">
+    <entry file="file://$PROJECT_DIR$/resources/js/components/Layout/Pagination.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-696" />
       </provider>

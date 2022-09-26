@@ -23,13 +23,19 @@ class StoreEmployeeService extends AbstractStoreService
         return parent::store($model);
     }
 
-    public function bulkUpdate(array $employees, string $status): bool
+    public function bulkUpdate(array $employees, ?string $status = null, $contacted = null): bool
     {
         $ids = array_map(function ($employee) {
             return $employee['id'];
         }, $employees);
 
-        return Employee::whereIn('id', $ids)->update(['status' => $status]);
+        return match (true) {
+            is_string($status) && !is_null($contacted) => Employee::whereIn('id', $ids)
+                ->update(['status' => $status, 'contacted' => $contacted]),
+            is_string($status) => Employee::whereIn('id', $ids)->update(['status' => $status]),
+            !is_null($contacted) => Employee::whereIn('id', $ids)->update(['contacted' => $contacted]),
+            default => false
+        };
     }
 
     public function bulkDestroy(array $employees): bool
@@ -55,20 +61,20 @@ class StoreEmployeeService extends AbstractStoreService
 
     public function getMedia(GetMediaRequest $request): Media
     {
-       $employee = Employee::query()->findOrFail($request->get('id'));
+        $employee = Employee::query()->findOrFail($request->get('id'));
 
-       return match ($request->get('collection')){
-           MediaCollection::AGREEMENT => $employee->agreement()->first(),
-           MediaCollection::SELFIE => $employee->selfie()->first(),
-           MediaCollection::SCAN => $employee->scan()->first(),
-           default => throw new \Exception('Unknown media collection')
-       };
+        return match ($request->get('collection')) {
+            MediaCollection::AGREEMENT => $employee->agreement()->first(),
+            MediaCollection::SELFIE => $employee->selfie()->first(),
+            MediaCollection::SCAN => $employee->scan()->first(),
+            default => throw new \Exception('Unknown media collection')
+        };
 
     }
 
     public function deleteMedia(SystemMedia $media)
     {
-        DB::transaction(function () use($media){
+        DB::transaction(function () use ($media) {
             $employee = Employee::query()->findOrFail($media->model_id);
             $employee->clearMediaCollection($media->collection_name);
             $media->deleteOrFail();

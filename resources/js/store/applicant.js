@@ -174,14 +174,14 @@ export default {
             }
         },
 
-       async bulkDelete({commit}, applicants) {
-           try {
-               await container.ApplicantService.bulkDelete(applicants);
-               applicants.forEach(applicant => commit('unset', applicant.id))
-           } catch (e) {
-               console.log(e)
-               emitter.emit('notification-error', e.response.data)
-           }
+        async bulkDelete({commit}, applicants) {
+            try {
+                await container.ApplicantService.bulkDelete(applicants);
+                applicants.forEach(applicant => commit('unset', applicant.id))
+            } catch (e) {
+                console.log(e)
+                emitter.emit('notification-error', e.response.data)
+            }
         },
 
         async bulkUpdate({commit}, {applicants, status}) {
@@ -196,8 +196,8 @@ export default {
 
                 applicants.forEach(applicant => applicant.contacted = contacted)
 
-                await container.ApplicantService.bulkUpdate(applicants, status);
-                applicants.forEach(applicant => applicant.status = status);
+                await container.ApplicantService.bulkUpdate(applicants, status, contacted);
+                if (status) applicants.forEach(applicant => applicant.status = status);
 
                 applicants.forEach(applicant => commit('set', applicant))
             } catch (e) {

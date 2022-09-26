@@ -43,8 +43,8 @@ export class ApplicantService {
         return await this.client.patch('api/employees', {'employees': employees});
     }
 
-    async bulkUpdate(employees, status) {
-        return await this.client.put('api/employees', {employees: employees, status: status});
+    async bulkUpdate(employees, status = null, contacted = null) {
+        return await this.client.put('api/employees', {employees: employees, status: status, contacted: contacted});
     }
 
     async getMedia(id, collection) {
