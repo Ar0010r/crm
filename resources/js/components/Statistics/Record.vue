@@ -1,7 +1,9 @@
 <template>
-    <h3>{{ record.head.title }}</h3>
-    <h5>Personnel: {{ record.head.personnel }} | Mails: {{ record.head.letters }} </h5>
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between pl-4 pt-4 pr-4">
+        <h3>{{ record.head.title }}</h3>
+        <h5>Personnel: {{ record.head.personnel }} | Mails: {{ record.head.letters }} </h5>
+    </div>
+    <div class="d-flex justify-content-between pl-4 pr-4">
         <table class="datatables-demo table table-striped table-bordered col-6">
             <thead>
             <tr>
@@ -9,6 +11,7 @@
                 <th class="text-left font-weight-bold">Mails</th>
                 <th class="text-left font-weight-bold">Total</th>
                 <th class="text-left font-weight-bold">Hired</th>
+                <th class="text-left font-weight-bold">Bounce</th>
                 <th class="text-left font-weight-bold">Rate</th>
             </tr>
             </thead>
@@ -26,6 +29,7 @@
                 </td>
                 <td>{{ hr.total }}</td>
                 <td>{{ hr.hired }}</td>
+                <td>{{(hr.total/hr.letters * 100).toFixed(2)}}%</td>
                 <td>{{(hr.hired/hr.letters * 100).toFixed(2)}}%</td>
             </tr>
             </tbody>

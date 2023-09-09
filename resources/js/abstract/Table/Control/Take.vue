@@ -5,9 +5,7 @@
                     v-model="vmodel"
                     @change="take"
             >
-                <option value=100>100</option>
-                <option value=200>200</option>
-                <option value=300>300</option>
+                <option v-for="value in values" :value="value">{{value}}</option>
             </select>
             records
         </label>
@@ -51,6 +49,10 @@ export default {
         vmodel: String | Number,
         getter: String,
         namespace: String,
+        values : {
+            type: Array,
+            default : [50, 100, 200, 300]
+        }
     },
 };
 </script>

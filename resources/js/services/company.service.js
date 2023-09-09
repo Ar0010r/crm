@@ -22,8 +22,10 @@ export class CompanyService {
         return await this.client.delete('/api/company/' + company.id);
     }
 
-    async statistics() {
-        return await this.client.get('api/company/statistics');
+    async conversion(params) {
+        if (params == undefined) params = {"take": 2};
+        let response = await this.client.get('api/company/statistics', {params});
+        return {data: response.data.list, meta: response.data.meta}
     }
 
     controlled(companies, profile) {
@@ -46,24 +48,24 @@ export class CompanyService {
         let hr = []
 
         Object.values(companies).forEach((company) => {
-            if(company.type == 1) {
+            if (company.type == 1) {
                 hr.push(company)
             }
         })
 
-        return  hr
+        return hr
     }
 
     delivery(companies) {
         let delivery = []
 
         Object.values(companies).forEach((company) => {
-            if(company.type == 0) {
+            if (company.type == 0) {
                 delivery.push(company)
             }
         })
 
-       return  delivery
+        return delivery
     }
 
     setIdKeys(data) {

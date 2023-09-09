@@ -2,32 +2,58 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6dd06283-79a3-451e-93c8-b1b73cd686ac" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/js/components/Analytics/StatsChartControl.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Controllers/V1/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Controllers/V1/CompanyController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Domain/Controllers/V1/EmployeeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Controllers/V1/EmployeeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Models/Subscription.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Subscription.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Employee/EmployeeBulkUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Employee/EmployeeBulkUpdateRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Subscription/SubscriptionGetRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Subscription/SubscriptionGetRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Requests/Rules/EmployeeRequestRules.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Rules/EmployeeRequestRules.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Resources/Subscription/SubscriptionResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Resources/Subscription/SubscriptionResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Controllers/V1/LetterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Controllers/V1/LetterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Enums/Status.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Enums/Status.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Models/Employee.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Employee.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Models/Letter.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Letter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Company/CompanyGetRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Concrete/Company/CompanyGetRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Requests/Rules/CompanyRequestRules.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Requests/Rules/CompanyRequestRules.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Resources/Employee/EmployeeResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Resources/Employee/EmployeeResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Services/Company/CompanyStatisticService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Company/CompanyStatisticService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Services/Company/StoreCompanyService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Company/StoreCompanyService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Services/Employee/GetEmployeeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Employee/GetEmployeeService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Domain/Services/Employee/StoreEmployeeService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Employee/StoreEmployeeService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Domain/Services/Letter/StoreLetterService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Letter/StoreLetterService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Services/Subscription/StoreSubscriptionService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Subscription/StoreSubscriptionService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/System/Search/Database/RangeFilters/EmployeeRangeFilters.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/System/Search/Database/RangeFilters/EmployeeRangeFilters.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Source/Requests/AbstractGetRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Requests/AbstractGetRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Source/Services/AbstractGetService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Services/AbstractGetService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Source/Services/Contracts/GetResourceInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Source/Services/Contracts/GetResourceInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/341.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/341.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js.LICENSE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js.LICENSE.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_ApplicantsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_ApplicantsView_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_CompaniesView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_CompaniesView_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_MailsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_MailsView_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_ManagersView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_ManagersView_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_StatisticsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_StatisticsView_vue.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_SubscriptionsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_SubscriptionsView_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_TestsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_TestsView_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/abstract/Table/Control/DatePicker.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/abstract/Table/Control/DatePicker.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/abstract/Table/Control/Take.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/abstract/Table/Control/Take.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Modal/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Modal/Body.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Control/ContactedSelect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Control/ContactedSelect.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Control/SecondaryControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Control/SecondaryControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Control/MainControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Control/MainControl.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Row/ContactedField.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Row/ContactedField.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Notification/DeleteForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Notification/DeleteForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Subscription/Table/Row.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Subscription/Table/Row.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/services/applicant.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/applicant.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/services/subscription.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/subscription.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Row/Wrapper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Row/Wrapper.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Mail/Table/History.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Mail/Table/History.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Statistics/Record.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Statistics/Record.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Statistics/Table.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Statistics/Table.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Statistics/Wrapper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Statistics/Wrapper.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/services/company.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/company.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/services/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/store/applicant.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/applicant.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/store/subscription.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/subscription.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/company.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/company.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/views/StatisticsView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/StatisticsView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,6 +214,9 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/V1/CompanyController.php" />
       </list>
     </option>
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="yfi1elub" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -350,23 +379,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Applications/MAMP/htdocs/laravel-vue-3-starter/resources/js/components/Applicant/Table/Control",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Applications/MAMP/htdocs/laravel-vue-3-starter/app/Domain/Enums&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/PhpStorm 2.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/resources/js/components/Applicant/Table/Control" />
-      <recent name="$PROJECT_DIR$/database/migrations" />
       <recent name="$PROJECT_DIR$/app/Domain/Enums" />
-      <recent name="$PROJECT_DIR$/app/Domain/Resources/User" />
-      <recent name="$PROJECT_DIR$/app/Domain/Resources/Test" />
+      <recent name="$PROJECT_DIR$/database/migrations" />
+      <recent name="$PROJECT_DIR$/app/Domain/Models" />
+      <recent name="$PROJECT_DIR$/resources/js/components/Analytics" />
+      <recent name="$PROJECT_DIR$/resources/js/abstract/Table/Control" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/Domain/Resources/User" />
@@ -541,7 +571,55 @@
       <workItem from="1657280432823" duration="1030000" />
       <workItem from="1660152928196" duration="887000" />
       <workItem from="1662983611849" duration="511000" />
-      <workItem from="1664050225481" duration="12609000" />
+      <workItem from="1664050225481" duration="13325000" />
+      <workItem from="1668170830716" duration="13337000" />
+      <workItem from="1669751415311" duration="536000" />
+      <workItem from="1671372649399" duration="530000" />
+      <workItem from="1672700176366" duration="797000" />
+      <workItem from="1672736048050" duration="160000" />
+      <workItem from="1681136929494" duration="343000" />
+      <workItem from="1681553921745" duration="4652000" />
+      <workItem from="1681928117526" duration="935000" />
+      <workItem from="1682169837381" duration="10689000" />
+      <workItem from="1682421561996" duration="1668000" />
+      <workItem from="1684406430802" duration="5886000" />
+      <workItem from="1684691207187" duration="3373000" />
+      <workItem from="1687461004712" duration="918000" />
+      <workItem from="1687554314566" duration="6139000" />
+      <workItem from="1687614122583" duration="277000" />
+      <workItem from="1687618095464" duration="440000" />
+      <workItem from="1689005190608" duration="541000" />
+      <workItem from="1689613175109" duration="146000" />
+      <workItem from="1689689932223" duration="16000" />
+      <workItem from="1689709954083" duration="306000" />
+      <workItem from="1689932984171" duration="180000" />
+      <workItem from="1689947513139" duration="2608000" />
+      <workItem from="1690098796640" duration="7000" />
+      <workItem from="1690390775631" duration="440000" />
+      <workItem from="1690394198631" duration="423000" />
+      <workItem from="1690447176522" duration="1334000" />
+      <workItem from="1690459262558" duration="32000" />
+      <workItem from="1690537430355" duration="2778000" />
+      <workItem from="1690565107919" duration="37760000" />
+      <workItem from="1690802731132" duration="130000" />
+      <workItem from="1690834486078" duration="3795000" />
+      <workItem from="1690903022522" duration="163000" />
+      <workItem from="1690910716931" duration="278000" />
+      <workItem from="1691183566364" duration="9382000" />
+      <workItem from="1691331233516" duration="94000" />
+      <workItem from="1691436879938" duration="6438000" />
+      <workItem from="1691528173065" duration="3749000" />
+      <workItem from="1691604198482" duration="1443000" />
+      <workItem from="1691951654030" duration="5662000" />
+      <workItem from="1692011933508" duration="33000" />
+      <workItem from="1692027111383" duration="15226000" />
+      <workItem from="1692122848763" duration="4076000" />
+      <workItem from="1692274430647" duration="10693000" />
+      <workItem from="1692691216857" duration="406000" />
+      <workItem from="1693337682750" duration="3477000" />
+      <workItem from="1693416282168" duration="369000" />
+      <workItem from="1693511024749" duration="1434000" />
+      <workItem from="1693830351284" duration="31000" />
     </task>
     <servers />
   </component>

@@ -4,6 +4,7 @@ use App\Domain\Controllers\V1\AuthController;
 use App\Domain\Controllers\V1\CompanyController;
 use App\Domain\Controllers\V1\EmployeeController;
 use App\Domain\Controllers\V1\LetterController;
+use App\Domain\Controllers\V1\StatisticsController;
 use App\Domain\Controllers\V1\SubscriptionController;
 use App\Domain\Controllers\V1\TestController;
 use App\Domain\Controllers\V1\UserController;
@@ -24,6 +25,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('/letter', LetterController::class);
 
     Route::group(['controller' => EmployeeController::class], function () {
+        Route::get('emails', 'emails');
         Route::post('employee/{employee}', 'upload');
         Route::post('employee/import', 'import');
         Route::patch('employees', 'bulkDestroy');
@@ -37,6 +39,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('/employee', EmployeeController::class);
     Route::apiResource('/test', TestController::class);
     Route::apiResource('/subscription', SubscriptionController::class);
+    Route::get('/statistics/daily', [StatisticsController::class, 'daily']);
+    Route::get('/statistics/total', [StatisticsController::class, 'total']);
+    Route::get('/statistics/today', [StatisticsController::class, 'today']);
 
     Route::get('/profile', [AuthController::class, 'profile']);
     Route::get('/logout', [AuthController::class, 'logout']);

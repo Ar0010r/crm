@@ -19,6 +19,8 @@ class Employee extends Model  implements HasMedia
 {
     use HasFactory, HasUuid, EmployeeRangeFilters, InteractsWithMedia, SoftDeletes;
 
+    protected $dates = ['created_at', 'updated_at', 'hired_at'];
+
     protected $fillable = [
         'id',
         'company_id',

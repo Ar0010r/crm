@@ -5,11 +5,13 @@ import test from "./test";
 import manager from "./manager";
 import subscription from "./subscription";
 import profile from "./profile";
+import conversion from "./conversion";
+import analytics from "./analytics";
 import {createStore} from 'vuex'
 
 export default createStore({
     getters: {
-        getProfileModel: state =>  state.profile.model,
+        getProfileModel: state => state.profile.model,
         getProfile: state => state.profile.profile,
 
         //getProfile: state => state.manager.profile,
@@ -40,7 +42,6 @@ export default createStore({
         getCompanies: state => state.company.data,
         getCompaniesMeta: state => state.company.meta,
         getCompanyQueryParams: state => state.company.queryParams,
-        getStatistics: state => state.company.statistics,
         getCompanyModel: state => state.company.companyModel,
         getTypes: state => state.company.types,
         getCompanyStatuses: state => state.company.statuses,
@@ -67,6 +68,44 @@ export default createStore({
         getServices: state => state.subscription.services,
         getPeriods: state => state.subscription.periods,
         getSubscriptionStatuses: state => state.subscription.statuses,
+
+        getConversion: function (state) {
+            return state.conversion.data;
+        },
+        //getConversion: state => state.conversion.data,
+        getConversionMeta: state => state.conversion.meta,
+        getConversionQueryParams: state => state.conversion.queryParams,
+
+        getDailyAnalytics: function (state) {
+            return state.analytics.data.daily;
+        },
+
+        getTotalAnalytics: function (state) {
+            return state.analytics.data.total;
+        },
+
+        getTodayAnalytics: function (state) {
+            return state.analytics.data.today;
+        },
+
+        getHrAnalytics: function (state) {
+            return state.analytics.data.hr;
+        },
+        //getTotalAnalytics: state => state.analytics.data,
+        getDailyAnalyticsQueryParams: function (state) {
+            return {
+                daily_from: state.analytics.queryParams.daily_from,
+                daily_to: state.analytics.queryParams.daily_to,
+                daily_hrs: state.analytics.queryParams.daily_hrs
+            };
+        },
+
+        getTotalAnalyticsQueryParams: function (state) {
+            return {
+                total_from: state.analytics.queryParams.total_from,
+                total_to: state.analytics.queryParams.total_to
+            };
+        },
     },
     modules: {
         profile: profile,
@@ -75,6 +114,8 @@ export default createStore({
         test: test,
         manager: manager,
         mail: mail,
-        subscription: subscription
+        subscription: subscription,
+        conversion: conversion,
+        analytics: analytics,
     }
 })

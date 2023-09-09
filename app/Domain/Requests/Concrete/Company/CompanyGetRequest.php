@@ -22,4 +22,9 @@ class CompanyGetRequest extends AbstractGetRequest
             'manager_id'
         ];
     }
+
+    protected function additionalFilters(): array
+    {
+        return ['created_from' => 'date', 'created_to' => 'date'];
+    }
 }

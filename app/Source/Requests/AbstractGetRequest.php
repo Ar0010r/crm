@@ -19,8 +19,8 @@ abstract class AbstractGetRequest extends FormRequest implements RequestInterfac
     public function queryRules(): array
     {
         return [
-            'page' => ['numeric'],
-            'take' => ['numeric'],
+            'page' => ['integer'],
+            'take' => ['integer'],
             'asc' => [],
             'order_by' => ['string', 'in:created_at,updated_at,' . implode(',', $this->orderByFields())],
             '_with' => ['nullable', 'array'],
@@ -31,7 +31,7 @@ abstract class AbstractGetRequest extends FormRequest implements RequestInterfac
 
     public function rules(): array
     {
-        return array_merge($this->baseRules(), $this->queryRules());
+        return array_merge($this->baseRules(), $this->queryRules(), $this->additionalFilters());
     }
 
     public function messages()
@@ -61,5 +61,10 @@ abstract class AbstractGetRequest extends FormRequest implements RequestInterfac
         }
 
         return parent::validationData();
+    }
+
+    protected function additionalFilters(): array
+    {
+        return [];
     }
 }

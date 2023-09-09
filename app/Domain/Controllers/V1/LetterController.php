@@ -14,7 +14,6 @@ use App\Domain\Models\Letter;
 use App\Domain\Services\Letter\GetLetterService;
 use App\Domain\Services\Letter\LetterStatisticsService;
 use App\Domain\Services\Letter\StoreLetterService;
-use Illuminate\Http\JsonResponse;
 
 class LetterController extends Controller
 {

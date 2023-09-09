@@ -2,6 +2,7 @@
 
 namespace App\Domain\Controllers\V1;
 
+use App\Domain\Requests\Concrete\Employee\GetEmailsRequest;
 use App\Domain\Resources\Employee\EmployeeCollection;
 use App\Domain\Resources\Employee\EmployeeResource;
 use App\Source\Control\Controller;
@@ -22,8 +23,11 @@ use App\Domain\Services\Employee\StoreEmployeeService;
 use App\Domain\Enums\Race;
 use App\Domain\Enums\Status;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class EmployeeController extends Controller
 {
@@ -108,8 +112,8 @@ class EmployeeController extends Controller
 
         return new ModelResource([
             'id' => $media->getKey(),
-            'url' =>  asset('storage/'.$media->getKey().'/'.$media->file_name),
-            ]);
+            'url' => asset('storage/' . $media->getKey() . '/' . $media->file_name),
+        ]);
     }
 
     public function deleteMedia(Media $media)
@@ -125,6 +129,15 @@ class EmployeeController extends Controller
             'all' => Status::ALL_STATUSES,
             'available' => Status::getAvailableRoles()
         ]);
+    }
+
+    public function emails(GetEmailsRequest $request)
+    {
+        [$fileName, $emails] = ['emails.txt', $this->getService->getEmails($request)];
+        Storage::disk('local')->put($fileName, implode(PHP_EOL, $emails->toArray()));
+        $file =  storage_path('app/' . $fileName);
+
+        return response()->download($file)->deleteFileAfterSend(true);
     }
 
     public function races()

@@ -3,9 +3,6 @@
 
 namespace App\Domain\Requests\Rules;
 
-
-use App\Domain\Rules\User\UserIdBelongsToPersonnel;
-
 trait CompanyRequestRules
 {
     public function baseRules(): array

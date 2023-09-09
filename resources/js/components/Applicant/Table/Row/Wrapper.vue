@@ -50,11 +50,11 @@
             <td>
                 <div class="d-flex align-items-center">
                     <i class="fas fa-envelope d-block d-flex align-items-center" v-if="applicant.email"></i>
-                    <p class="m-0 ml-1 p-0">{{ applicant.email }}</p>
+                    <p @click="copy(1)" class="m-0 ml-1 p-0">{{ applicant.email }}</p>
                 </div>
                 <div class="d-flex align-items-center d-flex align-items-center" v-if="applicant.paypal">
                     <i class="fab fa-paypal d-block"></i>
-                    <p class="m-0 ml-1 p-0">{{ applicant.paypal }}</p>
+                    <p @click="copy(2)" class="m-0 ml-1 p-0">{{ applicant.paypal }}</p>
                 </div>
                 <div class="d-flex mt-2 align-items-center" v-if="applicant.phone_1 || applicant.phone_2">
                     <i class="fas fa-phone-volume d-block"></i>
@@ -75,6 +75,7 @@
                               :update-on-select='true'
                 />
                 <ContactedField :applicant="applicant"/>
+                <HiredAtField :applicant="applicant"/>
             </td>
         </template>
         <template v-slot:actions>
@@ -101,6 +102,7 @@ import ContactedButton from './ContactedButton';
 import UploadButton from './UploadButton';
 import StatusSelect from './StatusSelect';
 import ContactedField from './ContactedField';
+import HiredAtField from './HiredAtField';
 import {computed, inject} from "vue";
 import {useStore} from "vuex";
 
@@ -117,6 +119,22 @@ export default {
                     collection: collection,
                 })
             },
+            copy: function(type) {
+                let contact = type == 1 ? 'email' : 'paypal';
+                let value = type == 1 ? props.applicant.email : props.applicant.paypal;
+                if (!value) return;
+
+
+                const tempTextArea = document.createElement('textarea');
+                tempTextArea.value = value;
+                document.body.appendChild(tempTextArea);
+                tempTextArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempTextArea);
+
+                store.dispatch('applicant/update', {...props.applicant})
+                emitter.emit('notification-success',  contact + " is copied to clipboard")
+            },
             canDelete: computed(() => {
                 return store.getters.getProfile.role === 'personnel'
             }),
@@ -130,7 +148,8 @@ export default {
         UploadButton,
         EditButton,
         ContactedField,
-        StatusSelect
+        StatusSelect,
+        HiredAtField,
     }
 };
 </script>

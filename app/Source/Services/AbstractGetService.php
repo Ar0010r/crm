@@ -54,15 +54,19 @@ abstract class AbstractGetService implements GetResourceInterface
         $this->model = $this->getModel();
     }
 
-    public function get(AbstractGetRequest $request): LengthAwarePaginator
+    public function buildQuery(Request $request): AbstractGetService
     {
         $user = $request->user() ?? auth()->user();
         return $this
             ->setSearchRequest($request)
             ->setBaseQuery($user)
             ->applyFilters()
-            ->applySearch()
-            ->paginate();
+            ->applySearch();
+    }
+
+    public function get(Request $request): LengthAwarePaginator
+    {
+        return $this->buildQuery($request)->paginate();
     }
 
     protected function setSearchRequest(Request $request): AbstractGetService
@@ -136,7 +140,7 @@ abstract class AbstractGetService implements GetResourceInterface
         $asc = (bool)$this->request->get('asc', false);
         $this->query = $asc ? $this->query->orderBy($sortBy) : $this->query->orderByDesc($sortBy);
 
-        return $this->query->paginate(perPage: $take,page: $page);
+        return $this->query->paginate(perPage: $take, page: $page);
         //return $this->query->paginate($this->request->get('take'), $select, 'page', $this->request['page']);
     }
 
@@ -146,4 +150,9 @@ abstract class AbstractGetService implements GetResourceInterface
     }
 
     abstract protected function getModel(): Model;
+
+    public function getQuery(): QueryBuilder
+    {
+        return $this->query;
+    }
 }

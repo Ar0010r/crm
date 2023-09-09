@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 import Store from "./store";
 import {container} from './services'
 import mitt from 'mitt';
+import '@vuepic/vue-datepicker/dist/main.css'
 
 export const emitter = mitt();
 

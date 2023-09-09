@@ -11,7 +11,8 @@
             v-if="!profileIsPersonnel"
             title="Import"
             event="file-input-form"
-            target="#fileInputForm"/>
+            target="#fileInputForm"
+        />
 
         <Select title="Delivery company"
                 :vmodel=filters.company_id

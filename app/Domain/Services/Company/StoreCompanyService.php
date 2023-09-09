@@ -4,7 +4,6 @@
 namespace App\Domain\Services\Company;
 
 use App\Domain\Models\Company;
-use App\Domain\Models\User;
 use App\Source\Services\AbstractStoreService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;

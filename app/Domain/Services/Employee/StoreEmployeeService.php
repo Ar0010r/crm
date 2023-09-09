@@ -3,6 +3,8 @@
 
 namespace App\Domain\Services\Employee;
 
+use App\Domain\Enums\Action;
+use App\Domain\Models\LeadLog;
 use App\Domain\Requests\Concrete\Employee\GetMediaRequest;
 use App\Domain\Requests\Concrete\Employee\UploadFileRequest;
 use App\Domain\Models\Employee;
@@ -10,6 +12,7 @@ use App\Source\Services\AbstractStoreService;
 use App\Domain\Enums\Status;
 use App\System\Media\Media as SystemMedia;
 use App\System\Media\MediaCollection;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -21,6 +24,23 @@ class StoreEmployeeService extends AbstractStoreService
         $model->status = Status::NEED_DATA;
         $model->hr_id = $model->hr_id ?? auth()->user()->getAuthIdentifier();
         return parent::store($model);
+    }
+
+    public function update(Model $model): bool
+    {
+        $oneDirty = count($model->getDirty()) == 1;
+        $contactedDirty = collect($model->getDirty())->has('contacted_at');
+        $justHired = is_null($model->hired_at) && $model->status == Status::READY;
+        $model->hired_at = $justHired ? Carbon::now() : $model->hired_at;
+        $log = LeadLog::make([
+            'employee_id' => $model->getKey(),
+            'action' => $contactedDirty && $oneDirty ? Action::EMAIL : Action::UPDATE
+        ]);
+
+        DB::transaction(fn () => $log->save() && parent::update($model));
+
+
+        return true;
     }
 
     public function bulkUpdate(array $employees, ?string $status = null, $contacted = null): bool

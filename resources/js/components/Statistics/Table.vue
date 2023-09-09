@@ -1,22 +1,36 @@
 <template>
-    <Record v-for="record in records" :key="record.head.period" :record="record"/>
+    <div class="bg-white p-2">
+        <Record v-for="record in data" :key="record.head.period" :record="record"/>
+    </div>
 </template>
 
+<!--<template>
+    <Control/>
+    <div class="bg-white p-2">
+        <Record v-for="record in data" :key="record.head.period" :record="record"/>
+    </div>
+    <Pagination namespace="conversion" :meta="meta" getter="getConversionQueryParams"/>
+</template>-->
+
 <script>
+import Control from './Control.vue';
 import Record from './Record.vue';
+import Pagination from '../../abstract/Table/Control/Pagination';
 import {computed} from 'vue';
 import {useStore} from 'vuex';
 
 export default {
     setup() {
         const store = useStore();
-
         return {
-            records: computed(() => store.getters.getStatistics),
+            data: computed(() => store.getters.getConversion),
+            meta: computed(() => store.getters.getConversionMeta),
         }
     },
-    components : {
-        Record
+    components: {
+        Record,
+        Control,
+        Pagination
     }
 };
 </script>

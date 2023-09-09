@@ -1,46 +1,50 @@
 <template>
-    <div class="container-fluid flex-grow-1 container-p-y">
-        <h4 class="font-weight-bold py-3 mb-4">
-            Statistics
-        </h4>
-        <Table />
-    </div>
+    <Table :from="meta.from" :to="meta.to" :total="meta.total">
+        <template v-slot:take>
+            <Take getter="getConversionQueryParams" namespace="conversion" :vmodel="params.take" :values="take"></Take>
+        </template>
+        <template v-slot:search>
+            <Search getter="getConversionQueryParams" namespace="conversion" :vmodel="params.search_term"></Search>
+        </template>
+        <template v-slot:body>
+            <tbody class="p-3">
+            <Record v-for="record in records" :record="record"/>
+            </tbody>
+        </template>
+        <template v-slot:pagination>
+            <Pagination namespace="conversion" :meta="meta" getter="getConversionQueryParams"/>
+        </template>
+    </Table>
 </template>
 
 <script>
-import Table from './Table.vue';
-import {computed, inject, onBeforeUnmount, ref} from 'vue';
-import {useStore} from 'vuex';
+import Table from '../../abstract/Table/Wrapper';
+import Pagination from '../../abstract/Table/Control/Pagination';
+import Take from '../../abstract/Table/Control/Take';
+import Search from '../../abstract/Table/Control/Search';
+import Record from './Record';
+import {computed} from "vue";
+import {useStore} from "vuex";
 
 export default {
     setup() {
-        const emitter = inject("emitter");
         const store = useStore();
-        let layout = ref(0)
-
-        const setTable = (value) => layout.value = value;
-
-        emitter.on('set-statistics-view', setTable);
-        onBeforeUnmount(() => emitter.off('set-statistics-view', setTable));
-
         return {
-            layout,
-            records: computed(() => store.getters.getMonthlyStatistics),
-            profileIsAdmin: computed(() => {
-                return store.getters.getProfile.role === 'admin'
-            }),
+            records: computed(() => store.getters.getConversion),
+            meta: computed(() => store.getters.getConversionMeta),
+            params: computed(() => store.getters.getConversionQueryParams),
+            take: [2, 5, 10],
+
 
         }
     },
 
     components: {
         Table,
+        Pagination,
+        Take,
+        Record,
+        Search,
     }
 };
 </script>
-
-<style>
-p {
-    margin: 0;
-}
-</style>

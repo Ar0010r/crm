@@ -70,21 +70,15 @@
                label="zip"
                regex="^\d{5}(-\d{4})?$"
         />
-        <Input v-model="object.phone_1"
-               :vmodel="object.phone_1"
+        <Phone v-model="object.phone_1"
                :validate="validate"
                :reset="reset"
                label="phone 1"
-               placeholder="xxx-xxx-xxxx"
-               regex="^\d{3}-\d{3}-\d{4}$"
         />
-        <Input v-model="object.phone_2"
-               :vmodel="object.phone_2"
+        <Phone v-model="object.phone_2"
                :validate="validate"
                :reset="reset"
                label="phone 2"
-               placeholder="xxx-xxx-xxxx"
-               regex="^\d{3}-\d{3}-\d{4}$"
         />
         <Input v-model="object.birthday"
                :vmodel="object.birthday"
@@ -112,6 +106,7 @@
 <script>
 import Select from '../../../abstract/Modal/Fields/Select.vue';
 import Input from '../../../abstract/Modal/Fields/Input.vue';
+import Phone from '../../../abstract/Modal/Fields/PhoneInput.vue';
 import Checkbox from '../../../abstract/Modal/Fields/Checkbox.vue';
 import StateInput from '../../../abstract/Modal/Fields/SpecialValuesInput.vue';
 import {useStore} from 'vuex';
@@ -142,6 +137,7 @@ export default {
         StateInput,
         Checkbox,
         Input,
+        Phone,
     }
 };
 </script>

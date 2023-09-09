@@ -15,7 +15,6 @@
             return {
                 contacted: computed(() => {
                     let response = {'style' : "text-danger", 'label' : "2 days +"};
-                    console.log(moment().toDate())
                     let hours = moment().diff(props.applicant.contacted, 'hours');
 
                     if(hours <= 1) {

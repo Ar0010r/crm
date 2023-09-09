@@ -35,4 +35,11 @@ class Letter extends Model
         return $this->hasOne(Company::class, 'id', 'company_id')
             ->select(['companies.id', 'companies.name']);
     }
+
+    public function getTotal()
+    {
+        return $this->google + $this->outlook + $this->yahoo + $this->other;
+    }
+
+
 }

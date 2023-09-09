@@ -43,6 +43,7 @@ export default {
             zip: null,
             pickup: null,
             contacted: null,
+            hired_at: null,
         }
     },
     mutations: {
@@ -158,8 +159,10 @@ export default {
 
         async updateStatus({commit, dispatch}, model) {
             try {
-                await container.ApplicantService.update(model);
-                commit('updateStatus', model);
+              /*  await container.ApplicantService.update(model);
+                commit('updateStatus', model);*/
+                let response = await container.ApplicantService.update(model);
+                commit('set', response.data.model);
             } catch (e) {
                 console.log(e)
                 emitter.emit('notification-error', e.response.data)

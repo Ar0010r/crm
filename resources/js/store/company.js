@@ -9,7 +9,6 @@ export default {
         hr: {},
         delivery: {},
         meta: {from: 0, to: 0, total: 0},
-        statistics: {},
         queryParams: {
             manager_id: null,
             type: null,
@@ -75,12 +74,6 @@ export default {
         setMeta(state, meta) {
             state.meta = meta;
         },
-        sortTypes(state, companies) {
-
-        },
-        setStatistics(state, statistics) {
-            state.statistics = statistics;
-        },
         set(state, company) {
             let key = company.id;
             if (state.data[key]) {
@@ -98,7 +91,7 @@ export default {
         },
     },
     actions: {
-        async get({commit, roo}, params) {
+        async get({commit}, params) {
             try {
                 let response = await container.CompanyService.get(params);
                 commit('setData', response.data);
@@ -147,16 +140,6 @@ export default {
             } else {
                 emitter.emit('notification-error', e.response.data)
             }
-        },
-        async statistics({commit}, params) {
-            try {
-                let statistics = await container.CompanyService.statistics();
-
-                commit('setStatistics', statistics.data.list);
-            } catch (e) {
-                emitter.emit('notification-error', e.response.data)
-                if (e.response.status === 401) container.AuthService.logout()
-            }
-        },
+        }
     },
 }

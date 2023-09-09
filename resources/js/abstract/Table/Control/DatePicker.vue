@@ -1,8 +1,7 @@
 <template>
-    <div class="col-md mb-4">
+    <div :class="classes">
         <label class="form-label">{{ title }}</label>
-        <Datepicker :format="format" placeholder="Any" :modelValue="vmodel" @update:modelValue="setDate">
-        </Datepicker>
+        <Datepicker :format="format" :placeholder="placeholder" :modelValue="vmodel" @update:modelValue="setDate"/>
     </div>
 </template>
 
@@ -16,7 +15,15 @@ export default {
         title: String,
         vmodel: String,
         commit: String,
-        param: String
+        param: String,
+        classes: {
+            type: String,
+            default: 'col-md mb-4'
+        },
+        placeholder: {
+            type: String,
+            default: 'Any'
+        }
     },
     components: {Datepicker},
     setup(props) {

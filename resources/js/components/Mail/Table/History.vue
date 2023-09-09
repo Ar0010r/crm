@@ -1,7 +1,7 @@
 <template>
     <Table :from="meta.from" :to="meta.to" :total="meta.total">
         <template v-slot:take>
-            <Take getter="getMailQueryParams" namespace="mail" :vmodel="params.take"></Take>
+            <Take getter="getMailQueryParams" namespace="mail" :vmodel="params.take" :values="[50, 100, 200]"></Take>
         </template>
         <template v-slot:search>
             <Search getter="getMailQueryParams" namespace="mail" :vmodel="params.search_term"></Search>

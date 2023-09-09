@@ -13,9 +13,6 @@ use App\Domain\Models\Company;
 use App\Domain\Services\Company\CompanyStatisticService;
 use App\Domain\Services\Company\GetCompanyService;
 use App\Domain\Services\Company\StoreCompanyService;
-use Illuminate\Database\QueryException;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 
 class CompanyController extends Controller
 {
@@ -63,9 +60,9 @@ class CompanyController extends Controller
         return new CompanyResource($company);
     }
 
-    public function statistics()
+    public function statistics(CompanyGetRequest $request)
     {
-        $data = $this->statisticService->get();
+        $data = $this->statisticService->get($request);
 
         return new ListResource($data);
     }

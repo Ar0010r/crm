@@ -3,6 +3,7 @@
 namespace App\Domain\Resources\Employee;
 
 use App\Source\Resources\ModelResource;
+use DateTimeInterface;
 
 class EmployeeResource extends ModelResource
 {
@@ -29,6 +30,7 @@ class EmployeeResource extends ModelResource
             'race' => $this->race,
             'contacted' => $this->contacted,
             'created_at'=> $this->created_at->format('Y-m-d'),
+            'hired_at'=> $this->hired_at instanceof DateTimeInterface ? $this->hired_at->format('Y-m-d'): null,
 
             'hr' => $this->hr,
             'company' => $this->company,
