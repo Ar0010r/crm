@@ -108,6 +108,14 @@ export default {
                 Object.values(addedStats).forEach(i => total += i)
 
                 return total;
+            }),
+            index: computed(function () {
+                let value = data.value ?? {};
+                let addedStats = value.index ?? {};
+                let total = 0;
+                Object.values(addedStats).forEach(i => total += i)
+
+                return total;
             })
 
         }

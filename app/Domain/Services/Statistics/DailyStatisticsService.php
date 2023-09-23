@@ -3,6 +3,7 @@
 namespace App\Domain\Services\Statistics;
 
 use App\Domain\Models\Employee;
+use App\Domain\Models\Letter;
 use App\Domain\Models\MailLog;
 use App\Domain\Models\User;
 use App\System\Shared\DateService;
@@ -29,6 +30,35 @@ class DailyStatisticsService
             ->selectRaw('DATE(hired_at) AS day, COUNT(*) AS count')
             ->when(is_string($to), fn(Builder $v) => $v->where('hired_at', '<=', $to))
             ->when(is_string($from), fn(Builder $v) => $v->where('hired_at', '>=', $from))
+            ->whereIn('hr_id', $ids->toArray())
+            ->groupBy(['day'])->toBase()->get()
+            ->mapToDictionary(fn($v) => [$v->day => (array)$v])
+            ->toArray();
+
+        /*   $q = "SELECT DATE(created_at) AS day,SUM(processed) AS sum, wave
+                   FROM mail_logs
+                   WHERE created_at >= '$from' AND created_at <= '$to'
+                   and hr_id in ('$ids')
+                   GROUP BY day, wave;";*/
+
+    }
+
+    public static function relativeHiredStats(?\DateTimeInterface $from, ?\DateTimeInterface $to, Collection $staff)
+    {
+        $to = $to?->format('Y-m-d h:m:s');
+        $from = $from?->format('Y-m-d h:m:s');
+        $ids = $staff->map(fn($x) => match (true) {
+            $x instanceof User => $x->getKey(),
+            Str::isUuid($x) => $x,
+            default => null,
+        })->whereNotNull()/*->join("', '")*/
+        ;
+
+        return Employee::query()
+            ->selectRaw('DATE(created_at) AS day, COUNT(*) AS count')
+            ->when(is_string($to), fn(Builder $v) => $v->where('created_at', '<=', $to))
+            ->when(is_string($from), fn(Builder $v) => $v->where('created_at', '>=', $from))
+            ->whereNotNull('hired_at')
             ->whereIn('hr_id', $ids->toArray())
             ->groupBy(['day'])->toBase()->get()
             ->mapToDictionary(fn($v) => [$v->day => (array)$v])
@@ -95,6 +125,30 @@ class DailyStatisticsService
 
     }
 
+    public static function totalMailStats(?\DateTimeInterface $from, ?\DateTimeInterface $to, Collection $staff)
+    {
+        $to = $to?->format('Y-m-d');
+        //$to = $to->format('Y-m-d h:m:s');
+        $from = $from?->format('Y-m-d');
+        //$from = $from->format('Y-m-d h:m:s');
+        $ids = $staff->map(fn($x) => match (true) {
+            $x instanceof User => $x->getKey(),
+            Str::isUuid($x) => $x,
+            default => null,
+        })->whereNotNull();
+
+        return Letter::query()->selectRaw('DATE(received_at) AS day, SUM(total) AS total')
+            ->when(is_string($to), fn(Builder $v) => $v->where('received_at', '<=', $to))
+            ->when(is_string($from), fn(Builder $v) => $v->where('received_at', '>=', $from))
+            ->whereIn('hr_id', $ids->toArray())
+            ->groupBy('day')->toBase()->get()
+            ->mapToDictionary(fn($v) => [$v->day => (int)$v->total])
+            ->map(fn($x) => $x[0] ?? 0)
+            ->toArray();
+            //->mapToDictionary(fn($v) => [$v->day => (int)$v->total])->toArray();
+
+    }
+
     public static function calculateBounce(Collection $mail, Collection $added)
     {
         $days = array_merge(array_keys($mail->toArray()), array_keys($added->toArray()));
@@ -117,11 +171,29 @@ class DailyStatisticsService
 
     }
 
+    public static function calculateConversion(Collection $mail, Collection $hired)
+    {
+        $days = array_merge(array_keys($mail->toArray()), array_keys($hired->toArray()));
+        //$days = ;
+
+        return collect($days)->unique()->mapToDictionary(function ($day) use ($hired, $mail) {
+            $dayHired = $hired->get($day, 0);
+            $totalMail = $mail->get($day,0);
+            $isValid = is_numeric($dayHired) && is_numeric($totalMail) && $totalMail > 0;
+            $result = $isValid ? ($dayHired / $totalMail) * 100 : null;
+
+            return [$day => is_numeric($result) ? round($result, 5) : null];
+        })->map(fn($v) => is_array($v) ? ($v[0] ?? 0) : $v);
+
+    }
+
     public static function total(?\DateTimeInterface $from, ?\DateTimeInterface $to, Collection $staff): array
     {
         $hired = collect(self::hiredStats($from, $to, $staff));
+        //$hired = collect(self::relativeHiredStats($from, $to, $staff));
         $added = collect(self::addedStats($from, $to, $staff));
         $mail = collect(self::mailStats($from, $to, $staff));
+        $totalMail = collect(self::totalMailStats($from, $to, $staff));
         //dd(DB::getQueryLog());
 
         $days = DateService::getDays($from, $to ?? Carbon::now());
@@ -139,8 +211,12 @@ class DailyStatisticsService
             }*/
             $yesterday = $yesterday->format('Y-m-d');
             $data['days'][] = $day;
-            $default = /*Carbon::parse($day)->isWeekend() ? null :*/
-                0;
+            $default = /*Carbon::parse($day)->isWeekend() ? null :*/0;
+
+            $data['total_mails'] = $data['total_mails'] ?? [];
+            $data['total_mails'][$day] = $totalMail->get($day, 0);
+
+            $data['total_mails'][$day] += $data['total_mails'][$yesterday] ?? 0;
 
             foreach (['sent_1' => 1, 'sent_2' => 2/*, 'sent_3' => 3*/] as $key => $wave) {
                 $value = $mail->has($day) ? collect($mail->get($day)) : collect([]);
@@ -166,9 +242,12 @@ class DailyStatisticsService
             //$data['new'][$day] = $value->get('count', $default);
             $data['new'][$day] = $value->get('count', $default) + ($data['new'][$yesterday] ?? 0);
             $data['bounce'] = self::calculateBounce(collect($data['total']), collect($data['new']));
+            $data['index'] = self::calculateConversion(collect($data['total_mails']), collect($data['hired']));
+            $data['total_bounce'] = self::calculateConversion(collect($data['total_mails']), collect($data['new']));
+            $data['total_conversion'] = self::calculateConversion(collect($data['new']), collect($data['hired']));
         }
 
-        foreach (['bounce', 'days', 'hired', 'new', 'sent_1', 'sent_2', 'total'] as $group) {
+        foreach (['bounce', 'days', 'hired', 'new', 'sent_1', 'sent_2', 'total', 'index', 'total_bounce', 'total_conversion'] as $group) {
             foreach ($data[$group] as $date => $value) {
                 if (Carbon::parse($date)->isWeekend()) {
                     unset($data[$group][$date]);

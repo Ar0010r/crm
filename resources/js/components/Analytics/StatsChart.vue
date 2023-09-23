@@ -92,6 +92,39 @@ export default {
                             cubicInterpolationMode: 'monotone',
                             tension: 0.8,
                             order: 1
+                        },
+                        {
+                            label: 'index',
+                            data: data.value.index,
+                            borderColor: 'rgb(36,44,49)',
+                            backgroundColor: 'rgb(36,44,49)',
+                            fill: false,
+                            cubicInterpolationMode: 'monotone',
+                            tension: 0.8,
+                            order: 1,
+                            radius: 1
+                        },
+                        {
+                            label: 'total_bounce',
+                            data: data.value.total_bounce,
+                            borderColor: 'rgb(220,157,120)',
+                            backgroundColor: 'rgb(220,157,120)',
+                            fill: false,
+                            cubicInterpolationMode: 'monotone',
+                            tension: 0.8,
+                            order: 1,
+                            radius: 1
+                        },
+                        {
+                            label: 'total_conversion',
+                            data: data.value.total_conversion,
+                            borderColor: 'rgb(171,81,85)',
+                            backgroundColor: 'rgb(171,81,85)',
+                            fill: false,
+                            cubicInterpolationMode: 'monotone',
+                            tension: 0.8,
+                            order: 1,
+                            radius: 1
                         }
                     ]
                 }
