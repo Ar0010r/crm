@@ -27,7 +27,6 @@ export default {
         const filters = computed(() => store.getters.getTotalAnalyticsQueryParams);
 
         watch(() => filters.value, (second, first) => {
-            console.log('watch', 111111);
             store.dispatch("analytics/getTotal", second);
         },{ deep: true });
 

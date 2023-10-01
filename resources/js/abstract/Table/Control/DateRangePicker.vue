@@ -19,7 +19,6 @@ export default {
         const format = (dates) => {
 
             //let r = "Date range : "
-            console.log("dates", dates.value);
             let r = ""
             dates.forEach(function (datetime){
                 let day = datetime.getDay();
@@ -31,8 +30,6 @@ export default {
 
                // r = r === "" ? `${day}-${month}-${year}` : r + ` -- ${day}-${month}-${year}`;
                 r += `${day}-${month}-${year} `;
-
-                console.log(123456, r);
             });
 
             return "Date range : " + r;

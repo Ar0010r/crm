@@ -80,6 +80,10 @@ export default createStore({
             return state.analytics.data.daily;
         },
 
+        getIndexAnalytics: function (state) {
+            return state.analytics.data.indexes;
+        },
+
         getTotalAnalytics: function (state) {
             return state.analytics.data.total;
         },
@@ -97,6 +101,14 @@ export default createStore({
                 daily_from: state.analytics.queryParams.daily_from,
                 daily_to: state.analytics.queryParams.daily_to,
                 daily_hrs: state.analytics.queryParams.daily_hrs
+            };
+        },
+
+        getDailyIndexQueryParams: function (state) {
+            return {
+                from: state.analytics.queryParams.index_from,
+                to: state.analytics.queryParams.index_to,
+                hrs: state.analytics.queryParams.index_hrs
             };
         },
 

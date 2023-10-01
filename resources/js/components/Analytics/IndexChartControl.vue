@@ -9,16 +9,16 @@
         />
         <DatePicker
             classes="col-md d-flex align-content-center"
-            :vmodel=filters.daily_from
-            param="daily_from"
+            :vmodel=filters.from
+            param="index_from"
             commit="analytics/setQueryParam"
             placeholder="From"
             style="width: 30%; min-height: 1.5rem"
         />
         <DatePicker
             classes="col-md d-flex align-content-center"
-            :vmodel=filters.daily_to
-            param="daily_to"
+            :vmodel=filters.to
+            param="index_to"
             commit="analytics/setQueryParam"
             placeholder="To"
             style="width: 30%"
@@ -38,23 +38,23 @@ export default {
     setup() {
         const store = useStore();
         //const filters = computed(() => store.getters[filters]);
-        const filters = computed(() => store.getters.getDailyAnalyticsQueryParams);
+        const filters = computed(() => store.getters.getDailyIndexQueryParams);
         const hrs = computed(() => store.getters.getHrs);
         const multi = ref([]);
 
         watch(() => filters.value, (second, first) => {
             let params = {};
-            if (second.daily_hrs) params.hrs = second.daily_hrs;
-            if (second.daily_from) params.from = second.daily_from;
-            if (second.daily_to) params.to = second.daily_to;
+            if (second.hrs) params.hrs = second.hrs;
+            if (second.from) params.from = second.from;
+            if (second.to) params.to = second.to;
 
             //store.dispatch(props.dispatch, params);
-            store.dispatch("analytics/getDaily", params);
+            store.dispatch("analytics/getIndex", params);
         }, {deep: true});
 
         watch(() => multi.value, (second, first) => {
-            //store.commit(props.commit, {'key': 'daily_hrs', 'value': second})
-            store.commit('analytics/setQueryParam', {'key': 'daily_hrs', 'value': second})
+            //store.commit(props.commit, {'key': 'index_hrs', 'value': second})
+            store.commit('analytics/setQueryParam', {'key': 'index_hrs', 'value': second})
         }, {deep: true});
 
         return {

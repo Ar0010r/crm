@@ -1,6 +1,6 @@
 <template>
     <h6 class="card-header with-elements justify-content-between">
-        <div class="card-header-title">Daily</div>
+        <div class="card-header-title">Index</div>
         <div style="width: 60%" class="d-flex align-content-center">
             <Control/>
         </div>
@@ -9,7 +9,7 @@
         <div class="col-md-9 col-lg-12 col-xl-9">
             <div class="card-body">
                 <div style="height: 24rem">
-                    <StatsChart/>
+                    <Chart/>
                     <!--                            <canvas id="statistics-chart-1"></canvas>-->
                 </div>
             </div>
@@ -55,16 +55,16 @@
 </template>
 
 <script>
-//import StatsChart from "./IndexChart";
-import StatsChart from "./StatsChart";
-import Control from "./StatsChartControl";
+import Chart from "./IndexChart";
+//import Chart from "./Chart";
+import Control from "./IndexChartControl";
 import {ref, computed} from "vue";
 
 import {useStore} from "vuex";
 
 export default {
-    name: "StatsChartBlock",
-    components: {StatsChart, Control},
+    name: "ChartBlock",
+    components: {Chart, Control},
     setup() {
 
         const store = useStore();

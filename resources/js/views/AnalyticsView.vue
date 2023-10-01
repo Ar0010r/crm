@@ -73,12 +73,9 @@
         </div>-->
         <!-- / Counters -->
 
-        <!-- Statistics -->
         <div class="card mb-4">
            <StatsChart/>
         </div>
-        <!-- / Statistics -->
-
         <div class="row">
             <div class="col-md-6">
 
@@ -153,6 +150,9 @@
 
             </div>
         </div>
+        <div class="card mb-4">
+            <IndexChart/>
+        </div>
     </div>
 </template>
 
@@ -160,6 +160,7 @@
 import StatisticsTableBundle from '../components/Statistics/Content';
 import {useStore} from 'vuex';
 import StatsChart from "../components/Analytics/StatsChartBlock";
+import IndexChart from "../components/Analytics/IndexChartBlock";
 import Control from "../components/Analytics/StatsChartControl";
 import {computed} from "vue";
 import StatsCounters from "../components/Analytics/StatsCounters";
@@ -171,6 +172,7 @@ export default {
     setup() {
         let store = useStore();
         let noDailyAnalytics = Object.keys(store.getters.getDailyAnalytics).length === 0;
+        let noIndexAnalytics = Object.keys(store.getters.getIndexAnalytics).length === 0;
         let noHrAnalytics = Object.keys(store.getters.getHrAnalytics).length === 0;
         let noManagers = Object.keys(store.getters.getManagers).length === 0;
         const today = new Date();
@@ -185,12 +187,15 @@ export default {
 // Format the date as "YYYY-MM-DD"
         const formattedLastWeekStartDate = `${lastWeekStartDate.getFullYear()}-${(lastWeekStartDate.getMonth() + 1).toString().padStart(2, '0')}-${lastWeekStartDate.getDate().toString().padStart(2, '0')}`;
         const formattedHalfYear = `${halfYear.getFullYear()}-${(halfYear.getMonth() + 1).toString().padStart(2, '0')}-${halfYear.getDate().toString().padStart(2, '0')}`;
+        const formattedStartYear = `${halfYear.getFullYear()}-01-01`;
 
         store.dispatch('analytics/getToday');
         store.commit('analytics/setQueryParam', {'key': 'daily_from', 'value': formattedLastWeekStartDate})
-        store.commit('analytics/setQueryParam', {'key': 'total_from', 'value': formattedHalfYear})
+        store.commit('analytics/setQueryParam', {'key': 'total_from', 'value': formattedStartYear})
+        store.commit('analytics/setQueryParam', {'key': 'index_from', 'value': formattedStartYear})
         if (noDailyAnalytics) store.dispatch('analytics/getDaily', {from:formattedLastWeekStartDate});
-        if (noHrAnalytics) store.dispatch('analytics/getTotal', {total_from:formattedHalfYear});
+        if (noHrAnalytics) store.dispatch('analytics/getTotal', {from:formattedStartYear});
+        if (noIndexAnalytics) store.dispatch('analytics/getIndex', {from:formattedStartYear});
         if (noManagers) store.dispatch('manager/get');
 
         return {
@@ -206,6 +211,7 @@ export default {
         StatsCounters,
         StatsChart,
         Control,
+        IndexChart
     }
 };
 </script>

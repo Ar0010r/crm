@@ -22090,6 +22090,38 @@ var AnalyticsService = /*#__PURE__*/function () {
 
       return getToday;
     }()
+  }, {
+    key: "getIndex",
+    value: function () {
+      var _getIndex = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(params) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return this.client.get('/api/statistics/index', {
+                  params: params
+                });
+
+              case 2:
+                response = _context4.sent;
+                return _context4.abrupt("return", response.data.model);
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function getIndex(_x4) {
+        return _getIndex.apply(this, arguments);
+      }
+
+      return getIndex;
+    }()
   }]);
 
   return AnalyticsService;
@@ -23827,7 +23859,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       daily: [],
       total: [],
       hr: [],
-      today: []
+      today: [],
+      indexes: []
     },
     hr: {},
     meta: {
@@ -23840,22 +23873,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       daily_to: null,
       daily_hrs: [],
       total_from: null,
-      total_to: null
+      total_to: null,
+      index_from: null,
+      index_to: null,
+      index_hrs: []
     }
   },
   mutations: {
     setQueryParam: function setQueryParam(state, _ref) {
       var key = _ref.key,
           value = _ref.value;
-      console.log(555, key, value);
       state.queryParams[key] = value;
     },
     setData: function setData(state, data) {
       state.data = data;
-      console.log(123456, data);
     },
     setDaily: function setDaily(state, data) {
       state.data.daily = data;
+    },
+    setIndex: function setIndex(state, data) {
+      state.data.indexes = data;
     },
     setTotal: function setTotal(state, data) {
       state.data.total = data;
@@ -23868,7 +23905,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   actions: {
-    getDaily: function getDaily(_ref2, params) {
+    getIndex: function getIndex(_ref2, params) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         var commit, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -23878,11 +23915,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit = _ref2.commit;
                 _context.prev = 1;
                 _context.next = 4;
-                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AnalyticsService.getDaily(params);
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AnalyticsService.getIndex(params);
 
               case 4:
                 response = _context.sent;
-                commit('setDaily', response); // commit('setMeta', response.meta);
+                commit('setIndex', response); // commit('setMeta', response.meta);
 
                 _context.next = 13;
                 break;
@@ -23902,7 +23939,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, null, [[1, 8]]);
       }))();
     },
-    getTotal: function getTotal(_ref3, params) {
+    getDaily: function getDaily(_ref3, params) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         var commit, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
@@ -23912,32 +23949,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit = _ref3.commit;
                 _context2.prev = 1;
                 _context2.next = 4;
-                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AnalyticsService.getTotal(params);
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AnalyticsService.getDaily(params);
 
               case 4:
                 response = _context2.sent;
-                commit('setTotal', response.total);
-                commit('setHr', response.hr); // commit('setMeta', response.meta);
+                commit('setDaily', response); // commit('setMeta', response.meta);
 
-                _context2.next = 14;
+                _context2.next = 13;
                 break;
 
-              case 9:
-                _context2.prev = 9;
+              case 8:
+                _context2.prev = 8;
                 _context2.t0 = _context2["catch"](1);
                 console.log('error', _context2.t0);
                 _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context2.t0.response.data);
                 if (_context2.t0.response.status === 401) _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
 
-              case 14:
+              case 13:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[1, 9]]);
+        }, _callee2, null, [[1, 8]]);
       }))();
     },
-    getToday: function getToday(_ref4, params) {
+    getTotal: function getTotal(_ref4, params) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
         var commit, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -23947,28 +23983,63 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 commit = _ref4.commit;
                 _context3.prev = 1;
                 _context3.next = 4;
-                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AnalyticsService.getToday();
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AnalyticsService.getTotal(params);
 
               case 4:
                 response = _context3.sent;
-                commit('setToday', response); // commit('setMeta', response.meta);
+                commit('setTotal', response.total);
+                commit('setHr', response.hr); // commit('setMeta', response.meta);
 
-                _context3.next = 13;
+                _context3.next = 14;
                 break;
 
-              case 8:
-                _context3.prev = 8;
+              case 9:
+                _context3.prev = 9;
                 _context3.t0 = _context3["catch"](1);
                 console.log('error', _context3.t0);
                 _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context3.t0.response.data);
                 if (_context3.t0.response.status === 401) _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
 
-              case 13:
+              case 14:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[1, 8]]);
+        }, _callee3, null, [[1, 9]]);
+      }))();
+    },
+    getToday: function getToday(_ref5, params) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var commit, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                commit = _ref5.commit;
+                _context4.prev = 1;
+                _context4.next = 4;
+                return _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AnalyticsService.getToday();
+
+              case 4:
+                response = _context4.sent;
+                commit('setToday', response); // commit('setMeta', response.meta);
+
+                _context4.next = 13;
+                break;
+
+              case 8:
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](1);
+                console.log('error', _context4.t0);
+                _app__WEBPACK_IMPORTED_MODULE_2__.emitter.emit('notification-error', _context4.t0.response.data);
+                if (_context4.t0.response.status === 401) _services_index__WEBPACK_IMPORTED_MODULE_1__.container.AuthService.logout();
+
+              case 13:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[1, 8]]);
       }))();
     }
   }
@@ -24986,6 +25057,9 @@ __webpack_require__.r(__webpack_exports__);
     getDailyAnalytics: function getDailyAnalytics(state) {
       return state.analytics.data.daily;
     },
+    getIndexAnalytics: function getIndexAnalytics(state) {
+      return state.analytics.data.indexes;
+    },
     getTotalAnalytics: function getTotalAnalytics(state) {
       return state.analytics.data.total;
     },
@@ -25001,6 +25075,13 @@ __webpack_require__.r(__webpack_exports__);
         daily_from: state.analytics.queryParams.daily_from,
         daily_to: state.analytics.queryParams.daily_to,
         daily_hrs: state.analytics.queryParams.daily_hrs
+      };
+    },
+    getDailyIndexQueryParams: function getDailyIndexQueryParams(state) {
+      return {
+        from: state.analytics.queryParams.index_from,
+        to: state.analytics.queryParams.index_to,
+        hrs: state.analytics.queryParams.index_hrs
       };
     },
     getTotalAnalyticsQueryParams: function getTotalAnalyticsQueryParams(state) {

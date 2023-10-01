@@ -8,7 +8,8 @@ export default {
             daily: [],
             total: [],
             hr: [],
-            today: []
+            today: [],
+            indexes: []
         },
         hr: {},
         meta: {from: 0, to: 0, total: 0},
@@ -18,19 +19,23 @@ export default {
             daily_hrs:[],
             total_from: null,
             total_to: null,
+            index_from: null,
+            index_to: null,
+            index_hrs:[],
         }
     },
     mutations: {
         setQueryParam(state, {key, value}) {
-            console.log(555, key, value);
             state.queryParams[key] = value
         },
         setData(state, data) {
             state.data = data;
-            console.log(123456, data)
         },
         setDaily(state, data) {
             state.data.daily = data;
+        },
+        setIndex(state, data) {
+            state.data.indexes = data;
         },
         setTotal(state, data) {
             state.data.total = data;
@@ -43,6 +48,18 @@ export default {
         }
     },
     actions: {
+        async getIndex({commit}, params) {
+            try {
+                let response = await container.AnalyticsService.getIndex(params);
+
+                commit('setIndex', response);
+                // commit('setMeta', response.meta);
+            } catch (e) {
+                console.log('error', e)
+                emitter.emit('notification-error', e.response.data)
+                if (e.response.status === 401) container.AuthService.logout()
+            }
+        },
         async getDaily({commit}, params) {
             try {
                 let response = await container.AnalyticsService.getDaily(params);

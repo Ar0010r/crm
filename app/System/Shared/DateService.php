@@ -3,10 +3,11 @@
 namespace App\System\Shared;
 
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class DateService
 {
-    public static function getDays(\DateTimeInterface $from, \DateTimeInterface $to): array
+    public static function getDays(\DateTimeInterface $from, \DateTimeInterface $to): Collection
     {
         $start = Carbon::parse($from);
         $end = Carbon::parse($to);
@@ -17,6 +18,6 @@ class DateService
             $start->addDay();
         }
 
-        return $days;
+        return collect($days);
     }
 }

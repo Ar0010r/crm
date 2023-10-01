@@ -10,7 +10,6 @@ use App\System\Shared\DateService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class DailyStatisticsService
@@ -190,10 +189,10 @@ class DailyStatisticsService
     public static function total(?\DateTimeInterface $from, ?\DateTimeInterface $to, Collection $staff): array
     {
         $hired = collect(self::hiredStats($from, $to, $staff));
-        //$hired = collect(self::relativeHiredStats($from, $to, $staff));
+        //$relativeHired = collect(self::relativeHiredStats($from, $to, $staff));
         $added = collect(self::addedStats($from, $to, $staff));
         $mail = collect(self::mailStats($from, $to, $staff));
-        $totalMail = collect(self::totalMailStats($from, $to, $staff));
+        //$totalMail = collect(self::totalMailStats($from, $to, $staff));
         //dd(DB::getQueryLog());
 
         $days = DateService::getDays($from, $to ?? Carbon::now());
@@ -213,10 +212,10 @@ class DailyStatisticsService
             $data['days'][] = $day;
             $default = /*Carbon::parse($day)->isWeekend() ? null :*/0;
 
-            $data['total_mails'] = $data['total_mails'] ?? [];
+           /* $data['total_mails'] = $data['total_mails'] ?? [];
             $data['total_mails'][$day] = $totalMail->get($day, 0);
 
-            $data['total_mails'][$day] += $data['total_mails'][$yesterday] ?? 0;
+            $data['total_mails'][$day] += $data['total_mails'][$yesterday] ?? 0;*/
 
             foreach (['sent_1' => 1, 'sent_2' => 2/*, 'sent_3' => 3*/] as $key => $wave) {
                 $value = $mail->has($day) ? collect($mail->get($day)) : collect([]);
@@ -231,10 +230,13 @@ class DailyStatisticsService
             $data['total'][$day] = $data['total'][$day] + ($data['total'][$yesterday] ?? 0);;
 
             $data['hired'] = $data['hired'] ?? [];
-            //$hired->has($day) && dd(collect($hired->get($day)));
+
+          /*  $data['relative_hired'] = $data['relative_hired'] ?? [];
             $value = $hired->has($day) ? collect($hired->get($day)[0] ?? []) : collect([]);
+            $relativeValue = $relativeHired->has($day) ? collect($relativeHired->get($day)[0] ?? []) : collect([]);*/
 
             $data['hired'][$day] = $value->get('count', $default) + ($data['hired'][$yesterday] ?? 0);
+            //$data['relative_hired'][$day] = $relativeValue->get('count', $default) + ($data['relative_hired'][$yesterday] ?? 0);
             // $data['hired'][$day] = $value->get('count', $default);
 
             $data['new'] = $data['new'] ?? [];
@@ -242,12 +244,13 @@ class DailyStatisticsService
             //$data['new'][$day] = $value->get('count', $default);
             $data['new'][$day] = $value->get('count', $default) + ($data['new'][$yesterday] ?? 0);
             $data['bounce'] = self::calculateBounce(collect($data['total']), collect($data['new']));
-            $data['index'] = self::calculateConversion(collect($data['total_mails']), collect($data['hired']));
-            $data['total_bounce'] = self::calculateConversion(collect($data['total_mails']), collect($data['new']));
-            $data['total_conversion'] = self::calculateConversion(collect($data['new']), collect($data['hired']));
         }
 
-        foreach (['bounce', 'days', 'hired', 'new', 'sent_1', 'sent_2', 'total', 'index', 'total_bounce', 'total_conversion'] as $group) {
+       // $data['index'] = self::calculateConversion(collect($data['total_mails']), collect($data['hired']));
+        $data['bounce'] = self::calculateConversion(collect($data['new']), collect($data['hired']))->map(fn($x) => is_numeric($x) && $x<15 ? $x : 0);;
+
+
+        foreach (['bounce', 'days', 'hired', 'new', 'sent_1', 'sent_2', 'total', /*'index', 'total_bounce', 'total_conversion'*/] as $group) {
             foreach ($data[$group] as $date => $value) {
                 if (Carbon::parse($date)->isWeekend()) {
                     unset($data[$group][$date]);

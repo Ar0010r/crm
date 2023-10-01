@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/statistics/daily', [StatisticsController::class, 'daily']);
     Route::get('/statistics/total', [StatisticsController::class, 'total']);
     Route::get('/statistics/today', [StatisticsController::class, 'today']);
+    Route::get('/statistics/index', [StatisticsController::class, 'index']);
 
     Route::get('/profile', [AuthController::class, 'profile']);
     Route::get('/logout', [AuthController::class, 'logout']);

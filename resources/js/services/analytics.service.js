@@ -21,4 +21,10 @@ export class AnalyticsService {
 
         return response.data.model
     }
+
+    async getIndex(params) {
+        let response =  await this.client.get('/api/statistics/index', {params});
+
+        return response.data.model
+    }
 }
