@@ -231,9 +231,9 @@ class DailyStatisticsService
 
             $data['hired'] = $data['hired'] ?? [];
 
-          /*  $data['relative_hired'] = $data['relative_hired'] ?? [];
+          /*  $data['relative_hired'] = $data['relative_hired'] ?? [];*/
             $value = $hired->has($day) ? collect($hired->get($day)[0] ?? []) : collect([]);
-            $relativeValue = $relativeHired->has($day) ? collect($relativeHired->get($day)[0] ?? []) : collect([]);*/
+            /*$relativeValue = $relativeHired->has($day) ? collect($relativeHired->get($day)[0] ?? []) : collect([]);*/
 
             $data['hired'][$day] = $value->get('count', $default) + ($data['hired'][$yesterday] ?? 0);
             //$data['relative_hired'][$day] = $relativeValue->get('count', $default) + ($data['relative_hired'][$yesterday] ?? 0);

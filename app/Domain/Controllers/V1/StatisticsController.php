@@ -5,6 +5,7 @@ namespace App\Domain\Controllers\V1;
 use App\Domain\Models\Employee;
 use App\Domain\Models\User;
 use App\Domain\Requests\Concrete\Shared\DateRangeRequest;
+use App\Domain\Services\Statistics\DailyStatisticsManager;
 use App\Domain\Services\Statistics\IndexStatisticsManager;
 use App\Domain\Services\Statistics\DailyStatisticsService;
 use App\Domain\Services\Statistics\TodayStatisticsService;
@@ -22,17 +23,20 @@ class StatisticsController extends Controller
     private GetUserService $getService;
     private TotalStatisticsService $statisticsService;
     private IndexStatisticsManager $statisticsManager;
+    private DailyStatisticsManager $dailyStatisticsManager;
 
     public function __construct(
         StoreUserService $storeService,
         GetUserService $getService,
         TotalStatisticsService $statisticsService,
-        IndexStatisticsManager $statisticsManager
+        IndexStatisticsManager $statisticsManager,
+        DailyStatisticsManager $dailyStatisticsManager
     ) {
         $this->storeService = $storeService;
         $this->getService = $getService;
         $this->statisticsService = $statisticsService;
         $this->statisticsManager = $statisticsManager;
+        $this->dailyStatisticsManager = $dailyStatisticsManager;
     }
 
     public function daily(DateRangeRequest $request)
@@ -43,7 +47,8 @@ class StatisticsController extends Controller
 
         $managers = empty($hrIds) ? User::all() : User::whereIn('id', $hrIds)->get();
         //$data = $this->statisticsManager->calculate($from, $to, $managers)->cutWeekends()->getCalculations();
-        $data = DailyStatisticsService::total($from, $to, $managers);
+        //$data = DailyStatisticsService::total($from, $to, $managers);
+        $data = $this->dailyStatisticsManager->calculate($from, $to, $managers)->cutWeekends()->getCalculations();
 
         return new ModelResource(['model' => $data]);
     }

@@ -31,10 +31,10 @@ class IndexStatisticsManager
         $relativeHired = GetDailyStatisticsService::relativeHiredStats($from, $to, $staff);
         $added = GetDailyStatisticsService::addedStats($from, $to, $staff);
         $mail = GetDailyStatisticsService::mailStats($from, $to, $staff);
-        self::summarize($hired);
-        self::summarize($relativeHired);
-        self::summarize($added);
-        self::summarize($mail);
+        self::summarize($hired, $from, $to);
+        self::summarize($relativeHired, $from, $to);
+        self::summarize($added, $from, $to);
+        self::summarize($mail, $from, $to);
 
         $this->calculations = collect([
             'days' => DateService::getDays($from, $to ?? Carbon::now()),
@@ -61,11 +61,12 @@ class IndexStatisticsManager
         return $this;
     }
 
-    private function summarize(Collection $data)
+    private function summarize(Collection $data,  ?\DateTimeInterface $from, ?\DateTimeInterface $to)
     {
-        $from = $data->keys()->min();
-        $to = $data->keys()->max();
-        $days = DateService::getDays(Carbon::parse($from), Carbon::parse($to));
+        $from = $from ?? Carbon::now();
+        $to = $to ?? Carbon::now();
+
+        $days = DateService::getDays($from, $to);
 
         foreach ($days as $day) {
             $yesterday = Carbon::parse($day)->subDay()->format('Y-m-d');

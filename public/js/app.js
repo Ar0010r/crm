@@ -24130,7 +24130,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       zip: null,
       pickup: null,
       contacted: null,
-      hired_at: null
+      hired_at: null,
+      address_2: null,
+      secondary_email: null
     }
   },
   mutations: {

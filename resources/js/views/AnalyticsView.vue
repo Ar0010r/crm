@@ -194,7 +194,7 @@ export default {
         store.commit('analytics/setQueryParam', {'key': 'total_from', 'value': formattedStartYear})
         store.commit('analytics/setQueryParam', {'key': 'index_from', 'value': formattedStartYear})
         if (noDailyAnalytics) store.dispatch('analytics/getDaily', {from:formattedLastWeekStartDate});
-        if (noHrAnalytics) store.dispatch('analytics/getTotal', {from:formattedStartYear});
+        if (noHrAnalytics) store.dispatch('analytics/getTotal', {total_from:formattedStartYear});
         if (noIndexAnalytics) store.dispatch('analytics/getIndex', {from:formattedStartYear});
         if (noManagers) store.dispatch('manager/get');
 

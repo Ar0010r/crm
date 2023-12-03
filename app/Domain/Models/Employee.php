@@ -41,6 +41,8 @@ class Employee extends Model  implements HasMedia
         'phone_2',
         'race',
         'contacted',
+        'secondary_email',
+        'address_2'
     ];
 
     public function hr()

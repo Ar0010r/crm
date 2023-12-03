@@ -17,6 +17,13 @@
                regex='email'
                :required=true
         />
+        <Input v-model="object.secondary_email"
+               :vmodel="object.secondary_email"
+               :validate="validate"
+               :reset="reset"
+               label="email 2"
+               regex='email'
+        />
         <Input v-model="object.paypal"
                :vmodel="object.paypal"
                :validate="validate"
@@ -47,6 +54,12 @@
                :validate="validate"
                :reset="reset"
                label="address"
+        />
+        <Input v-model="object.address_2"
+               :vmodel="object.address_2"
+               :validate="validate"
+               :reset="reset"
+               label="address 2"
         />
         <Input v-model="object.city"
                :vmodel="object.city"

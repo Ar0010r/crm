@@ -44,6 +44,9 @@ export default {
             pickup: null,
             contacted: null,
             hired_at: null,
+            address_2: null,
+            secondary_email: null,
+
         }
     },
     mutations: {

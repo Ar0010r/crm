@@ -52,6 +52,10 @@
                     <i class="fas fa-envelope d-block d-flex align-items-center" v-if="applicant.email"></i>
                     <p @click="copy(1)" class="m-0 ml-1 p-0">{{ applicant.email }}</p>
                 </div>
+                <div class="d-flex align-items-center">
+                    <i class="fas text-black-50 fa-envelope d-block d-flex align-items-center" v-if="applicant.secondary_email"></i>
+                    <p @click="copy(3)" class="m-0 ml-1 p-0">{{ applicant.secondary_email }}</p>
+                </div>
                 <div class="d-flex align-items-center d-flex align-items-center" v-if="applicant.paypal">
                     <i class="fab fa-paypal d-block"></i>
                     <p @click="copy(2)" class="m-0 ml-1 p-0">{{ applicant.paypal }}</p>

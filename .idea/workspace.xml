@@ -4,19 +4,20 @@
     <list default="true" id="6dd06283-79a3-451e-93c8-b1b73cd686ac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Domain/Controllers/V1/StatisticsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Controllers/V1/StatisticsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Models/Employee.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Models/Employee.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Resources/Employee/EmployeeResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Resources/Employee/EmployeeResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Services/Statistics/DailyStatisticsManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Statistics/DailyStatisticsManager.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Domain/Services/Statistics/DailyStatisticsService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Statistics/DailyStatisticsService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/System/Shared/DateService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/System/Shared/DateService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Services/Statistics/GetDailyStatisticsService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Statistics/GetDailyStatisticsService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Services/Statistics/IndexStatisticsManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Services/Statistics/IndexStatisticsManager.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/abstract/Table/Control/DateRangePicker.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/abstract/Table/Control/DateRangePicker.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Analytics/StatsChart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Analytics/StatsChart.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/resources_js_views_ApplicantsView_vue.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/resources_js_views_ApplicantsView_vue.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Analytics/IndexChartBlock.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Analytics/IndexChartBlock.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Analytics/StatsChartBlock.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Analytics/StatsChartBlock.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Analytics/StatsChartControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Analytics/StatsChartControl.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Analytics/StatsTotalControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Analytics/StatsTotalControl.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/services/analytics.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/services/analytics.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/store/analytics.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/analytics.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Modal/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Modal/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Row/Wrapper.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Applicant/Table/Row/Wrapper.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/applicant.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/applicant.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/views/AnalyticsView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/views/AnalyticsView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -356,9 +357,9 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/Domain/Services/Statistics" />
+      <recent name="$PROJECT_DIR$/database/migrations" />
       <recent name="$PROJECT_DIR$/resources/js/components/Analytics" />
       <recent name="$PROJECT_DIR$/app/Domain/Enums" />
-      <recent name="$PROJECT_DIR$/database/migrations" />
       <recent name="$PROJECT_DIR$/app/Domain/Models" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -590,7 +591,13 @@
       <workItem from="1695806553251" duration="41000" />
       <workItem from="1696107801358" duration="4310000" />
       <workItem from="1696162081602" duration="127000" />
-      <workItem from="1696176798751" duration="5197000" />
+      <workItem from="1696176798751" duration="8695000" />
+      <workItem from="1696269915877" duration="130000" />
+      <workItem from="1699550720612" duration="3940000" />
+      <workItem from="1699630322105" duration="88000" />
+      <workItem from="1700908826590" duration="6307000" />
+      <workItem from="1701113105352" duration="151000" />
+      <workItem from="1701620393423" duration="3556000" />
     </task>
     <servers />
   </component>

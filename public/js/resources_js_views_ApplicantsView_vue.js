@@ -3948,8 +3948,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8
   /* PROPS */
   , ["modelValue", "vmodel", "validate", "reset"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Input, {
-    modelValue: $props.object.paypal,
+    modelValue: $props.object.secondary_email,
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $props.object.secondary_email = $event;
+    }),
+    vmodel: $props.object.secondary_email,
+    validate: $props.validate,
+    reset: $props.reset,
+    label: "email 2",
+    regex: "email"
+  }, null, 8
+  /* PROPS */
+  , ["modelValue", "vmodel", "validate", "reset"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Input, {
+    modelValue: $props.object.paypal,
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $props.object.paypal = $event;
     }),
     vmodel: $props.object.paypal,
@@ -3965,7 +3977,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     label: "delivery",
     vmodel: $props.object.company_id,
     modelValue: $props.object.company_id,
-    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
       return $props.object.company_id = $event;
     }),
     required: true,
@@ -3979,7 +3991,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     label: "hiring",
     vmodel: $props.object.hr_company_id,
     modelValue: $props.object.hr_company_id,
-    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $props.object.hr_company_id = $event;
     }),
     required: true,
@@ -3989,7 +4001,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["options", "vmodel", "modelValue", "reset", "validate"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Input, {
     modelValue: $props.object.address,
-    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
       return $props.object.address = $event;
     }),
     vmodel: $props.object.address,
@@ -3999,8 +4011,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8
   /* PROPS */
   , ["modelValue", "vmodel", "validate", "reset"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Input, {
+    modelValue: $props.object.address_2,
+    "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+      return $props.object.address_2 = $event;
+    }),
+    vmodel: $props.object.address_2,
+    validate: $props.validate,
+    reset: $props.reset,
+    label: "address 2"
+  }, null, 8
+  /* PROPS */
+  , ["modelValue", "vmodel", "validate", "reset"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Input, {
     modelValue: $props.object.city,
-    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+    "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
       return $props.object.city = $event;
     }),
     vmodel: $props.object.city,
@@ -4011,7 +4034,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue", "vmodel", "validate", "reset"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_StateInput, {
     modelValue: $props.object.state,
-    "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+    "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
       return $props.object.state = $event;
     }),
     vmodel: $props.object.state,
@@ -4023,7 +4046,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue", "vmodel", "validate", "reset", "values"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Input, {
     modelValue: $props.object.zip,
-    "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
+    "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
       return $props.object.zip = $event;
     }),
     vmodel: $props.object.zip,
@@ -4036,7 +4059,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue", "vmodel", "validate", "reset"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Phone, {
     modelValue: $props.object.phone_1,
-    "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
+    "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
       return $props.object.phone_1 = $event;
     }),
     validate: $props.validate,
@@ -4046,7 +4069,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue", "validate", "reset"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Phone, {
     modelValue: $props.object.phone_2,
-    "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
+    "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
       return $props.object.phone_2 = $event;
     }),
     validate: $props.validate,
@@ -4056,7 +4079,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["modelValue", "validate", "reset"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Input, {
     modelValue: $props.object.birthday,
-    "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
+    "onUpdate:modelValue": _cache[13] || (_cache[13] = function ($event) {
       return $props.object.birthday = $event;
     }),
     vmodel: $props.object.birthday,
@@ -4073,7 +4096,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     label: "race",
     vmodel: $props.object.race,
     modelValue: $props.object.race,
-    "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
+    "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
       return $props.object.race = $event;
     }),
     reset: $props.reset,
@@ -4084,7 +4107,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     label: "available for pick up",
     vmodel: $props.object.pickup,
     modelValue: $props.object.pickup,
-    "onUpdate:modelValue": _cache[13] || (_cache[13] = function ($event) {
+    "onUpdate:modelValue": _cache[15] || (_cache[15] = function ($event) {
       return $props.object.pickup = $event;
     })
   }, null, 8
@@ -5503,46 +5526,47 @@ var _hoisted_15 = {
   "class": "fas fa-envelope d-block d-flex align-items-center"
 };
 var _hoisted_16 = {
+  "class": "d-flex align-items-center"
+};
+var _hoisted_17 = {
+  key: 0,
+  "class": "fas text-black-50 fa-envelope d-block d-flex align-items-center"
+};
+var _hoisted_18 = {
   key: 0,
   "class": "d-flex align-items-center d-flex align-items-center"
 };
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "fab fa-paypal d-block"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_18 = {
+var _hoisted_20 = {
   key: 1,
   "class": "d-flex mt-2 align-items-center"
 };
 
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "fas fa-phone-volume d-block"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_20 = {
+var _hoisted_22 = {
   "class": "m-0 p-0 ml-1"
 };
-var _hoisted_21 = {
+var _hoisted_23 = {
   "class": "m-0 p-0 ml-1 pl-1",
   style: {
     "border-left": "1px solid gray"
   }
 };
 
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)();
-
-var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
-/* HOISTED */
-);
-
 var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)();
 
-var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' '), -1
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
 /* HOISTED */
 );
 
@@ -5558,7 +5582,13 @@ var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_30 = {
+var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)();
+
+var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' '), -1
+/* HOISTED */
+);
+
+var _hoisted_32 = {
   style: {
     "text-align": "center",
     "vertical-align": "middle"
@@ -5634,26 +5664,33 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "m-0 ml-1 p-0"
       }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.applicant.email), 1
       /* TEXT */
-      )]), $props.applicant.paypal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+      )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [$props.applicant.secondary_email ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("i", _hoisted_17)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
         onClick: _cache[4] || (_cache[4] = function ($event) {
+          return $setup.copy(3);
+        }),
+        "class": "m-0 ml-1 p-0"
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.applicant.secondary_email), 1
+      /* TEXT */
+      )]), $props.applicant.paypal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+        onClick: _cache[5] || (_cache[5] = function ($event) {
           return $setup.copy(2);
         }),
         "class": "m-0 ml-1 p-0"
       }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.applicant.paypal), 1
       /* TEXT */
-      )])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.applicant.phone_1 || $props.applicant.phone_2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.applicant.phone_1), 1
+      )])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.applicant.phone_1 || $props.applicant.phone_2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.applicant.phone_1), 1
       /* TEXT */
-      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.applicant.phone_2), 1
+      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.applicant.phone_2), 1
       /* TEXT */
       )])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.applicant.address), 1
       /* TEXT */
-      ), _hoisted_22, _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.applicant.city), 1
+      ), _hoisted_24, _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.applicant.city), 1
       /* TEXT */
-      ), _hoisted_24, _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.applicant.state), 1
+      ), _hoisted_26, _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.applicant.state), 1
       /* TEXT */
-      ), _hoisted_26, _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.applicant.zip), 1
+      ), _hoisted_28, _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.applicant.zip), 1
       /* TEXT */
-      ), _hoisted_28, _hoisted_29]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_30, [$props.applicant.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_StatusSelect, {
+      ), _hoisted_30, _hoisted_31]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_32, [$props.applicant.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_StatusSelect, {
         key: 0,
         status: $props.applicant.status,
         id: $props.applicant.id,

@@ -74,7 +74,7 @@ export default {
                 let value = data.value ?? {};
                 let addedStats = value.new ?? {};
                 let total = 0;
-                Object.values(addedStats).forEach(i => total = i > total ? i : total)
+                Object.values(addedStats).forEach(i => total += i)
 
                 return total;
             }),
@@ -82,7 +82,7 @@ export default {
                 let value = data.value ?? {};
                 let addedStats = value.hired ?? {};
                 let total = 0;
-                Object.values(addedStats).forEach(i => total = i > total ? i : total)
+                Object.values(addedStats).forEach(i => total += i)
 
                 return total;
             }),
@@ -90,9 +90,11 @@ export default {
                 let value = data.value ?? {};
                 let addedStats = value.bounce ?? {};
                 let total = 0;
-                Object.values(addedStats).forEach(i => total = i > total ? i : total)
+                Object.values(addedStats).forEach(i => total += i)
 
-                return total;
+                let res = Number((total / Object.values(addedStats).length).toFixed(2));
+
+                return res ? res : 0
             }),
             sent_1: computed(function () {
                 let value = data.value ?? {};
@@ -118,7 +120,6 @@ export default {
 
                 return total;
             })
-
         }
     }
 }

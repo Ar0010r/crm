@@ -20,30 +20,30 @@
 
                 <!-- Numbers -->
                 <div class="row">
-                    <div class="col-6 col-xl-5 text-muted mb-3">Total new leads</div>
+                    <div class="col-6 col-xl-5 text-muted mb-3">Index</div>
                     <div class="col-6 col-xl-7 mb-3">
-                        <span class="text-big">{{newAdded}}</span>
+                        <span class="text-big">{{ last_index }}%</span>
 <!--                        <sup class="text-success">+12%</sup>-->
                     </div>
-                    <div class="col-6 col-xl-5 text-muted mb-3">Total hired</div>
+                    <div class="col-6 col-xl-5 text-muted mb-3">R index</div>
                     <div class="col-6 col-xl-7 mb-3">
-                        <span class="text-big">{{hired}}</span>
+                        <span class="text-big">{{relative_index}}%</span>
 <!--                        <sup class="text-danger">-5%</sup>-->
-                    </div>
-                    <div class="col-6 col-xl-5 text-muted mb-3">1st wave sent</div>
-                    <div class="col-6 col-xl-7 mb-3">
-                        <span class="text-big">{{sent_1}}</span>
-<!--                        <sup class="text-success">+12%</sup>-->
-                    </div>
-
-                    <div class="col-6 col-xl-5 text-muted mb-3">2nd wave sent</div>
-                    <div class="col-6 col-xl-7 mb-3">
-                        <span class="text-big">{{sent_2}}</span>
-                        <!--                        <sup class="text-success">+12%</sup>-->
                     </div>
                     <div class="col-6 col-xl-5 text-muted mb-3">Bounce</div>
                     <div class="col-6 col-xl-7 mb-3">
                         <span class="text-big">{{bounce}}%</span>
+<!--                        <sup class="text-success">+12%</sup>-->
+                    </div>
+
+                    <div class="col-6 col-xl-5 text-muted mb-3">Conversion</div>
+                    <div class="col-6 col-xl-7 mb-3">
+                        <span class="text-big">{{conversion}}%</span>
+                        <!--                        <sup class="text-success">+12%</sup>-->
+                    </div>
+                    <div class="col-6 col-xl-5 text-muted mb-3">R Conversion</div>
+                    <div class="col-6 col-xl-7 mb-3">
+                        <span class="text-big">{{relative_conversion}}%</span>
 <!--                        <sup class="text-danger">-12%</sup>-->
                     </div>
                 </div>
@@ -68,57 +68,48 @@ export default {
     setup() {
 
         const store = useStore();
-        const data = computed(() => store.getters.getDailyAnalytics)
+        const data = computed(() => store.getters.getIndexAnalytics)
         return {
-            newAdded: computed(function () {
+            last_index: computed(function () {
                 let value = data.value ?? {};
-                let addedStats = value.new ?? {};
-                let total = 0;
-                Object.values(addedStats).forEach(i => total = i > total ? i : total)
+                let addedStats = value.index ?? {};
+                let max = "";
+                Object.keys(addedStats).forEach(i => max = i > max ? i : max)
 
-                return total;
+                return Number((addedStats[max] ?? 0).toFixed(2));
             }),
-            hired: computed(function () {
+            relative_index: computed(function () {
                 let value = data.value ?? {};
-                let addedStats = value.hired ?? {};
-                let total = 0;
-                Object.values(addedStats).forEach(i => total = i > total ? i : total)
+                let addedStats = value.relative_index ?? {};
+                let max = "";
+                Object.keys(addedStats).forEach(i => max = i > max ? i : max)
 
-                return total;
+                return Number((addedStats[max] ?? 0).toFixed(2));
             }),
             bounce: computed(function () {
                 let value = data.value ?? {};
                 let addedStats = value.bounce ?? {};
-                let total = 0;
-                Object.values(addedStats).forEach(i => total = i > total ? i : total)
+                let max = "";
+                Object.keys(addedStats).forEach(i => max = i > max ? i : max)
 
-                return total;
+                return Number((addedStats[max] ?? 0).toFixed(2));
             }),
-            sent_1: computed(function () {
+            conversion: computed(function () {
                 let value = data.value ?? {};
-                let addedStats = value.sent_1 ?? {};
-                let total = 0;
-                Object.values(addedStats).forEach(i => total += i)
+                let addedStats = value.conversion ?? {};
+                let max = "";
+                Object.keys(addedStats).forEach(i => max = i > max ? i : max)
 
-                return total;
+                return Number((addedStats[max] ?? 0).toFixed(2));
             }),
-            sent_2: computed(function () {
+            relative_conversion: computed(function () {
                 let value = data.value ?? {};
-                let addedStats = value.sent_2 ?? {};
-                let total = 0;
-                Object.values(addedStats).forEach(i => total += i)
+                let addedStats = value.relative_conversion ?? {};
+                let max = "";
+                Object.keys(addedStats).forEach(i => max = i > max ? i : max)
 
-                return total;
-            }),
-            index: computed(function () {
-                let value = data.value ?? {};
-                let addedStats = value.index ?? {};
-                let total = 0;
-                Object.values(addedStats).forEach(i => total += i)
-
-                return total;
+                return Number((addedStats[max] ?? 0).toFixed(2));
             })
-
         }
     }
 }

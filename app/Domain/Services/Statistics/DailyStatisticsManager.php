@@ -26,20 +26,27 @@ class DailyStatisticsManager
         ?\DateTimeInterface $from,
         ?\DateTimeInterface $to,
         Collection $staff
-    ): IndexStatisticsManager {
+    ): DailyStatisticsManager {
         $hired = GetDailyStatisticsService::hiredStats($from, $to, $staff);
         $added = GetDailyStatisticsService::addedStats($from, $to, $staff);
         $mail = GetDailyStatisticsService::sendingStats($from, $to, $staff);
+        $relativeHired = GetDailyStatisticsService::relativeHiredStats($from, $to, $staff);
+        $waves = $this->getWaves($mail);
+        $totalMails = collect($waves['total']);
 
         $this->calculations = collect([
+            ...$waves,
+            'new' => $added,
+            'hired' => $hired,
+            'relative_hired' => $relativeHired,
             'days' => DateService::getDays($from, $to ?? Carbon::now()),
-
+            'bounce' => $this->calculateConversion($totalMails, $added),
         ]);
 
         return $this;
     }
 
-    public function cutWeekends(): IndexStatisticsManager
+    public function cutWeekends(): DailyStatisticsManager
     {
         foreach ($this->calculations->keys() as $metric) {
             foreach ($this->calculations[$metric] as $date => $value) {
@@ -91,5 +98,24 @@ class DailyStatisticsManager
     public function getCalculations(): Collection
     {
         return $this->calculations;
+    }
+
+    public function getWaves(Collection $mailStats, $default = 0): Collection
+    {
+        $days = $mailStats->keys()->unique();
+        $data = ['total' => [], 'sent_1' => [], 'sent_2' => []];
+
+        foreach ($days as $key => $day) {
+            foreach (['sent_1' => 1, 'sent_2' => 2] as $key => $wave) {
+                $value = $mailStats->has($day) ? collect($mailStats->get($day)) : collect([]);
+                $values[$day] = (int)($value->where('wave', $wave)->first()['processed'] ?? $default);
+                //$values[$day] = $values[$day] + ($values[$yesterday] ?? 0);
+                $data[$key] = $values;
+                $data['total'][$day] = $data['total'][$day] ?? 0;
+                $data['total'][$day] += $values[$day];
+            }
+        }
+
+        return  collect($data);
     }
 }

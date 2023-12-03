@@ -26,7 +26,7 @@ class GetDailyStatisticsService
             ->when(is_string($to), fn(Builder $v) => $v->where('hired_at', '<=', $to))
             ->when(is_string($from), fn(Builder $v) => $v->where('hired_at', '>=', $from))
             ->whereIn('hr_id', $ids->toArray())
-            ->groupBy(['day'])->toBase()->get()
+            ->groupBy(['day'])->orderBy('day')->toBase()->get()
             ->mapToDictionary(fn($v) => [$v->day => (int)$v->count])
             ->map(fn($x) => is_array($x) ? ($x[0] ?? 0) : 0);
 
@@ -44,7 +44,7 @@ class GetDailyStatisticsService
             ->when(is_string($from), fn(Builder $v) => $v->where('created_at', '>=', $from))
             ->whereNotNull('hired_at')
             ->whereIn('hr_id', $ids->toArray())
-            ->groupBy(['day'])->toBase()->get()
+            ->groupBy(['day'])->orderBy('day')->toBase()->get()
             ->mapToDictionary(fn($v) => [$v->day => (int)$v->count])
             ->map(fn($x) => is_array($x) ? ($x[0] ?? 0) : 0);
     }
@@ -78,7 +78,7 @@ class GetDailyStatisticsService
              ->where('created_at', '<=', $to)*/
             ->whereIn('hr_id', $ids->toArray())
             ->groupBy(['day', 'wave'])->toBase()->get()
-            ->mapToDictionary(fn($v) => [$v->day => (int)$v]);
+            ->mapToDictionary(fn($v) => [$v->day => (array)$v]);
     }
 
     public static function mailStats(?\DateTimeInterface $from, ?\DateTimeInterface $to, Collection $staff): Collection
@@ -99,7 +99,7 @@ class GetDailyStatisticsService
 
    private static function getStaffIds(Collection $staff): Collection
    {
-       return  $staff->map(fn($x) => match (true) {
+       return $staff->map(fn($x) => match (true) {
            $x instanceof User => $x->getKey(),
            Str::isUuid($x) => $x,
            default => null,
